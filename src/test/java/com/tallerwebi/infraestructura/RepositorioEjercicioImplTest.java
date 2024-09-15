@@ -1,7 +1,6 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.Ejercicio;
-import com.tallerwebi.dominio.Opcion;
 import com.tallerwebi.dominio.RepositorioEjercicio;
 import com.tallerwebi.infraestructura.config.HibernateRepositorioTestConfig;
 import org.hibernate.SessionFactory;
@@ -14,8 +13,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -37,11 +34,11 @@ public class RepositorioEjercicioImplTest {
     @Transactional
     public void dadoQueExisteUnRepositorioEjercicioCuandoGuardoUnEjercicioEntoncesLoEncuentroEnLaBaseDeDatos(){
         Ejercicio ejercicio = new Ejercicio();
-        ejercicio.setNombre("A-E");
+        ejercicio.setConsigna("A-E");
 
         this.repositorioEjercicio.guardar(ejercicio);
 
-        String hql = "FROM Ejercicio where nombre = :nombre";
+        String hql = "FROM Ejercicio where consigna = :nombre";
         Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("nombre", "A-E");
         Ejercicio ejercicioObtenido = (Ejercicio) query.getSingleResult();

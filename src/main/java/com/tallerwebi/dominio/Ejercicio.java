@@ -1,9 +1,6 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -11,10 +8,16 @@ public class Ejercicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
+    private String consigna;
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+
+    @OneToOne
+    private Opcion opcionCorrecta;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Opcion> opcionesIncorrectas;
+
+    public void setConsigna(String nombre) {
+        this.consigna = nombre;
     }
 
     public void setId(Long id) {
@@ -23,5 +26,25 @@ public class Ejercicio {
 
     public Long getId() {
         return id;
+    }
+
+    public Opcion getOpcionCorrecta() {
+        return opcionCorrecta;
+    }
+
+    public void setOpcionCorrecta(Opcion opcionCorrecta) {
+        this.opcionCorrecta = opcionCorrecta;
+    }
+
+    public String getConsigna() {
+        return consigna;
+    }
+
+    public List<Opcion> getOpcionesIncorrectas() {
+        return opcionesIncorrectas;
+    }
+
+    public void setOpcionesIncorrectas(List<Opcion> opcionesIncorrectas) {
+        this.opcionesIncorrectas = opcionesIncorrectas;
     }
 }

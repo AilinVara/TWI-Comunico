@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ejercicio</title>
+</head>
+<body>
+
+<h1>Ejercicio</h1>
+
+<p>Consigna: </p><p th:text="${ejercicio.consigna}"></p>
+
+<form action="#" th:action="@{/resolver}" method="POST" th:object="${ejercicio}">
+        <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
+        <div>
+            <input type="radio" id="opcionCorrecta" name="opcionSeleccionada" th:value="${ejercicio.opcionCorrecta.id}" />
+            <label th:for="opcionCorrecta" th:text="${ejercicio.opcionCorrecta.descripcion}">Opción correcta</label>
+        </div>
+
+        <div th:each="opcion : ${ejercicio.opcionesIncorrectas}">
+            <input type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}" />
+            <label th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">Opción incorrecta</label>
+        </div>
+
+        <button type="submit">Enviar</button>
+</form>
+<div th:if="${esCorrecta != null}">
+    <div th:if="${esCorrecta}">
+        <script>
+                alert("Respuesta correcta");
+        </script>
+    </div>
+    <div th:unless="${esCorrecta}">
+        <script>
+            alert("Respuesta incorrecta");
+        </script>
+    </div>
+</div>
+</body>
+</html>
