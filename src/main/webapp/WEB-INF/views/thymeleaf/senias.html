@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comunico</title>
   <link rel="icon" href="/TWI-Comunico/src/main/webapp/resources/core/img/icon.svg" type="image/x-icon">
-  <link rel="stylesheet" href="/TWI-Comunico/src/main/webapp/resources/core/css/señas.css">
+  <link rel="stylesheet" th:href="@{/css/senias.css}"/>
   <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
   <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
 </head>
@@ -20,10 +20,10 @@
 
   <nav>
     <ul>
-      <li><a href="./inicio.html">Inicio</a></li>
-      <li><a href="#" class="active">Lengua de Señas</a></li>
-      <li><a href="./braille.html">Braille</a></li>
-      <li><a href="#">Cursos Online</a></li>
+      <li><a th:href="@{/home}">Inicio</a></li>
+      <li><a th:href="@{/senias}" class="active">Lengua de Señas</a></li>
+      <li><a th:href="@{/braille}">Braille</a></li>
+      <li><a th:href="@{/ejercicio}">Ejercicio</a></li>
         <img src="/TWI-Comunico/src/main/webapp/resources/core/img/perfil-icon.png" alt="Usuario" class="user-icon">
     </ul>
   </nav>
