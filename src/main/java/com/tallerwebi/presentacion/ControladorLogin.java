@@ -83,5 +83,7 @@ public class ControladorLogin {
     @RequestMapping(path = "/braille", method = RequestMethod.GET)
     public ModelAndView braile(){ return new ModelAndView("braille");}
 
+    @RequestMapping(path = "/alfabeto", method = RequestMethod.GET)
+    public ModelAndView alfabeto(){ return new ModelAndView("alfabeto");}
 }
 

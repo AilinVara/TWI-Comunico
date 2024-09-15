@@ -8,7 +8,7 @@
 <h1>Ejercicio</h1>
 
 <p>Consigna: </p><p th:text="${ejercicio.consigna}"></p>
-
+<img th:src="@{/img/braille-a.png}">
 <form action="#" th:action="@{/resolver}" method="POST" th:object="${ejercicio}">
         <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
         <div>
