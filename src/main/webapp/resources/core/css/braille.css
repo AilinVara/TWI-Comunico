@@ -277,7 +277,7 @@ footer {
 }*/
 
 /*----------------------------Seccion abecedario--------------------*/
-.braille-grid {
+.braille-grid, .señas-grid {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   gap: 20px;
@@ -287,8 +287,11 @@ footer {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 50px;
 }
+.señas-grid{
+  grid-template-columns: repeat(7, 1fr);
+}
 
-.braille-item {
+.braille-item, .señas-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -296,12 +299,12 @@ footer {
   padding: 10px;
   background-color: #e0e0e0;
   border-radius: 10px;
-  font-size: 2em;
+  font-size: 1.70em;
   color: #333;
   transition: background-color 0.3s ease;
 }
 
-.braille-item:hover {
+.braille-item:hover, .señas-item:hover,.seña:hover,.sort-signs:hover, .sort-braille:hover {
   background-color: #1cb0f6;
   color: white;
   cursor: default;
@@ -370,3 +373,23 @@ footer {
   background-color: #004495;
 }*/
 
+img{
+  height: 120px;
+  width: 120px;
+}
+.advertencia{
+  font-size: 18px;
+}
+
+.sort{
+  margin-left: 10%;
+}
+
+.sort-signs, .sort-braille{
+  padding: 15px 18px;
+  margin-left: 1.5%;
+  border: none;
+  border-radius: 8px;
+  background-color: #dadada;
+  font-size: 15px;
+}
