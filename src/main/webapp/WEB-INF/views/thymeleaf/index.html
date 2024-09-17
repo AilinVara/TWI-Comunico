@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comunico - Inicio de Sesión</title>
-  <link rel="icon" href="/TWI-Comunico/src/main/webapp/resources/core/img/icon.svg" type="image/x-icon">
-  <link rel="stylesheet" href="/TWI-Comunico/src/main/webapp/resources/core/css/style.css">
+  <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
   <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
   <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
 </head>
@@ -13,7 +13,7 @@
 <body>
 <header>
   <div class="logo">
-    <img src="/TWI-Comunico/src/main/webapp/resources/core/img/icon.svg" alt="Logo" class="logo-img">
+    <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
     <h1>omunico</h1>
   </div>
 
@@ -38,12 +38,12 @@
 <section class="login-container">
   <div class="login-content">
     <div class="login-logo">
-      <img src="/TWI-Comunico/src/main/webapp/resources/core/img/Isologo-Comunico.svg" alt="Logo Comunico" class="large-logo">
+      <img th:src="@{/img/Isologo-Comunico.svg}" alt="Logo Comunico" class="large-logo">
     </div>
     <div class="login-text">
       <h2>La forma divertida, efectiva y gratis de aprender lengua de señas y braille.</h2>
       <div class="login-buttons">
-        <a href="./inicio.html" class="btn btn-login">Iniciar Sesión</a>
+        <a th:href="@{inicio}" class="btn btn-login">Iniciar Sesión</a>
         <a href="#" class="btn btn-signup">Registrarse</a>
       </div>
     </div>
@@ -62,7 +62,7 @@
     <div class="footer-section">
       <h4>Comunico</h4>
       <p>Aprendé lengua de señas y braille de manera divertida y accesible.</p>
-      <img src="/TWI-Comunico/src/main/webapp/resources/core/img/Isologo-Comunico.svg" alt="Logo Comunico" class="footer-logo">
+      <img th:src="@{/img/Isologo-Comunico.svg}" alt="Logo Comunico" class="footer-logo">
     </div>
 
     <div class="footer-section">

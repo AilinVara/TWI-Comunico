@@ -15,9 +15,8 @@ public class ServicioEjercicioImpl implements ServicioEjercicio{
 
     @Override
     public Ejercicio obtenerEjercicio(Long ejercicioId){
-        return this.repositorioEjercicio.buscarUno(1L);
+        return this.repositorioEjercicio.buscarEjercicio(1L);
     }
-
 
 }
 

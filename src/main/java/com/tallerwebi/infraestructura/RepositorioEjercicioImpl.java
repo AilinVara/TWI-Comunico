@@ -25,13 +25,10 @@ public class RepositorioEjercicioImpl implements RepositorioEjercicio {
 
     @Override
     @Transactional
-    public Ejercicio buscarUno(Long id) {
+    public Ejercicio buscarEjercicio(Long id) {
         final Session session = sessionFactory.getCurrentSession();
-        Ejercicio ejercicio = (Ejercicio) session.createCriteria(Ejercicio.class)
+        return (Ejercicio) session.createCriteria(Ejercicio.class)
                 .add(Restrictions.eq("id", id))
                 .uniqueResult();
-        ejercicio.getOpcionesIncorrectas().size();
-        ejercicio.getOpcionCorrecta();
-        return ejercicio;
     }
 }

@@ -20,22 +20,20 @@ public class ControladorEjercicio {
             this.servicioEjercicio = servicioEjercicio;
     }
 
-    @RequestMapping("/ejercicio")
+    @RequestMapping(value = "/ejercicio", method = RequestMethod.GET)
     public ModelAndView irAjercicio(){
         ModelMap modelo = new ModelMap();
-        modelo.put("ejercicio", servicioEjercicio.obtenerEjercicio(1L));
+        Ejercicio ejercicio = servicioEjercicio.obtenerEjercicio(1L);
+        modelo.put("ejercicio", ejercicio);
         return new ModelAndView("ejercicio", modelo);
     }
 
     @RequestMapping( path = "/resolver", method = RequestMethod.POST)
     public ModelAndView resolverEjercicio(@RequestParam("opcionSeleccionada") Long opcionId, @RequestParam("ejercicioId")Long ejercicioId){
         ModelMap modelo = new ModelMap();
-
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
-
         modelo.put("ejercicio",ejercicio);
         modelo.put("esCorrecta", (ejercicio.getOpcionCorrecta().getId().equals(opcionId)));
-
         return new ModelAndView("ejercicio", modelo);
     }
 }

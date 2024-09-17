@@ -4,5 +4,5 @@ public interface RepositorioEjercicio {
 
     public void guardar(Ejercicio ejercicio);
 
-    public Ejercicio buscarUno(Long id);
+    public Ejercicio buscarEjercicio(Long id);
 }
