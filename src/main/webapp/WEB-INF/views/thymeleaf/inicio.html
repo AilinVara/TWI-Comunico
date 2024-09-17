@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title> Comunico </title>
-  <link rel="icon" href="/TWI-Comunico/src/main/webapp/resources/core/img/icon.svg" type="image/x-icon">
-  <link rel="stylesheet" href="/TWI-Comunico/src/main/webapp/resources/core/css/inicio.css">
+  <link rel="icon" th:href="@{/img/Isologo-Comunico.svg}" type="image/x-icon">
+  <link rel="stylesheet" th:href="@{/css/inicio.css}"/>
   <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
   <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
 </head>
@@ -13,17 +13,17 @@
 <body>
 <header>
   <div class="logo">
-    <img src="/TWI-Comunico/src/main/webapp/resources/core/img/icon.svg" alt="Logo" class="logo-img">
+    <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
     <h1>omunico</h1>
   </div>
 
   <nav>
     <ul>
-      <li><a href="#" class="active">Inicio</a></li>
-      <li><a href="./señas.html">Lengua de Señas</a></li>
-      <li><a href="./braille.html">Braille</a></li>
-      <li><a href="#">Cursos Online</a></li>
-      <img src="/TWI-Comunico/src/main/webapp/resources/core/img/perfil-icon.png" alt="Usuario" class="user-icon">
+      <li><a th:href="@{/home}" class="active">Inicio</a></li>
+      <li><a th:href="@{/senias}">Lengua de Señas</a></li>
+      <li><a th:href="@{/braille}">Braille</a></li>
+      <li><a th:href="@{/ejercicio}">Ejercicio</a></li>
+      <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon">
     </ul>
   </nav>
 </header>
@@ -37,12 +37,12 @@
     <div class="modulo">
       <h3>Señas</h3>
       <p>Aprendé con imágenes y juegos interactivos.</p>
-      <a href="./señas.html">Empezar</a>
+      <a th:href="@{/senias}">Empezar</a>
     </div>
     <div class="modulo">
       <h3>Braille</h3>
       <p>Conocé el alfabeto en braille y ponete a prueba.</p>
-      <a href="./braille.html">Empezar</a>
+      <a th:href="@{braille}">Empezar</a>
     </div>
   </div>
 </section>
@@ -75,7 +75,7 @@
     <div class="footer-section">
       <h4>Comunico</h4>
       <p>Aprendé lengua de señas y braille de manera divertida y accesible.</p>
-      <img src="/TWI-Comunico/src/main/webapp/resources/core/img/Isologo-Comunico.svg" alt="Logo Comunico" class="footer-logo">
+      <img th:src="@{img/Isologo-Comunico.svg}" alt="Logo Comunico" class="footer-logo">
     </div>
 
     <div class="footer-section">

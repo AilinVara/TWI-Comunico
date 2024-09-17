@@ -69,12 +69,21 @@ public class ControladorLogin {
 
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public ModelAndView irAHome() {
-        return new ModelAndView("home");
+        return new ModelAndView("inicio");
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public ModelAndView inicio() {
         return new ModelAndView("redirect:/login");
     }
+
+    @RequestMapping(path = "/senias", method = RequestMethod.GET)
+    public ModelAndView senias(){ return new ModelAndView("senias");}
+
+    @RequestMapping(path = "/braille", method = RequestMethod.GET)
+    public ModelAndView braile(){ return new ModelAndView("braille");}
+
+    @RequestMapping(path = "/alfabeto", method = RequestMethod.GET)
+    public ModelAndView alfabeto(){ return new ModelAndView("alfabeto");}
 }
 
