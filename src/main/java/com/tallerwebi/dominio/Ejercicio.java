@@ -13,7 +13,7 @@ public class Ejercicio {
 
     @OneToOne
     private Opcion opcionCorrecta;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private List<Opcion> opcionesIncorrectas;
 
     public void setConsigna(String nombre) {
