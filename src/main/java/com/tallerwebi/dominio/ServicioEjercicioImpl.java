@@ -2,7 +2,8 @@ package com.tallerwebi.dominio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.transaction.Transactional;
 
 @Service("servicioEjercicio")
 @Transactional
@@ -15,7 +16,7 @@ public class ServicioEjercicioImpl implements ServicioEjercicio{
 
     @Override
     public Ejercicio obtenerEjercicio(Long ejercicioId){
-        return this.repositorioEjercicio.buscarEjercicio(1L);
+        return this.repositorioEjercicio.buscarEjercicio(ejercicioId);
     }
 
 }
