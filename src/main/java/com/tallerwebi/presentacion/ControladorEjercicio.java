@@ -20,10 +20,18 @@ public class ControladorEjercicio {
             this.servicioEjercicio = servicioEjercicio;
     }
 
+//    @RequestMapping(value = "/ejercicio", method = RequestMethod.GET)
+//    public ModelAndView irAjercicio(){
+//        ModelMap modelo = new ModelMap();
+//        Ejercicio ejercicio = servicioEjercicio.obtenerEjercicio(1L);
+//        modelo.put("ejercicio", ejercicio);
+//        return new ModelAndView("ejercicio", modelo);
+//    }
+
     @RequestMapping(value = "/ejercicio", method = RequestMethod.GET)
-    public ModelAndView irAjercicio(){
+    public ModelAndView irAjercicio(@RequestParam(required = false, defaultValue = "1", value = "id") Long id){
         ModelMap modelo = new ModelMap();
-        Ejercicio ejercicio = servicioEjercicio.obtenerEjercicio(1L);
+        Ejercicio ejercicio = servicioEjercicio.obtenerEjercicio(id);
         modelo.put("ejercicio", ejercicio);
         return new ModelAndView("ejercicio", modelo);
     }
