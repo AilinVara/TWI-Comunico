@@ -67,16 +67,14 @@ public class ControladorLogin {
         return new ModelAndView("nuevo-usuario", model);
     }
 
-
-
     @RequestMapping(path = "/inicio", method = RequestMethod.GET)
     public ModelAndView irAInicio() {
         return new ModelAndView("inicio");
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public ModelAndView inicio() {
-        return new ModelAndView("index");
+    public ModelAndView irAlIndice() {
+        return new ModelAndView("indice");
     }
 
     @RequestMapping(path = "/senias", method = RequestMethod.GET)
