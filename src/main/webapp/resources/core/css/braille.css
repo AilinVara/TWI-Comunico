@@ -102,12 +102,13 @@ nav a.active:hover {
   color: #333;
 }
 
-.titulo {
+.titulo-de-la-leccion {
   text-align: center;
-  padding: 50px;
+  padding: 20px;
   font-size: 2.5em;
-  margin-bottom: 10px;
-  color: #333;
+  margin-bottom: 30px;
+  color: #fff;
+  background-color:#1cb0f6;
 }
 
 .leccionesBasicas {
@@ -241,40 +242,53 @@ footer {
 
 /* Alfabeto */
 
-/*.vida-flotante{
-  position: fixed;
-  z-index: 1;
-  font-size: 30px;
-  color: #b90606;
+#vidas{
+    font-size: 16px;
+    color: #EA2B2B;
 }
 
 #vidaYNum {
-  right: 40px;
-  top: 15%;
+  right: 30px;
+  top: 16%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  background-color: #0057b3a1;
-  width: 70px;
-  height: 70px;
-  border-radius: 40%;
+  background-color: #2B70C9;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-}
+   position: absolute;
+    right: 100px;
+    top: 5%;
 
+}
+.user-icon{
+  position: absolute;
+    right: 20px;
+    top:3.5%;
+    width: 55px;
+    height: 55px;
+
+
+}
 #vidaYNum h4 {
-  margin-right: 10px;
+  margin-right: 11px;
   color: white;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
 }
+
 #vidaYNum:hover{
-  background-color: #0057b3c1;
+  background-color: #1453A3;
   transform: scale(1.1);
   border: #01152b;
-  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
+
   transition: all 0.3s ease;
-}*/
+}
+
+
 
 /*----------------------------Seccion abecedario--------------------*/
 .braille-grid {
@@ -306,16 +320,144 @@ footer {
   color: white;
   cursor: default;
 }
+/*----Modificaciones de Juli para la lecciones de braille-----*/
+.braille-item-sin-hover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  margin-right: 8em;
+  margin-left: 8em;
+  width: 48%;
 
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  font-size: 2em;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
 .letra {
   margin-bottom: 10px;
-  font-size: 1.5em;
+  font-size: 1.4em;
+}
+#braille-letter{
+font-size: 20px;
 }
 
 .braille {
   font-size: 5em;
   margin: 20px 0;
 }
+.option {
+  height: 76px;
+  width: 350px;
+  padding: 20px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-left: 52px;
+  margin-top: 30px;
+
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.option:hover {
+  background-color: #89e219;
+  color: white;
+  transform: scale(1.05);
+}
+.question {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.titulo-de-la-leccion .logo-img{
+  position: absolute;
+    left: 100px;
+    top: 5%;
+}
+.menu-hamburguesa {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.hamburguesa-icon {
+    font-size: 30px;
+    cursor: pointer;
+    display: block;
+    color: white;
+}
+
+#toggle-menu {
+    display: none;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 60px; /* Para que el menú aparezca debajo del icono */
+    left: 20px;
+    width: 100px;
+    height: 50%;
+    background-color: #1cb0f6;
+    z-index: 1000;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#toggle-menu:checked + .hamburguesa-icon + .menu {
+    display: block;
+    background-color: #1453A3;
+
+}
+
+.menu ul {
+display:column;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #1453A3;
+}
+
+.menu ul li {
+    display:column;
+    padding: 15px;
+    border-bottom: 1px solid #fff;
+    text-align: left;
+    background-color: #1453A3;
+}
+
+.menu ul li:last-child {
+display:column;
+    border-bottom: none;
+    background-color: #1453A3;
+}
+
+.menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    transition: background-color 0.3s ease;
+    background-color: #1453A3;
+}
+
+.menu ul li a:hover {
+    background-color: #1453A3;
+}
+/*Modificaciones para Ejercicio/*
+
+
 
 /* Estilos para el modal */
 
