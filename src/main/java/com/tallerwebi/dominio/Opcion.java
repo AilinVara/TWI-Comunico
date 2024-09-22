@@ -12,12 +12,11 @@ public class Opcion {
     private Long id;
     private String descripcion;
 
-    public Opcion(String descripcion) {
-        this.descripcion = descripcion;
+    public Opcion() {
     }
 
-    public Opcion() {
-
+    public Opcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override

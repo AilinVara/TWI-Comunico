@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.Opcion;
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,7 +10,6 @@ public class Ejercicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String consigna;
-
 
     @OneToOne
     private Opcion opcionCorrecta;
@@ -32,8 +32,8 @@ public class Ejercicio {
         return opcionCorrecta;
     }
 
-    public void setOpcionCorrecta(Opcion opcionCorrecta) {
-        this.opcionCorrecta = opcionCorrecta;
+    public void setOpcionCorrecta(Opcion opcion) {
+        this.opcionCorrecta = opcion;
     }
 
     public String getConsigna() {
