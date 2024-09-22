@@ -1,0 +1,230 @@
+@import url(https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold);
+@font-face {
+  font-family: "Feather Bold";
+  src: url("TWI-Comunico/src/main/webapp/resources/core/fonts/feather_bold_by_typicalbro44_dee263c.ttf");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Feather Bold', sans-serif;
+}
+
+/*body {
+  background-color: #f7f9fc;
+  color: #333;
+}*/
+
+body {
+  background-image:url("../img/fondo-lecciones.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: #333;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #1cb0f6;
+  color: white;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.logo h1 {
+  font-size: 1.8em;
+}
+
+.logo-img {
+  width: 50px;
+  height: auto;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav a.active {
+  background-color: #2b70c9;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+nav a.active:hover {
+  background-color: #215598;
+}
+
+.perfil {
+  display: flex;
+  align-items: center;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 8px;
+  margin-right: 15px;
+  transition: transform 0.3s ease;
+}
+
+.user-icon:hover{
+  transform: scale(1.2);
+}
+
+.titulo {
+  text-align: center;
+  padding: 50px;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.leccionesBasicas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lecciones {
+  height: 76px;
+  width: 550px;
+  padding: 20px;
+  background-color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.lecciones:hover {
+  background-color: #89e219;
+  color: white;
+  transform: scale(1.05);
+}
+
+.volver-atras-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 49px;
+}
+
+.volver-atras {
+  display: inline-block;
+  width: 150px;
+  padding: 10px;
+  background-color: #fff;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1em;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.volver-atras:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  font-size: 1em;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.footer-section {
+  flex: 1;
+  margin: 0 20px;
+}
+
+.footer-section h4 {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+}
+
+.footer-section p {
+  font-size: 1em;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+  text-decoration: underline;
+}
+
+.footer-logo {
+  width: 100px;
+  margin-top: 10px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 1.5em;
+  text-decoration: none;
+}
+
+.social-icons a:hover {
+  color: #ddd;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.9em;
+}

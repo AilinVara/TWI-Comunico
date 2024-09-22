@@ -46,16 +46,16 @@ public class ControladorLoginTest {
 	}
 
 	@Test
-	public void debeRetornarLaPaginaLoginCuandoSeNavegaALaRaiz() throws Exception {
+	public void debeRetornarLaPaginaIndiceCuandoSeNavegaALaRaiz() throws Exception {
 
 		MvcResult result = this.mockMvc.perform(get("/"))
 				/*.andDo(print())*/
-				.andExpect(status().is3xxRedirection())
+				.andExpect(status().isOk())
 				.andReturn();
 
 		ModelAndView modelAndView = result.getModelAndView();
         assert modelAndView != null;
-		assertThat("redirect:/login", equalToIgnoringCase(Objects.requireNonNull(modelAndView.getViewName())));
+		assertThat("indice", equalToIgnoringCase(Objects.requireNonNull(modelAndView.getViewName())));
 		assertThat(true, is(modelAndView.getModel().isEmpty()));
 	}
 
@@ -70,5 +70,44 @@ public class ControladorLoginTest {
         assert modelAndView != null;
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("login"));
 		assertThat(modelAndView.getModel().get("datosLogin").toString(),  containsString("com.tallerwebi.presentacion.DatosLogin"));
+	}
+
+	@Test
+	public void debeRetornarLaPaginaSeniasCuandoSeNavegaASenias() throws Exception {
+
+		MvcResult result = this.mockMvc.perform(get("/senias"))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		ModelAndView modelAndView = result.getModelAndView();
+		assert modelAndView != null;
+		assertThat(modelAndView.getViewName(), equalToIgnoringCase("senias"));
+		assertThat(true,  is(modelAndView.getModel().isEmpty()));
+	}
+
+	@Test
+	public void debeRetornarLaPaginaBrailleCuandoSeNavegaABraille() throws Exception {
+
+		MvcResult result = this.mockMvc.perform(get("/braille"))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		ModelAndView modelAndView = result.getModelAndView();
+		assert modelAndView != null;
+		assertThat(modelAndView.getViewName(), equalToIgnoringCase("braille"));
+		assertThat(true,  is(modelAndView.getModel().isEmpty()));
+	}
+
+	@Test
+	public void debeRetornarLaPaginaAlfabetoCuandoSeNavegaAAlfabeto() throws Exception {
+
+		MvcResult result = this.mockMvc.perform(get("/alfabeto"))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		ModelAndView modelAndView = result.getModelAndView();
+		assert modelAndView != null;
+		assertThat(modelAndView.getViewName(), equalToIgnoringCase("alfabeto"));
+		assertThat(true,  is(modelAndView.getModel().isEmpty()));
 	}
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunico</title>
+    <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/ejercicio.css}"/>
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<a th:href="@{/inicio}" class="cerrar">&#10005;</a>
+<h1>Ejercicio</h1>
+<p th:text="${ejercicio.consigna}">Consigna:</p>
+
+<img th:src="@{/img/braille-a.png}">
+
+
+<form action="#" th:action="@{/resolver}" method="POST" th:object="${ejercicio}">
+    <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
+    <div class="radio-container">
+        <label>
+            <input type="radio" name="opcionSeleccionada" th:value="${ejercicio.opcionCorrecta.id}">
+            <span th:text="${ejercicio.opcionCorrecta.descripcion}">Opción correcta</span>
+        </label>
+        <div th:each="opcion : ${ejercicio.opcionesIncorrectas}">
+            <label>
+                <input type="radio" name="opcionSeleccionada" th:value="${opcion.id}">
+                <span th:text="${opcion.descripcion}">Opción incorrecta</span>
+            </label>
+        </div>
+    </div>
+    <button type="submit">Enviar</button>
+</form>
+
+
+
+<div id="modal" class="modal" th:if="${esCorrecta != null}">
+    <div class="modal-content">
+        <p th:if="${esCorrecta}">¡Respuesta correcta!</p>
+        <p th:unless="${esCorrecta}">Respuesta incorrecta.</p>
+        <button id="closeModal">Cerrar</button>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        var modal = document.getElementById('modal');
+        if (modal) {
+            modal.style.display = 'block';
+            var closeModal = document.getElementById('closeModal');
+            closeModal.onclick = function() {
+                modal.style.display = 'none';
+            }
+        }
+    }
+</script>
+</body>
+</html>
