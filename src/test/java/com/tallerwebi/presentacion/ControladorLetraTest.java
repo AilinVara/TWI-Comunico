@@ -1,8 +1,7 @@
-package com.tallerwebi.integracion;
+package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Letra;
 import com.tallerwebi.dominio.ServicioLetra;
-import com.tallerwebi.presentacion.ControladorLetra;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +36,7 @@ public class ControladorLetraTest {
         when(servicioLetraMock.buscarPorNombre("A")).thenReturn((Letra) List.of(letra));
 
         // Llamar al controlador
-        ModelAndView modelAndView = controladorLetra.buscarLetraPorNombre("A");
+        ModelAndView modelAndView = controladorLetra.alfabeto("A");
 
         // Obtener el modelo del ModelAndView
         ModelMap modelo = modelAndView.getModelMap();

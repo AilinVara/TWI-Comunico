@@ -5,3 +5,5 @@ INSERT INTO Opcion(id, descripcion) VALUES (1, 'A'), (2, 'B'), (3, 'C');
 INSERT INTO Ejercicio(id, consigna, opcionCorrecta_id) VALUES (1, 'Ejercicio de traduccion: ', 1);
 
 INSERT INTO Ejercicio_Opcion(Ejercicio_id, opcionesIncorrectas_id) VALUES (1,2), (1,3);
+
+INSERT INTO Letra(id, nombre, imagenDeManos) VALUES (1, "A", 'A.png'), (2, "B", 'B.png'), (3, "C", 'C.png');
