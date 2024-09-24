@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Comunico </title>
+  <title>abecedarioDeSeñas</title>
   <link rel="icon" href="/TWI-Comunico/src/main/webapp/resources/core/img/icon.svg" type="image/x-icon">
   <link rel="stylesheet" th:href="@{/css/braille.css}">
   <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
@@ -15,7 +15,7 @@
 <header>
   <div class="logo">
     <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
-    <h1>omunico</h1>
+    <h1>Comunico</h1>
   </div>
 
   <nav>
@@ -29,132 +29,124 @@
   </nav>
 </header>
 
-<!-- <div class="vida-flotante" id="vidaYNum">
-  <i class="fa-solid fa-heart" id="vidas"></i>
-  <h4>5</h4>
-</div> -->
-
 <h2 class="titulo"><i class="fa-solid fa-braille"></i> Abecedario en Braille</h2>
-<div class="braille-grid">
+
+<!-- Formulario de búsqueda -->
+<div>
+  <input type="text" id="buscador" placeholder="Buscar letra..." oninput="filtrarLetras()">
+</div>
+
+<div class="braille-grid" id="brailleGrid">
   <div class="braille-item">
     <span class="letra">A</span>
-    <span class="braille">&#10241;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/A.png}" alt="Braille A" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">B</span>
-    <span class="braille">&#10243;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/B.png}" alt="Braille B" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">C</span>
-    <span class="braille">&#10249;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/C.png}" alt="Braille C" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">D</span>
-    <span class="braille">&#10265;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/D.png}" alt="Braille D" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">E</span>
-    <span class="braille">&#10257;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/E.png}" alt="Braille E" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">F</span>
-    <span class="braille">&#10251;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/F.png}" alt="Braille F" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">G</span>
-    <span class="braille">&#10267;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/G.png}" alt="Braille G" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">H</span>
-    <span class="braille">&#10259;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/H.png}" alt="Braille H" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">I</span>
-    <span class="braille">&#10250;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/I.png}" alt="Braille I" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">J</span>
-    <span class="braille">&#10266;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/J.png}" alt="Braille J" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">K</span>
-    <span class="braille">&#10245;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/K.png}" alt="Braille K" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">L</span>
-    <span class="braille">&#10247;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/L.png}" alt="Braille L" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">M</span>
-    <span class="braille">&#10253;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/M.png}" alt="Braille M" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">N</span>
-    <span class="braille">&#10269;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/N.png}" alt="Braille N" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">Ñ</span>
-    <span class="braille">&#10363;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/Ñ.png}" alt="Braille Ñ" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">O</span>
-    <span class="braille">&#10261;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/O.png}" alt="Braille O" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">P</span>
-    <span class="braille">&#10255;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/P.png}" alt="Braille P" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">Q</span>
-    <span class="braille">&#10271;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/Q.png}" alt="Braille Q" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">R</span>
-    <span class="braille">&#10263;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/R.png}" alt="Braille R" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">S</span>
-    <span class="braille">&#10254;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/S.png}" alt="Braille S" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">T</span>
-    <span class="braille">&#10270;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/T.png}" alt="Braille T" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">U</span>
-    <span class="braille">&#10277;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/U.png}" alt="Braille U" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">V</span>
-    <span class="braille">&#10279;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/V.png}" alt="Braille V" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">W</span>
-    <span class="braille">&#10298;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/W.png}" alt="Braille W" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">X</span>
-    <span class="braille">&#10285;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/X.png}" alt="Braille X" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">Y</span>
-    <span class="braille">&#10301;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/Y.png}" alt="Braille Y" class="braille-img">
   </div>
   <div class="braille-item">
     <span class="letra">Z</span>
-    <span class="braille">&#10293;</span>
+    <img th:src="@{/img/AlfabetoDeSeñas/Z.png}" alt="Braille Z" class="braille-img">
   </div>
-
-  <!-- Modal
-  <div id="modalVidas" class="modal">
-    <div class="modal-content">
-      <span class="close">&times</span>
-      <h2>Vidas <3 <3 <3 <3 <3 </h2>
-      <p>¿Deseas comprar más vidas?</p>
-      <button class="btn-comprar">Comprar</button>
-    </div>
-  </div> -->
 </div>
+
 
 <footer>
   <div class="footer-container">
@@ -169,37 +161,32 @@
       <ul>
         <li><a href="#">Blog</a></li>
         <li><a href="#">Preguntas Frecuentes</a></li>
-        <li><a href="#">Términos y Condiciones</a></li>
-        <li><a href="#">Política de Privacidad</a></li>
+        <li><a href="#">Contacto</a></li>
       </ul>
     </div>
 
     <div class="footer-section">
-      <h4>Conocé más</h4>
-      <ul>
-        <li><a href="#">Sobre Nosotros</a></li>
-        <li><a href="#">Cursos Disponibles</a></li>
-        <li><a href="#">Testimonios</a></li>
-        <li><a href="#">Carreras</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-section">
-      <h4>Redes Sociales</h4>
+      <h4>Síguenos</h4>
       <div class="social-icons">
         <a href="#"><i class="fa-brands fa-facebook"></i></a>
-        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
         <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>&copy; 2024 Comunico - Todos los derechos reservados.</p>
-  </div>
 </footer>
 
-<!-- <script src="../js/javaScript.js"></script> -->
+<!--<script>
+  function filtrarLetras() {
+    const input = document.getElementById('buscador').value.toLowerCase();
+    const letras = document.querySelectorAll('.braille-item');
+
+    letras.forEach(letra => {
+      const letraText = letra.querySelector('.letra').textContent.toLowerCase();
+      letra.style.display = letraText.includes(input) ? '' : 'none';
+    });
+  }
+</script>-->
 
 </body>
 </html>
