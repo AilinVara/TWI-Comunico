@@ -40,8 +40,9 @@ public class ControladorEjercicio {
     public ModelAndView resolverEjercicio(@RequestParam("opcionSeleccionada") Long opcionId, @RequestParam("ejercicioId")Long ejercicioId){
         ModelMap modelo = new ModelMap();
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
+        Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicio, opcionId);
         modelo.put("ejercicio",ejercicio);
-        modelo.put("esCorrecta", (ejercicio.getOpcionCorrecta().getId().equals(opcionId)));
+        modelo.put("esCorrecta", (resuelto));
         return new ModelAndView("ejercicio", modelo);
     }
 }

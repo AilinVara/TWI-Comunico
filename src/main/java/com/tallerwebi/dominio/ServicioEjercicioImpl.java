@@ -19,5 +19,10 @@ public class ServicioEjercicioImpl implements ServicioEjercicio{
         return this.repositorioEjercicio.buscarEjercicio(ejercicioId);
     }
 
+    @Override
+    public Boolean resolverEjercicio(Ejercicio ejercicio, Long opcionId) {
+        return ejercicio.getOpcionCorrecta().getId().equals(opcionId);
+    }
+
 }
 

@@ -67,7 +67,6 @@ public class ControladorEjercicioTest {
     public void contestarConLaRespuestaIncorrectaDebeRetornarEsCorrectaComoFalse(){
         Opcion opcionIncorrecta = ejercicioMock.getOpcionesIncorrectas().get(0);
 
-
         ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionIncorrecta.getId(), ejercicioMock.getId());
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));

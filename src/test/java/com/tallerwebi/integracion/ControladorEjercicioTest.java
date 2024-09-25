@@ -25,6 +25,7 @@ public class ControladorEjercicioTest {
     public void init(){
         ejercicioMock = mock(Ejercicio.class);
         controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock);
+
     }
 
 }
