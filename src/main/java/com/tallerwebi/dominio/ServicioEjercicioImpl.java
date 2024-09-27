@@ -15,6 +15,11 @@ public class ServicioEjercicioImpl implements ServicioEjercicio{
     public ServicioEjercicioImpl (RepositorioEjercicio repositorioEjercicio){ this.repositorioEjercicio = repositorioEjercicio;}
 
     @Override
+    public void guardarEjercicio(Ejercicio ejercicio) {
+        this.repositorioEjercicio.guardar(ejercicio);
+    }
+
+    @Override
     public Ejercicio obtenerEjercicio(Long ejercicioId){
         return this.repositorioEjercicio.buscarEjercicio(ejercicioId);
     }
