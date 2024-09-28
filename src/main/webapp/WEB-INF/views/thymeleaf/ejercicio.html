@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -44,9 +45,9 @@
 
         <div class="contenedorDeOpciones">
             <div class="radioYLetraJuntos">
-            <input class="option" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
-                   th:value="${ejercicio.opcionCorrecta.id}"/>
-            <label class="optionLetra" th:for="opcionCorrecta" th:text="${ejercicio.opcionCorrecta.descripcion}">Opción correcta</label>
+                <input class="option" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
+                       th:value="${ejercicio.opcionCorrecta.id}"/>
+                <label class="optionLetra" th:for="opcionCorrecta" th:text="${ejercicio.opcionCorrecta.descripcion}">Opción correcta</label>
             </div>
             <div class="radioYLetraJuntos" th:each="opcion : ${ejercicio.opcionesIncorrectas}">
                 <input class="option" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}"/>
@@ -60,18 +61,32 @@
 
     <div th:if="${esCorrecta != null}">
         <div th:if="${esCorrecta}">
-            <script>
-                alert("Respuesta correcta");
+            <script th:inline="javascript">
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Correcto!',
+                    text: 'Respuesta correcta',
+                    confirmButtonColor: '#4CAF50'
+                });
             </script>
         </div>
         <div th:unless="${esCorrecta}">
-            <script>
-                alert("Respuesta incorrecta");
+            <script th:inline="javascript">
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Incorrecto!',
+                    text: 'Respuesta incorrecta',
+                    confirmButtonColor: '#f44336'
+                });
             </script>
         </div>
     </div>
 
+
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 
 </body>
 </html>
