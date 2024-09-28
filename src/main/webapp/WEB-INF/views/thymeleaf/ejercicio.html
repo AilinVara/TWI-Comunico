@@ -1,50 +1,33 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Ejercicio</title>
 
     <!-- custom style -->
-    <link rel="stylesheet" th:href="@{/css/braille.css}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="stylesheet" th:href="@{/css/ejercicios.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img"/>
-    <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"/>
-
-
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
+
 <body>
 
 <div class="titulo-de-la-leccion">
-    <img src="/TWI-Comunico/src/main/webapp/resources/core/img/icon.svg" alt="Logo" class="logo-img">
+    <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img"/>
     <h3>Ejercicio</h3>
-    <img src="/TWI-Comunico/src/main/webapp/resources/core/img/perfil-icon.png" alt="Usuario" class="user-icon">
+    <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"/>
     <div class="grupo_input" id="vidaYNum">
         <i class="fa-solid fa-heart" id="vidas"></i>
         <h4>5</h4>
     </div>
-    <!--<div class="menu-hamburguesa">
-        <input type="checkbox" id="toggle-menu">
-        <label for="toggle-menu" class="hamburguesa-icon">&#9776;</label>
-        <nav class="menu">
-            <ul>
-                <li><a href="#abecedario">Abecedario</a></li>
-                <li><a href="#gestos">Reconoce gestos</a></li>
-                <li><a href="#dialogos">Practica diálogos simples</a></li>
-                <li><a href="#conversaciones">Aprende conversaciones</a></li>
-            </ul>
-        </nav>
-    </div>-->
-
 </div>
 
 <div class="game-container">
@@ -56,36 +39,38 @@
         </div>
     </div>
 
-    <div class="options">
-        <form action="#" th:action="@{/resolver}" method="POST" th:object="${ejercicio}">
-            <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
-            <div>
-                <input class="option" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
-                       th:value="${ejercicio.opcionCorrecta.id}"/>
-                <label class="option" th:for="opcionCorrecta" th:text="${ejercicio.opcionCorrecta.descripcion}">Opción correcta</label>
-            </div>
+    <form action="#" th:action="@{/resolver}" method="POST" th:object="${ejercicio}">
+        <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
 
-            <div th:each="opcion : ${ejercicio.opcionesIncorrectas}">
+        <div class="contenedorDeOpciones">
+            <div class="radioYLetraJuntos">
+            <input class="option" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
+                   th:value="${ejercicio.opcionCorrecta.id}"/>
+            <label class="optionLetra" th:for="opcionCorrecta" th:text="${ejercicio.opcionCorrecta.descripcion}">Opción correcta</label>
+            </div>
+            <div class="radioYLetraJuntos" th:each="opcion : ${ejercicio.opcionesIncorrectas}">
                 <input class="option" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}"/>
-                <label class="option" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">Opción incorrecta</label>
+                <label class="optionLetra" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">Opción incorrecta</label>
             </div>
 
-            <button class="option" type="submit">Enviar</button>
-        </form>
-    </div>
-</div>
+        </div>
 
-<div th:if="${esCorrecta != null}">
-    <div th:if="${esCorrecta}">
-        <script>
-            alert("Respuesta correcta");
-        </script>
+        <button class="enviar" type="submit">Enviar</button>
+    </form>
+
+    <div th:if="${esCorrecta != null}">
+        <div th:if="${esCorrecta}">
+            <script>
+                alert("Respuesta correcta");
+            </script>
+        </div>
+        <div th:unless="${esCorrecta}">
+            <script>
+                alert("Respuesta incorrecta");
+            </script>
+        </div>
     </div>
-    <div th:unless="${esCorrecta}">
-        <script>
-            alert("Respuesta incorrecta");
-        </script>
-    </div>
+
 </div>
 
 </body>
