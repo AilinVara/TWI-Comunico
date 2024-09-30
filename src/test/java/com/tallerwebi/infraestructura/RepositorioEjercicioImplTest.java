@@ -18,8 +18,6 @@ import javax.persistence.Query;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = HibernateRepositorioTestConfig.class)
@@ -28,32 +26,11 @@ public class RepositorioEjercicioImplTest {
     @Autowired
     private SessionFactory sessionFactory;
     private RepositorioEjercicio repositorioEjercicio;
-    private Opcion opcionMock;
 
     @BeforeEach
     public void init() {
         this.repositorioEjercicio = new RepositorioEjercicioImpl(sessionFactory);
-        opcionMock = mock(Opcion.class);
-        when(opcionMock.getId()).thenReturn(1L);
     }
-
-    @Test
-    @Transactional
-    @Rollback
-    public void dadoQueExisteUnEjercicioEnLaBaseDeDatosCuandoLeAgregoLaOpcionCorrectaLoEncuentroEnLaBaseDeDatos(){
-        Ejercicio ejercicio = new Ejercicio();
-        ejercicio.setOpcionCorrecta(opcionMock);
-
-        this.repositorioEjercicio.guardar(ejercicio);
-
-        String hql = "FROM Ejercicio where opcionCorrecta_id = :id";
-        Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("id", opcionMock.getId());
-        Ejercicio ejercicioObtenido = (Ejercicio) query.getSingleResult();
-
-        assertThat(ejercicioObtenido, equalTo(ejercicio));
-    }
-
 
     @Test
     @Transactional
@@ -72,6 +49,39 @@ public class RepositorioEjercicioImplTest {
         assertThat(ejercicioObtenido, equalTo(ejercicio));
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExisteUnEjercicioConOpcionCorrectaEnLaBaseDeDatosCuandoLoBuscoPorDescripcionDeLaOpcionCorrectaLoEncuentroEnLaBaseDeDatos(){
+        Ejercicio ejercicio = new Ejercicio();
+        Opcion opcion = new Opcion("A");
 
+        this.sessionFactory.getCurrentSession().save(opcion);
+
+        ejercicio.setOpcionCorrecta(opcion);
+
+        this.repositorioEjercicio.guardar(ejercicio);
+
+        String hql = "SELECT e FROM Ejercicio e JOIN Opcion o ON e.opcionCorrecta.id = o.id WHERE o.descripcion = :descripcion";
+        Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("descripcion", opcion.getDescripcion());
+        Ejercicio ejercicioObtenido = (Ejercicio) query.getSingleResult();
+
+        assertThat(ejercicioObtenido, equalTo(ejercicio));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExisteUnEjercicioEnLaBaseDeDatosLoEncuentroPorSuId(){
+        Ejercicio ejercicio = new Ejercicio();
+        ejercicio.setConsigna("A-E");
+
+        this.repositorioEjercicio.guardar(ejercicio);
+
+        Ejercicio ejercicioObtenido = this.repositorioEjercicio.buscarEjercicio(ejercicio.getId());
+
+        assertThat(ejercicioObtenido, equalTo(ejercicio));
+    }
 
 }
