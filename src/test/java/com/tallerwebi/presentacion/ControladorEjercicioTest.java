@@ -7,8 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,13 +26,12 @@ public class ControladorEjercicioTest {
         ejercicioMock = mock(Ejercicio.class);
         when(ejercicioMock.getId()).thenReturn(1L);
 
-
         Opcion opcionCorrectaMock = mock(Opcion.class);
         when(opcionCorrectaMock.getId()).thenReturn(1L);
 
         Opcion opcionIncorrectaMock = mock(Opcion.class);
         when(opcionIncorrectaMock.getId()).thenReturn(2L);
-        List<Opcion> opcionesIncorrectas = Arrays.asList(opcionIncorrectaMock);
+        List<Opcion> opcionesIncorrectas = List.of(opcionIncorrectaMock);
 
         when(ejercicioMock.getOpcionCorrecta()).thenReturn(opcionCorrectaMock);
         when(ejercicioMock.getOpcionesIncorrectas()).thenReturn(opcionesIncorrectas);
@@ -56,6 +53,8 @@ public class ControladorEjercicioTest {
     @Test
     public void contestarConLaRespuestaCorrectaDebeRetornarEsCorrectaComoTrue(){
         Long opcionCorrecta = ejercicioMock.getOpcionCorrecta().getId();
+
+        when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, opcionCorrecta)).thenReturn(true);
 
         ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionCorrecta, ejercicioMock.getId());
 
