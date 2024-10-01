@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.ServicioLetra;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -24,6 +25,21 @@ public class ControladorLetraTest {
         servicioLetraMock = mock(ServicioLetra.class);
         controladorLetra = new ControladorLetra(servicioLetraMock);
     }
+
+    @Test
+    public void cuandoNavegoASeniasAlfabetoEntoncesReciboLaVistaAlfabetoYUnaListaConLetrasEnElModelo(){
+        Letra letra = new Letra( "A", "senias-a.png","braille-a.png");
+
+        when(servicioLetraMock.buscarTodasLasLetras()).thenReturn(List.of(letra));
+
+        ModelAndView modelAndView = this.controladorLetra.alfabetoSenias("");
+
+        assertNotNull(modelAndView);
+        assertEquals("alfabeto",modelAndView.getViewName());
+        assertEquals(1, modelAndView.getModel().size());
+        assertEquals(List.of(letra), modelAndView.getModel().get("letrassenias"));
+    }
+
 
     @Test
     public void cuandoNavegoASeniasAlfabetoYEnvioUnaLetraDeParametroEntoncesReciboLaVistaAlfabetoYLaLetraEnElModelo() {
