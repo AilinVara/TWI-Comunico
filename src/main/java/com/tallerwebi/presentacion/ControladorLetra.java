@@ -23,24 +23,38 @@ public class ControladorLetra {
     }
 
     // Muestra la página de búsqueda de letras
-    @RequestMapping("/alfabeto")
-    public ModelAndView alfabeto(@RequestParam(required = false, defaultValue = "", value="letra") String letraBuscada) {
+    @RequestMapping("braille/alfabeto")
+    public ModelAndView alfabetoBraille(@RequestParam(required = false, defaultValue = "", value="letra") String letraBuscada) {
         ModelMap modelo = new ModelMap();
-
         List<Letra> letras = new ArrayList<>();
 
         if(letraBuscada.equals("")){
             letras = servicioLetra.buscarTodasLasLetras();
-            modelo.put("letras", letras);
-
-            return new ModelAndView("alfabeto", modelo);
         }else{
             Letra letra = servicioLetra.buscarPorNombre(letraBuscada);
             letras.add(letra);
-            modelo.put("letras", letras);
-
-            return new ModelAndView("alfabeto", modelo);
         }
+
+        modelo.put("letrasbraille", letras);
+
+        return new ModelAndView("alfabeto", modelo);
+    }
+
+    @RequestMapping("senias/alfabeto")
+    public ModelAndView alfabetoSenias(@RequestParam(required = false, defaultValue = "", value="letra") String letraBuscada) {
+        ModelMap modelo = new ModelMap();
+        List<Letra> letras = new ArrayList<>();
+
+        if(letraBuscada.equals("")){
+            letras = servicioLetra.buscarTodasLasLetras();
+        }else{
+            Letra letra = servicioLetra.buscarPorNombre(letraBuscada);
+            letras.add(letra);
+        }
+
+        modelo.put("letrassenias", letras);
+
+        return new ModelAndView("alfabeto", modelo);
     }
 
 }

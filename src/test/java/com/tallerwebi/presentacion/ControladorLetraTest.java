@@ -5,7 +5,6 @@ import com.tallerwebi.dominio.ServicioLetra;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -14,7 +13,6 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
 public class ControladorLetraTest {
 
     private ControladorLetra controladorLetra;
@@ -28,24 +26,20 @@ public class ControladorLetraTest {
     }
 
     @Test
-    public void testBuscarLetraPorNombre() {
+    public void cuandoNavegoASeniasAlfabetoYEnvioUnaLetraDeParametroEntoncesReciboLaVistaAlfabetoYLaLetraEnElModelo() {
         // Crear una letra de ejemplo
-        Letra letra = new Letra(1L, "A", "ruta/a/imagen.png");
+        Letra letra = new Letra( "A", "senias-a.png","braille-a.png");
 
         // Definir comportamiento del mock
-        when(servicioLetraMock.buscarPorNombre("A")).thenReturn((Letra) List.of(letra));
+        when(servicioLetraMock.buscarPorNombre("A")).thenReturn(letra);
 
         // Llamar al controlador
-        ModelAndView modelAndView = controladorLetra.alfabeto("A");
-
-        // Obtener el modelo del ModelAndView
-        ModelMap modelo = modelAndView.getModelMap();
-        List<Letra> resultado = (List<Letra>) modelo.get("letras");
+        ModelAndView modelAndView = controladorLetra.alfabetoSenias("A");
 
         // Verificar el resultado
-        assertNotNull(resultado);
-        assertEquals(1, resultado.size());
-        assertEquals("A", resultado.get(0).getNombre());
-
+        assertNotNull(modelAndView);
+        assertEquals(1, modelAndView.getModel().size());
+        assertEquals(List.of(letra), modelAndView.getModel().get("letrassenias"));
+        assertEquals("alfabeto", modelAndView.getViewName());
     }
 }

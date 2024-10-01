@@ -39,7 +39,7 @@ public class RepositorioLetraImplTest {
 
         Letra letra = new Letra();
         letra.setNombre("B");
-        letra.setImagenDeManos("/img/AlfabetoDeSeñas/B.png");
+        letra.setImagenSenias("senias-b.png");
 
 
         this.repositorioLetra.guardar(letra);
