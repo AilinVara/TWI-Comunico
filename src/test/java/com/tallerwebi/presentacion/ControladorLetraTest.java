@@ -11,6 +11,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,9 +37,9 @@ public class ControladorLetraTest {
         ModelAndView modelAndView = this.controladorLetra.alfabetoSenias("");
 
         assertNotNull(modelAndView);
-        assertEquals("alfabeto",modelAndView.getViewName());
-        assertEquals(1, modelAndView.getModel().size());
-        assertEquals(List.of(letra), modelAndView.getModel().get("letrassenias"));
+        assertThat(modelAndView.getViewName(), equalTo("alfabeto"));
+        assertThat(modelAndView.getModel().size(), equalTo(1) );
+        assertThat(modelAndView.getModel().get("letrassenias"), equalTo(List.of(letra)));
     }
 
     @Test
@@ -49,9 +51,9 @@ public class ControladorLetraTest {
         ModelAndView modelAndView = this.controladorLetra.alfabetoBraille("");
 
         assertNotNull(modelAndView);
-        assertEquals("alfabeto",modelAndView.getViewName());
-        assertEquals(1, modelAndView.getModel().size());
-        assertEquals(List.of(letra), modelAndView.getModel().get("letrasbraille"));
+        assertThat(modelAndView.getViewName(), equalTo("alfabeto"));
+        assertThat(modelAndView.getModel().size(), equalTo(1) );
+        assertThat(modelAndView.getModel().get("letrasbraille"), equalTo(List.of(letra)));
     }
 
     @Test
@@ -67,9 +69,9 @@ public class ControladorLetraTest {
 
         // Verificar el resultado
         assertNotNull(modelAndView);
-        assertEquals(1, modelAndView.getModel().size());
-        assertEquals(List.of(letra), modelAndView.getModel().get("letrassenias"));
-        assertEquals("alfabeto", modelAndView.getViewName());
+        assertThat(modelAndView.getModel().size(), equalTo(1) );
+        assertThat(modelAndView.getModel().get("letrassenias"), equalTo(List.of(letra)));
+        assertThat(modelAndView.getViewName(), equalTo("alfabeto"));
     }
 
     @Test
@@ -85,8 +87,8 @@ public class ControladorLetraTest {
 
         // Verificar el resultado
         assertNotNull(modelAndView);
-        assertEquals(1, modelAndView.getModel().size());
-        assertEquals(List.of(letra), modelAndView.getModel().get("letrasbraille"));
-        assertEquals("alfabeto", modelAndView.getViewName());
+        assertThat(modelAndView.getModel().size(), equalTo(1));
+        assertThat(modelAndView.getModel().get("letrasbraille"), equalTo(List.of(letra)));
+        assertThat(modelAndView.getViewName(), equalTo("alfabeto"));
     }
 }
