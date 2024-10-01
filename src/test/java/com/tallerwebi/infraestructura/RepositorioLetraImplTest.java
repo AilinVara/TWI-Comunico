@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.persistence.Query;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,11 +34,31 @@ public class RepositorioLetraImplTest {
         this.repositorioLetra = new RepositorioLetraImpl(sessionFactory);
     }
 
+
+
     @Test
     @Transactional
     @Rollback
     public void dadoQueExisteUnRepositorioLetraCuandoGuardoUnaLetraEntoncesLaEncuentroEnLaBaseDeDatos() {
+        Letra letra = new Letra();
+        letra.setNombre("B");
+        letra.setImagenSenias("senias-b.png");
 
+        this.repositorioLetra.guardar(letra);
+
+        String hql = "FROM Letra WHERE nombre = :nombre";
+        Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("nombre", "B");
+
+        Letra letraObtenida = (Letra) query.getSingleResult();
+
+        assertThat(letraObtenida, equalTo(letra));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExisteUnaLetraEntoncesCuandoLaBuscoEntoncesLaEncuentroEnLaBaseDeDatos() {
         Letra letra = new Letra();
         letra.setNombre("B");
         letra.setImagenSenias("senias-b.png");
