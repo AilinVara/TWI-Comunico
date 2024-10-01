@@ -40,6 +40,19 @@ public class ControladorLetraTest {
         assertEquals(List.of(letra), modelAndView.getModel().get("letrassenias"));
     }
 
+    @Test
+    public void cuandoNavegoABrailleAlfabetoEntoncesReciboLaVistaAlfabetoYUnaListaConLetrasEnElModelo(){
+        Letra letra = new Letra( "A", "senias-a.png","braille-a.png");
+
+        when(servicioLetraMock.buscarTodasLasLetras()).thenReturn(List.of(letra));
+
+        ModelAndView modelAndView = this.controladorLetra.alfabetoBraille("");
+
+        assertNotNull(modelAndView);
+        assertEquals("alfabeto",modelAndView.getViewName());
+        assertEquals(1, modelAndView.getModel().size());
+        assertEquals(List.of(letra), modelAndView.getModel().get("letrasbraille"));
+    }
 
     @Test
     public void cuandoNavegoASeniasAlfabetoYEnvioUnaLetraDeParametroEntoncesReciboLaVistaAlfabetoYLaLetraEnElModelo() {
