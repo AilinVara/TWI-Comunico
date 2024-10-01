@@ -171,9 +171,9 @@
                     <httpConnector>
                         <port>8080</port>
                     </httpConnector>
-                    <webApp>
+                    <!--<webApp>
                         <contextPath>/spring</contextPath>
-                    </webApp>
+                    </webApp>-->
                 </configuration>
             </plugin>
 

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>abecedarioDeSeñas</title>
-  <link rel="icon" href="/TWI-Comunico/src/main/webapp/resources/core/img/icon.svg" type="image/x-icon">
+  <title>Abecedario</title>
+  <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{/css/braille.css}">
   <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
   <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
@@ -29,11 +29,15 @@
   </nav>
 </header>
 
-<h2 class="titulo"><i class="fa-solid fa-braille"></i> Abecedario en Braille</h2>
+<h2 class="titulo"><i class="fa-solid fa-braille"></i>Abecedario</h2>
 
 <!-- Formulario de búsqueda -->
 <div>
-  <input type="text" id="buscador" placeholder="Buscar letra..." oninput="filtrarLetras()">
+  <form th:action="@{${#httpServletRequest.requestURI}}" method="get">
+    <label for="busqueda">Buscar:</label>
+    <input type="text" id="busqueda" th:name="letra" placeholder="Buscar letra">
+    <button type="submit">Buscar</button>
+  </form>
 </div>
 
 
@@ -61,7 +65,7 @@
     <div class="footer-section">
       <h4>Comunico</h4>
       <p>Aprendé lengua de señas y braille de manera divertida y accesible.</p>
-      <img src="/TWI-Comunico/src/main/webapp/resources/core/img/Isologo-Comunico.svg" alt="Logo Comunico" class="footer-logo">
+      <img th:src="@{/img/Isologo-Comunico.svg}" alt="Logo Comunico" class="footer-logo">
     </div>
 
     <div class="footer-section">
@@ -83,18 +87,6 @@
     </div>
   </div>
 </footer>
-
-<!--<script>
-  function filtrarLetras() {
-    const input = document.getElementById('buscador').value.toLowerCase();
-    const letras = document.querySelectorAll('.braille-item');
-
-    letras.forEach(letra => {
-      const letraText = letra.querySelector('.letra').textContent.toLowerCase();
-      letra.style.display = letraText.includes(input) ? '' : 'none';
-    });
-  }
-</script>-->
 
 </body>
 </html>
