@@ -37,125 +37,24 @@
 </div>
 
 
-<div th:each="letra : ${letras}" class="braille-grid">
-  <div class="braille-item">
-    <span class="letra" th:text="${letra.nombre}">Letra</span>
-    <img th:src="@{'/img/' + ${letra.imagenDeManos}}" alt="Letra" class="braille-img">
+<div th:if="${letrasbraille}" class="braille-grid">
+  <div th:each="letra : ${letrasbraille}" class="braille-grid">
+    <div class="braille-item">
+      <span class="letra" th:text="${letra.nombre}">Letra</span>
+      <img th:src="@{'/img/' + ${letra.imagenBraille}}" alt="Letra" class="braille-img">
+    </div>
   </div>
 </div>
 
-<!--
-<div class="braille-grid" id="brailleGrid">
-  <div class="braille-item">
-    <span class="letra">A</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/A.png}" alt="Braille A" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">B</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/B.png}" alt="Braille B" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">C</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/C.png}" alt="Braille C" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">D</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/D.png}" alt="Braille D" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">E</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/E.png}" alt="Braille E" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">F</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/F.png}" alt="Braille F" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">G</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/G.png}" alt="Braille G" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">H</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/H.png}" alt="Braille H" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">I</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/I.png}" alt="Braille I" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">J</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/J.png}" alt="Braille J" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">K</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/K.png}" alt="Braille K" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">L</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/L.png}" alt="Braille L" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">M</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/M.png}" alt="Braille M" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">N</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/N.png}" alt="Braille N" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">Ñ</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/Ñ.png}" alt="Braille Ñ" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">O</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/O.png}" alt="Braille O" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">P</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/P.png}" alt="Braille P" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">Q</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/Q.png}" alt="Braille Q" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">R</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/R.png}" alt="Braille R" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">S</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/S.png}" alt="Braille S" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">T</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/T.png}" alt="Braille T" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">U</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/U.png}" alt="Braille U" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">V</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/V.png}" alt="Braille V" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">W</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/W.png}" alt="Braille W" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">X</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/X.png}" alt="Braille X" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">Y</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/Y.png}" alt="Braille Y" class="braille-img">
-  </div>
-  <div class="braille-item">
-    <span class="letra">Z</span>
-    <img th:src="@{/img/AlfabetoDeSeñas/Z.png}" alt="Braille Z" class="braille-img">
+<div th:if="${letrassenias}" class="braille-grid">
+  <div th:each="letra : ${letrassenias}" >
+    <div class="braille-item">
+      <span class="letra" th:text="${letra.nombre}">Letra</span>
+      <img th:src="@{'/img/' + ${letra.imagenSenias}}" alt="Letra" class="señas-img">
+    </div>
   </div>
 </div>
--->
+
 
 <footer>
   <div class="footer-container">

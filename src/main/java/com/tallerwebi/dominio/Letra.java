@@ -12,18 +12,17 @@ public class Letra  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String imagenDeManos;
+    private String imagenSenias;
+    private String imagenBraille;
 
     public Letra() {
     }
 
-    public Letra(Long id, String nombre, String imagenDeManos) {
-        this.id = id;
+    public Letra(String nombre, String imagenSenias, String imagenBraille) {
         this.nombre = nombre;
-        this.imagenDeManos = imagenDeManos;
+        this.imagenSenias = imagenSenias;
+        this.imagenBraille = imagenBraille;
     }
-
-
 
     public Long getId() {
         return id;
@@ -41,11 +40,16 @@ public class Letra  {
         this.nombre = nombre;
     }
 
-    public String getImagenDeManos() {
-        return imagenDeManos;
+    public String getImagenSenias() {
+        return imagenSenias;
+    }
+    public String getImagenBraille() {
+        return imagenBraille;
     }
 
-    public void setImagenDeManos(String imagenDeManos) {
-        this.imagenDeManos = imagenDeManos;
+    public void setImagenSenias(String imagenSenias) {
+        this.imagenSenias = imagenSenias;
     }
+
+
 }
