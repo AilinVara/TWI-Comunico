@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,21 +36,16 @@ public class RepositorioLetraImplTest {
 
     @Test
     @Transactional
+    @Rollback
     public void dadoQueExisteUnRepositorioLetraCuandoGuardoUnaLetraEntoncesLaEncuentroEnLaBaseDeDatos() {
 
         Letra letra = new Letra();
         letra.setNombre("B");
         letra.setImagenSenias("senias-b.png");
 
-
         this.repositorioLetra.guardar(letra);
 
-
-        String hql = "FROM Letra where nombre = :nombre";
-        Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("nombre", "B");
-        Letra letraObtenida = (Letra) query.getSingleResult();
-
+        Letra letraObtenida = this.repositorioLetra.buscarUnaLetra("B");
 
         assertThat(letraObtenida, equalTo(letra));
     }
