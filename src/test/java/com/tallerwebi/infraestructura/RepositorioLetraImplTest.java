@@ -34,8 +34,6 @@ public class RepositorioLetraImplTest {
         this.repositorioLetra = new RepositorioLetraImpl(sessionFactory);
     }
 
-
-
     @Test
     @Transactional
     @Rollback
