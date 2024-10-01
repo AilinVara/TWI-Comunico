@@ -42,4 +42,22 @@ public class ControladorLetraTest {
         assertEquals(List.of(letra), modelAndView.getModel().get("letrassenias"));
         assertEquals("alfabeto", modelAndView.getViewName());
     }
+
+    @Test
+    public void cuandoNavegoABrailleAlfabetoYEnvioUnaLetraDeParametroEntoncesReciboLaVistaAlfabetoYLaLetraEnElModelo() {
+        // Crear una letra de ejemplo
+        Letra letra = new Letra( "A", "senias-a.png","braille-a.png");
+
+        // Definir comportamiento del mock
+        when(servicioLetraMock.buscarPorNombre("A")).thenReturn(letra);
+
+        // Llamar al controlador
+        ModelAndView modelAndView = controladorLetra.alfabetoBraille("A");
+
+        // Verificar el resultado
+        assertNotNull(modelAndView);
+        assertEquals(1, modelAndView.getModel().size());
+        assertEquals(List.of(letra), modelAndView.getModel().get("letrasbraille"));
+        assertEquals("alfabeto", modelAndView.getViewName());
+    }
 }

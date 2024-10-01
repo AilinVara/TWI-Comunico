@@ -22,7 +22,6 @@ public class ControladorLetra {
         this.servicioLetra = servicioLetra;
     }
 
-    // Muestra la página de búsqueda de letras
     @RequestMapping("braille/alfabeto")
     public ModelAndView alfabetoBraille(@RequestParam(required = false, defaultValue = "", value="letra") String letraBuscada) {
         ModelMap modelo = new ModelMap();
