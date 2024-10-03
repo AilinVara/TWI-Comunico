@@ -82,8 +82,8 @@ nav a.active:hover {
 }
 
 .user-icon {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   margin-left: 8px;
   margin-right: 15px;
@@ -240,66 +240,17 @@ footer {
 }
 
 
-/* Alfabeto */
-
-#vidas{
-    font-size: 16px;
-    color: #EA2B2B;
-}
-
-#vidaYNum {
-  right: 30px;
-  top: 16%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  background-color: #2B70C9;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-   position: absolute;
-    right: 100px;
-    top: 5%;
-
-}
-.user-icon{
-  position: absolute;
-    right: 20px;
-    top:3.5%;
-    width: 55px;
-    height: 55px;
-
-
-}
-#vidaYNum h4 {
-  margin-right: 11px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-#vidaYNum:hover{
-  background-color: #1453A3;
-  transform: scale(1.1);
-  border: #01152b;
-
-  transition: all 0.3s ease;
-}
-
-
 
 /*----------------------------Seccion abecedario--------------------*/
 .braille-grid {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  gap: 20px;
-  padding: 60px;
-  max-width: 100%;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 50px;
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+   gap: 0.5em;
+   padding: 10px;
+   max-width: 100%;
+   background-color: white;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   margin-top: 1em;
 }
 
 .braille-item {
@@ -307,20 +258,97 @@ footer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 0.3em;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  font-size: 2em;
+  color: #333;
+  transition: background-color 0.3s ease;
+
+}
+
+.braille-item:hover {
+  background-color: #1899d6;
+  color: white;
+  cursor: default;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+.single-result .senia-item,
+.single-result .braille-item {
+  max-width: 150px;
+  margin: 12px;
+}
+
+.senia-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+   gap: 0.5em;
+   padding: 10px;
+   max-width: 100%;
+   background-color: white;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.senia-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75em;
   background-color: #e0e0e0;
   border-radius: 10px;
   font-size: 2em;
   color: #333;
   transition: background-color 0.3s ease;
 }
-
-.braille-item:hover {
-  background-color: #1cb0f6;
+.braille-img,
+.senias-img {
+  width: 100%;
+  height: auto;
+  max-width: 150px;
+  object-fit: contain;
+}
+.senia-item:hover {
+  background-color: #1899d6;
   color: white;
   cursor: default;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
 }
-/*----Modificaciones de Juli para la lecciones de braille-----*/
+
+.buscar {
+    height: 2em;
+    width: 5em;
+    padding: 0.5em;
+    padding-top: 5px;
+    background-color: #777777;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
+    color: white;
+    }
+
+.buscar:hover {
+background-color: #89e219;
+    color: white;
+    transform: scale(1.2);
+}
+.buscador input{
+    width: 18em;
+    padding: 1em;
+    border-radius: 10px;
+    border: none;
+    margin: 10px;
+}
+
+
+/*----Modificaciones de Juli para la lecciones de braille-----
 .braille-item-sin-hover {
   display: flex;
   flex-direction: column;
@@ -385,130 +413,8 @@ font-size: 20px;
     left: 100px;
     top: 5%;
 }
-.menu-hamburguesa {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
-
-.hamburguesa-icon {
-    font-size: 30px;
-    cursor: pointer;
-    display: block;
-    color: white;
-}
-
-#toggle-menu {
-    display: none;
-}
-
-.menu {
-    display: none;
-    position: absolute;
-    top: 60px; /* Para que el menú aparezca debajo del icono */
-    left: 20px;
-    width: 100px;
-    height: 50%;
-    background-color: #1cb0f6;
-    z-index: 1000;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-#toggle-menu:checked + .hamburguesa-icon + .menu {
-    display: block;
-    background-color: #1453A3;
-
-}
-
-.menu ul {
-display:column;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    background-color: #1453A3;
-}
-
-.menu ul li {
-    display:column;
-    padding: 15px;
-    border-bottom: 1px solid #fff;
-    text-align: left;
-    background-color: #1453A3;
-}
-
-.menu ul li:last-child {
-display:column;
-    border-bottom: none;
-    background-color: #1453A3;
-}
-
-.menu ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    display: block;
-    transition: background-color 0.3s ease;
-    background-color: #1453A3;
-}
-
-.menu ul li a:hover {
-    background-color: #1453A3;
-}
-/*Modificaciones para Ejercicio/*
+*/
 
 
 
-/* Estilos para el modal */
-
-/*.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-  background-color: white;
-  margin: 15% auto;
-  padding: 20px;
-  border-radius: 10px;
-  width: 30%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.btn-comprar {
-  background-color: #0056b3;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
-}
-
-.btn-comprar:hover {
-  background-color: #004495;
-}*/
 

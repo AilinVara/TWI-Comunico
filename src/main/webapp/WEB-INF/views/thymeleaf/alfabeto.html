@@ -15,7 +15,7 @@
 <header>
   <div class="logo">
     <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
-    <h1>Comunico</h1>
+    <h1>omunico</h1>
   </div>
 
   <nav>
@@ -32,29 +32,28 @@
 <h2 class="titulo"><i class="fa-solid fa-braille"></i>Abecedario</h2>
 
 <!-- Formulario de búsqueda -->
-<div>
+<div class="buscador">
   <form th:action="@{${#httpServletRequest.requestURI}}" method="get">
-    <label for="busqueda">Buscar:</label>
-    <input type="text" id="busqueda" th:name="letra" placeholder="Buscar letra">
-    <button type="submit">Buscar</button>
+    <input  type="text" id="busqueda" th:name="letra" placeholder="Buscar letra">
+    <button class="buscar" type="submit">Buscar</button>
   </form>
 </div>
 
-
-<div th:if="${letrasbraille}" class="braille-grid">
-  <div th:each="letra : ${letrasbraille}" class="braille-grid">
-    <div class="braille-item">
-      <span class="letra" th:text="${letra.nombre}">Letra</span>
-      <img th:src="@{'/img/' + ${letra.imagenBraille}}" alt="Letra" class="braille-img">
-    </div>
+<div th:if="${letrasbraille}" class="braille-grid"
+     th:classappend="${#lists.size(letrasbraille) == 1} ? 'single-result'">
+  <div th:each="letra : ${letrasbraille}" class="braille-item">
+    <span class="letra" th:text="${letra.nombre}">Letra</span>
+    <img th:src="@{'/img/' + ${letra.imagenBraille}}" alt="Letra" class="braille-img">
   </div>
 </div>
+</div>
 
-<div th:if="${letrassenias}" class="braille-grid">
-  <div th:each="letra : ${letrassenias}" >
-    <div class="braille-item">
+<div class="senia-grid">
+<div th:if="${letrassenias}" class="senia-grid"
+  th:classappend="${#lists.size(letrassenias) == 1} ? 'single-result'">
+  <div th:each="letra : ${letrassenias}"class="senia-item" >
       <span class="letra" th:text="${letra.nombre}">Letra</span>
-      <img th:src="@{'/img/' + ${letra.imagenSenias}}" alt="Letra" class="señas-img">
+      <img class="senias-img" th:src="@{'/img/' + ${letra.imagenSenias}}" alt="Letra" >
     </div>
   </div>
 </div>
