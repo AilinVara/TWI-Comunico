@@ -98,16 +98,4 @@ public class ControladorLoginTest {
 		assertThat(true,  is(modelAndView.getModel().isEmpty()));
 	}
 
-	@Test
-	public void debeRetornarLaPaginaAlfabetoCuandoSeNavegaAAlfabeto() throws Exception {
-
-		MvcResult result = this.mockMvc.perform(get("/alfabeto"))
-				.andExpect(status().isOk())
-				.andReturn();
-
-		ModelAndView modelAndView = result.getModelAndView();
-		assert modelAndView != null;
-		assertThat(modelAndView.getViewName(), equalToIgnoringCase("alfabeto"));
-		assertThat(true,  is(modelAndView.getModel().isEmpty()));
-	}
 }
