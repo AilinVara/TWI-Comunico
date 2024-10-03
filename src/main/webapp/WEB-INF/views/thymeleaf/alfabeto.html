@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comunico</title>
+  <title>Abecedario</title>
   <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{/css/braille.css}">
   <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
@@ -20,7 +20,7 @@
 
   <nav>
     <ul>
-      <li><a th:href="@{/inicio}">Inicio</a></li>
+      <li><a th:href="@{/home}">Inicio</a></li>
       <li><a th:href="@{/senias}">Lengua de Señas</a></li>
       <li><a th:href="@{/braille}">Braille</a></li>
       <li><a th:href="@{/ejercicio}">Ejercicio</a></li>
@@ -29,139 +29,42 @@
   </nav>
 </header>
 
-<!-- <div class="vida-flotante" id="vidaYNum">
-  <i class="fa-solid fa-heart" id="vidas"></i>
-  <h4>5</h4>
-</div> -->
+<h2 class="titulo"><i class="fa-solid fa-braille"></i>Abecedario</h2>
 
-<h2 class="titulo"><i class="fa-solid fa-braille"></i> Abecedario en Braille</h2>
-<div class="braille-grid">
-  <div class="braille-item">
-    <span class="letra">A</span>
-    <span class="braille">&#10241;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">B</span>
-    <span class="braille">&#10243;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">C</span>
-    <span class="braille">&#10249;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">D</span>
-    <span class="braille">&#10265;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">E</span>
-    <span class="braille">&#10257;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">F</span>
-    <span class="braille">&#10251;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">G</span>
-    <span class="braille">&#10267;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">H</span>
-    <span class="braille">&#10259;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">I</span>
-    <span class="braille">&#10250;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">J</span>
-    <span class="braille">&#10266;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">K</span>
-    <span class="braille">&#10245;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">L</span>
-    <span class="braille">&#10247;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">M</span>
-    <span class="braille">&#10253;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">N</span>
-    <span class="braille">&#10269;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">Ñ</span>
-    <span class="braille">&#10363;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">O</span>
-    <span class="braille">&#10261;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">P</span>
-    <span class="braille">&#10255;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">Q</span>
-    <span class="braille">&#10271;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">R</span>
-    <span class="braille">&#10263;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">S</span>
-    <span class="braille">&#10254;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">T</span>
-    <span class="braille">&#10270;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">U</span>
-    <span class="braille">&#10277;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">V</span>
-    <span class="braille">&#10279;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">W</span>
-    <span class="braille">&#10298;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">X</span>
-    <span class="braille">&#10285;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">Y</span>
-    <span class="braille">&#10301;</span>
-  </div>
-  <div class="braille-item">
-    <span class="letra">Z</span>
-    <span class="braille">&#10293;</span>
-  </div>
-
-  <!-- Modal
-  <div id="modalVidas" class="modal">
-    <div class="modal-content">
-      <span class="close">&times</span>
-      <h2>Vidas <3 <3 <3 <3 <3 </h2>
-      <p>¿Deseas comprar más vidas?</p>
-      <button class="btn-comprar">Comprar</button>
-    </div>
-  </div> -->
+<!-- Formulario de búsqueda -->
+<div class="buscador">
+  <form th:action="@{${#httpServletRequest.requestURI}}" method="get">
+    <input  type="text" id="busqueda" th:name="letra" placeholder="Buscar letra">
+    <button class="buscar" type="submit">Buscar</button>
+  </form>
 </div>
+
+<div th:if="${letrasbraille}" class="braille-grid"
+     th:classappend="${#lists.size(letrasbraille) == 1} ? 'single-result'">
+  <div th:each="letra : ${letrasbraille}" class="braille-item">
+    <span class="letra" th:text="${letra.nombre}">Letra</span>
+    <img th:src="@{'/img/' + ${letra.imagenBraille}}" alt="Letra" class="braille-img">
+  </div>
+</div>
+</div>
+
+<div class="senia-grid">
+<div th:if="${letrassenias}" class="senia-grid"
+  th:classappend="${#lists.size(letrassenias) == 1} ? 'single-result'">
+  <div th:each="letra : ${letrassenias}"class="senia-item" >
+      <span class="letra" th:text="${letra.nombre}">Letra</span>
+      <img class="senias-img" th:src="@{'/img/' + ${letra.imagenSenias}}" alt="Letra" >
+    </div>
+  </div>
+</div>
+
 
 <footer>
   <div class="footer-container">
     <div class="footer-section">
       <h4>Comunico</h4>
       <p>Aprendé lengua de señas y braille de manera divertida y accesible.</p>
-      <img src="/TWI-Comunico/src/main/webapp/resources/core/img/Isologo-Comunico.svg" alt="Logo Comunico" class="footer-logo">
+      <img th:src="@{/img/Isologo-Comunico.svg}" alt="Logo Comunico" class="footer-logo">
     </div>
 
     <div class="footer-section">
@@ -169,37 +72,20 @@
       <ul>
         <li><a href="#">Blog</a></li>
         <li><a href="#">Preguntas Frecuentes</a></li>
-        <li><a href="#">Términos y Condiciones</a></li>
-        <li><a href="#">Política de Privacidad</a></li>
+        <li><a href="#">Contacto</a></li>
       </ul>
     </div>
 
     <div class="footer-section">
-      <h4>Conocé más</h4>
-      <ul>
-        <li><a href="#">Sobre Nosotros</a></li>
-        <li><a href="#">Cursos Disponibles</a></li>
-        <li><a href="#">Testimonios</a></li>
-        <li><a href="#">Carreras</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-section">
-      <h4>Redes Sociales</h4>
+      <h4>Síguenos</h4>
       <div class="social-icons">
         <a href="#"><i class="fa-brands fa-facebook"></i></a>
-        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
         <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>&copy; 2024 Comunico - Todos los derechos reservados.</p>
-  </div>
 </footer>
-
-<!-- <script src="../js/javaScript.js"></script> -->
 
 </body>
 </html>

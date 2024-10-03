@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abecedario en Braille</title>
+    <link rel="stylesheet" href="/estilos/PruebaCSS.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+        <div class="header">
+            <div class="titulo">
+                <h1>Paralingo</h1>
+                <div class="logo">
+                    <img src="/Imagenes/th-removebg-preview.png" alt="" id="logoParalingo">
+                </div>
+            </div>
+            <div class="botonesHeader">
+    
+                <div class="grupo_input">
+                    <input class="botonesHeader1" type="button" name="Home" value="Home">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                <div class="grupo_input">
+                    <input class="botonesHeader1 braile-seleccionado" type="button" name="Braile" value="Braile">
+                    <i class="fa-solid fa-braille"></i>
+                </div>
+    
+                <div class="grupo_input">
+                    <input class="botonesHeader1" type="button" name="Home" value="Más retos">
+                    <i class="fa-solid fa-school"></i>
+                </div>
+                <div class="grupo_input">
+                    <input class="botonesHeader1" type="button" name="Home" value="Señas">
+    
+                    <i class="fa-solid fa-hands"></i>
+                </div>
+                <div class="grupo_input">
+                    <input class="botonesHeader1" type="button" name="Home" value="Perfil">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="grupo_input" id="vidaYNum">
+                    <i class="fa-solid fa-heart" id="vidas"></i>
+                    <h4>5</h4>
+                </div>
+    
+            </div>
+        </div>
+    </head>
+    
+
+<body>
+    <h2>Abecedario en Braille</h2>
+    <div class="braille-grid">
+        <div class="braille-item">
+            <span class="letra">A</span>
+            <span class="braille">&#10241;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">B</span>
+            <span class="braille">&#10243;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">C</span>
+            <span class="braille">&#10249;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">D</span>
+            <span class="braille">&#10265;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">E</span>
+            <span class="braille">&#10257;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">F</span>
+            <span class="braille">&#10251;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">G</span>
+            <span class="braille">&#10267;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">H</span>
+            <span class="braille">&#10259;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">I</span>
+            <span class="braille">&#10250;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">J</span>
+            <span class="braille">&#10266;</span>
+        </div>
+        <!-- K - T -->
+        <div class="braille-item">
+            <span class="letra">K</span>
+            <span class="braille">&#10245;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">L</span>
+            <span class="braille">&#10247;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">M</span>
+            <span class="braille">&#10253;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">N</span>
+            <span class="braille">&#10269;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">O</span>
+            <span class="braille">&#10261;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">P</span>
+            <span class="braille">&#10255;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">Q</span>
+            <span class="braille">&#10271;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">R</span>
+            <span class="braille">&#10263;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">S</span>
+            <span class="braille">&#10254;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">T</span>
+            <span class="braille">&#10270;</span>
+        </div>
+
+        <!-- U - Z -->
+        <div class="braille-item">
+            <span class="letra">U</span>
+            <span class="braille">&#10277;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">V</span>
+            <span class="braille">&#10279;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">W</span>
+            <span class="braille">&#10298;</span> <!-- W es diferente en Braille -->
+        </div>
+        <div class="braille-item">
+            <span class="letra">X</span>
+            <span class="braille">&#10285;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">Y</span>
+            <span class="braille">&#10301;</span>
+        </div>
+        <div class="braille-item">
+            <span class="letra">Z</span>
+            <span class="braille">&#10293;</span>
+    </div>
+        <!-- Modal -->
+        <div id="modalVidas" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Comprar más vidas</h2>
+                <p>¿Deseas comprar más vidas?</p>
+                <button class="btn-comprar">Comprar</button>
+            </div>
+        </div>
+        <script src="/CodigoJs/javaScript.js"></script>
+</body>
+</html>
