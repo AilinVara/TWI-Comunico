@@ -11,6 +11,7 @@ public class Leccion {
 
     @OneToMany
     private List<Ejercicio> ejercicios;
+    private String titulo;
 
     public List<Ejercicio> getEjercicios() {
         return ejercicios;
@@ -26,5 +27,9 @@ public class Leccion {
 
     public Long getId() {
         return id;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }

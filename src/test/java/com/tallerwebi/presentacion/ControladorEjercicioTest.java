@@ -7,8 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,13 +32,14 @@ public class ControladorEjercicioTest {
 
         Opcion opcionIncorrectaMock = mock(Opcion.class);
         when(opcionIncorrectaMock.getId()).thenReturn(2L);
-        List<Opcion> opcionesIncorrectas = Arrays.asList(opcionIncorrectaMock);
+        List<Opcion> opcionesIncorrectas = List.of(opcionIncorrectaMock);
 
         when(ejercicioMock.getOpcionCorrecta()).thenReturn(opcionCorrectaMock);
         when(ejercicioMock.getOpcionesIncorrectas()).thenReturn(opcionesIncorrectas);
 
         servicioEjercicioMock = mock(ServicioEjercicio.class);
         when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioMock);
+        when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, ejercicioMock.getOpcionCorrecta().getId())).thenReturn(true);
         controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock);
     }
 
@@ -65,9 +64,9 @@ public class ControladorEjercicioTest {
 
     @Test
     public void contestarConLaRespuestaIncorrectaDebeRetornarEsCorrectaComoFalse(){
-        Opcion opcionIncorrecta = ejercicioMock.getOpcionesIncorrectas().get(0);
+        Long opcionIncorrecta = ejercicioMock.getOpcionesIncorrectas().get(0).getId();
 
-        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionIncorrecta.getId(), ejercicioMock.getId());
+        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionIncorrecta, ejercicioMock.getId());
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("esCorrecta"), is(false));

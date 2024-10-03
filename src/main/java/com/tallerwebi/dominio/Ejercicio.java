@@ -1,8 +1,8 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.dominio.Opcion;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Ejercicio {
@@ -13,8 +13,14 @@ public class Ejercicio {
 
     @OneToOne
     private Opcion opcionCorrecta;
+    @ManyToOne
+    private Leccion leccion;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Opcion> opcionesIncorrectas;
+
+    public Ejercicio(){}
+
+
 
     public void setConsigna(String nombre) {
         this.consigna = nombre;
@@ -46,5 +52,18 @@ public class Ejercicio {
 
     public void setOpcionesIncorrectas(List<Opcion> opcionesIncorrectas) {
         this.opcionesIncorrectas = opcionesIncorrectas;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ejercicio ejercicio = (Ejercicio) o;
+        return Objects.equals(id, ejercicio.id) && Objects.equals(consigna, ejercicio.consigna) && Objects.equals(opcionCorrecta, ejercicio.opcionCorrecta) && Objects.equals(opcionesIncorrectas, ejercicio.opcionesIncorrectas);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, consigna, opcionCorrecta, opcionesIncorrectas);
     }
 }

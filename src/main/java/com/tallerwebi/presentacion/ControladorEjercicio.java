@@ -29,7 +29,7 @@ public class ControladorEjercicio {
 //    }
 
     @RequestMapping(value = "/ejercicio", method = RequestMethod.GET)
-    public ModelAndView irAjercicio(@RequestParam(required = false, defaultValue = "1", value = "id") Long id){
+    public ModelAndView irAjercicio(@RequestParam(required = false, defaultValue = "1") Long id){
         ModelMap modelo = new ModelMap();
         Ejercicio ejercicio = servicioEjercicio.obtenerEjercicio(id);
         modelo.put("ejercicio", ejercicio);
