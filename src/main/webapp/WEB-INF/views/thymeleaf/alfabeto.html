@@ -20,7 +20,7 @@
 
   <nav>
     <ul>
-      <li><a th:href="@{/home}">Inicio</a></li>
+      <li><a th:href="@{/inicio}">Inicio</a></li>
       <li><a th:href="@{/senias}">Lengua de Señas</a></li>
       <li><a th:href="@{/braille}">Braille</a></li>
       <li><a th:href="@{/ejercicio}">Ejercicio</a></li>
@@ -46,12 +46,11 @@
     <img th:src="@{'/img/' + ${letra.imagenBraille}}" alt="Letra" class="braille-img">
   </div>
 </div>
-</div>
 
 <div class="senia-grid">
 <div th:if="${letrassenias}" class="senia-grid"
   th:classappend="${#lists.size(letrassenias) == 1} ? 'single-result'">
-  <div th:each="letra : ${letrassenias}"class="senia-item" >
+  <div th:each="letra : ${letrassenias}" class="senia-item" >
       <span class="letra" th:text="${letra.nombre}">Letra</span>
       <img class="senias-img" th:src="@{'/img/' + ${letra.imagenSenias}}" alt="Letra" >
     </div>

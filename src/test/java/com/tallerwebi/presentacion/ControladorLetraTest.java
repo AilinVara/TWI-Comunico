@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,16 +42,23 @@ public class ControladorLetraTest {
 
     @Test
     public void cuandoNavegoABrailleAlfabetoEntoncesReciboLaVistaAlfabetoYUnaListaConLetrasEnElModelo(){
-        Letra letra = new Letra( "A", "senias-a.png","braille-a.png");
+        Letra letraA = new Letra( "A", "senias-a.png","braille-a.png");
+        Letra letraB = new Letra( "B", "senias-b.png","braille-b.png");
+        Letra letraC= new Letra( "C", "senias-c.png","braille-c.png");
 
-        when(servicioLetraMock.buscarTodasLasLetras()).thenReturn(List.of(letra));
+        List<Letra> letras = new ArrayList<>();
+        letras.add(letraA);
+        letras.add(letraB);
+        letras.add(letraC);
+
+        when(servicioLetraMock.buscarTodasLasLetras()).thenReturn(letras);
 
         ModelAndView modelAndView = this.controladorLetra.alfabetoBraille("");
 
         assertNotNull(modelAndView);
         assertThat(modelAndView.getViewName(), equalTo("alfabeto"));
         assertThat(modelAndView.getModel().size(), equalTo(1) );
-        assertThat(modelAndView.getModel().get("letrasbraille"), equalTo(List.of(letra)));
+        assertThat(modelAndView.getModel().get("letrasbraille"), equalTo(letras));
     }
 
     @Test
@@ -86,6 +94,31 @@ public class ControladorLetraTest {
         assertNotNull(modelAndView);
         assertThat(modelAndView.getModel().size(), equalTo(1));
         assertThat(modelAndView.getModel().get("letrasbraille"), equalTo(List.of(letra)));
+        assertThat(modelAndView.getViewName(), equalTo("alfabeto"));
+    }
+
+    @Test
+    public void dadoQueExistenVariasLetrasCuandoNavegoABrailleAlfabetoYEnvioUnParametroInvalidoEntoncesReciboLaVistaAlfabetoYTodasLasLetrasEnElModelo() {
+        Letra letraA = new Letra( "A", "senias-a.png","braille-a.png");
+        Letra letraB = new Letra( "B", "senias-b.png","braille-b.png");
+        Letra letraC= new Letra( "C", "senias-c.png","braille-c.png");
+
+        List<Letra> letras = new ArrayList<>();
+        letras.add(letraA);
+        letras.add(letraB);
+        letras.add(letraC);
+
+        // Definir comportamiento del mock
+        when(servicioLetraMock.buscarPorNombre("PRUEBAINVALIDA")).thenReturn(null);
+        when(servicioLetraMock.buscarTodasLasLetras()).thenReturn(letras);
+
+        // Llamar al controlador
+        ModelAndView modelAndView = controladorLetra.alfabetoBraille("PRUEBAINVALIDA");
+
+        // Verificar el resultado
+        assertNotNull(modelAndView);
+        assertThat(modelAndView.getModel().size(), equalTo(1));
+        assertThat(modelAndView.getModel().get("letrasbraille"), equalTo(letras));
         assertThat(modelAndView.getViewName(), equalTo("alfabeto"));
     }
 }
