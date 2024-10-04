@@ -28,5 +28,6 @@ public class ControladorLeccion {
 
         model.put("ejercicios", leccion.getEjercicios());
 
+        return new ModelAndView("leccion", model);
     }
 }
