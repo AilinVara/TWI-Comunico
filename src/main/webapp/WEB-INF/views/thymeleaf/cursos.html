@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang= es xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cursos disponibles</title>
+</head>
+<body>
+
+<h1>Cursos disponibles</h1>
+<ul>
+    <li th:each="curso : ${cursos}">
+        <span th:text="${curso.nombre}">Nombre del curso</span> -
+        <span th:text="${curso.fecha}">Fecha</span> -
+        <span th:text="${curso.hora}">Hora</span> -
+        <span th:text="${curso.capacidad}">Capacidad</span>
+    </li>
+</ul>
+
+</body>
+</html>
