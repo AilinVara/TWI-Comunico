@@ -16,4 +16,9 @@ public class ServicioLeccionImpl implements ServicioLeccion {
     public void guardarLeccion(Leccion leccion) {
         this.repositorioLeccion.guardar(leccion);
     }
+
+    @Override
+    public Leccion obtenerLeccion(Long id) {
+        return this.repositorioLeccion.buscarPorId(id);
+    }
 }

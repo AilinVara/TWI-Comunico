@@ -19,7 +19,7 @@ public class ServicioLeccionImplTest {
     }
 
     @Test
-    public void cuandoGuardoUnaLeccionEntoncesSeLlamaAlRepositorioGuardar() {
+    public void dadoQueExisteUnaLeccionCuandoLaGuardoEntoncesSeLlamaAlMetodoGuardarDelRepositorioLeccion() {
         Leccion leccion = new Leccion();
         servicioLeccion.guardarLeccion(leccion);
 

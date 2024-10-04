@@ -10,16 +10,10 @@ public class Leccion {
     private Long id;
 
     @OneToMany
+    @JoinColumn(name = "leccion_id")
     private List<Ejercicio> ejercicios;
+
     private String titulo;
-
-    public List<Ejercicio> getEjercicios() {
-        return ejercicios;
-    }
-
-    public void setEjercicios(List<Ejercicio> ejercicios) {
-        this.ejercicios = ejercicios;
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -31,5 +25,9 @@ public class Leccion {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public List<Ejercicio> getEjercicios() {
+        return this.ejercicios;
     }
 }

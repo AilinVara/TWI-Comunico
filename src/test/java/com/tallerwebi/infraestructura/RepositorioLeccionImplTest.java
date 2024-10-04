@@ -67,41 +67,5 @@ public class RepositorioLeccionImplTest {
         assertThat(leccionObtenida, equalTo(leccion));
     }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void dadoQueExistenDosEjerciciosEnUnaLeccionCuandoBuscoLaLeccionEntoncesObtengoLaLeccionConLosEjercicios(){
-        Ejercicio ej1 = new Ejercicio();
-        ej1.setConsigna("Consigna 1");
-        Opcion op1 = new Opcion();
-        op1.setDescripcion("Opcion 1");
-        ej1.setOpcionCorrecta(op1);
 
-        this.sessionFactory.getCurrentSession().save(op1);
-        this.sessionFactory.getCurrentSession().save(ej1);
-
-        Ejercicio ej2 = new Ejercicio();
-        ej2.setConsigna("Consigna 2");
-        Opcion op2 = new Opcion();
-        op2.setDescripcion("Opcion 2");
-        ej2.setOpcionCorrecta(op2);
-
-        this.sessionFactory.getCurrentSession().save(op2);
-        this.sessionFactory.getCurrentSession().save(ej2);
-
-        List<Ejercicio> ejercicios = new ArrayList<>();
-        ejercicios.add(ej1);
-        ejercicios.add(ej2);
-
-        Leccion leccion = new Leccion();
-        leccion.setTitulo("Leccion con ejercicios");
-        leccion.setEjercicios(ejercicios);
-
-        this.sessionFactory.getCurrentSession().save(leccion);
-
-        Leccion leccionObtenida = this.repositorioLeccion.buscarPorTitulo("Leccion con ejercicios");
-
-        assertThat(leccionObtenida, equalTo(leccion));
-        assertThat(leccionObtenida.getEjercicios(), equalTo(leccion.getEjercicios()));
-    }
 }

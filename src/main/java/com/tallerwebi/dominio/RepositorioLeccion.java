@@ -4,4 +4,6 @@ public interface RepositorioLeccion {
     void guardar(Leccion leccion);
 
     Leccion buscarPorTitulo(String primerLeccion);
+
+    Leccion buscarPorId(Long id);
 }
