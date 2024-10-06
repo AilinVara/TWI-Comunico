@@ -17,6 +17,17 @@ public class ServicioCursoImpl implements ServicioCurso {
     public List<Curso> obtenerCursosDisponibles() {
         return repositorioCurso.obtenerTodosLosCursos();
     }
+
+    @Override
+    public List<Curso> filtrarCursos(String tipo, String nivel) {
+        return repositorioCurso.filtrarCursos(tipo, nivel);
+    }
+
+    @Override
+    public List<Curso> ordenarCursosPorFecha(String ordenFecha, List<Curso> cursosFiltrados) {
+        return repositorioCurso.ordenarCursosPorFecha(ordenFecha, cursosFiltrados);
+    }
+
 }
 
 
