@@ -34,8 +34,8 @@ public class RepositorioLeccionImpl implements RepositorioLeccion {
     @Override
     public Leccion buscarPorId(Long id) {
         final Session session = sessionFactory.getCurrentSession();
-        return (Leccion) session.createCriteria(Leccion.class)
-                .add(Restrictions.eq("id", id))
+        return (Leccion) session.createQuery("SELECT l FROM Leccion l LEFT JOIN FETCH l.ejercicios WHERE l.id = :id")
+                .setParameter("id", id)
                 .uniqueResult();
     }
 }

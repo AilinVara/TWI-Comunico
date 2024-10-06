@@ -17,6 +17,7 @@
 
 <img th:src="@{/img/braille-a.png}">
 
+<p th:text="${indice}">P</p>
 
 <form action="#" th:action="@{/resolver}" method="POST" th:object="${ejercicio}">
     <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
@@ -41,7 +42,18 @@
     <div class="modal-content">
         <p th:if="${esCorrecta}">¡Respuesta correcta!</p>
         <p th:unless="${esCorrecta}">Respuesta incorrecta.</p>
-        <button id="closeModal">Cerrar</button>
+        <div th:switch="${indice}">
+            <div th:case="1" class="modal-content">
+                <a th:href="@{/ejercicio/1}" class="closeModal">Cerrar</a>
+            </div>
+            <div th:case="2" class="modal-content">
+                <a th:href="@{/ejercicio/2}" class="closeModal">Cerrar</a>
+            </div>
+            <div th:case="3" class="modal-content">
+                <a th:href="@{/ejercicio/3}" class="closeModal">Cerrar</a>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -50,10 +62,12 @@
         var modal = document.getElementById('modal');
         if (modal) {
             modal.style.display = 'block';
-            var closeModal = document.getElementById('closeModal');
-            closeModal.onclick = function() {
-                modal.style.display = 'none';
-            }
+            var closeModal = document.getElementsByClassName('closeModal');
+            Array.from(closeModal).forEach(function(element) {
+                element.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            });
         }
     }
 </script>
