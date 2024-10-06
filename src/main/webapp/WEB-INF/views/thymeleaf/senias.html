@@ -12,22 +12,7 @@
 
 <body>
 
-<header>
-  <div class="logo">
-    <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
-    <h1>omunico</h1>
-  </div>
-
-  <nav>
-    <ul>
-      <li><a th:href="@{/inicio}">Inicio</a></li>
-      <li><a th:href="@{/senias}" class="active">Lengua de Señas</a></li>
-      <li><a th:href="@{/braille}">Braille</a></li>
-      <li><a th:href="@{/ejercicio}">Ejercicio</a></li>
-      <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon">
-    </ul>
-  </nav>
-</header>
+<div th:replace="header :: header"></div>
 
 <div class="titulo"><i class="fa-regular fa-hand"></i> Lecciones de Lengua de señas</div>
 <div class="leccionesBasicas">
@@ -42,48 +27,7 @@
   <a th:href="@{/inicio}" class="volver-atras">Volver atrás</a>
 </div>>
 
-<footer>
-  <div class="footer-container">
-    <div class="footer-section">
-      <h4>Comunico</h4>
-      <p>Aprendé lengua de señas y braille de manera divertida y accesible.</p>
-      <img th:src="@{/img/Isologo-Comunico.svg}" alt="Logo Comunico" class="footer-logo">
-    </div>
-
-    <div class="footer-section">
-      <h4>Recursos</h4>
-      <ul>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Preguntas Frecuentes</a></li>
-        <li><a href="#">Términos y Condiciones</a></li>
-        <li><a href="#">Política de Privacidad</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-section">
-      <h4>Conocé más</h4>
-      <ul>
-        <li><a href="#">Sobre Nosotros</a></li>
-        <li><a href="#">Cursos Disponibles</a></li>
-        <li><a href="#">Testimonios</a></li>
-        <li><a href="#">Carreras</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-section">
-      <h4>Redes Sociales</h4>
-      <div class="social-icons">
-        <a href="#"><i class="fa-brands fa-facebook"></i></a>
-        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; 2024 Comunico - Todos los derechos reservados.</p>
-  </div>
-</footer>
+<div th:replace="footer :: footer"></div>
 
 </body>
 </html>
