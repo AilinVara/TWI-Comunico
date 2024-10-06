@@ -41,4 +41,9 @@ public class RepositorioImplProgresoLeccion implements RepositorioProgresoLeccio
                 .add(Restrictions.eq("leccion.id", leccionId))
                 .list();
     }
+
+    @Override
+    public void actualizar(ProgresoLeccion progreso) {
+        this.sessionFactory.getCurrentSession().update(progreso);
+    }
 }

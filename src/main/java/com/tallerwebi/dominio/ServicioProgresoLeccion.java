@@ -7,4 +7,7 @@ public interface ServicioProgresoLeccion {
     ProgresoLeccion buscarPorIds(Long leccionId, Long usuarioId, Long ejercicioId);
     List<ProgresoLeccion> buscarPorUsuarioIdYLeccionId(Long usuarioId, Long leccionId);
 
+    void crearProgresoLeccion(Long leccionId, Long usuarioId);
+
+    void actualizarProgreso(ProgresoLeccion progreso, Boolean resuelto);
 }

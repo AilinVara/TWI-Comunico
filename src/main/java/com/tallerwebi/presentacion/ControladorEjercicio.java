@@ -24,7 +24,7 @@ public class ControladorEjercicio {
             this.servicioEjercicio = servicioEjercicio;
             this.servicioLeccion = servicioLeccion;
             this.servicioUsuario = servicioUsuario;
-        this.servicioProgresoLeccion = servicioProgresoLeccion;
+            this.servicioProgresoLeccion = servicioProgresoLeccion;
     }
 
 //    @RequestMapping(value = "/ejercicio", method = RequestMethod.GET)
@@ -51,14 +51,25 @@ public class ControladorEjercicio {
     public ModelAndView resolverEjercicio(@RequestParam("opcionSeleccionada") Long opcionId, @RequestParam("ejercicioId")Long ejercicioId,
                                           @RequestParam("leccion")Long leccionId, @PathVariable("indice") Long indice, HttpServletRequest request){
         ModelMap modelo = new ModelMap();
+
+
+
+        Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+
+        ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
+
+        if(progreso == null){
+            this.servicioProgresoLeccion.crearProgresoLeccion(leccionId, usuarioId);
+            progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
+            System.out.println("EJERCICIO 1: " + ejercicioId);
+        }
+        Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicio, opcionId);
+        System.out.println("ProgresoLeccion es null para el ejercicioId: " + ejercicioId);
+        this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
+
         modelo.put("indice", indice);
         modelo.put("leccion", leccionId);
-        Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
-
-        Long usuarioId = (Long) request.getSession().getAttribute("id");
-        ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, ejercicioId, usuarioId);
-
-        Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicio, opcionId);
         modelo.put("ejercicio",ejercicio);
         modelo.put("esCorrecta", (resuelto));
         return new ModelAndView("ejercicio", modelo);

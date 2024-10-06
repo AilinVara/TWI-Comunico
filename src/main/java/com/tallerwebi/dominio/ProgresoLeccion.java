@@ -30,6 +30,15 @@ public class ProgresoLeccion {
         this.leccion = leccion;
     }
 
+    public Boolean getCompleto() {
+        return completo;
+    }
+
+    public void setCompleto(Boolean completo) {
+        this.completo = completo;
+    }
+
+
     public void setId(Long id) {
         this.id = id;
     }

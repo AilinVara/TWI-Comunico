@@ -10,10 +10,14 @@ import java.util.List;
 @Transactional
 public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
     private RepositorioProgresoLeccion repositorioProgresoLeccion;
+    private ServicioLogin servicioUsuario;
+    private ServicioLeccion servicioLeccion;
 
     @Autowired
-    public ServicioProgresoLeccionImpl(RepositorioProgresoLeccion repositorioProgresoLeccion) {
+    public ServicioProgresoLeccionImpl(RepositorioProgresoLeccion repositorioProgresoLeccion, ServicioLogin servicioUsuario, ServicioLeccion servicioLeccion) {
         this.repositorioProgresoLeccion = repositorioProgresoLeccion;
+        this.servicioUsuario = servicioUsuario;
+        this.servicioLeccion = servicioLeccion;
     }
     @Override
     public void guardarProgresoLeccion(ProgresoLeccion progresoLeccion) {
@@ -28,5 +32,27 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
     @Override
     public List<ProgresoLeccion> buscarPorUsuarioIdYLeccionId(Long usuarioId, Long leccionId) {
         return this.repositorioProgresoLeccion.buscarPorUsuarioIdYLeccionId(usuarioId, leccionId);
+    }
+
+    @Override
+    public void crearProgresoLeccion(Long leccionId, Long usuarioId) {
+        Usuario usuario = this.servicioUsuario.obtenerUsuarioPorId(usuarioId);
+        Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
+        List<Ejercicio> ejercicios = leccion.getEjercicios();
+
+        for(Ejercicio ejercicio : ejercicios){
+            ProgresoLeccion progresoExistente = this.repositorioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicio.getId());
+
+            if(progresoExistente == null){
+                ProgresoLeccion progresoLeccion = new ProgresoLeccion(usuario, leccion, ejercicio);
+                this.guardarProgresoLeccion(progresoLeccion);
+            }
+        }
+    }
+
+    @Override
+    public void actualizarProgreso(ProgresoLeccion progresoLeccion, Boolean resuelto) {
+        progresoLeccion.setCompleto(resuelto);
+        this.repositorioProgresoLeccion.actualizar(progresoLeccion);
     }
 }

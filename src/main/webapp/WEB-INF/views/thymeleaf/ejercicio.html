@@ -41,8 +41,7 @@
     <div class="modal-content">
         <p th:if="${esCorrecta}">¡Respuesta correcta!</p>
         <p th:unless="${esCorrecta}">Respuesta incorrecta.</p>
-        <a th:if="${indice == 1}" th:href="@{'/ejercicio/2?leccion=' + ${leccion}}" class="closeModal">Siguiente ejercicio</a>
-        <a th:if="${indice == 2}" th:href="@{'/ejercicio/3?leccion=' + ${leccion}}" class="closeModal">Siguiente ejercicio</a>
+        <a th:if="${indice &lt; 3}" th:href="@{'/ejercicio/'+ ${indice + 1} + '?leccion=' + ${leccion}}" class="closeModal">Siguiente ejercicio</a>
         <a th:if="${indice == 3}" th:href="@{/braille}" class="closeModal">Finalizar lección</a>
     </div>
 </div>

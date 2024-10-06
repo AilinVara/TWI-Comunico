@@ -8,4 +8,6 @@ public interface RepositorioProgresoLeccion {
     ProgresoLeccion buscarPorIds(Long leccionId, Long usuarioId, Long ejercicioId);
 
     List<ProgresoLeccion> buscarPorUsuarioIdYLeccionId(Long usuarioId, Long leccionId);
+
+    void actualizar(ProgresoLeccion progreso);
 }
