@@ -131,7 +131,7 @@ script {
 }
 
 .modal-content a {
-    background-color: #1cb0f6;
+    background-color: #9de35e;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -142,5 +142,5 @@ script {
 }
 
 .modal-content a:hover {
-    background-color: #2b70c9;
+    background-color: #89e219;
 }

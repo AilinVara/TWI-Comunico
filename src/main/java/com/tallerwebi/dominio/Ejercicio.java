@@ -16,9 +16,8 @@ public class Ejercicio {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Opcion> opcionesIncorrectas;
 
+
     public Ejercicio(){}
-
-
 
     public void setConsigna(String nombre) {
         this.consigna = nombre;

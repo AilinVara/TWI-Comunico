@@ -17,10 +17,9 @@
 
 <img th:src="@{/img/braille-a.png}">
 
-<p th:text="${indice}">P</p>
-
-<form action="#" th:action="@{/resolver}" method="POST" th:object="${ejercicio}">
+<form action="#" th:action="@{'/resolver/' + ${indice}}" method="POST" th:object="${ejercicio}">
     <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
+    <input hidden name="leccion" th:value="${leccion}">
     <div class="radio-container">
         <label>
             <input type="radio" name="opcionSeleccionada" th:value="${ejercicio.opcionCorrecta.id}">
@@ -36,24 +35,15 @@
     <button type="submit">Enviar</button>
 </form>
 
-
+<p th:text="${usuario}">Usuario</p>
 
 <div id="modal" class="modal" th:if="${esCorrecta != null}">
     <div class="modal-content">
         <p th:if="${esCorrecta}">¡Respuesta correcta!</p>
         <p th:unless="${esCorrecta}">Respuesta incorrecta.</p>
-        <div th:switch="${indice}">
-            <div th:case="1" class="modal-content">
-                <a th:href="@{/ejercicio/1}" class="closeModal">Cerrar</a>
-            </div>
-            <div th:case="2" class="modal-content">
-                <a th:href="@{/ejercicio/2}" class="closeModal">Cerrar</a>
-            </div>
-            <div th:case="3" class="modal-content">
-                <a th:href="@{/ejercicio/3}" class="closeModal">Cerrar</a>
-            </div>
-        </div>
-
+        <a th:if="${indice == 1}" th:href="@{'/ejercicio/2?leccion=' + ${leccion}}" class="closeModal">Siguiente ejercicio</a>
+        <a th:if="${indice == 2}" th:href="@{'/ejercicio/3?leccion=' + ${leccion}}" class="closeModal">Siguiente ejercicio</a>
+        <a th:if="${indice == 3}" th:href="@{/braille}" class="closeModal">Finalizar lección</a>
     </div>
 </div>
 

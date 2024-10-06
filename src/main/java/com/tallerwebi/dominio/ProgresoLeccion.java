@@ -20,6 +20,8 @@ public class ProgresoLeccion {
     @JoinColumn(name = "ejercicio_id")
     private Ejercicio ejercicio;
 
+    Boolean completo = false;
+
     public ProgresoLeccion(){}
 
     public ProgresoLeccion(Usuario usuario, Leccion leccion, Ejercicio ejercicio) {

@@ -34,5 +34,10 @@ public class ServicioLoginImpl implements ServicioLogin {
         repositorioUsuario.guardar(usuario);
     }
 
+    @Override
+    public Usuario obtenerUsuarioPorId(Long id) {
+        return this.repositorioUsuario.buscarUsuarioPorId(id);
+    }
+
 }
 
