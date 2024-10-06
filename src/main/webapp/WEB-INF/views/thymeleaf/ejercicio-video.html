@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio</title>
+
+  <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
+  <link rel="stylesheet" th:href="@{/css/ejercicio.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="titulo-de-la-leccion">
+  <a th:href="@{/inicio}"><img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img"/></a>
+  <h3>Ejercicio</h3>
+  <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"/>
+  <div class="grupo_input" id="vidaYNum">
+    <i class="fa-solid fa-heart" id="vidas"></i>
+    <h4>5</h4>
+  </div>
+</div>
+
+</body>
+</html>
