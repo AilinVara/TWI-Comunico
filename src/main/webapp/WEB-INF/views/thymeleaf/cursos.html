@@ -7,6 +7,12 @@
 <body>
 
 <h1>Cursos disponibles</h1>
+
+<form action="/buscarCursos" method="post" accept-charset="UTF-8">
+    <input type="text" name="nombre" placeholder="Buscar curso por nombre" />
+    <button type="submit">Buscar</button>
+</form>
+
 <form action="/filtrarCursos" method="POST">
     <label for="tipo">Tipo:</label>
     <select name="tipo" id="tipo">

@@ -44,7 +44,6 @@ public class RepositorioCursoImpl implements RepositorioCurso {
 
     @Override
     public List<Curso> ordenarCursosPorFecha(String ordenFecha, List<Curso> cursosFiltrados) {
-        // Usar una lista para ordenar en memoria
         if (ordenFecha.equals("asc")) {
             cursosFiltrados.sort(Comparator.comparing(Curso::getFecha));
         } else {

@@ -30,16 +30,23 @@ public class ControladorCurso {
                                         @RequestParam(required = false) String ordenFecha,
                                         Model model) {
 
-        // Filtrar los cursos por tipo y nivel
         List<Curso> cursosFiltrados = servicioCurso.filtrarCursos(tipo, nivel);
 
-        // Ordenar los cursos filtrados por fecha si el parámetro es proporcionado
         if (ordenFecha != null && !ordenFecha.isEmpty()) {
             cursosFiltrados = servicioCurso.ordenarCursosPorFecha(ordenFecha, cursosFiltrados);
         }
 
         model.addAttribute("cursos", cursosFiltrados);
-        return "cursos"; // Devuelve la vista de cursos con los cursos filtrados y ordenados
+        return "cursos";
     }
+
+    @RequestMapping(value = "/buscarCursos", method = RequestMethod.POST)
+    public String buscarCursos(@RequestParam(required = false) String nombre,
+                               Model model) {
+        List<Curso> cursosBuscados = servicioCurso.buscarCursosPorNombre(nombre);
+        model.addAttribute("cursos", cursosBuscados);
+        return "cursos";
+    }
+
 
 }
