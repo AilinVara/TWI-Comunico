@@ -9,4 +9,6 @@ public interface ServicioCurso {
     List<Curso> filtrarCursos(String tipo, String nivel);
 
     List<Curso> ordenarCursosPorFecha(String ordenFecha, List<Curso> cursosFiltrados);
+
+    List<Curso> buscarCursosPorNombre(String nombre);
 }
