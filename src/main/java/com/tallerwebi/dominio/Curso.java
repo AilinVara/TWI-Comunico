@@ -15,27 +15,15 @@ public class Curso {
     private String descripcion;
     private LocalDate fecha;
     private LocalTime hora;
-
-    @Enumerated(EnumType.STRING)
-    private Tipo tipo;
-
-    @Enumerated(EnumType.STRING)
-    private Nivel nivel;
+    private String tipo;
+    private String nivel;
 
     private int capacidad;
     private int inscriptos;
 
-    public enum Tipo {
-        SEÑAS, BRAILLE
-    }
-
-    public enum Nivel {
-        BÁSICO, INTERMEDIO, AVANZADO
-    }
-
     public Curso() {}
 
-    public Curso(String nombre, String descripcion, LocalDate fecha, LocalTime hora, Tipo tipo, Nivel nivel, int capacidad) {
+    public Curso(String nombre, String descripcion, LocalDate fecha, LocalTime hora, String tipo, String nivel, int capacidad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fecha = fecha;
@@ -86,19 +74,19 @@ public class Curso {
         this.hora = hora;
     }
 
-    public Tipo getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(Tipo tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
-    public Nivel getNivel() {
+    public String getNivel() {
         return nivel;
     }
 
-    public void setNivel(Nivel nivel) {
+    public void setNivel(String nivel) {
         this.nivel = nivel;
     }
 

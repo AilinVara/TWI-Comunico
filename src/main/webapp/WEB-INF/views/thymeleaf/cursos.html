@@ -7,6 +7,32 @@
 <body>
 
 <h1>Cursos disponibles</h1>
+<form action="/filtrarCursos" method="POST">
+    <label for="tipo">Tipo:</label>
+    <select name="tipo" id="tipo">
+        <option value="">Seleccione</option>
+        <option value="senias">Lengua de Senias</option>
+        <option value="braille">Braille</option>
+    </select>
+
+    <label for="nivel">Nivel:</label>
+    <select name="nivel" id="nivel">
+        <option value="">Seleccione</option>
+        <option value="basico">Básico</option>
+        <option value="intermedio">Intermedio</option>
+        <option value="avanzado">Avanzado</option>
+    </select>
+
+    <label for="ordenFecha">Fecha:</label>
+    <select name="ordenFecha" id="ordenFecha">
+        <option value="">Ordenar por Fecha</option>
+        <option value="asc">Ascendente</option>
+        <option value="desc">Descendente</option>
+    </select>
+
+    <button type="submit">Filtrar Cursos</button>
+</form>
+
 <ul>
     <li th:each="curso : ${cursos}">
         <span th:text="${curso.nombre}">Nombre del curso</span> -
