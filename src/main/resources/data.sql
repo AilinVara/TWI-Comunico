@@ -34,13 +34,3 @@ INSERT INTO Letra(id, nombre, imagenSenias, imagenBraille) VALUES
 (25, "X", 'senias-x.png', 'braille-x.png'),
 (26, "Y", 'senias-y.png', 'braille-y.png'),
 (27, "Z", 'senias-z.png', 'braille-z.png');
-
-INSERT INTO Opcion(id, descripcion) VALUES
-                                        (4, 'Te conozco'),
-                                        (5, 'Te deseo lo mejor'),
-                                        (6, 'Encantado de conocerte');
-INSERT INTO ejercicio(id, consigna, opcionCorrecta_id) VALUES (2, 'Ver el video e identificar que dice', 6);
-
-insert into ejercicio_opcion(Ejercicio_id, opcionesIncorrectas_id) VALUE (2,4);
-
-insert into ejercicio_opcion(Ejercicio_id, opcionesIncorrectas_id) VALUE (2,5);
