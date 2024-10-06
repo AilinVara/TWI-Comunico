@@ -136,6 +136,26 @@ nav a.active:hover {
   transform: scale(1.05);
 }
 
+.lecciones_deshabilitadas {
+  height: 76px;
+  width: 550px;
+  padding: 20px;
+  background-color: #515050;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.lecciones_deshabilitadas:hover {
+  background-color: #a5a5a1;
+  color: #000000;
+  transform: scale(1.05);
+}
+
 .volver-atras-container {
   display: flex;
   justify-content: center;

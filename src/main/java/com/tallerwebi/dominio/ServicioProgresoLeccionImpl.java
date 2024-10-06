@@ -30,7 +30,7 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
     }
 
     @Override
-    public List<ProgresoLeccion> buscarPorUsuarioIdYLeccionId(Long usuarioId, Long leccionId) {
+    public List<ProgresoLeccion> buscarProgresoLeccionDeUsuario(Long usuarioId, Long leccionId) {
         return this.repositorioProgresoLeccion.buscarPorUsuarioIdYLeccionId(usuarioId, leccionId);
     }
 
@@ -54,5 +54,10 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
     public void actualizarProgreso(ProgresoLeccion progresoLeccion, Boolean resuelto) {
         progresoLeccion.setCompleto(resuelto);
         this.repositorioProgresoLeccion.actualizar(progresoLeccion);
+    }
+
+    @Override
+    public Boolean verificarCompletado(List<ProgresoLeccion> progresoLeccion) {
+        return (progresoLeccion.get(0).getCompleto() && progresoLeccion.get(1).getCompleto() && progresoLeccion.get(2).getCompleto());
     }
 }
