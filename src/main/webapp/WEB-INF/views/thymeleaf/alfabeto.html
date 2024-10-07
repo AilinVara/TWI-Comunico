@@ -27,7 +27,7 @@
      th:classappend="${#lists.size(letrasbraille) == 1} ? 'single-result'">
   <div th:each="letra : ${letrasbraille}" class="braille-item">
     <span class="letra" th:text="${letra.nombre}">Letra</span>
-    <img th:src="@{'/img/' + ${letra.imagenBraille}}" alt="Letra" class="braille-img">
+    <img th:src="@{'/img/braille/' + ${letra.nombre}}" alt="Letra" class="braille-img">
   </div>
 </div>
 
@@ -36,7 +36,7 @@
   th:classappend="${#lists.size(letrassenias) == 1} ? 'single-result'">
   <div th:each="letra : ${letrassenias}" class="senia-item" >
       <span class="letra" th:text="${letra.nombre}">Letra</span>
-      <img class="senias-img" th:src="@{'/img/' + ${letra.imagenSenias}}" alt="Letra" >
+      <img class="senias-img" th:src="@{'/img/senias/' + ${letra.nombre}}" alt="Letra" >
     </div>
   </div>
 </div>
