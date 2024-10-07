@@ -50,9 +50,6 @@ public class ControladorEjercicio {
     public ModelAndView resolverEjercicio(@RequestParam("opcionSeleccionada") Long opcionId, @RequestParam("ejercicioId")Long ejercicioId,
                                           @RequestParam("leccion")Long leccionId, @PathVariable("indice") Long indice, HttpServletRequest request){
         ModelMap modelo = new ModelMap();
-
-
-
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
 
@@ -61,10 +58,9 @@ public class ControladorEjercicio {
         if(progreso == null){
             this.servicioProgresoLeccion.crearProgresoLeccion(leccionId, usuarioId);
             progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
-            System.out.println("EJERCICIO 1: " + ejercicioId);
+            System.out.println("PROGRESO COMPLETADO: " + progreso.getId());
         }
         Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicio, opcionId);
-        System.out.println("ProgresoLeccion es null para el ejercicioId: " + ejercicioId);
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
         modelo.put("indice", indice);

@@ -62,5 +62,17 @@ public class RepositorioLeccionImplTest {
         assertThat(leccionObtenida, equalTo(leccion));
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExisteUnaLeccionCuandoLaBuscoPorIdEntoncesLaEncuentroEnLaBaseDeDatos(){
+        Leccion leccion = new Leccion();
+
+        this.repositorioLeccion.guardar(leccion);
+
+        Leccion leccionObtenida = this.repositorioLeccion.buscarPorId(leccion.getId());
+
+        assertThat(leccionObtenida, equalTo(leccion));
+    }
 
 }

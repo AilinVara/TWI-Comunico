@@ -30,4 +30,8 @@ public class Leccion {
     public List<Ejercicio> getEjercicios() {
         return this.ejercicios;
     }
+
+    public void setEjercicios(List<Ejercicio> ejercicios) {
+        this.ejercicios = ejercicios;
+    }
 }
