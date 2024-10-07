@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -22,6 +24,38 @@ public class ControladorCurso {
         List<Curso> cursos = servicioCurso.obtenerCursosDisponibles();
         model.addAttribute("cursos", cursos);
         return "cursos";
+    }
+
+    @RequestMapping(value = "/crear-curso", method = RequestMethod.GET)
+    public String mostrarFormularioCrearCurso(Model model) {
+        return "crear-curso";
+    }
+
+    @RequestMapping(value = "/guardarCurso", method = RequestMethod.POST)
+    public String guardarCurso(@RequestParam String nombre,
+                               @RequestParam String descripcion,
+                               @RequestParam String fecha,
+                               @RequestParam String hora,
+                               @RequestParam String tipo,
+                               @RequestParam String nivel,
+                               @RequestParam int capacidad) {
+
+        // Crear una nueva entidad Curso
+        Curso nuevoCurso = new Curso();
+        nuevoCurso.setNombre(nombre);
+        nuevoCurso.setDescripcion(descripcion);
+        nuevoCurso.setFecha(LocalDate.parse(fecha));
+        nuevoCurso.setHora(LocalTime.parse(hora));
+        nuevoCurso.setTipo(tipo);
+        nuevoCurso.setNivel(nivel);
+        nuevoCurso.setCapacidad(capacidad);
+        nuevoCurso.setInscriptos(0); // Inicializar inscriptos en 0
+
+        // Llamar al servicio para guardar el curso
+        servicioCurso.agregarCurso(nuevoCurso);
+
+        // Redirigir a la lista de cursos o a una página de éxito
+        return "redirect:/cursos"; // redirige a la lista de cursos después de guardar
     }
 
     @RequestMapping(value = "/filtrarCursos", method = RequestMethod.POST)
@@ -47,6 +81,4 @@ public class ControladorCurso {
         model.addAttribute("cursos", cursosBuscados);
         return "cursos";
     }
-
-
 }

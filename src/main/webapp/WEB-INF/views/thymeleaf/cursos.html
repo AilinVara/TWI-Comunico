@@ -1,67 +1,71 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang= es xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursos Disponibles</title>
+    <title>Cursos disponibles</title>
     <link rel="stylesheet" th:href="@{/css/cursos.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" th:href="@{/img/Isologo-Comunico.svg}" type="image/x-icon">
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div th:replace="header :: header"></div>
 
-<main class="courses-page">
-    <h1>Cursos Disponibles</h1>
+<h1 class="titulo">Cursos disponibles</h1>
 
-    <aside class="sidebar">
-        <h3>Categorías</h3>
-        <form th:action="@{/filtrarCursos}" method="post">
-            <ul>
-                <li>
-                    <input type="hidden" name="tipo" value="senias">
-                    <button type="submit">Lengua de señas</button>
-                </li>
-                <li>
-                    <input type="hidden" name="tipo" value="braille">
-                    <button type="submit">Braille</button>
-                </li>
-            </ul>
-        </form>
-    </aside>
+<form action="/buscarCursos" method="post" accept-charset="UTF-8" class="form-buscar">
+    <input type="text" name="nombre" placeholder="Buscar curso por nombre" />
+    <button type="submit">Buscar</button>
+</form>
 
-    <section class="courses-content">
-        <div class="search-filter">
-            <form action="#" th:action="@{/buscarCursos}" method="POST">
-                <input type="text" name="nombre" placeholder="Buscar cursos...">
-                <select name="nivel">
-                    <option value="">Todos los niveles</option>
-                    <option value="basico">Básico</option>
-                    <option value="intermedio">Intermedio</option>
-                    <option value="avanzado">Avanzado</option>
-                </select>
-                <button type="submit">Buscar</button>
-            </form>
+<form action="/filtrarCursos" method="POST" class="form-filtrar">
+    <label for="tipo">Tipo:</label>
+    <select name="tipo" id="tipo" class="select-tipo">
+        <option value="">Seleccione</option>
+        <option value="senias">Lengua de Señas</option>
+        <option value="braille">Braille</option>
+    </select>
+
+    <label for="nivel">Nivel:</label>
+    <select name="nivel" id="nivel" class="select-nivel">
+        <option value="">Seleccione</option>
+        <option value="basico">Básico</option>
+        <option value="intermedio">Intermedio</option>
+        <option value="avanzado">Avanzado</option>
+    </select>
+
+    <label for="ordenFecha">Fecha:</label>
+    <select name="ordenFecha" id="ordenFecha" class="select-orden">
+        <option value="">Ordenar por Fecha</option>
+        <option value="asc">Ascendente</option>
+        <option value="desc">Descendente</option>
+    </select>
+
+    <button type="submit" class="btn-filtrar">Filtrar Cursos</button>
+</form>
+
+<!-- Lista de cursos -->
+<div class="cursos-container">
+    <div class="curso-card" th:each="curso : ${cursos}">
+        <div class="curso-imagen">
+         <img th:src="${curso.imagen}" alt="Imagen del curso" />
         </div>
-
-        <div class="courses-list">
-            <div th:each="curso : ${cursos}">
-                <article class="course-item">
-                    <img th:src="@{/imagenes/${curso.tipo}.jpg}" alt="Curso de [[${curso.nombre}]]">
-                    <div class="course-info">
-                        <h2 th:text="${curso.nombre}">Nombre del curso</h2>
-                        <p th:text="${curso.descripcion}">Descripción del curso</p>
-                        <div class="course-meta">
-                            <span class="difficulty" th:text="'Nivel: ' + ${curso.nivel}">Nivel: </span>
-                            <span class="duration"><i class="fas fa-clock"></i> <span th:text="${curso.hora}">Duración</span></span>
-                        </div>
-                        <button class="btn-view">Ver más</button>
-                    </div>
-                </article>
+        <div class="curso-info">
+            <h2 class="curso-nombre" th:text="${curso.nombre}">Nombre del curso</h2>
+            <div class="curso-datos">
+                <span class="curso-fecha">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span th:text="${curso.fecha}">Fecha</span>
+                </span>
+                <span class="curso-hora">
+                    <i class="fas fa-clock"></i>
+                    <span th:text="${curso.hora}">Hora</span>
+                </span>
             </div>
         </div>
-    </section>
-</main>
+    </div>
+</div>
 
 <div th:replace="footer :: footer"></div>
 
