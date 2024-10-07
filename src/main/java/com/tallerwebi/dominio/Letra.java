@@ -1,9 +1,6 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
@@ -12,13 +9,18 @@ public class Letra  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String imagenSenias;
-    private String imagenBraille;
+
+    @Lob
+    @Column(name = "imagenSenias", columnDefinition="MEDIUMBLOB")
+    private byte[] imagenSenias;
+    @Lob
+    @Column(name = "imagenBraille", columnDefinition="MEDIUMBLOB")
+    private byte[] imagenBraille;
 
     public Letra() {
     }
 
-    public Letra(String nombre, String imagenSenias, String imagenBraille) {
+    public Letra(String nombre, byte[] imagenSenias, byte[] imagenBraille) {
         this.nombre = nombre;
         this.imagenSenias = imagenSenias;
         this.imagenBraille = imagenBraille;
@@ -40,15 +42,17 @@ public class Letra  {
         this.nombre = nombre;
     }
 
-    public String getImagenSenias() {
+    public byte[] getImagenSenias() {
         return imagenSenias;
     }
-    public String getImagenBraille() {
+    public byte[] getImagenBraille() {
         return imagenBraille;
     }
 
-    public void setImagenSenias(String imagenSenias) {
+    public void setImagenBraille(byte[] imagenBraille) {
+        this.imagenBraille = imagenBraille;
+    }
+    public void setImagenSenia(byte[] imagenSenias) {
         this.imagenSenias = imagenSenias;
     }
-
 }

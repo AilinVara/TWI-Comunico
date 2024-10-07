@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.ServicioLogin;
+import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,6 @@ public class ControladorLogin {
         this.servicioLogin = servicioLogin;
     }
 
-
     @RequestMapping("/login")
     public ModelAndView irALogin() {
 
@@ -38,7 +38,6 @@ public class ControladorLogin {
         Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
         if (usuarioBuscado != null) {
             request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-            request.getSession().setAttribute("id", usuarioBuscado.getId());
             return new ModelAndView("redirect:/inicio");
         } else {
             model.put("error", "Usuario o clave incorrecta");
@@ -77,5 +76,14 @@ public class ControladorLogin {
     public ModelAndView irAlIndice() {
         return new ModelAndView("indice");
     }
+
+    @RequestMapping(path = "/senias", method = RequestMethod.GET)
+    public ModelAndView senias(){ return new ModelAndView("senias");}
+
+    @RequestMapping(path = "/braille", method = RequestMethod.GET)
+    public ModelAndView braille(){ return new ModelAndView("braille");}
+
+//    @RequestMapping(path = "/alfabeto", method = RequestMethod.GET)
+//    public ModelAndView alfabeto(){ return new ModelAndView("alfabeto");}
 }
 
