@@ -21,6 +21,9 @@ public class Curso {
     private int capacidad;
     private int inscriptos;
 
+    @Lob
+    private byte[] imagen;
+
     public Curso() {}
 
     public Curso(String nombre, String descripcion, LocalDate fecha, LocalTime hora, String tipo, String nivel, int capacidad) {
@@ -104,5 +107,13 @@ public class Curso {
 
     public void setInscriptos(int inscriptos) {
         this.inscriptos = inscriptos;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
 }

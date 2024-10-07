@@ -11,4 +11,7 @@ public interface ServicioCurso {
     List<Curso> ordenarCursosPorFecha(String ordenFecha, List<Curso> cursosFiltrados);
 
     List<Curso> buscarCursosPorNombre(String nombre);
+
+    void agregarCurso(Curso nuevoCurso);
+
 }

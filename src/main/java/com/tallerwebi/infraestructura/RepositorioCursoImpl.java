@@ -27,6 +27,13 @@ public class RepositorioCursoImpl implements RepositorioCurso {
     }
 
     @Override
+    public void agregarCurso(Curso curso) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(curso);
+    }
+
+
+    @Override
     public List<Curso> filtrarCursos(String tipo, String nivel) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Curso.class);
