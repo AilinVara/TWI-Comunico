@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Agregar Curso</title>
+  <link rel="stylesheet" th:href="@{/css/crear-curso.css}">
+  <link rel="icon" th:href="@{/img/Isologo-Comunico.svg}" type="image/x-icon">
+  <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<h1 class="titulo">Crear un nuevo curso</h1>
+<form action="/guardarCurso" method="POST" accept-charset="UTF-8">
+  <label for="nombre">Nombre del Curso:</label>
+  <input type="text" id="nombre" name="nombre" required placeholder="Ej. Curso de Braille"><br>
+
+  <label for="descripcion">Descripción:</label>
+  <textarea id="descripcion" name="descripcion" required placeholder="Descripción del curso"></textarea><br>
+
+  <label for="fecha">Fecha:</label>
+  <input type="date" id="fecha" name="fecha" required><br>
+
+  <label for="hora">Hora:</label>
+  <input type="time" id="hora" name="hora" required><br>
+
+  <label for="tipo">Tipo:</label>
+  <select id="tipo" name="tipo" required>
+    <option value="">Seleccione</option>
+    <option value="senias">Lengua de Señas</option>
+    <option value="braille">Braille</option>
+  </select><br>
+
+  <label for="nivel">Nivel:</label>
+  <select id="nivel" name="nivel" required>
+    <option value="">Seleccione</option>
+    <option value="basico">Básico</option>
+    <option value="intermedio">Intermedio</option>
+    <option value="avanzado">Avanzado</option>
+  </select><br>
+
+  <label for="capacidad">Capacidad:</label>
+  <input type="number" id="capacidad" name="capacidad" required min="1" placeholder="Ej. 30"><br>
+
+  <button type="submit">Crear Curso</button>
+</form>
+
+<div th:replace="footer :: footer"></div>
+
+</body>
+</html>
