@@ -16,14 +16,6 @@ body {
   color: #333;
 }
 
-/*body {
-  background-image:url("../img/background.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  color: #333;
-}*/
-
 header {
   display: flex;
   justify-content: space-between;
@@ -208,13 +200,22 @@ nav a.active:hover {
   background-color: #b66e28;
 }
 
-.eventos ul {
-  list-style-type: none;
-  padding: 0;
+.boton-ver-cursos {
+  margin: 10px 0 0 0;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #1cb0f6;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: 'Feather Bold', sans-serif;
+  transition: background-color 0.3s ease;
 }
 
-.eventos li {
-  margin-bottom: 10px;
+.boton-ver-cursos:hover {
+  background-color: #2b70c9;
 }
 
 footer {
