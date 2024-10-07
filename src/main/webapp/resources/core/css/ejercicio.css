@@ -164,9 +164,6 @@ nav a.active:hover {
     transform: scale(1.05);
 }
 
-
-
-
 .braille-item-sin-hover {
     display: flex;
     flex-direction: column;
@@ -188,7 +185,7 @@ nav a.active:hover {
     margin-bottom: 10px;
     font-size: 1.4em;
 }
-#braille-letter{
+#braille-letter, #sign{
     font-size: 20px;
     margin-top: -10px;
 }
@@ -234,15 +231,12 @@ label.optionLetra {
 }
 
 
-
-
 input[type="radio"]:checked {
     transform: scale(1.12);
     accent-color: #1453a3;
 }
 
 .enviar {
-
     height: 60px;
     width: 120px;
     padding: 20px;
@@ -269,7 +263,7 @@ input[type="radio"]:checked {
     background-color:red;
 
 }
-.question {
+.question{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -328,6 +322,8 @@ input[type="radio"]:checked {
     background-color: #1453A3;
     transform: scale(1.1);
     border: #01152b;
-
     transition: all 0.3s ease;
+}
+.sign-video{
+    align-items: center;
 }

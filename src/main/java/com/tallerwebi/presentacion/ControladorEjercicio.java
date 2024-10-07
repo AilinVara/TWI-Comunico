@@ -45,4 +45,23 @@ public class ControladorEjercicio {
         modelo.put("esCorrecta", (resuelto));
         return new ModelAndView("ejercicio", modelo);
     }
+
+    @RequestMapping(value = "/ejercicio-video", method = RequestMethod.GET)
+    public ModelAndView irAEjercicioVideo(@RequestParam(required = false, defaultValue = "2", value = "id") Long id){
+        ModelMap modelo = new ModelMap();
+        Ejercicio ejercicioVideo = servicioEjercicio.obtenerEjercicio(id);
+        modelo.put("ejercicio", ejercicioVideo);
+        return new ModelAndView("ejercicio-video", modelo);
+    }
+
+    @RequestMapping(path = "/resolverVideo", method = RequestMethod.POST)
+    public ModelAndView resolverEjercicioVideo(@RequestParam("opcionSeleccionada") Long opcionId,@RequestParam("ejercicioId")Long ejercicioId){
+        ModelMap modelo = new ModelMap();
+        Ejercicio ejercicioVideo = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
+        Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicioVideo, opcionId);
+        modelo.put("ejercicio",ejercicioVideo);
+        modelo.put("esCorrecta", (resuelto));
+        return new ModelAndView("ejercicio-video", modelo);
+    }
+
 }
