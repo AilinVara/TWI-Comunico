@@ -26,13 +26,6 @@ public class ControladorEjercicio {
             this.servicioProgresoLeccion = servicioProgresoLeccion;
     }
 
-//    @RequestMapping(value = "/ejercicio", method = RequestMethod.GET)
-//    public ModelAndView irAjercicio(){
-//        ModelMap modelo = new ModelMap();
-//        Ejercicio ejercicio = servicioEjercicio.obtenerEjercicio(1L);
-//        modelo.put("ejercicio", ejercicio);
-//        return new ModelAndView("ejercicio", modelo);
-//    }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
     public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request){
