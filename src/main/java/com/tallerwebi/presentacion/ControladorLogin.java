@@ -72,10 +72,6 @@ public class ControladorLogin {
         return new ModelAndView("inicio");
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
-    public ModelAndView irAlIndice() {
-        return new ModelAndView("indice");
-    }
 
     @RequestMapping(path = "/senias", method = RequestMethod.GET)
     public ModelAndView senias(){ return new ModelAndView("senias");}
