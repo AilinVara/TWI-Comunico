@@ -1,0 +1,16 @@
+<header th:fragment="header">
+  <div class="logo">
+    <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
+    <h1>omunico</h1>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a th:href="@{/inicio}" class="active">Inicio</a></li>
+      <li><a th:href="@{/senias}">Lengua de Señas</a></li>
+      <li><a th:href="@{/braille}">Braille</a></li>
+      <li><a th:href="@{/ejercicio}">Ejercicio</a></li>
+      <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon">
+    </ul>
+  </nav>
+</header>

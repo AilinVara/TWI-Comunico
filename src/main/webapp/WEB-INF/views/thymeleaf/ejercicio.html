@@ -2,63 +2,89 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comunico</title>
+    <title>Ejercicio</title>
+
+    <!-- custom style -->
     <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/css/ejercicio.css}"/>
-    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/ejercicio.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
+
 <body>
 
-<a th:href="@{/inicio}" class="cerrar">&#10005;</a>
-<h1>Ejercicio</h1>
-<p th:text="${ejercicio.consigna}">Consigna:</p>
-
-<img th:src="@{/img/braille-a.png}">
-
-<form action="#" th:action="@{'/resolver/' + ${indice}}" method="POST" th:object="${ejercicio}">
-    <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
-    <input hidden name="leccion" th:value="${leccion}">
-    <div class="radio-container">
-        <label>
-            <input type="radio" name="opcionSeleccionada" th:value="${ejercicio.opcionCorrecta.id}">
-            <span th:text="${ejercicio.opcionCorrecta.descripcion}">Opción correcta</span>
-        </label>
-        <div th:each="opcion : ${ejercicio.opcionesIncorrectas}">
-            <label>
-                <input type="radio" name="opcionSeleccionada" th:value="${opcion.id}">
-                <span th:text="${opcion.descripcion}">Opción incorrecta</span>
-            </label>
-        </div>
-    </div>
-    <button type="submit">Enviar</button>
-</form>
-
-<p th:text="${usuario}">Usuario</p>
-
-<div id="modal" class="modal" th:if="${esCorrecta != null}">
-    <div class="modal-content">
-        <p th:if="${esCorrecta}">¡Respuesta correcta!</p>
-        <p th:unless="${esCorrecta}">Respuesta incorrecta.</p>
-        <a th:if="${indice &lt; 3}" th:href="@{'/ejercicio/'+ ${indice + 1} + '?leccion=' + ${leccion}}" class="closeModal">Siguiente ejercicio</a>
-        <a th:if="${indice == 3}" th:href="@{/braille}" class="closeModal">Finalizar lección</a>
+<div class="titulo-de-la-leccion">
+    <a th:href="@{/inicio}"><img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img"/></a>
+    <h3>Ejercicio</h3>
+    <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"/>
+    <div class="grupo_input" id="vidaYNum">
+        <i class="fa-solid fa-heart" id="vidas"></i>
+        <h4>5</h4>
     </div>
 </div>
 
-<script>
-    window.onload = function() {
-        var modal = document.getElementById('modal');
-        if (modal) {
-            modal.style.display = 'block';
-            var closeModal = document.getElementsByClassName('closeModal');
-            Array.from(closeModal).forEach(function(element) {
-                element.addEventListener('click', function() {
-                    modal.style.display = 'none';
+<div class="game-container">
+    <div class="question">
+        <p id="braille-letter" th:text="${ejercicio.consigna}"></p>
+        <div id="braille-display" class="braille"></div>
+        <div class="braille-item-sin-hover">
+            <img th:src="@{/img/braille-a.png}">
+        </div>
+    </div>
+
+    <form action="#" th:action="@{/resolver}" method="POST" th:object="${ejercicio}">
+        <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
+
+        <div class="contenedorDeOpciones">
+            <div class="radioYLetraJuntos">
+                <input class="option" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
+                       th:value="${ejercicio.opcionCorrecta.id}"/>
+                <label class="optionLetra" th:for="opcionCorrecta" th:text="${ejercicio.opcionCorrecta.descripcion}">Opción correcta</label>
+            </div>
+            <div class="radioYLetraJuntos" th:each="opcion : ${ejercicio.opcionesIncorrectas}">
+                <input class="option" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}"/>
+                <label class="optionLetra" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">Opción incorrecta</label>
+            </div>
+
+        </div>
+
+        <button class="enviar" type="submit">Enviar</button>
+    </form>
+
+    <div th:if="${esCorrecta != null}">
+        <div th:if="${esCorrecta}">
+            <script th:inline="javascript">
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Correcto!',
+                    text: 'Respuesta correcta',
+                    confirmButtonColor: '#4CAF50'
                 });
-            });
-        }
-    }
-</script>
+            </script>
+        </div>
+        <div th:unless="${esCorrecta}">
+            <script th:inline="javascript">
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Incorrecto!',
+                    text: 'Respuesta incorrecta',
+                    confirmButtonColor: '#f44336'
+                });
+            </script>
+        </div>
+    </div>
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
 </body>
 </html>
