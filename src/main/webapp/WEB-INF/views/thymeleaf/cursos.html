@@ -16,7 +16,7 @@
 
 <form action="/buscarCursos" method="post" accept-charset="UTF-8" class="form-buscar">
     <input type="text" name="nombre" placeholder="Buscar curso por nombre" />
-    <button type="submit">Buscar</button>
+    <button type="submit" class="btn-filtrar">Buscar</button>
 </form>
 
 <form action="/filtrarCursos" method="POST" class="form-filtrar">
@@ -38,19 +38,24 @@
     <label for="ordenFecha">Fecha:</label>
     <select name="ordenFecha" id="ordenFecha" class="select-orden">
         <option value="">Ordenar por Fecha</option>
-        <option value="asc">Ascendente</option>
-        <option value="desc">Descendente</option>
+        <option value="asc">Más recientes</option>
+        <option value="desc">Más antiguos</option>
     </select>
 
     <button type="submit" class="btn-filtrar">Filtrar Cursos</button>
 </form>
 
-<!-- Lista de cursos -->
 <div class="cursos-container">
     <div class="curso-card" th:each="curso : ${cursos}">
-        <div class="curso-imagen">
+
+ <!--       <div class="curso-imagen">
          <img th:src="${curso.imagen}" alt="Imagen del curso" />
+        </div> -->
+
+        <div class="curso-imagen">
+            <img src="https://blog.duolingo.com/content/images/2024/07/cover_at-duolingo-humans-and-ai-work-together-to-create-a-high-quality-learning-experience.png" alt="Imagen del curso" />
         </div>
+
         <div class="curso-info">
             <h2 class="curso-nombre" th:text="${curso.nombre}">Nombre del curso</h2>
             <div class="curso-datos">

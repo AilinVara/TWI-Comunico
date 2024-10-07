@@ -40,7 +40,6 @@ public class ControladorCurso {
                                @RequestParam String nivel,
                                @RequestParam int capacidad) {
 
-        // Crear una nueva entidad Curso
         Curso nuevoCurso = new Curso();
         nuevoCurso.setNombre(nombre);
         nuevoCurso.setDescripcion(descripcion);
@@ -49,13 +48,11 @@ public class ControladorCurso {
         nuevoCurso.setTipo(tipo);
         nuevoCurso.setNivel(nivel);
         nuevoCurso.setCapacidad(capacidad);
-        nuevoCurso.setInscriptos(0); // Inicializar inscriptos en 0
+        nuevoCurso.setInscriptos(0);
 
-        // Llamar al servicio para guardar el curso
         servicioCurso.agregarCurso(nuevoCurso);
 
-        // Redirigir a la lista de cursos o a una página de éxito
-        return "redirect:/cursos"; // redirige a la lista de cursos después de guardar
+        return "redirect:/cursos";
     }
 
     @RequestMapping(value = "/filtrarCursos", method = RequestMethod.POST)
