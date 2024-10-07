@@ -20,6 +20,11 @@ public class ServicioCursoImpl implements ServicioCurso {
     }
 
     @Override
+    public void agregarCurso(Curso curso) {
+        repositorioCurso.agregarCurso(curso);
+    }
+
+    @Override
     public List<Curso> filtrarCursos(String tipo, String nivel) {
         return repositorioCurso.filtrarCursos(tipo, nivel);
     }
