@@ -1,52 +1,69 @@
 <!DOCTYPE html>
-<html lang= es xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cursos disponibles</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos Disponibles</title>
+    <link rel="stylesheet" th:href="@{/css/cursos.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
-<h1>Cursos disponibles</h1>
+<div th:replace="header :: header"></div>
 
-<form action="/buscarCursos" method="post" accept-charset="UTF-8">
-    <input type="text" name="nombre" placeholder="Buscar curso por nombre" />
-    <button type="submit">Buscar</button>
-</form>
+<main class="courses-page">
+    <h1>Cursos Disponibles</h1>
 
-<form action="/filtrarCursos" method="POST">
-    <label for="tipo">Tipo:</label>
-    <select name="tipo" id="tipo">
-        <option value="">Seleccione</option>
-        <option value="senias">Lengua de Senias</option>
-        <option value="braille">Braille</option>
-    </select>
+    <aside class="sidebar">
+        <h3>Categorías</h3>
+        <form th:action="@{/filtrarCursos}" method="post">
+            <ul>
+                <li>
+                    <input type="hidden" name="tipo" value="senias">
+                    <button type="submit">Lengua de señas</button>
+                </li>
+                <li>
+                    <input type="hidden" name="tipo" value="braille">
+                    <button type="submit">Braille</button>
+                </li>
+            </ul>
+        </form>
+    </aside>
 
-    <label for="nivel">Nivel:</label>
-    <select name="nivel" id="nivel">
-        <option value="">Seleccione</option>
-        <option value="basico">Básico</option>
-        <option value="intermedio">Intermedio</option>
-        <option value="avanzado">Avanzado</option>
-    </select>
+    <section class="courses-content">
+        <div class="search-filter">
+            <form action="#" th:action="@{/buscarCursos}" method="POST">
+                <input type="text" name="nombre" placeholder="Buscar cursos...">
+                <select name="nivel">
+                    <option value="">Todos los niveles</option>
+                    <option value="basico">Básico</option>
+                    <option value="intermedio">Intermedio</option>
+                    <option value="avanzado">Avanzado</option>
+                </select>
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
 
-    <label for="ordenFecha">Fecha:</label>
-    <select name="ordenFecha" id="ordenFecha">
-        <option value="">Ordenar por Fecha</option>
-        <option value="asc">Ascendente</option>
-        <option value="desc">Descendente</option>
-    </select>
+        <div class="courses-list">
+            <div th:each="curso : ${cursos}">
+                <article class="course-item">
+                    <img th:src="@{/imagenes/${curso.tipo}.jpg}" alt="Curso de [[${curso.nombre}]]">
+                    <div class="course-info">
+                        <h2 th:text="${curso.nombre}">Nombre del curso</h2>
+                        <p th:text="${curso.descripcion}">Descripción del curso</p>
+                        <div class="course-meta">
+                            <span class="difficulty" th:text="'Nivel: ' + ${curso.nivel}">Nivel: </span>
+                            <span class="duration"><i class="fas fa-clock"></i> <span th:text="${curso.hora}">Duración</span></span>
+                        </div>
+                        <button class="btn-view">Ver más</button>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
 
-    <button type="submit">Filtrar Cursos</button>
-</form>
-
-<ul>
-    <li th:each="curso : ${cursos}">
-        <span th:text="${curso.nombre}">Nombre del curso</span> -
-        <span th:text="${curso.fecha}">Fecha</span> -
-        <span th:text="${curso.hora}">Hora</span> -
-        <span th:text="${curso.capacidad}">Capacidad</span>
-    </li>
-</ul>
+<div th:replace="footer :: footer"></div>
 
 </body>
 </html>
