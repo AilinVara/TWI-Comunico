@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -22,12 +23,15 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,14 +49,12 @@ public class ControladorEjercicioTest {
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
-    private MockHttpServletRequest mockRequest;
 
     @BeforeEach
     public void init(){
         this.repositorioEjercicio = new RepositorioEjercicioImpl(sessionFactory);
         this.servicioEjercicio = new ServicioEjercicioImpl(repositorioEjercicio);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-        this.mockRequest = new MockHttpServletRequest();
     }
 
     private Ejercicio crearEjercicio() {
@@ -76,7 +78,7 @@ public class ControladorEjercicioTest {
     @Test
     @Transactional
     @Rollback
-    public void dadoQueExisteUnaLeccionConEjerciciosCuandoUnUsuarioResuelveUnEjercicioDebeRetornarLaVistaEjercicioYVerdaderoEnElModelo() throws Exception {
+    public void dadoQueExisteUnaLeccionConEjerciciosCuandoUnUsuarioResuelveCorrectamenteUnEjercicioSeDebeRetornarLaVistaEjercicioYVerdaderoEnElModelo() throws Exception {
 
         Usuario usuario = new Usuario();
         this.sessionFactory.getCurrentSession().save(usuario);
@@ -84,12 +86,14 @@ public class ControladorEjercicioTest {
         Leccion leccion = crearLeccion();
         this.sessionFactory.getCurrentSession().save(leccion);
 
-        this.mockRequest.addParameter("id", usuario.getId().toString());
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("id", usuario.getId());
 
         MvcResult result = this.mockMvc.perform(post("/resolver/1?leccion=" + leccion.getId().toString())
                         .param("opcionSeleccionada", "1")
                         .param("ejercicioId", "1")
-                        .param("leccion",leccion.getId().toString()))
+                        .param("leccion",leccion.getId().toString())
+                        .session(session))
                         .andExpect(status().isOk())
                         .andReturn();
 
@@ -117,6 +121,8 @@ public class ControladorEjercicioTest {
     @Transactional
     @Rollback
     public void cuandoNavegoALaRutaEjercicioYEnvioUnIdDeParametroReciboLaVistaEjercicioYElEjercicioConEseIdEnElModelo() throws Exception {
+
+
 
         Ejercicio ejercicio1 = crearEjercicio();
         ejercicio1.setConsigna("Consigna 1");

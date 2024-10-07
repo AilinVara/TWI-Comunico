@@ -45,13 +45,11 @@ public class ControladorEjercicio {
         ModelMap modelo = new ModelMap();
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
-
         ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
 
         if(progreso == null){
             this.servicioProgresoLeccion.crearProgresoLeccion(leccionId, usuarioId);
             progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
-            System.out.println("PROGRESO COMPLETADO: " + progreso.getId());
         }
         Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicio, opcionId);
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
