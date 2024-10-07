@@ -1,381 +1,333 @@
-    @import url(https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold);
-    @font-face {
-        font-family: "Feather Bold";
-    }
+@import url(https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold);
+@font-face {
+    font-family: "Feather Bold";
+    src: url("TWI-Comunico/src/main/webapp/resources/core/fonts/feather_bold_by_typicalbro44_dee263c.ttf");
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Feather Bold', sans-serif;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Feather Bold', sans-serif;
+}
 
-    body {
-        background-image:url("../img/fondo-lecciones.jpg");
-        background-size: cover;
-        background-position: center;
-        color: #333;
-    }
+/*body {
+  background-color: #f7f9fc;
+  color: #333;
+}*/
 
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        background-color: #1cb0f6;
-        color: white;
-    }
+body {
+    background-image:url("../img/fondo-lecciones.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #333;
+}
 
-    .logo {
-        display: flex;
-        align-items: center;
-        margin-left: 20px;
-    }
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #1cb0f6;
+    color: white;
+}
 
-    .logo h1 {
-        font-size: 1.8em;
-    }
+.logo {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
 
-    .logo-img {
-        width: 50px;
-        height: auto;
-    }
+.logo h1 {
+    font-size: 1.8em;
+}
 
-    nav ul {
-        list-style-type: none;
-        display: flex;
-        gap: 20px;
-        align-items: center;
-    }
+.logo-img {
+    width: 50px;
+    height: auto;
+}
 
-    nav a {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-    }
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
 
-    nav a:hover {
-        text-decoration: underline;
-    }
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-    nav a.active {
-        background-color: #2b70c9;
-        padding: 10px;
-        border-radius: 5px;
-        text-decoration: none;
-    }
+nav a:hover {
+    text-decoration: underline;
+}
 
-    nav a.active:hover {
-        background-color: #215598;
-    }
+nav a.active {
+    background-color: #2b70c9;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
 
-    .perfil {
-        display: flex;
-        align-items: center;
-    }
+nav a.active:hover {
+    background-color: #215598;
+}
 
-    .user-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-left: 8px;
-        margin-right: 15px;
-        transition: transform 0.3s ease;
-    }
+.perfil {
+    display: flex;
+    align-items: center;
+}
 
-    .user-icon:hover{
-        transform: scale(1.2);
-    }
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 8px;
+    margin-right: 15px;
+    transition: transform 0.3s ease;
+}
 
-    .titulo {
-        text-align: center;
-        padding: 50px;
-        font-size: 2.5em;
-        margin-bottom: 10px;
-        color: #333;
-    }
+.user-icon:hover{
+    transform: scale(1.2);
+}
 
-    .titulo-de-la-leccion {
-        text-align: center;
-        padding: 20px;
-        font-size: 2.5em;
-        margin-bottom: 30px;
-        color: #fff;
-        background-color:#1cb0f6;
-    }
+.titulo {
+    text-align: center;
+    padding: 50px;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #333;
+}
 
-    .leccionesBasicas {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.titulo-de-la-leccion {
+    text-align: center;
+    padding: 20px;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #fff;
+    background-color:#1cb0f6;
+}
 
-    .lecciones {
-        height: 76px;
-        width: 550px;
-        padding: 20px;
-        background-color: #fff;
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        font-size: 1.2em;
-        cursor: pointer;
-        margin-bottom: 20px;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
+.leccionesBasicas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    .lecciones:hover {
-        background-color: #89e219;
-        color: white;
-        transform: scale(1.05);
-    }
+.lecciones {
+    height: 76px;
+    width: 550px;
+    padding: 20px;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-    .volver-atras-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 30px;
-        margin-bottom: 49px;
-    }
+.lecciones:hover {
+    background-color: #89e219;
+    color: white;
+    transform: scale(1.05);
+}
 
-    .volver-atras {
-        display: inline-block;
-        width: 150px;
-        padding: 10px;
-        background-color: #fff;
-        text-align: center;
-        text-decoration: none;
-        color: #333;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        font-size: 1em;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
+.volver-atras-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 49px;
+}
 
-    .volver-atras:hover {
-        background-color: #ddd;
-        transform: scale(1.05);
-    }
+.volver-atras {
+    display: inline-block;
+    width: 150px;
+    padding: 10px;
+    background-color: #fff;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-    .braille-item-sin-hover {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 8px;
-        margin-top: -15px;
-        margin-right: 8em;
-        margin-left: 8em;
-        width: 25%;
-        background-color: #e0e0e0;
-        border-radius: 10px;
-        font-size: 2em;
-        color: #333;
-        transition: background-color 0.3s ease;
-
-    }
-    .letra {
-        margin-bottom: 10px;
-        font-size: 1.4em;
-    }
-
-    .braille {
-        font-size: 5em;
-        margin: 20px 0;
-    }
-    .contenedorDeOpciones {
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        gap:30px;
-        margin-top: 5px;
-    }
-
-    .radioYLetraJuntos {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 20px;
-        background-color: #1cb0f6;
-        border-radius: 10px;
-        padding: 10px;
-        width: auto;
-    }
-
-    label.optionLetra {
-        margin: 0 10px 0 0;
-        font-size: 1.2em;
-        color: aliceblue;
-    }
-
-    .option{
-        height:30px;
-        width: 30px;
-        margin: 4px;
-    }
-
-    input[type="radio"]:checked {
-        transform: scale(1.12);
-        accent-color: #1cb0f6;
-    }
-
-    .contenedor-enviar{
-        display: flex;
-    }
-
-    .contenedor-enviar{
-        display:flex;
-        justify-content:center;
-        align-items:center;
-    }
-
-    .enviar {
-
-        height: 60px;
-        width: 120px;
-        padding: 20px;
-        background-color: #58cc02;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        font-size: 1.2em;
-        cursor: pointer;
-        margin: 20px 0 20px 0;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-    .enviar:hover {
-        background-color: #46a001;
-        transform: scale(1.05);
-    }
-
-    .question {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        width: 100%;
-    }
-
-    .titulo-de-la-leccion .logo-img{
-        position: absolute;
-        left: 1em;
-        top: 5%;
-    }
+.volver-atras:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}
 
 
 
-    #vidas{
-        font-size: 16px;
-        color: #EA2B2B;
-    }
 
-    #vidaYNum {
-        right: 30px;
-        top: 16%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        background-color: #2B70C9;
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-        position: absolute;
-        right: 100px;
-        top: 5%;
+.braille-item-sin-hover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin-top: -15px;
+    margin-right: 8em;
+    margin-left: 8em;
+    width: 25%;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    font-size: 2em;
+    color: #333;
+    transition: background-color 0.3s ease;
 
-    }
+}
+.letra {
+    margin-bottom: 10px;
+    font-size: 1.4em;
+}
+#braille-letter{
+    font-size: 20px;
+    margin-top: -10px;
+}
 
-    #vidaYNum h4 {
-        margin-right: 11px;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-    }
+.braille {
+    font-size: 5em;
+    margin: 20px 0;
+}
+.contenedorDeOpciones {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:30px;
+    margin-top: 5px;
 
-    #vidaYNum:hover{
-        background-color: #1453A3;
-        transform: scale(1.1);
-        border: #01152b;
+}
+.radioYLetraJuntos {
+    margin: 20px;
+    background-color: #1cb0f6;
+    border-radius: 10px;
+    padding: 2.8px;
+    width: 5%;
+}
+.options{
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 500px;
 
-        transition: all 0.3s ease;
-    }
+}
+label.optionLetra {
+    position: absolute;
+    top: 492px;
+    color: aliceblue;
+}
 
-    footer {
-        background-color: #333;
-        color: white;
-        padding: 40px 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: left;
-        font-size: 1em;
-        margin-top: 80px;
-    }
+.option{
+    height:30px;
+    width: 30px;
+    border-radius:30px;
+    margin: 4px;
+}
 
-    .footer-container {
-        display: flex;
-        justify-content: space-around;
-        width: 100%;
-        max-width: 1200px;
-    }
 
-    .footer-section {
-        flex: 1;
-        margin: 0 20px;
-    }
 
-    .footer-section h4 {
-        font-size: 1.2em;
-        margin-bottom: 15px;
-    }
 
-    .footer-section p {
-        font-size: 1em;
-    }
+input[type="radio"]:checked {
+    transform: scale(1.12);
+    accent-color: #1453a3;
+}
 
-    .footer-section ul {
-        list-style: none;
-        padding: 0;
-    }
+.enviar {
 
-    .footer-section ul li {
-        margin-bottom: 10px;
-    }
+    height: 60px;
+    width: 120px;
+    padding: 20px;
+    background-color: #D7FFB8;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-bottom: 20px;
+    margin-left: 88%;
+    margin-top: -25px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.enviar:hover {
+    background-color: #89e219;
+    color: white;
+    transform: scale(1.05);
+}
+.contenedorEnviar{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:red;
 
-    .footer-section ul li a {
-        color: #ffffff;
-        text-decoration: none;
-    }
+}
+.question {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
 
-    .footer-section ul li a:hover {
-        text-decoration: underline;
-    }
+.titulo-de-la-leccion .logo-img{
+    position: absolute;
+    left: 1em;
+    top: 5%;
+}
 
-    .footer-logo {
-        width: 100px;
-        margin-top: 10px;
-    }
 
-    .social-icons {
-        display: flex;
-        gap: 15px;
-    }
 
-    .social-icons a {
-        color: white;
-        font-size: 1.5em;
-        text-decoration: none;
-    }
+#vidas{
+    font-size: 16px;
+    color: #EA2B2B;
+}
 
-    .social-icons a:hover {
-        color: #ddd;
-    }
+#vidaYNum {
+    right: 30px;
+    top: 16%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #2B70C9;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    position: absolute;
+    right: 100px;
+    top: 5%;
 
-    .footer-bottom {
-        text-align: center;
-        font-size: 0.9em;
-    }
+}
+.user-icon{
+    position: absolute;
+    right: 20px;
+    top:3.5%;
+    width: 55px;
+    height: 55px;
+
+
+}
+#vidaYNum h4 {
+    margin-right: 11px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#vidaYNum:hover{
+    background-color: #1453A3;
+    transform: scale(1.1);
+    border: #01152b;
+
+    transition: all 0.3s ease;
+}

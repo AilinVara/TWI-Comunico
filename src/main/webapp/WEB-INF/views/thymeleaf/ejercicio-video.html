@@ -18,13 +18,72 @@
 
 <div class="titulo-de-la-leccion">
   <a th:href="@{/inicio}"><img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img"/></a>
-  <h3>Ejercicio</h3>
+  <h3>Ejercicio con video</h3>
   <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"/>
   <div class="grupo_input" id="vidaYNum">
     <i class="fa-solid fa-heart" id="vidas"></i>
     <h4>5</h4>
   </div>
 </div>
+
+<div class="game-container">
+<div class="question">
+  <p id="braille-letter sign" th:text="${ejercicio.consigna}"></p>
+</div>
+
+  <div class="sign-video">
+    <iframe width="460" height="350" src="https://www.youtube.com/embed/wk2p48ptyNo?si=jozE8deKO0XA2-FH"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+    <form action="#" th:action="@{/resolverVideo}" method="post" th:object="${ejercicio}">
+        <input hidden th:name="ejercicioId" th:value="${ejercicio.getId()}">
+
+             <div class="radioYLetraJuntos" th:each="opcion: ${ejercicio.opcionesIncorrectas}">
+                 <input class="option" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}"/>
+                 <label class="optionLetra" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">Opción incorrecta</label>
+             </div>
+
+             <div class="radioYLetraJuntos">
+                 <input class="option" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
+                        th:value="${ejercicio.opcionCorrecta.id}"/>
+                 <label class="optionLetra" th:for="opcionCorrecta" th:text="${ejercicio.opcionCorrecta.descripcion}">Opcion correcta</label>
+             </div>
+
+          <!--<p>Sorpresa</p>
+          <p>Ahí esta</p>
+          <p>Mucho</p>-->
+        <button class="enviar" type="submit">Enviar</button>
+    </form>
+</div>
+    <div th:if="${esCorrecta != null}">
+        <div th:if="${esCorrecta}">
+            <script th:inline="javascript">
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Correcto!',
+                    text: 'Respuesta correcta',
+                    confirmButtonColor: '#4CAF50'
+                });
+            </script>
+        </div>
+        <div th:unless="${esCorrecta}">
+            <script th:inline="javascript">
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Incorrecto!',
+                    text: 'Respuesta incorrecta',
+                    confirmButtonColor: '#f44336'
+                });
+            </script>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 </html>
