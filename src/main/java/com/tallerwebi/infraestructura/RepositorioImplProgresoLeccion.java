@@ -43,7 +43,7 @@ public class RepositorioImplProgresoLeccion implements RepositorioProgresoLeccio
     }
 
     @Override
-    public void actualizar(ProgresoLeccion progreso) {
-        this.sessionFactory.getCurrentSession().update(progreso);
+    public void actualizar(ProgresoLeccion progresoLeccion) {
+        this.sessionFactory.getCurrentSession().update(progresoLeccion);
     }
 }

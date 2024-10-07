@@ -46,4 +46,28 @@ public class ProgresoLeccion {
     public Long getId() {
         return id;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Leccion getLeccion() {
+        return leccion;
+    }
+
+    public void setLeccion(Leccion leccion) {
+        this.leccion = leccion;
+    }
+
+    public Ejercicio getEjercicio() {
+        return ejercicio;
+    }
+
+    public void setEjercicio(Ejercicio ejercicio) {
+        this.ejercicio = ejercicio;
+    }
 }

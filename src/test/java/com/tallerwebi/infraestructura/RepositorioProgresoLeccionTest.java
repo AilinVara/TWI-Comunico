@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -31,29 +33,100 @@ public class RepositorioProgresoLeccionTest {
         this.repositorioProgresoLeccion = new RepositorioImplProgresoLeccion(sessionFactory);
     }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void dadoQueExisteUnUsuarioUnaLeccionYUnEjercicioPuedoUsarlosParaGuardarUnProgresoLeccionEnLaBaseDeDatos(){
+    public ProgresoLeccion crearProgresoLeccion(){
         Usuario usuario = new Usuario();
         this.sessionFactory.getCurrentSession().save(usuario);
         Leccion leccion = new Leccion();
         this.sessionFactory.getCurrentSession().save(leccion);
         Ejercicio ejercicio = new Ejercicio();
         this.sessionFactory.getCurrentSession().save(ejercicio);
+        return new ProgresoLeccion(usuario, leccion, ejercicio);
+    }
 
-        ProgresoLeccion progresoLeccion = new ProgresoLeccion(usuario, leccion, ejercicio);
+
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExisteUnUsuarioUnaLeccionYUnEjercicioPuedoUsarlosParaGuardarUnProgresoLeccionEnLaBaseDeDatos(){
+
+        ProgresoLeccion progresoLeccion = crearProgresoLeccion();
 
         this.repositorioProgresoLeccion.guardar(progresoLeccion);
 
         String hql = "SELECT pg FROM ProgresoLeccion pg JOIN Usuario u ON pg.usuario = u.id JOIN Leccion l on pg.leccion = l.id JOIN Ejercicio e ON pg.ejercicio = e.id WHERE u.id = :uid AND l.id = :lid AND e.id = :eid";
         Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("uid", usuario.getId());
-        query.setParameter("lid", leccion.getId());
-        query.setParameter("eid", ejercicio.getId());
+        query.setParameter("uid", progresoLeccion.getUsuario().getId());
+        query.setParameter("lid", progresoLeccion.getLeccion().getId());
+        query.setParameter("eid", progresoLeccion.getEjercicio().getId());
         ProgresoLeccion progresoLeccionRecibido = (ProgresoLeccion) query.getSingleResult();
 
         assertThat(progresoLeccionRecibido, equalTo(progresoLeccion));
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExisteUnProgresoLeccionCuandoLoBuscoPorIdsEntoncesLoEncuentroEnLaBaseDeDatos() {
+        ProgresoLeccion progresoLeccion = crearProgresoLeccion();
+        this.repositorioProgresoLeccion.guardar(progresoLeccion);
+
+        Long leccionId = progresoLeccion.getLeccion().getId();
+        Long usuarioId = progresoLeccion.getUsuario().getId();
+        Long ejercicioId = progresoLeccion.getEjercicio().getId();
+
+        ProgresoLeccion progresoRecibido = this.repositorioProgresoLeccion.buscarPorIds(leccionId,usuarioId,ejercicioId);
+
+        assertThat(progresoRecibido, equalTo(progresoLeccion));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExisten3ProgresosLeccionDeUnUsuarioEnUnaLeccionCuandoLosBuscoPorUsuarioIdYLeccionIdEntoncesLosEncuentroEnLaBaseDeDatos() {
+        Leccion leccion = new Leccion();
+        this.sessionFactory.getCurrentSession().save(leccion);
+        Usuario usuario = new Usuario();
+        this.sessionFactory.getCurrentSession().save(usuario);
+        Ejercicio ejercicio1 = new Ejercicio();
+        this.sessionFactory.getCurrentSession().save(ejercicio1);
+        Ejercicio ejercicio2 = new Ejercicio();
+        this.sessionFactory.getCurrentSession().save(ejercicio2);
+        Ejercicio ejercicio3 = new Ejercicio();
+        this.sessionFactory.getCurrentSession().save(ejercicio3);
+
+        ProgresoLeccion progreso1 = new ProgresoLeccion(usuario, leccion, ejercicio1);
+        ProgresoLeccion progreso2 = new ProgresoLeccion(usuario, leccion, ejercicio2);
+        ProgresoLeccion progreso3 = new ProgresoLeccion(usuario, leccion, ejercicio3);
+
+        this.repositorioProgresoLeccion.guardar(progreso1);
+        this.repositorioProgresoLeccion.guardar(progreso2);
+        this.repositorioProgresoLeccion.guardar(progreso3);
+
+        List<ProgresoLeccion> progresosRecibidos = this.repositorioProgresoLeccion.buscarPorUsuarioIdYLeccionId(usuario.getId(), leccion.getId());
+
+        assertThat(progresosRecibidos.size(), equalTo(3));
+        assertThat(progresosRecibidos.contains(progreso1), equalTo(true));
+        assertThat(progresosRecibidos.contains(progreso2), equalTo(true));
+        assertThat(progresosRecibidos.contains(progreso3), equalTo(true));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExisteUnProgresoLeccionCuandoLoActualizoEntoncesSeReflejanLosCambios(){
+        ProgresoLeccion progreso = crearProgresoLeccion();
+        this.repositorioProgresoLeccion.guardar(progreso);
+
+        ProgresoLeccion progresoAntes = this.repositorioProgresoLeccion.buscarPorIds(progreso.getLeccion().getId(), progreso.getUsuario().getId(), progreso.getEjercicio().getId());
+
+        assertThat(progresoAntes.getCompleto(), equalTo(false));
+
+        progresoAntes.setCompleto(true);
+
+        this.repositorioProgresoLeccion.actualizar(progresoAntes);
+
+        ProgresoLeccion progresoDespues = this.repositorioProgresoLeccion.buscarPorIds(progresoAntes.getLeccion().getId(), progresoAntes.getUsuario().getId(), progresoAntes.getEjercicio().getId());
+
+        assertThat(progresoDespues.getCompleto(), equalTo(true));
+    }
 }
