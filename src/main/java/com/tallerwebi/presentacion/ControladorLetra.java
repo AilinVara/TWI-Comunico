@@ -3,8 +3,11 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.Letra;
 import com.tallerwebi.dominio.ServicioLetra;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,16 +33,28 @@ public ControladorLetra(ServicioLetra servicioLetra) {
 @RequestMapping(path = "/", method = RequestMethod.GET)
 public ModelAndView irAlIndiceYCargarImagenes() throws IOException {
     List<Letra> letras = this.servicioLetra.buscarTodasLasLetras();
-
     if(letras.isEmpty()){
         this.servicioLetra.crearTodasLasLetras();
     }
-
     return new ModelAndView("indice");
 }
 
+    @RequestMapping(value = "/img/braille/{nombre}")
+    public ResponseEntity<byte[]> obtenerImagenBraille(@PathVariable("nombre") String nombre) throws IOException {
+        Letra letra = this.servicioLetra.buscarPorNombre(nombre);
+        byte[] imagen = letra.getImagenBraille();
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imagen);
+    }
 
-@RequestMapping("braille/alfabeto")
+    @RequestMapping(value = "/img/senias/{nombre}")
+    public ResponseEntity<byte[]> obtenerImagenSenias(@PathVariable("nombre") String nombre) throws IOException {
+        Letra letra = this.servicioLetra.buscarPorNombre(nombre);
+        byte[] imagen = letra.getImagenSenias();
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imagen);
+    }
+
+
+    @RequestMapping("braille/alfabeto")
 public ModelAndView alfabetoBraille(@RequestParam(required = false, defaultValue = "", value="letra") String letraBuscada) {
     ModelMap modelo = new ModelMap();
     List<Letra> letras = new ArrayList<>();
