@@ -34,10 +34,3 @@ INSERT INTO Letra(id, nombre, imagenSenias, imagenBraille) VALUES
 (25, "X", 'senias-x.png', 'braille-x.png'),
 (26, "Y", 'senias-y.png', 'braille-y.png'),
 (27, "Z", 'senias-z.png', 'braille-z.png');
-
-INSERT INTO Curso(id, nombre, descripcion, fecha, hora, tipo, nivel, capacidad, inscriptos) VALUES
-(1, 'Curso Básico de Lengua de Señas', 'Introducción a la lengua de señas para principiantes.', '2024-10-15', '10:00:00', 'senias', 'basico', 20, 0),
-(2, 'Curso Intermedio de Lengua de Señas', 'Profundización en la lengua de señas para quienes ya tienen conocimientos básicos.', '2024-10-22', '11:00:00', 'senias', 'intermedio', 15, 0),
-(3, 'Curso Avanzado de Lengua de Señas', 'Dominio avanzado de la lengua de señas y su uso en situaciones complejas.', '2024-11-01', '09:00:00', 'senias', 'avanzado', 10, 0),
-(4, 'Curso de Braille para Principiantes', 'Introducción al sistema Braille y su aplicación en la vida diaria.', '2024-11-05', '14:00:00', 'braille', 'basico', 25, 0),
-(5, 'Curso de Braille Avanzado', 'Profundización en el sistema Braille para usuarios con experiencia.', '2024-11-10', '16:00:00', 'braille', 'avanzado', 10, 0);
