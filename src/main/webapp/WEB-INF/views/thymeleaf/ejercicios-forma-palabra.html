@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ejercicios de Velocidad</title>
+    <link rel="stylesheet" th:href="@{/css/ejercicio-forma-palabra.css}" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<h1  class="titulo">Formá palabras</h1>
+<div th:each="ejercicio, iterStat : ${ejercicios}">
+    <div th:if="${iterStat.index == indiceEjercicio}">
+        <div  class="imagen">
+            <img th:src="@{'/img/' + ${ejercicio.getImagen()}}" alt="Palabra en braille" />
+        </div>
+
+        <div class="drop-area" id="dropArea">
+            <p>Arrastrá las letras acá</p>
+            <div id="droppedLetters"></div>
+        </div>
+        <div class="contenedor-letras">
+            <div style="display: flex; justify-content: center; flex-wrap: wrap;" th:each="letra : ${ejercicio.letras}">
+                <div class="letter" th:text="${letra}" draggable="true" ondragstart="drag(event)"></div>
+            </div>
+        </div>
+        <form action="/verificarRespuesta" method="post">
+            <input type="hidden" name="respuestaUsuario" id="respuestaUsuario" value="">
+            <input type="hidden" name="indiceEjercicio" th:value="${indiceEjercicio}">
+            <button type="submit">Verificar</button>
+        </form>
+        <div th:if="${mensaje}" class="message">
+            <p th:text="${mensaje}"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function drag(event) {
+        event.dataTransfer.setData("text/plain", event.target.innerText);
+    }
+
+    document.getElementById("dropArea").addEventListener("dragover", function(event) {
+        event.preventDefault();
+    });
+
+    document.getElementById("dropArea").addEventListener("drop", function(event) {
+        event.preventDefault();
+        const data = event.dataTransfer.getData("text/plain");
+
+        const droppedLetterDiv = document.createElement("div");
+        droppedLetterDiv.classList.add("dropped-letter");
+        droppedLetterDiv.innerText = data;
+
+        document.getElementById("droppedLetters").appendChild(droppedLetterDiv);
+
+        const respuestaUsuario = document.getElementById("respuestaUsuario");
+        respuestaUsuario.value += data;
+    });
+</script>
+
+<div th:replace="footer :: footer"></div>
+
+</body>
+</html>
