@@ -27,7 +27,6 @@
      th:classappend="${#lists.size(letrasbraille) == 1} ? 'single-result'">
   <div th:each="letra : ${letrasbraille}" class="braille-item">
     <span class="letra" th:text="${letra.nombre}">Letra</span>
-    <img th:src="@{'/img/' + ${letra.imagenBraille}}" alt="Letra" class="braille-img">
   </div>
 </div>
 
