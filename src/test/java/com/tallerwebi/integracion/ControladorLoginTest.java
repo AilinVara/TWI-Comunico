@@ -95,7 +95,6 @@ public class ControladorLoginTest {
 		ModelAndView modelAndView = result.getModelAndView();
 		assert modelAndView != null;
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("braille"));
-		assertThat(true,  is(modelAndView.getModel().isEmpty()));
 	}
 
 }

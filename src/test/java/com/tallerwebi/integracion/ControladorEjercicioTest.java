@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,15 +22,12 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,13 +45,94 @@ public class ControladorEjercicioTest {
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
+    private MockHttpSession sessionMock;
 
     @BeforeEach
     public void init(){
         this.repositorioEjercicio = new RepositorioEjercicioImpl(sessionFactory);
         this.servicioEjercicio = new ServicioEjercicioImpl(repositorioEjercicio);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+        this.sessionMock = new MockHttpSession();
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExisteUnaLeccionConEjerciciosCuandoUnUsuarioResuelveCorrectamenteUnEjercicioSeDebeRetornarLaVistaEjercicioYVerdaderoEnElModelo() throws Exception {
+        Usuario usuario = new Usuario();
+        this.sessionFactory.getCurrentSession().save(usuario);
+
+        Leccion leccion = crearLeccion();
+        this.sessionFactory.getCurrentSession().save(leccion);
+
+
+        sessionMock.setAttribute("id", usuario.getId());
+
+        MvcResult result = this.mockMvc.perform(post("/resolver/1?leccion=" + leccion.getId().toString())
+                        .param("opcionSeleccionada", "1")
+                        .param("ejercicioId", "1")
+                        .param("leccion",leccion.getId().toString())
+                        .session(sessionMock))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+        ModelAndView modelAndView = result.getModelAndView();
+
+        assert modelAndView != null;
+
+        assertThat("ejercicio", equalToIgnoringCase(Objects.requireNonNull(modelAndView.getViewName())));
+        assertThat(false, is(modelAndView.getModel().isEmpty()));
+        assertThat(modelAndView.getModel().get("esCorrecta"), equalTo(true));
+    }
+
+
+
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConTresEjerciciosCuandoNavegoALaRutaEjercicioYEnvioUnIdDeParametroReciboLaVistaEjercicioYElEjercicioConEseIdEnElModelo() throws Exception {
+        Usuario usuario = new Usuario();
+        this.sessionFactory.getCurrentSession().save(usuario);
+        sessionMock.setAttribute("id", usuario.getId());
+
+        Ejercicio ejercicio1 = crearEjercicio();
+        ejercicio1.setConsigna("Consigna 1");
+
+        Ejercicio ejercicio2 = crearEjercicio();
+        ejercicio2.setConsigna("Consigna 2");
+
+        Ejercicio ejercicio3 = crearEjercicio();
+        ejercicio3.setConsigna("Consigna 3");
+
+        this.servicioEjercicio.guardarEjercicio(ejercicio1);
+        this.servicioEjercicio.guardarEjercicio(ejercicio2);
+        this.servicioEjercicio.guardarEjercicio(ejercicio3);
+
+        List<Ejercicio> listaEjercicios = new ArrayList<>();
+        listaEjercicios.add(ejercicio1);
+        listaEjercicios.add(ejercicio2);
+        listaEjercicios.add(ejercicio3);
+
+        Leccion leccion = crearLeccion();
+        leccion.setEjercicios(listaEjercicios);
+        this.sessionFactory.getCurrentSession().save(leccion);
+
+        MvcResult result = this.mockMvc.perform(get("/ejercicio/2?leccion=" + leccion.getId())
+                        .param("leccion", leccion.getId().toString())
+                        .session(sessionMock))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        ModelAndView modelAndView = result.getModelAndView();
+
+        Ejercicio ejercicioEsperado = this.servicioEjercicio.obtenerEjercicio(ejercicio2.getId());
+
+        assert modelAndView != null;
+
+        assertThat(modelAndView.getViewName(), equalTo("ejercicio"));
+        assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioEsperado));
+    }
+
 
     private Ejercicio crearEjercicio() {
         Ejercicio ejercicio = new Ejercicio();
@@ -74,38 +151,6 @@ public class ControladorEjercicioTest {
         return ejercicio;
     }
 
-
-    @Test
-    @Transactional
-    @Rollback
-    public void dadoQueExisteUnaLeccionConEjerciciosCuandoUnUsuarioResuelveCorrectamenteUnEjercicioSeDebeRetornarLaVistaEjercicioYVerdaderoEnElModelo() throws Exception {
-
-        Usuario usuario = new Usuario();
-        this.sessionFactory.getCurrentSession().save(usuario);
-
-        Leccion leccion = crearLeccion();
-        this.sessionFactory.getCurrentSession().save(leccion);
-
-        MockHttpSession session = new MockHttpSession();
-        session.setAttribute("id", usuario.getId());
-
-        MvcResult result = this.mockMvc.perform(post("/resolver/1?leccion=" + leccion.getId().toString())
-                        .param("opcionSeleccionada", "1")
-                        .param("ejercicioId", "1")
-                        .param("leccion",leccion.getId().toString())
-                        .session(session))
-                        .andExpect(status().isOk())
-                        .andReturn();
-
-        ModelAndView modelAndView = result.getModelAndView();
-
-        assert modelAndView != null;
-
-        assertThat("ejercicio", equalToIgnoringCase(Objects.requireNonNull(modelAndView.getViewName())));
-        assertThat(false, is(modelAndView.getModel().isEmpty()));
-        assertThat(modelAndView.getModel().get("esCorrecta"), equalTo(true));
-    }
-
     private Leccion crearLeccion() {
         Leccion leccion = new Leccion();
         leccion.setTitulo("Leccion 1");
@@ -116,40 +161,4 @@ public class ControladorEjercicioTest {
         leccion.setEjercicios(ejercicios);
         return leccion;
     }
-
-    @Test
-    @Transactional
-    @Rollback
-    public void cuandoNavegoALaRutaEjercicioYEnvioUnIdDeParametroReciboLaVistaEjercicioYElEjercicioConEseIdEnElModelo() throws Exception {
-
-
-
-        Ejercicio ejercicio1 = crearEjercicio();
-        ejercicio1.setConsigna("Consigna 1");
-
-        Ejercicio ejercicio2 = crearEjercicio();
-        ejercicio2.setConsigna("Consigna 2");
-
-        Ejercicio ejercicio3 = crearEjercicio();
-        ejercicio3.setConsigna("Consigna 3");
-
-        this.servicioEjercicio.guardarEjercicio(ejercicio1);
-        this.servicioEjercicio.guardarEjercicio(ejercicio2);
-        this.servicioEjercicio.guardarEjercicio(ejercicio3);
-
-        MvcResult result = this.mockMvc.perform(get("/ejercicio")
-                        .param("id", "2"))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        ModelAndView modelAndView = result.getModelAndView();
-
-        Ejercicio ejercicioEsperado = this.servicioEjercicio.obtenerEjercicio(2L);
-
-        assert modelAndView != null;
-
-        assertThat(modelAndView.getViewName(), equalTo("ejercicio"));
-        assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioEsperado));
-    }
-
 }
