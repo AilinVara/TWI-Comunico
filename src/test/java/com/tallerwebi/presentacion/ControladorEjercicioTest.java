@@ -79,7 +79,7 @@ public class ControladorEjercicioTest {
         when(sessionMock.getAttribute(anyString())).thenReturn(1L);
         when(servicioProgresoLeccionMock.buscarPorIds(anyLong(), anyLong(), anyLong())).thenReturn(progresoMock);
         when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, opcionCorrecta)).thenReturn(true);
-        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionCorrecta, 1L, 1L, requestMock);
+        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionCorrecta, 1L, 1L, 1L, requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("esCorrecta"), is(true));
@@ -94,7 +94,7 @@ public class ControladorEjercicioTest {
         when(sessionMock.getAttribute(anyString())).thenReturn(1L);
         when(servicioProgresoLeccionMock.buscarPorIds(anyLong(), anyLong(), anyLong())).thenReturn(progresoMock);
         when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, opcionIncorrecta)).thenReturn(false);
-        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionIncorrecta, 1L, 1L, requestMock);
+        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(1L, opcionIncorrecta, 1L, 1L, requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("esCorrecta"), is(false));

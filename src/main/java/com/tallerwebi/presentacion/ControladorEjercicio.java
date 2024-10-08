@@ -36,7 +36,7 @@ public class ControladorEjercicio {
     }
 
     @RequestMapping( path = "/resolver/{indice}", method = RequestMethod.POST)
-    public ModelAndView resolverEjercicio(@RequestParam("opcionSeleccionada") Long opcionId, @RequestParam("ejercicioId")Long ejercicioId,
+    public ModelAndView resolverEjercicio(@PathVariable("indice") Long indice, @RequestParam("opcionSeleccionada") Long opcionId, @RequestParam("ejercicioId")Long ejercicioId,
                                           @RequestParam("leccion")Long leccionId, HttpServletRequest request){
         ModelMap modelo = new ModelMap();
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
@@ -50,6 +50,7 @@ public class ControladorEjercicio {
         Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicio, opcionId);
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
+        modelo.put("indice", indice);
         modelo.put("leccion", leccionId);
         modelo.put("ejercicio",ejercicio);
         modelo.put("esCorrecta", (resuelto));
