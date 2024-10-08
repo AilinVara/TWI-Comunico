@@ -22,7 +22,6 @@ public class ControladorEjercicioTest {
     private Ejercicio ejercicioMock;
     private ServicioEjercicio servicioEjercicioMock;
     private ServicioLeccion servicioLeccionMock;
-    private ServicioLogin servicioUsuarioMock;
     private ServicioProgresoLeccion servicioProgresoLeccionMock;
     private HttpServletRequest requestMock;
     private Leccion leccionMock;
@@ -53,9 +52,8 @@ public class ControladorEjercicioTest {
         when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioMock);
         when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, ejercicioMock.getOpcionCorrecta().getId())).thenReturn(true);
         servicioLeccionMock = mock(ServicioLeccion.class);
-        servicioUsuarioMock = mock(ServicioLogin.class);
         servicioProgresoLeccionMock = mock(ServicioProgresoLeccion.class);
-        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioUsuarioMock, servicioProgresoLeccionMock);
+        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock);
     }
 
     @Test

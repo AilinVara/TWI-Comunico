@@ -18,7 +18,7 @@ public class ControladorEjercicio {
     private ServicioProgresoLeccion servicioProgresoLeccion;
 
     @Autowired
-    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioLogin servicioUsuario, ServicioProgresoLeccion servicioProgresoLeccion) {
+    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion) {
             this.servicioEjercicio = servicioEjercicio;
             this.servicioLeccion = servicioLeccion;
             this.servicioProgresoLeccion = servicioProgresoLeccion;
