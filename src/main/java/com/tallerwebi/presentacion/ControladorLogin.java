@@ -25,7 +25,6 @@ public class ControladorLogin {
 
     @RequestMapping("/login")
     public ModelAndView irALogin() {
-
         ModelMap modelo = new ModelMap();
         modelo.put("datosLogin", new DatosLogin());
         return new ModelAndView("login", modelo);
@@ -72,18 +71,5 @@ public class ControladorLogin {
         return new ModelAndView("inicio");
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
-    public ModelAndView irAlIndice() {
-        return new ModelAndView("indice");
-    }
-
-    @RequestMapping(path = "/senias", method = RequestMethod.GET)
-    public ModelAndView senias(){ return new ModelAndView("senias");}
-
-    @RequestMapping(path = "/braille", method = RequestMethod.GET)
-    public ModelAndView braille(){ return new ModelAndView("braille");}
-
-//    @RequestMapping(path = "/alfabeto", method = RequestMethod.GET)
-//    public ModelAndView alfabeto(){ return new ModelAndView("alfabeto");}
 }
 

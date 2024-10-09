@@ -11,10 +11,10 @@ public class Letra  {
     private String nombre;
 
     @Lob
-    @Column(name = "imagenSenias", columnDefinition="MEDIUMBLOB")
+    @Column(name = "imagenSenias")
     private byte[] imagenSenias;
     @Lob
-    @Column(name = "imagenBraille", columnDefinition="MEDIUMBLOB")
+    @Column(name = "imagenBraille")
     private byte[] imagenBraille;
 
     public Letra() {

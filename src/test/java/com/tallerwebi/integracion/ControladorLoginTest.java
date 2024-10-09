@@ -45,19 +45,6 @@ public class ControladorLoginTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}
 
-	@Test
-	public void debeRetornarLaPaginaIndiceCuandoSeNavegaALaRaiz() throws Exception {
-
-		MvcResult result = this.mockMvc.perform(get("/"))
-				/*.andDo(print())*/
-				.andExpect(status().isOk())
-				.andReturn();
-
-		ModelAndView modelAndView = result.getModelAndView();
-        assert modelAndView != null;
-		assertThat("indice", equalToIgnoringCase(Objects.requireNonNull(modelAndView.getViewName())));
-		assertThat(true, is(modelAndView.getModel().isEmpty()));
-	}
 
 	@Test
 	public void debeRetornarLaPaginaLoginCuandoSeNavegaALLogin() throws Exception {
