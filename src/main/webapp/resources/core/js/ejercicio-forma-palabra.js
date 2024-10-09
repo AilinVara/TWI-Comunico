@@ -1,46 +1,32 @@
-// Definir la función drag en el ámbito global
-console.log("ejercicio-forma-palabra.js cargado correctamente");
+// Array para almacenar las letras que han sido movidas a la drop-area
+let letrasSeleccionadas = [];
 
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.innerText);
+// Función para manejar el arrastre de las letras
+function drag(event) {
+    event.dataTransfer.setData("text/plain", event.target.innerText);
 }
 
-// Esperar a que el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', () => {
-    const dropArea = document.getElementById("dropArea");
-    const letters = document.querySelectorAll('.letter'); // Seleccionar todas las letras
-
-    // Agregar el evento dragstart a cada letra
-    letters.forEach(letter => {
-        letter.addEventListener('dragstart', drag);
-    });
-
-    dropArea.addEventListener("dragover", (ev) => {
-        ev.preventDefault(); // Necesario para permitir la caída
-    });
-
-    dropArea.addEventListener("drop", (ev) => {
-        ev.preventDefault();
-        const data = ev.dataTransfer.getData("text");
-
-        // Crear un nuevo div para la letra arrastrada
-        const letterDiv = document.createElement("div");
-        letterDiv.innerText = data;
-        letterDiv.classList.add("letter");
-        dropArea.appendChild(letterDiv);
-
-        // Actualizar el campo oculto de respuesta
-        updateRespuestaUsuario();
-    });
+// Evento cuando el área de drop permite que se le arrastren elementos
+document.getElementById("dropArea").addEventListener("dragover", function(event) {
+    event.preventDefault();
 });
 
-// Función para actualizar el valor del campo de respuesta
-function updateRespuestaUsuario() {
-    const letters = document.getElementById("dropArea").getElementsByClassName("letter");
-    let respuesta = '';
-    for (let i = 0; i < letters.length; i++) {
-        respuesta += letters[i].innerText;
-    }
-    document.getElementById("respuestaUsuario").value = respuesta; // Actualizar el campo oculto
-}
+// Evento cuando se suelta una letra en el área de drop
+document.getElementById("dropArea").addEventListener("drop", function(event) {
+    event.preventDefault();
+    const data = event.dataTransfer.getData("text/plain");
+
+    // Crear un nuevo div para mostrar la letra soltada
+    const droppedLetterDiv = document.createElement("div");
+    droppedLetterDiv.classList.add("dropped-letter");
+    droppedLetterDiv.innerText = data;
+
+    document.getElementById("droppedLetters").appendChild(droppedLetterDiv);
+
+    // Agregar la letra al array de letras seleccionadas
+    letrasSeleccionadas.push(data);
+
+    // Actualizar el campo oculto del formulario con las letras seleccionadas
+    const listaLetras = document.getElementById("listaLetras");
+    listaLetras.value = letrasSeleccionadas.join(""); // Convertir el array en una cadena
+});
