@@ -164,9 +164,6 @@ nav a.active:hover {
     transform: scale(1.05);
 }
 
-
-
-
 .braille-item-sin-hover {
     display: flex;
     flex-direction: column;
@@ -205,7 +202,7 @@ nav a.active:hover {
     margin-top: 5px;
 
 }
-.radioYLetraJuntos {
+.radioYLetraJuntos{
     margin: 20px;
     background-color: #1cb0f6;
     border-radius: 10px;
@@ -220,7 +217,7 @@ nav a.active:hover {
     max-width: 500px;
 
 }
-label.optionLetra {
+label.optionLetra{
     position: absolute;
     top: 492px;
     color: aliceblue;
@@ -234,15 +231,12 @@ label.optionLetra {
 }
 
 
-
-
 input[type="radio"]:checked {
     transform: scale(1.12);
     accent-color: #1453a3;
 }
 
 .enviar {
-
     height: 60px;
     width: 120px;
     padding: 20px;
@@ -269,7 +263,7 @@ input[type="radio"]:checked {
     background-color:red;
 
 }
-.question {
+.question{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -328,6 +322,36 @@ input[type="radio"]:checked {
     background-color: #1453A3;
     transform: scale(1.1);
     border: #01152b;
-
     transition: all 0.3s ease;
 }
+
+/*----------------------------------Ejercicio-Video------------------------------------*/
+
+.sign-gif{
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    gap: 15px;
+}
+.OpcionesFrase{
+    background-color: #1cb0f6;
+    border-radius: 10px;
+    display: flex;
+    gap: 12px;
+    padding: 8px 15px;
+    margin: 17px;
+}
+.optionFrase{
+    color: aliceblue;
+    font-size: 35px;
+    margin-right: 7px;
+}
+.optionVideo{
+    margin-left: 7px;
+}
+.enviar-ejercicioVideo{
+    margin-top: 30px;
+}
+
+
