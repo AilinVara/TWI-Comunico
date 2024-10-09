@@ -8,7 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+
 
 @Repository("repositorioVida")
 public class RepositorioVidaImpl implements RepositorioVida {
@@ -31,6 +31,11 @@ public class RepositorioVidaImpl implements RepositorioVida {
         return (Vida) session.createCriteria(Vida.class)
                 .add(Restrictions.eq("id", id))
                 .uniqueResult();
+    }
+
+    @Override
+    public void actualizarVida(Vida vida) {
+        this.sessionFactory.getCurrentSession().update(vida);
     }
 
 
