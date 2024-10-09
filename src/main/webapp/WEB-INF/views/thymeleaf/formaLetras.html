@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Forma Letras en Braille</title>
+    <link rel="stylesheet" th:href="@{/css/formaLetras.css}" />
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<header class="titulo-de-la-leccion">
+    <a th:href="@{/inicio}"><img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img"/></a>
+    <h3>Ejercicio de Braille</h3>
+    <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"/>
+    <div class="grupo_input" id="vidaYNum">
+        <i class="fa-solid fa-heart" id="vidas"></i>
+        <h4>5</h4>
+    </div>
+</header>
+
+<div class="game-container">
+    <div class="question">
+        <p id="braille-letter" th:text="${ejercicio.getConsigna()}"></p>
+    </div>
+
+    <form th:action="@{/braille/formaLetras/resolver}" method="POST" onsubmit="return concatenarCheckboxes()">
+        <input type="hidden" name="ejercicioId" th:value="${ejercicio.getId()}"/>
+        <input type="hidden" name="matrizId" th:value="${matriz.getId()}"/>
+        <input type="hidden" name="puntosSeleccionados" id="puntosSeleccionados" />
+
+        <div class="braille-matriz">
+            <label><input type="checkbox" name="punto" value="1" class="braille-checkbox"></label>
+            <label><input type="checkbox" name="punto" value="2" class="braille-checkbox"></label>
+            <label><input type="checkbox" name="punto" value="3" class="braille-checkbox"></label>
+            <label><input type="checkbox" name="punto" value="4" class="braille-checkbox"></label>
+            <label><input type="checkbox" name="punto" value="5" class="braille-checkbox"></label>
+            <label><input type="checkbox" name="punto" value="6" class="braille-checkbox"></label>
+        </div>
+
+        <div class="submit-container">
+            <button type="submit" class="enviar">Enviar</button>
+        </div>
+    </form>
+
+    <div th:if="${esCorrecta != null}">
+        <div th:if="${esCorrecta}">
+            <script th:inline="javascript">
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Correcto!',
+                    text: 'Respuesta correcta',
+                    confirmButtonColor: '#4CAF50'
+                });
+            </script>
+        </div>
+        <div th:unless="${esCorrecta}">
+            <script th:inline="javascript">
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Incorrecto!',
+                    text: 'Respuesta incorrecta',
+                    confirmButtonColor: '#f44336'
+                });
+            </script>
+        </div>
+    </div>
+    <div th:if="${mostrarVolverMenu}">
+        <a th:href="@{/braille}">
+            <input class="volver-atras" type="button" value="Volver al menú">
+        </a>
+    </div>
+</div>
+
+<script>
+    function concatenarCheckboxes() {
+        let checkboxes = document.querySelectorAll('.braille-checkbox');
+        let resultado = '';
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                resultado += '1';
+            } else {
+                resultado += '0';
+            }
+        });
+
+        document.getElementById('puntosSeleccionados').value = resultado;
+
+        return true;
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>
