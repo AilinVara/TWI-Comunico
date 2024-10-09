@@ -35,12 +35,30 @@ public class ControladorEjercicioFormaPalabra {
     }
 
     @RequestMapping(value = "/verificarRespuesta", method = RequestMethod.POST)
-    public ModelAndView verificarRespuesta(@RequestParam("listaLetras") String listaLetras, @RequestParam("ejercicioId")Long ejercicioId) {
+    public ModelAndView verificarRespuesta(@RequestParam("listaLetras") String listaLetras, @RequestParam("ejercicioId") Long ejercicioId) {
         ModelMap modelo = new ModelMap();
         EjercicioFormaPalabra ejercicio = this.servicioEjercicioFormaPalabra.obtenerEjercicio(ejercicioId);
         Boolean resuelto = this.servicioEjercicioFormaPalabra.resolverEjercicio(ejercicio.getRespuestaCorrecta(), listaLetras);
-        modelo.put("ejercicio",ejercicio);
         modelo.put("esCorrecta", resuelto);
+
+        if (resuelto) {
+            if (ejercicioId < 3) {
+                EjercicioFormaPalabra siguienteEjercicio = this.servicioEjercicioFormaPalabra.obtenerEjercicio(ejercicio.getId() + 1);
+                List<String> letras = servicioEjercicioFormaPalabra.convertirLetrasALista(siguienteEjercicio.getLetras());
+                modelo.put("letras", letras);
+                modelo.put("ejercicio", siguienteEjercicio);
+            } else if (ejercicioId == 3) {
+                modelo.put("mostrarVolverMenu", true);
+                List<String> letras = servicioEjercicioFormaPalabra.convertirLetrasALista(ejercicio.getLetras());
+                modelo.put("letras", letras);
+                modelo.put("ejercicio", ejercicio);
+            }
+        } else {
+            List<String> letras = servicioEjercicioFormaPalabra.convertirLetrasALista(ejercicio.getLetras());
+            modelo.put("letras", letras);
+            modelo.put("ejercicio", ejercicio);
+        }
+
         return new ModelAndView("ejercicios-forma-palabra", modelo);
     }
 }
