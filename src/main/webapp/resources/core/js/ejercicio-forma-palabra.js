@@ -1,3 +1,5 @@
+console.log("Archivo JS cargado correctamente.");
+
 // Array para almacenar las letras que han sido movidas a la drop-area
 let letrasSeleccionadas = [];
 
