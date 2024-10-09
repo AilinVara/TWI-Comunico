@@ -7,4 +7,7 @@ public interface ServicioEjercicio {
     Ejercicio obtenerEjercicio(Long ejercicioId);
 
     Boolean resolverEjercicio(Ejercicio ejercicio, Long opcionId);
+
+    public Boolean perderVida(Long id);
+
 }
