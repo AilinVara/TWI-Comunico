@@ -12,16 +12,22 @@ public class EjercicioFormaPalabra {
 
     private String imagen;
     private String respuestaCorrecta;
-
-    @ElementCollection
-    private List<String> letras;
+    private String letras;
 
     public EjercicioFormaPalabra() {}
 
-    public EjercicioFormaPalabra(String imagen, String respuestaCorrecta, List<String> letras) {
+    public EjercicioFormaPalabra(String imagen, String respuestaCorrecta, String letras) {
         this.imagen = imagen;
         this.respuestaCorrecta = respuestaCorrecta;
         this.letras = letras;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getRespuestaCorrecta() {
@@ -40,11 +46,11 @@ public class EjercicioFormaPalabra {
         this.imagen = imagen;
     }
 
-    public List<String> getLetras() {
+    public String getLetras() {
         return letras;
     }
 
-    public void setLetras(List<String> letras) {
+    public void setLetras(String letras) {
         this.letras = letras;
     }
 }
