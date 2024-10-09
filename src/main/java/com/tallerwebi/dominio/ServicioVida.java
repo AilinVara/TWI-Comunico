@@ -4,9 +4,9 @@ public interface ServicioVida {
 
      Vida obtenerVida(Long id);
 
-    Boolean perderUnaVida(Usuario usuario);
+    Boolean perderUnaVida(Long usuarioId);
 
-    Boolean regenerarUnaVida(Long id);
+    Boolean regenerarUnaVida(Long vidaId);
 
 
 }

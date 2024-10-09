@@ -7,18 +7,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Service("servicioVida")
 @Transactional
 public class ServicioVidaImpl implements ServicioVida {
 
     private RepositorioVida repositorioVida;
+    private RepositorioUsuario repositorioUsuario;
 
     @Autowired
-    public ServicioVidaImpl(RepositorioVida repositorioVida) {
+    public ServicioVidaImpl(RepositorioVida repositorioVida, RepositorioUsuario repositorioUsuario) {
         this.repositorioVida = repositorioVida;
+        this.repositorioUsuario = repositorioUsuario;
     }
 
 
@@ -37,16 +38,14 @@ public class ServicioVidaImpl implements ServicioVida {
     }
 
     @Override
-
-    public Boolean perderUnaVida(Usuario usuario) {
+    public Boolean perderUnaVida(Long usuarioId) {
         Boolean perdida = Boolean.FALSE;
-        Vida vida = usuario.getVida();
+        Vida vida = this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getVida();
 
-        // Si el usuario tiene al menos una vida
         if (vida.getCantidadDeVidasActuales() > 0) {
-            // Y la elimina
             vida.setCantidadDeVidasActuales(vida.getCantidadDeVidasActuales() - 1);
-            repositorioVida.guardarUnaVida(vida);
+
+            repositorioVida.actualizarVida(vida);
 
             perdida = Boolean.TRUE;
         }
@@ -57,9 +56,9 @@ public class ServicioVidaImpl implements ServicioVida {
 
     @Override
     @Scheduled(fixedRate = 60000)//Es para que se regenere cada un minuto (60000 milisegundos)
-    public Boolean regenerarUnaVida(Long id) {
+    public Boolean regenerarUnaVida(Long vidaId) {
         Boolean vidaRegenerada = false;
-        Vida vida = obtenerVida(id);
+        Vida vida = obtenerVida(vidaId);
         LocalDateTime ahora = LocalDateTime.now();
         //Compara la ultima vez que se regeneró la vida con la hora actual.
         Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
