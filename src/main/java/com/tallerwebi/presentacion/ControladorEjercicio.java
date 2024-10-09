@@ -16,21 +16,18 @@ public class ControladorEjercicio {
     private ServicioEjercicio servicioEjercicio;
     private ServicioLeccion servicioLeccion;
     private ServicioProgresoLeccion servicioProgresoLeccion;
-    private RepositorioUsuario repositorioUsuario;
-    private ServicioVida servicioVida;
+
 
     @Autowired
     public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, RepositorioUsuario repositorioUsuario, ServicioVida servicioVida) {
         this.servicioEjercicio = servicioEjercicio;
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
-        this.repositorioUsuario = repositorioUsuario;
-        this.servicioVida =servicioVida;
     }
 
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
-    public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, @RequestParam ("usuarioId") Long usuarioID) {
+    public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice) {
         ModelMap modelo = new ModelMap();
         Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
 
@@ -43,10 +40,10 @@ public class ControladorEjercicio {
     @RequestMapping(path = "/resolver/{indice}", method = RequestMethod.POST)
     public ModelAndView resolverEjercicio(@PathVariable("indice") Long indice, @RequestParam("opcionSeleccionada") Long opcionId,
                                           @RequestParam("ejercicioId") Long ejercicioId, @RequestParam("leccion") Long leccionId,
-                                          @RequestParam("usuarioId") Long usuarioId, HttpServletRequest request) {
+                                          HttpServletRequest request) {
         ModelMap modelo = new ModelMap();
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
-
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
 
         ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
         if (progreso == null) {
@@ -55,23 +52,17 @@ public class ControladorEjercicio {
         }
 
         Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicio, opcionId);
-        Usuario usuario = repositorioUsuario.buscarUsuarioPorId(usuarioId);
-
-        if (!resuelto) {
-            if (usuario != null) {
-                boolean vidaPerdida = servicioEjercicio.perderVida(usuarioId);
-                modelo.put("vidaPerdida", vidaPerdida);
-            } else {
-                modelo.put("Error", "No se encuentra el usuario");
-            }
-        }
+//
+//        if (!resuelto) {
+//            boolean vidaPerdida =
+//            modelo.put("vidaPerdida", vidaPerdida);
+//        }
 
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
         modelo.put("indice", indice);
         modelo.put("leccion", leccionId);
         modelo.put("ejercicio", ejercicio);
-        modelo.put("usuario", usuario);
         modelo.put("esCorrecta", resuelto);
 
         return new ModelAndView("ejercicio", modelo);
