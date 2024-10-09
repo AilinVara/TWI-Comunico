@@ -5,10 +5,11 @@ import com.tallerwebi.dominio.ServicioEjercicioFormaPalabra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -19,52 +20,27 @@ public class ControladorEjercicioFormaPalabra {
 
     private List<EjercicioFormaPalabra> ejercicios = new ArrayList<>();
 
-    public ControladorEjercicioFormaPalabra() {
-        // Crear los ejercicios
-        ejercicios.add(new EjercicioFormaPalabra("gato.png", "GATO", Arrays.asList("R", "A", "G", "P", "S", "O", "T")));
-        ejercicios.add(new EjercicioFormaPalabra("gato.png","PERRO", Arrays.asList("A", "N", "R", "O", "P", "E", "D")));
-        ejercicios.add(new EjercicioFormaPalabra("gato.png","AVIÓN", Arrays.asList("C", "N", "I", "Ó", "M", "A", "V")));
+    @Autowired
+    private ServicioEjercicioFormaPalabra servicioEjercicioFormaPalabra;
+
+
+    @RequestMapping(value = "/ejercicios-forma-palabra", method = RequestMethod.GET)
+    public ModelAndView irAEjercicioFormaPalabra(@RequestParam (required = false, defaultValue = "1", value = "id") Long id, Model model, ModelMap modelMap){
+        ModelMap modelo = new ModelMap();
+        EjercicioFormaPalabra ejercicio = servicioEjercicioFormaPalabra.obtenerEjercicio(id);
+        modelo.put("ejercicio", ejercicio);
+        List<String> letras = servicioEjercicioFormaPalabra.convertirLetrasALista(ejercicio.getLetras());
+        modelo.put("letras", letras);
+        return new ModelAndView("ejercicios-forma-palabra", modelo);
     }
 
-    @GetMapping("/leccionFormaPalabra")
-    public String mostrarLeccion(Model model) {
-        List<EjercicioFormaPalabra> ejercicios = new ArrayList<>();
-
-        ejercicios.add(new EjercicioFormaPalabra("gato.png", "GATO", Arrays.asList("R", "A", "G", "P", "S", "O", "T")));
-        ejercicios.add(new EjercicioFormaPalabra("gato.png","PERRO", Arrays.asList("A", "N", "R", "O", "P", "E", "D")));
-        ejercicios.add(new EjercicioFormaPalabra("gato.png","AVIÓN", Arrays.asList("C", "N", "I", "Ó", "M", "A", "V")));
-
-        model.addAttribute("ejercicios", ejercicios);
-        model.addAttribute("indiceEjercicio", 0);
-        model.addAttribute("mensaje", "");
-
-        return "ejercicios-forma-palabra";
-    }
-
-    @PostMapping("/verificarRespuesta")
-    public String verificarRespuesta(
-            @RequestParam("respuestaUsuario") String respuestaUsuario,
-            @RequestParam("indiceEjercicio") int indiceEjercicio,
-            Model model) {
-
-        EjercicioFormaPalabra ejercicio = ejercicios.get(indiceEjercicio);
-        String respuestaCorrecta = ejercicio.getRespuestaCorrecta();
-
-        if (respuestaUsuario.equalsIgnoreCase(respuestaCorrecta)) {
-            model.addAttribute("mensaje", "Respuesta correcta");
-
-            if (indiceEjercicio < ejercicios.size() - 1) {
-                model.addAttribute("indiceEjercicio", indiceEjercicio + 1);
-            } else {
-                model.addAttribute("mensaje", "¡Has completado todos los ejercicios!");
-                model.addAttribute("indiceEjercicio", indiceEjercicio);
-            }
-        } else {
-            model.addAttribute("mensaje", "Respuesta incorrecta");
-            model.addAttribute("indiceEjercicio", indiceEjercicio);
-        }
-
-        model.addAttribute("ejercicio", ejercicio);
-        return "ejercicios-forma-palabra";
+    @RequestMapping(value = "/verificarRespuesta", method = RequestMethod.POST)
+    public ModelAndView verificarRespuesta(@RequestParam("listaLetras") String listaLetras, @RequestParam("ejercicioId")Long ejercicioId) {
+        ModelMap modelo = new ModelMap();
+        EjercicioFormaPalabra ejercicio = this.servicioEjercicioFormaPalabra.obtenerEjercicio(ejercicioId);
+        Boolean resuelto = this.servicioEjercicioFormaPalabra.resolverEjercicio(ejercicio.getRespuestaCorrecta(), listaLetras);
+        modelo.put("ejercicio",ejercicio);
+        modelo.put("esCorrecta", resuelto);
+        return new ModelAndView("ejercicios-forma-palabra", modelo);
     }
 }
