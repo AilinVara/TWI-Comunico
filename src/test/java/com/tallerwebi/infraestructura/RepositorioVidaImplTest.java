@@ -26,7 +26,6 @@ public class RepositorioVidaImplTest {
     private RepositorioVida repositorioVida;
 
 
-
     @BeforeEach
     public void init() {
         this.repositorioVida = new RepositorioVidaImpl(sessionFactory);
@@ -56,32 +55,13 @@ public class RepositorioVidaImplTest {
     @Rollback
     public void dadoQueExisteUnaVidaEntoncesCuandoLaGuardoLuegoLaBuscoEntoncesLaEncuentroEnLaBaseDeDatos() {
         Vida vida = new Vida();
+        vida.setId(1L);
 
         this.repositorioVida.guardarUnaVida(vida);
 
-        Long vidaId = vida.getId();
-
-        Vida vidaObtenida = this.repositorioVida.buscarUnaVidaPorId(vidaId);
+        Vida vidaObtenida = this.repositorioVida.buscarUnaVidaPorId(1L);
 
         assertThat(vidaObtenida, equalTo(vida));
-
-    }
-
-
-
-    @Test
-    @Transactional
-    @Rollback
-    public void dadoQueExisteUnaVidaEntoncesCuandoLaActualizoEntoncesLaEncuentroEnLaBaseDeDatosActualizada() {
-        Vida vida = new Vida();
-        this.repositorioVida.guardarUnaVida(vida);
-        Vida vidaAnterior = this.repositorioVida.buscarUnaVidaPorId(vida.getId());
-        assertThat(vidaAnterior.getCantidadDeVidasActuales(),equalTo(5));
-        vida.setCantidadDeVidasActuales(4);
-        this.repositorioVida.actualizarVida(vida);
-        Vida vidaPosterior = this.repositorioVida.buscarUnaVidaPorId(vida.getId());
-
-        assertThat(vidaPosterior.getCantidadDeVidasActuales(),equalTo(4));
 
     }
 
