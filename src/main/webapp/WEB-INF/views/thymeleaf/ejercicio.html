@@ -57,29 +57,6 @@
         <button class="enviar" type="submit">Enviar</button>
     </form>
 
-    <!-- <div th:if="${esCorrecta != null}">
-        <div th:if="${esCorrecta}">
-            <script th:inline="javascript">
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Correcto!',
-                    text: 'Respuesta correcta',
-                    confirmButtonColor: '#4CAF50'
-                });
-            </script>
-        </div>
-        <div th:unless="${esCorrecta}">
-            <script th:inline="javascript">
-                Swal.fire({
-                    icon: 'error',
-                    title: '¡Incorrecto!',
-                    text: 'Respuesta incorrecta',
-                    confirmButtonColor: '#f44336'
-                });
-            </script>
-        </div>
-    </div>-->
-
     <div th:if="${esCorrecta != null}">
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
