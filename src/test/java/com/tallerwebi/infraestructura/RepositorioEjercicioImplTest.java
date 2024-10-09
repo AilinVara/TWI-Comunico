@@ -35,7 +35,7 @@ public class RepositorioEjercicioImplTest {
     @Test
     @Transactional
     @Rollback
-    public void dadoQueExisteUnRepositorioEjercicioCuandoGuardoUnEjercicioEntoncesLoEncuentroEnLaBaseDeDatos(){
+    public void dadoQueExisteUnRepositorioEjercicioCuandoGuardoUnEjercicioEntoncesLoEncuentroEnLaBaseDeDatos() {
         Ejercicio ejercicio = new Ejercicio();
         ejercicio.setConsigna("A-E");
 
@@ -52,7 +52,7 @@ public class RepositorioEjercicioImplTest {
     @Test
     @Transactional
     @Rollback
-    public void dadoQueExisteUnEjercicioConOpcionCorrectaEnLaBaseDeDatosCuandoLoBuscoPorDescripcionDeLaOpcionCorrectaLoEncuentroEnLaBaseDeDatos(){
+    public void dadoQueExisteUnEjercicioConOpcionCorrectaEnLaBaseDeDatosCuandoLoBuscoPorDescripcionDeLaOpcionCorrectaLoEncuentroEnLaBaseDeDatos() {
         Ejercicio ejercicio = new Ejercicio();
         Opcion opcion = new Opcion("A");
 
@@ -73,7 +73,7 @@ public class RepositorioEjercicioImplTest {
     @Test
     @Transactional
     @Rollback
-    public void dadoQueExisteUnEjercicioEnLaBaseDeDatosLoEncuentroPorSuId(){
+    public void dadoQueExisteUnEjercicioEnLaBaseDeDatosLoEncuentroPorSuId() {
         Ejercicio ejercicio = new Ejercicio();
         ejercicio.setConsigna("A-E");
 
