@@ -1,8 +1,10 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Ejercicio;
+import com.tallerwebi.dominio.Matriz;
 import com.tallerwebi.dominio.Opcion;
 import com.tallerwebi.dominio.ServicioEjercicio;
+import com.tallerwebi.dominio.ServicioMatriz;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +22,8 @@ public class ControladorEjercicioTest {
     private ControladorEjercicio controladorEjercicio;
     private Ejercicio ejercicioMock;
     private ServicioEjercicio servicioEjercicioMock;
+    private ServicioMatriz servicioMatrizMock;
+    private Matriz matrizMock; 
 
     @BeforeEach
     public void init(){
@@ -38,17 +42,21 @@ public class ControladorEjercicioTest {
 
         servicioEjercicioMock = mock(ServicioEjercicio.class);
         when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioMock);
-        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock);
+
+        servicioMatrizMock = mock(ServicioMatriz.class);
+        matrizMock = mock(Matriz.class);
+        when(servicioMatrizMock.obtenerMatriz(anyLong())).thenReturn(matrizMock);
+
+        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioMatrizMock);
     }
 
     @Test
     public void cuandoVoyAEjercicioReciboLaVistaEjercicioYUnObjetoEjercicioEnElModelo(){
-        ModelAndView modelAndView = controladorEjercicio.irAjercicio(anyLong());
+        ModelAndView modelAndView = controladorEjercicio.irAEjercicio(anyLong());
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioMock));
     }
-
 
     @Test
     public void contestarConLaRespuestaCorrectaDebeRetornarEsCorrectaComoTrue(){
@@ -65,6 +73,8 @@ public class ControladorEjercicioTest {
     @Test
     public void contestarConLaRespuestaIncorrectaDebeRetornarEsCorrectaComoFalse(){
         Opcion opcionIncorrecta = ejercicioMock.getOpcionesIncorrectas().get(0);
+
+        when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, opcionIncorrecta.getId())).thenReturn(false);
 
         ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionIncorrecta.getId(), ejercicioMock.getId());
 
