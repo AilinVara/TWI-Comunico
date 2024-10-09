@@ -31,8 +31,8 @@
   <p id="braille-letter" th:text="${ejercicio.consigna}"></p>
 </div>
 
-  <div class="sign-gif">
-    <img th:src="@{https://i.pinimg.com/originals/6a/dc/6a/6adc6a4018d5e1b69e7553ee704adb41.gif}" alt = "ntmy">
+  <div class="sign-video">
+    <img class="video" th:src="@{https://diccionariolsc.ces.edu.co/wp-content/uploads/sites/3/2022/05/B_Frontal.gif}" alt = "ntmy">
 
     <form action="#" th:action="@{/resolverVideo}" method="post" th:object="${ejercicio}">
         <input hidden th:name="ejercicioId" th:value="${ejercicio.getId()}">
