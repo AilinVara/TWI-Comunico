@@ -77,8 +77,5 @@ public class ControladorLogin {
     public ModelAndView irAlIndice() {
         return new ModelAndView("indice");
     }
-
-    @RequestMapping(path = "/alfabeto", method = RequestMethod.GET)
-    public ModelAndView alfabeto(){ return new ModelAndView("alfabeto");}
 }
 

@@ -23,6 +23,10 @@
   </form>
 </div>
 
+<div th:if="${mensaje}">
+  <div class="mensaje" th:text="${mensaje}">Mensaje</div>
+</div>
+
 <div th:if="${letrasbraille}" class="braille-grid"
      th:classappend="${#lists.size(letrasbraille) == 1} ? 'single-result'">
   <div th:each="letra : ${letrasbraille}" class="braille-item">
