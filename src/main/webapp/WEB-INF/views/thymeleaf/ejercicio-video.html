@@ -39,13 +39,13 @@
 
         <div class="radioYFrases">
                 <div class="OpcionesFrase" th:each="opcion: ${ejercicio.opcionesIncorrectas}">
-                    <input class="optionVideo" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}"/>
+                    <input class="option optionVideo" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}"/>
                     <label class="optionFrase" th:for="'opcion_' + ${opcion.id}"
                            th:text="${opcion.descripcion}">-</label>
                 </div>
 
                 <div class="OpcionesFrase">
-                    <input class="optionVideo" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
+                    <input class="option optionVideo" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
                            th:value="${ejercicio.opcionCorrecta.id}"/>
                     <label class="optionFrase" th:for="opcionCorrecta"
                            th:text="${ejercicio.opcionCorrecta.descripcion}">-</label>
