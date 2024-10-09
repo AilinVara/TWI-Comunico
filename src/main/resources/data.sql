@@ -34,3 +34,5 @@ INSERT INTO Letra(id, nombre, imagenSenias, imagenBraille) VALUES
 (25, "X", 'senias-x.png', 'braille-x.png'),
 (26, "Y", 'senias-y.png', 'braille-y.png'),
 (27, "Z", 'senias-z.png', 'braille-z.png');
+
+INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras) values (1, 'gato.png', "GATO", 'R, A, G, P, S, O, T');
