@@ -1,9 +1,11 @@
 package com.tallerwebi.dominio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface RepositorioVida {
 
-    void guardarUnaVida(Vida vida);
-    Vida buscarUnaVidaPorId(Long id);
-    void actualizarVida(Vida vida);
+    public void guardarUnaVida(Vida vida);
+    public Vida buscarUnaVidaPorId(Long id);
 
 }

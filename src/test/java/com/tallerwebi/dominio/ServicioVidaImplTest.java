@@ -7,55 +7,46 @@ import org.springframework.test.annotation.Rollback;
 import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ServicioVidaImplTest {
 
     ServicioVida servicioVida;
     RepositorioVida repositorioVidaMock;
     Vida vidaMock;
-    Usuario usuarioMock;
-    RepositorioUsuario repositorioUsuario;
 
     @BeforeEach
-    public void init() {
+    public void init(){
 
-        vidaMock = mock(Vida.class);
-        usuarioMock = mock(Usuario.class);
+        vidaMock = new Vida(5);
         this.repositorioVidaMock = mock(RepositorioVida.class);
-        this.repositorioUsuario = mock(RepositorioUsuario.class);
-        servicioVida = new ServicioVidaImpl(repositorioVidaMock, repositorioUsuario);
+        servicioVida = new ServicioVidaImpl(repositorioVidaMock);
         when(repositorioVidaMock.buscarUnaVidaPorId(vidaMock.getId())).thenReturn(vidaMock);
-        when(repositorioUsuario.buscarUsuarioPorId(usuarioMock.getId())).thenReturn(usuarioMock);
-        when(usuarioMock.getVida()).thenReturn(vidaMock);
-        when(servicioVida.obtenerVida(usuarioMock.getId())).thenReturn(vidaMock);
 
 
     }
-
     @Test
     @Rollback
     @Transactional
     public void dadoQueElUsuarioTieneVidasCuandoPierdeUnaVidaEntoncesCantidadDeVidasDisminuyeEnUno() {
+        int cantidadDeVidasActuales = 3;
+        Vida vida = new Vida(cantidadDeVidasActuales);
+        this.repositorioVidaMock.guardarUnaVida(vida);
 
-        when(vidaMock.getCantidadDeVidasActuales()).thenReturn(3);
-        //vidaMock.setCantidadDeVidasActuales(3);
+        Usuario usuario = new Usuario();
+        usuario.setVida(vida);
 
-        this.repositorioVidaMock.guardarUnaVida(vidaMock);
-        this.repositorioUsuario.guardar(usuarioMock);
-
-        Boolean resultado = this.servicioVida.perderUnaVida(usuarioMock.getId());
+        Boolean resultado = this.servicioVida.perderUnaVida(usuario);
 
         assertThat(resultado, equalTo(Boolean.TRUE));
-        //assertThat(vidaMock.getCantidadDeVidasActuales(), equalTo(2));
+        assertThat(vida.getCantidadDeVidasActuales(), equalTo(2));
     }
 
-    //    @Test
+//    @Test
 //    @Rollback
 //    @Transactional
 //    public void dadoQueElUsuarioTieneVidasCuandoGanaUnaVidaEntoncesLaCantidadDeVidasAumentaEnUno(){
@@ -75,17 +66,16 @@ public class ServicioVidaImplTest {
     @Rollback
     @Transactional
     public void dadoQueUsuarioTieneMaximoDeVidasCuandoSeRegeneraEntoncesCantidadDeVidasNoSuperaLaCantidadDeVidasMaximas() {
+        int cantidadDeVidasActuales = 5;
+        Vida vida = new Vida(cantidadDeVidasActuales);
+        vida.setUltimaVezQueSeRegeneroLaVida(LocalDateTime.now().minusMinutes(2));
+        this.repositorioVidaMock.guardarUnaVida(vida);
 
-        when(vidaMock.getCantidadDeVidasActuales()).thenReturn(4);
-        vidaMock.setUltimaVezQueSeRegeneroLaVida(LocalDateTime.now().minusMinutes(2));
-        this.repositorioVidaMock.guardarUnaVida(vidaMock);
-        List<Usuario> usuarios = new ArrayList<>();
-        usuarios.add(usuarioMock);
-        when(this.repositorioUsuario.obtenerTodosLosUsuarios()).thenReturn(usuarios);
-        this.servicioVida.regenerarVidasDeTodosLosUsuarios();
+        Boolean regenerada = this.servicioVida.regenerarUnaVida(vida.getId());
 
-
-        assertThat(vidaMock.getCantidadDeVidasActuales(), equalTo(5));
+        Vida vidaActualizada = this.repositorioVidaMock.buscarUnaVidaPorId(vida.getId());
+        assertThat(regenerada, equalTo(Boolean.FALSE));
+        assertThat(vidaActualizada.getCantidadDeVidasActuales(), equalTo(5));
 
     }
 

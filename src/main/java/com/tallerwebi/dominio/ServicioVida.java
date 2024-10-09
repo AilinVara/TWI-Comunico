@@ -2,13 +2,11 @@ package com.tallerwebi.dominio;
 
 public interface ServicioVida {
 
-     Vida obtenerVida(Long usuarioId);
+     Vida obtenerVida(Long id);
 
-    Boolean perderUnaVida(Long usuarioId);
+    Boolean perderUnaVida(Usuario usuario);
 
-    void regenerarVidasDeTodosLosUsuarios();
-
-
+    Boolean regenerarUnaVida(Long id);
 
 
 }
