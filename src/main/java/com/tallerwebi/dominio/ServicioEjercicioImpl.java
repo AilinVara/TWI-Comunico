@@ -36,7 +36,17 @@ public class ServicioEjercicioImpl implements ServicioEjercicio {
         return ejercicio.getOpcionCorrecta().getId().equals(opcionId);
     }
 
+    @Override
+    public Boolean perderVida(Long id) {
+        Usuario usuario = repositorioUsuario.buscarUsuarioPorId(id);
+        if (usuario != null) {
+            return servicioVida.perderUnaVida(usuario);
 
+        } else {
+            return false;
+        }
+
+    }
 
 }
 

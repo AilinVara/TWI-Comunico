@@ -23,14 +23,17 @@ public class ControladorEjercicioTest {
     private ServicioEjercicio servicioEjercicioMock;
     private ServicioLeccion servicioLeccionMock;
     private ServicioProgresoLeccion servicioProgresoLeccionMock;
-    private ServicioMatriz servicioMatrizMock;
     private HttpServletRequest requestMock;
     private Leccion leccionMock;
     private HttpSession sessionMock;
     private ProgresoLeccion progresoMock;
+    private Usuario usuarioMock;
+    private RepositorioUsuario repositorioUsuarioMock;
+    private ServicioVida servicioVidaMock;
+    private Vida vidaMock;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         ejercicioMock = mock(Ejercicio.class);
         when(ejercicioMock.getId()).thenReturn(1L);
 
@@ -49,13 +52,21 @@ public class ControladorEjercicioTest {
         when(ejercicioMock.getOpcionCorrecta()).thenReturn(opcionCorrectaMock);
         when(ejercicioMock.getOpcionesIncorrectas()).thenReturn(opcionesIncorrectas);
 
+        usuarioMock = mock(Usuario.class);
+        repositorioUsuarioMock = mock(RepositorioUsuario.class);
+
+        servicioVidaMock = mock(ServicioVida.class);
+
         servicioEjercicioMock = mock(ServicioEjercicio.class);
         when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioMock);
         when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, ejercicioMock.getOpcionCorrecta().getId())).thenReturn(true);
         servicioLeccionMock = mock(ServicioLeccion.class);
         servicioProgresoLeccionMock = mock(ServicioProgresoLeccion.class);
-        servicioMatrizMock = mock(ServicioMatriz.class);
-        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioMatrizMock);
+        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock,repositorioUsuarioMock,servicioVidaMock);
+
+
+
+
     }
 
     @Test
@@ -66,7 +77,7 @@ public class ControladorEjercicioTest {
         leccionMock.setEjercicios(lista);
         when(leccionMock.getEjercicios()).thenReturn(lista);
 
-        ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1);
+        ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1, 1L);
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioMock));
     }
@@ -81,7 +92,7 @@ public class ControladorEjercicioTest {
         when(sessionMock.getAttribute(anyString())).thenReturn(1L);
         when(servicioProgresoLeccionMock.buscarPorIds(anyLong(), anyLong(), anyLong())).thenReturn(progresoMock);
         when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, opcionCorrecta)).thenReturn(true);
-        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionCorrecta, 1L, 1L, 1L, requestMock);
+        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionCorrecta, 1L, 1L, 1L,1L, requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("esCorrecta"), is(true));
@@ -96,7 +107,7 @@ public class ControladorEjercicioTest {
         when(sessionMock.getAttribute(anyString())).thenReturn(1L);
         when(servicioProgresoLeccionMock.buscarPorIds(anyLong(), anyLong(), anyLong())).thenReturn(progresoMock);
         when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, opcionIncorrecta)).thenReturn(false);
-        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(1L, opcionIncorrecta, 1L, 1L, requestMock);
+        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(1L, opcionIncorrecta, 1L, 1L,1L, requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("esCorrecta"), is(false));

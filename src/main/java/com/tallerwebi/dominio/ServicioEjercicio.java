@@ -8,6 +8,6 @@ public interface ServicioEjercicio {
 
     Boolean resolverEjercicio(Ejercicio ejercicio, Long opcionId);
 
-
+    public Boolean perderVida(Long id);
 
 }
