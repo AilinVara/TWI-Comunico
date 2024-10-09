@@ -28,36 +28,36 @@
 
 <div class="game-container">
 <div class="question">
-  <p id="braille-letter sign" th:text="${ejercicio.consigna}"></p>
+  <p id="braille-letter" th:text="${ejercicio.consigna}"></p>
 </div>
 
-  <div class="sign-video">
-    <iframe width="460" height="350" src="https://www.youtube.com/embed/wk2p48ptyNo?si=jozE8deKO0XA2-FH"
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
+  <div class="sign-gif">
+    <img th:src="@{https://i.pinimg.com/originals/6a/dc/6a/6adc6a4018d5e1b69e7553ee704adb41.gif}" alt = "ntmy">
 
     <form action="#" th:action="@{/resolverVideo}" method="post" th:object="${ejercicio}">
         <input hidden th:name="ejercicioId" th:value="${ejercicio.getId()}">
 
-             <div class="radioYLetraJuntos" th:each="opcion: ${ejercicio.opcionesIncorrectas}">
-                 <input class="option" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}"/>
-                 <label class="optionLetra" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">Opción incorrecta</label>
-             </div>
+        <div class="radioYFrases">
+                <div class="OpcionesFrase" th:each="opcion: ${ejercicio.opcionesIncorrectas}">
+                    <input class="optionVideo" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}"/>
+                    <label class="optionFrase" th:for="'opcion_' + ${opcion.id}"
+                           th:text="${opcion.descripcion}">-</label>
+                </div>
 
-             <div class="radioYLetraJuntos">
-                 <input class="option" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
-                        th:value="${ejercicio.opcionCorrecta.id}"/>
-                 <label class="optionLetra" th:for="opcionCorrecta" th:text="${ejercicio.opcionCorrecta.descripcion}">Opcion correcta</label>
-             </div>
+                <div class="OpcionesFrase">
+                    <input class="optionVideo" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
+                           th:value="${ejercicio.opcionCorrecta.id}"/>
+                    <label class="optionFrase" th:for="opcionCorrecta"
+                           th:text="${ejercicio.opcionCorrecta.descripcion}">-</label>
+                </div>
+        </div>
 
-          <!--<p>Sorpresa</p>
-          <p>Ahí esta</p>
-          <p>Mucho</p>-->
-        <button class="enviar" type="submit">Enviar</button>
+
+        <button class="enviar enviar-ejercicioVideo" type="submit">Enviar</button>
     </form>
+
 </div>
+
     <div th:if="${esCorrecta != null}">
         <div th:if="${esCorrecta}">
             <script th:inline="javascript">

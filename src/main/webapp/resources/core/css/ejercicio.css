@@ -185,7 +185,7 @@ nav a.active:hover {
     margin-bottom: 10px;
     font-size: 1.4em;
 }
-#braille-letter, #sign{
+#braille-letter{
     font-size: 20px;
     margin-top: -10px;
 }
@@ -202,7 +202,7 @@ nav a.active:hover {
     margin-top: 5px;
 
 }
-.radioYLetraJuntos {
+.radioYLetraJuntos{
     margin: 20px;
     background-color: #1cb0f6;
     border-radius: 10px;
@@ -217,7 +217,7 @@ nav a.active:hover {
     max-width: 500px;
 
 }
-label.optionLetra {
+label.optionLetra{
     position: absolute;
     top: 492px;
     color: aliceblue;
@@ -324,6 +324,34 @@ input[type="radio"]:checked {
     border: #01152b;
     transition: all 0.3s ease;
 }
-.sign-video{
-    align-items: center;
+
+/*----------------------------------Ejercicio-Video------------------------------------*/
+
+.sign-gif{
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    gap: 15px;
 }
+.OpcionesFrase{
+    background-color: #1cb0f6;
+    border-radius: 10px;
+    display: flex;
+    gap: 12px;
+    padding: 8px 15px;
+    margin: 17px;
+}
+.optionFrase{
+    color: aliceblue;
+    font-size: 35px;
+    margin-right: 7px;
+}
+.optionVideo{
+    margin-left: 7px;
+}
+.enviar-ejercicioVideo{
+    margin-top: 30px;
+}
+
+
