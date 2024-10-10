@@ -23,4 +23,9 @@ public class ServicioMatrizImpl implements ServicioMatriz {
     public Boolean resolverMatriz(String puntosSeleccionados, String puntosDeLaMatriz) {
         return puntosSeleccionados.equals(puntosDeLaMatriz);
     }
+
+    @Override
+    public Matriz obtenerMatrizPorEjercicio(Long ejercicioId) {
+        return this.repositorioMatriz.buscarMatrizPorEjercicio(ejercicioId);
+    }
 }
