@@ -36,15 +36,18 @@ public class ServicioCursoImpl implements ServicioCurso {
 
     @Override
     public List<Curso> buscarCursosPorNombre(String nombre) {
-        if (nombre == null || nombre.isEmpty()) {
-            return obtenerCursosDisponibles();
-        }
         List<Curso> cursos = repositorioCurso.obtenerTodosLosCursos();
-        return cursos.stream()
-                .filter(curso -> curso.getNombre().toLowerCase().contains(nombre.toLowerCase()))
-                .collect(Collectors.toList());
+        if (nombre != null) {
+            List<Curso> cursosADevolver = cursos.stream()
+                    .filter(curso -> curso.getNombre().toLowerCase().contains(nombre.toLowerCase()))
+                    .collect(Collectors.toList());
+
+            if (cursosADevolver.isEmpty()) {
+                return cursos;
+            } else {
+                return cursosADevolver;
+            }
+        }
+        return cursos;
     }
-
 }
-
-
