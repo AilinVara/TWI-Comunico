@@ -16,12 +16,15 @@ public class ControladorEjercicio {
     private ServicioEjercicio servicioEjercicio;
     private ServicioLeccion servicioLeccion;
     private ServicioProgresoLeccion servicioProgresoLeccion;
+    private ServicioMatriz servicioMatriz;
+
 
     @Autowired
-    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion) {
+    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioMatriz servicioMatrizMock) {
             this.servicioEjercicio = servicioEjercicio;
             this.servicioLeccion = servicioLeccion;
             this.servicioProgresoLeccion = servicioProgresoLeccion;
+            this.servicioMatriz = servicioMatrizMock;
     }
 
 
