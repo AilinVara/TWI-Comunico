@@ -68,9 +68,11 @@ public class ControladorEjercicioTest {
 
         sessionMock.setAttribute("id", usuario.getId());
 
+        Ejercicio ejercicioResuelto = leccion.getEjercicios().get(0);
+
         MvcResult result = this.mockMvc.perform(post("/resolver/1?leccion=" + leccion.getId().toString())
-                        .param("opcionSeleccionada", "1")
-                        .param("ejercicioId", "1")
+                        .param("opcionSeleccionada", ejercicioResuelto.getOpcionCorrecta().getId().toString())
+                        .param("ejercicioId", ejercicioResuelto.getId().toString())
                         .param("leccion",leccion.getId().toString())
                         .session(sessionMock))
                         .andExpect(status().isOk())
