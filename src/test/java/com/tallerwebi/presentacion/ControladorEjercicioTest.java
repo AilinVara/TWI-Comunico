@@ -23,6 +23,7 @@ public class ControladorEjercicioTest {
     private ServicioEjercicio servicioEjercicioMock;
     private ServicioLeccion servicioLeccionMock;
     private ServicioProgresoLeccion servicioProgresoLeccionMock;
+    private ServicioMatriz servicioMatrizMock;
     private HttpServletRequest requestMock;
     private Leccion leccionMock;
     private HttpSession sessionMock;
@@ -53,7 +54,8 @@ public class ControladorEjercicioTest {
         when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, ejercicioMock.getOpcionCorrecta().getId())).thenReturn(true);
         servicioLeccionMock = mock(ServicioLeccion.class);
         servicioProgresoLeccionMock = mock(ServicioProgresoLeccion.class);
-        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock);
+        servicioMatrizMock = mock(ServicioMatriz.class);
+        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioMatrizMock);
     }
 
     @Test
