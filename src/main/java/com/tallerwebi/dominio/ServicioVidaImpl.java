@@ -1,16 +1,19 @@
 package com.tallerwebi.dominio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Service("servicioVida")
 @Transactional
+@EnableScheduling
 public class ServicioVidaImpl implements ServicioVida {
 
     private RepositorioVida repositorioVida;
@@ -24,8 +27,8 @@ public class ServicioVidaImpl implements ServicioVida {
 
 
     @Override
-    public Vida obtenerVida(Long vidaId) {
-        return this.repositorioVida.buscarUnaVidaPorId(vidaId);
+    public Vida obtenerVida(Long usuarioId) {
+        return this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getVida();
 
 //        //Esto es para guardar una vida temporalmente sin crearla en la base
 //        if (vida == null) {
@@ -53,33 +56,26 @@ public class ServicioVidaImpl implements ServicioVida {
         return perdida;
     }
 
-
     @Override
-    @Scheduled(fixedRate = 60000)//Es para que se regenere cada un minuto (60000 milisegundos)
-    public Boolean regenerarUnaVida(Long vidaId) {
-        Boolean vidaRegenerada = false;
-        Vida vida = obtenerVida(vidaId);
-        LocalDateTime ahora = LocalDateTime.now();
-        //Compara la ultima vez que se regeneró la vida con la hora actual.
-        Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
-        Integer cantidadDeVidasMaximas = 5;
-//        System.out.println("Ultima vez que se regeneró la vida: " + vida.getUltimaVezQueSeRegeneroLaVida());
-//        System.out.println("Hora actual: " + ahora);
-        //Si la duracion pasada a minutos es mayor o igual a 1 minuto y la cantidad de vidas actuales es igual a 5(Max cantidad de vidas)
-        if (duracion.toMinutes() >= 1 && vida.getCantidadDeVidasActuales() < cantidadDeVidasMaximas) {
+    @Scheduled(fixedRate = 60000)
+    public void regenerarVidasDeTodosLosUsuarios() {
+        List<Usuario> usuarios = repositorioUsuario.obtenerTodosLosUsuarios();
 
-            vida.setCantidadDeVidasActuales(vida.getCantidadDeVidasActuales() + 1);//Setea la cantidad de vidas actuales para que pasen a ser 1 mas
+        for (Usuario usuario : usuarios) {
+            Vida vida = usuario.getVida();
+            LocalDateTime ahora = LocalDateTime.now();
+            Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
 
-            vida.setUltimaVezQueSeRegeneroLaVida(ahora);//La vida se regenera en el tiempo actual
 
-            repositorioVida.guardarUnaVida(vida);//Y la guarda en la bd
-            vidaRegenerada = true;
+            if (duracion.toMinutes() >= 1 && vida.getCantidadDeVidasActuales() < 5) {
+                vida.setCantidadDeVidasActuales(vida.getCantidadDeVidasActuales() + 1);
+                vida.setUltimaVezQueSeRegeneroLaVida(ahora);
+                repositorioVida.actualizarVida(vida);
+            }
         }
-
-
-        return vidaRegenerada;
-
     }
 
-
 }
+
+
+
