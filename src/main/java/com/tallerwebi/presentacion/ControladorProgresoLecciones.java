@@ -28,18 +28,27 @@ public class ControladorProgresoLecciones {
     @RequestMapping(path = "/braille", method = RequestMethod.GET)
     public ModelAndView braille(HttpServletRequest request){
         ModelMap modelo = new ModelMap();
-        Boolean ejercicio1;
+        Boolean leccion1;
         Long usuarioId = (Long) request.getSession().getAttribute("id");
 
         List<ProgresoLeccion> progresoLeccion = this.servicioProgresoLeccion.buscarProgresoLeccionDeUsuario(usuarioId, 1L);
         if(progresoLeccion.isEmpty()){
-            ejercicio1 = false;
+            leccion1 = false;
         } else{
-            ejercicio1 = this.servicioProgresoLeccion.verificarCompletado(progresoLeccion);
+            leccion1 = this.servicioProgresoLeccion.verificarCompletado(progresoLeccion);
         }
-        modelo.put("ejercicio1", ejercicio1);
-        modelo.put("ejercicio2", false);
-        modelo.put("ejercicio3", false);
+
+        Boolean leccion2;
+        List<ProgresoLeccion> progresoLeccion2 = this.servicioProgresoLeccion.buscarProgresoLeccionDeUsuario(usuarioId, 2L);
+        if(progresoLeccion2.isEmpty()){
+            leccion2 = false;
+        } else{
+            leccion2 = this.servicioProgresoLeccion.verificarCompletado(progresoLeccion2);
+        }
+
+        modelo.put("leccion1", leccion1);
+        modelo.put("leccion2", leccion2);
+        modelo.put("leccion3", false);
 
         return new ModelAndView("braille", modelo);
     }
