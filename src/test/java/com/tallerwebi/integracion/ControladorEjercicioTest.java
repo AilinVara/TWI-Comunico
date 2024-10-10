@@ -90,7 +90,7 @@ public class ControladorEjercicioTest {
     @Test
     @Transactional
     @Rollback
-    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConTresEjerciciosCuandoNavegoALaRutaEjercicioYEnvioUnIdDeParametroReciboLaVistaEjercicioYElEjercicioConEseIdEnElModelo() throws Exception {
+    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConTresEjerciciosCuandoNavegoALaRutaEjercicioYEnvioUnIdDeParametroReciboLaVistaEjercicioYElIndiceEnElModelo() throws Exception {
         Usuario usuario = new Usuario();
         this.sessionFactory.getCurrentSession().save(usuario);
         sessionMock.setAttribute("id", usuario.getId());
@@ -117,7 +117,7 @@ public class ControladorEjercicioTest {
         leccion.setEjercicios(listaEjercicios);
         this.sessionFactory.getCurrentSession().save(leccion);
 
-        MvcResult result = this.mockMvc.perform(get("/ejercicio/2?leccion=" + leccion.getId())
+        MvcResult result = this.mockMvc.perform(get("/ejercicio/3?leccion=" + leccion.getId())
                         .param("leccion", leccion.getId().toString())
                         .session(sessionMock))
                 .andExpect(status().isOk())
@@ -125,12 +125,10 @@ public class ControladorEjercicioTest {
 
         ModelAndView modelAndView = result.getModelAndView();
 
-        Ejercicio ejercicioEsperado = this.servicioEjercicio.obtenerEjercicio(ejercicio2.getId());
-
         assert modelAndView != null;
 
         assertThat(modelAndView.getViewName(), equalTo("ejercicio"));
-        assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioEsperado));
+        assertThat(modelAndView.getModel().get("indice"), equalTo(3));
     }
 
 
