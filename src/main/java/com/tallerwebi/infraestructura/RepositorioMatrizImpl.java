@@ -31,4 +31,14 @@ public class RepositorioMatrizImpl implements RepositorioMatriz {
                 .add(Restrictions.eq("id", id))
                 .uniqueResult();
     }
+
+    @Override
+    public Matriz buscarMatrizPorEjercicio(Long ejercicioId) {
+        final Session session = sessionFactory.getCurrentSession();
+        return (Matriz) session.createCriteria(Matriz.class)
+                .createAlias("ejercicio", "e")
+                .add(Restrictions.eq("e.id", ejercicioId))
+                .uniqueResult();
+    }
+
 }
