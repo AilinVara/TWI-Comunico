@@ -18,9 +18,9 @@
 <div class="leccionesBasicas">
   <a th:href="@{/braille/alfabeto}"> <input class="lecciones" type="button" name="abecedario" id="abc" value="Abecedario"> </a>
   <a th:href="@{/leccion/1}">  <input class="lecciones" type="button" name="" id="letras" value="Reconocé letras"></a>
-  <a th:href="@{/leccion/2}"><input th:classappend="${ejercicio1} ? lecciones : lecciones_deshabilitadas" type="button" name="" id="palabras" value="Formá palabras"></a>
-  <a th:href="@{/leccion/3}"><input th:classappend="${ejercicio2} ? lecciones : lecciones_deshabilitadas" type="button" name="" id="frases" value="Practicá frases"></a>
-  <a href="#"><input th:classappend="${ejercicio3} ? lecciones : lecciones_deshabilitadas" type="button" name="" id="desafio" value="Desafío de velocidad"></a>
+  <a th:href="@{/leccion/2}"><input th:classappend="${leccion1} ? lecciones : lecciones_deshabilitadas" type="button" name="" id="palabras" value="Formá palabras"></a>
+  <a th:href="@{/leccion/3}"><input th:classappend="${leccion2} ? lecciones : lecciones_deshabilitadas" type="button" name="" id="frases" value="Practicá frases"></a>
+  <a href="#"><input th:classappend="${leccion3} ? lecciones : lecciones_deshabilitadas" type="button" name="" id="desafio" value="Desafío de velocidad"></a>
 </div>
 
 <div class="volver-atras-container">
