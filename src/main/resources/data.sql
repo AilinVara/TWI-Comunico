@@ -31,3 +31,8 @@ INSERT INTO Matriz (id, ejercicio_id, puntos) VALUES
 (1, 10, '100000'),
 (2, 11, '101000'),
 (3, 12, '110000');
+
+INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras) values
+(1, 'gato.png', "GATO", 'T, A, G, P, S, O, R'),
+(2, 'perro.png', "PERRO", 'R, A, P, E, S, O, N'),
+(3, 'libro.png', "LIBRO", 'L, O, B, N, S, I, R');
