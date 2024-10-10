@@ -13,24 +13,29 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class ControladorEjercicio {
 
+    private ServicioVida servicioVida;
     private ServicioEjercicio servicioEjercicio;
     private ServicioLeccion servicioLeccion;
     private ServicioProgresoLeccion servicioProgresoLeccion;
 
 
     @Autowired
-    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, RepositorioUsuario repositorioUsuario, ServicioVida servicioVida) {
+    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida) {
         this.servicioEjercicio = servicioEjercicio;
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
+        this.servicioVida = servicioVida;
     }
 
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
-    public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice) {
+    public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request) {
         ModelMap modelo = new ModelMap();
         Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
 
+
+        modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
         modelo.put("leccion", leccionId);
         modelo.put("ejercicio", leccion.getEjercicios().get(indice - 1));
         modelo.put("indice", indice);
@@ -52,11 +57,11 @@ public class ControladorEjercicio {
         }
 
         Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicio, opcionId);
-//
-//        if (!resuelto) {
-//            boolean vidaPerdida =
-//            modelo.put("vidaPerdida", vidaPerdida);
-//        }
+
+        if (!resuelto) {
+            this.servicioVida.perderUnaVida(usuarioId);
+            modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
+        }
 
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
