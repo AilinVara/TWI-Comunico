@@ -23,9 +23,10 @@
         <p id="braille-letter" th:text="${ejercicio.getConsigna()}"></p>
     </div>
 
-    <form th:action="@{/braille/formaLetras/resolver}" method="POST" onsubmit="return concatenarCheckboxes()">
+    <form th:action="@{'/resolverMatriz/' + ${indice}}" method="POST" onsubmit="return concatenarCheckboxes()">
         <input type="hidden" name="ejercicioId" th:value="${ejercicio.getId()}"/>
         <input type="hidden" name="matrizId" th:value="${matriz.getId()}"/>
+        <input type="hidden" name="leccion" th:value="${leccion}"/>
         <input type="hidden" name="puntosSeleccionados" id="puntosSeleccionados" />
 
         <div class="braille-matriz">
