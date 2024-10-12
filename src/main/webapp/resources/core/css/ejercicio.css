@@ -1,7 +1,6 @@
 @import url(https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold);
 @font-face {
     font-family: "Feather Bold";
-    src: url("TWI-Comunico/src/main/webapp/resources/core/fonts/feather_bold_by_typicalbro44_dee263c.ttf");
 }
 
 * {
@@ -11,14 +10,8 @@
     font-family: 'Feather Bold', sans-serif;
 }
 
-/*body {
-  background-color: #f7f9fc;
-  color: #333;
-}*/
-
 body {
     background-image:url("../img/fondo-lecciones.jpg");
-    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     color: #333;
@@ -185,10 +178,6 @@ nav a.active:hover {
     margin-bottom: 10px;
     font-size: 1.4em;
 }
-#braille-letter{
-    font-size: 20px;
-    margin-top: -10px;
-}
 
 .braille {
     font-size: 5em;
@@ -200,70 +189,67 @@ nav a.active:hover {
     align-items:center;
     gap:30px;
     margin-top: 5px;
-
 }
-.radioYLetraJuntos{
+
+.radioYLetraJuntos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 20px;
     background-color: #1cb0f6;
     border-radius: 10px;
-    padding: 2.8px;
-    width: 5%;
+    padding: 10px;
+    width: auto;
 }
-.options{
-    display: flex;
-    justify-content: center;
-    margin: 20px auto;
-    width: 100%;
-    max-width: 500px;
 
-}
-label.optionLetra{
-    position: absolute;
-    top: 492px;
+label.optionLetra {
+    margin: 0 10px 0 0;
+    font-size: 1.2em;
     color: aliceblue;
 }
 
 .option{
     height:30px;
     width: 30px;
-    border-radius:30px;
     margin: 4px;
 }
 
-
 input[type="radio"]:checked {
     transform: scale(1.12);
-    accent-color: #1453a3;
+    accent-color: #1cb0f6;
+}
+
+.contenedor-enviar{
+    display: flex;
+}
+
+.contenedor-enviar{
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .enviar {
+
     height: 60px;
     width: 120px;
     padding: 20px;
-    background-color: #D7FFB8;
+    background-color: #58cc02;
+    color: white;
     border: none;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-size: 1.2em;
     cursor: pointer;
-    margin-bottom: 20px;
-    margin-left: 88%;
-    margin-top: -25px;
+    margin: 20px 0 20px 0;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 .enviar:hover {
-    background-color: #89e219;
-    color: white;
+    background-color: #46a001;
     transform: scale(1.05);
 }
-.contenedorEnviar{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background-color:red;
 
-}
-.question{
+.question {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -302,15 +288,7 @@ input[type="radio"]:checked {
     top: 5%;
 
 }
-.user-icon{
-    position: absolute;
-    right: 20px;
-    top:3.5%;
-    width: 55px;
-    height: 55px;
 
-
-}
 #vidaYNum h4 {
     margin-right: 11px;
     color: white;
@@ -322,8 +300,86 @@ input[type="radio"]:checked {
     background-color: #1453A3;
     transform: scale(1.1);
     border: #01152b;
+
     transition: all 0.3s ease;
 }
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    font-size: 1em;
+    margin-top: 80px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.footer-section h4 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    font-size: 1em;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-logo {
+    width: 100px;
+    margin-top: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #ddd;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.9em;
+}
+
 
 /*----------------------------------Ejercicio-Video------------------------------------*/
 
