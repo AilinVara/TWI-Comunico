@@ -16,7 +16,9 @@
 
 <div th:each="ejercicios : ${ejercicio}">
         <div  class="imagen">
-            <img th:src="@{'/img/' + ${ejercicio.getImagen()}}" alt="Palabra en braille" />
+            <div th:each="letra : ${ejercicio.respuestaCorrecta.toCharArray()}">
+                <img th:src="@{'/img/braille/' + ${letra}}" alt="Letra en braille">
+            </div>
         </div>
 
         <div class="drop-area" id="dropArea">

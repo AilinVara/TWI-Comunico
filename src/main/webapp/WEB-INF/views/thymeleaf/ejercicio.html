@@ -32,7 +32,7 @@
         <p id="braille-letter" th:text="${ejercicio.consigna}"></p>
         <div id="braille-display" class="braille"></div>
         <div class="braille-item-sin-hover">
-            <img th:src="@{/img/braille-a.png}">
+            <img th:src="@{'/img/braille/' + ${ejercicio.opcionCorrecta.descripcion}}">
         </div>
     </div>
 
