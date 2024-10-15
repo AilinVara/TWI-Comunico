@@ -1,7 +1,9 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Usuario {
@@ -13,9 +15,6 @@ public class Usuario {
     private String password;
     private String rol;
     private Boolean activo = false;
-
-   @OneToOne
-    private Set<Logro> logros;
 
     public Long getId() {
         return id;
@@ -46,14 +45,6 @@ public class Usuario {
     }
     public void setActivo(Boolean activo) {
         this.activo = activo;
-    }
-
-    public Set<Logro> getRangos() {
-        return logros;
-    }
-
-    public void setRangos(Set<Logro> logroes) {
-        this.logros = logroes;
     }
 
     public boolean activo() {
