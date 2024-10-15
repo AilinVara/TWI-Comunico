@@ -72,7 +72,7 @@ public class ControladorEjercicioTest {
         leccionMock.setEjercicios(lista);
         when(leccionMock.getEjercicios()).thenReturn(lista);
 
-        ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1);
+        ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1,requestMock);
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioMock));
     }

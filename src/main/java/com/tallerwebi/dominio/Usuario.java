@@ -14,6 +14,9 @@ public class Usuario {
     private String password;
     private String rol;
     private Boolean activo = false;
+
+
+
     @OneToOne
     private Vida vida;
 

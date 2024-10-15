@@ -33,11 +33,13 @@ public class ControladorEjercicio {
 
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
-    public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice){
+    public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request){
         ModelMap modelo = new ModelMap();
         modelo.put("leccion", leccionId);
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
         Long ejercicioId = Long.valueOf(indice);
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
+        modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
         modelo.put("ejercicio", ejercicio);
         modelo.put("indice", indice);
 
@@ -69,14 +71,16 @@ public class ControladorEjercicio {
         if (!resuelto){
             this.servicioVida.perderUnaVida(usuarioId);
             modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
+
+            Vida vida = this.servicioVida.obtenerVida(usuarioId);
+            LocalDateTime ahora = LocalDateTime.now();
+            Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
+            long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
+            long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60); // Cada 60 segundos
+            modelo.put("tiempoRestante", tiempoRestante);
         }
 
-        Vida vida = this.servicioVida.obtenerVida(usuarioId);
-        LocalDateTime ahora = LocalDateTime.now();
-        Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
-        long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
-        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60); // Cada 60 segundos
-        modelo.put("tiempoRestante", tiempoRestante);
+
 
         modelo.put("indice", indice);
         modelo.put("leccion", leccionId);

@@ -16,7 +16,12 @@ body {
     background-position: center;
     color: #333;
 }
-
+.fa-solid fa-heart-crack{
+color:red;
+}
+.fa-solid fa-clock-rotate-left{
+color:yellow;
+}
 header {
     display: flex;
     justify-content: space-between;
