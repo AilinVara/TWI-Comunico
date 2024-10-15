@@ -51,7 +51,7 @@ public class ControladorEjercicio {
             modelo.put("matriz", matriz);
             return new ModelAndView("formaLetras", modelo);
         }
-        return new ModelAndView("ejercicio", modelo);
+        return new ModelAndView("ejercicio-braille", modelo);
     }
 
     @RequestMapping(path = "/resolver/{indice}", method = RequestMethod.POST)
@@ -82,7 +82,7 @@ public class ControladorEjercicio {
         modelo.put("leccion", leccionId);
         modelo.put("ejercicio", ejercicio);
         modelo.put("esCorrecta", (resuelto));
-        return new ModelAndView("ejercicio", modelo);
+        return new ModelAndView("ejercicio-braille", modelo);
     }
 
     @RequestMapping(path = "/resolverMatriz/{indice}", method = RequestMethod.POST)
