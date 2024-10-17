@@ -4,25 +4,16 @@
     <meta charset="UTF-8">
     <title>Forma Letras en Braille</title>
     <link rel="stylesheet" th:href="@{/css/formaLetras.css}" />
+    <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-<header class="titulo-de-la-leccion">
-    <a th:href="@{/inicio}"><img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img"/></a>
-    <h3>Ejercicio de Braille</h3>
-    <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"/>
-    <div class="grupo_input" id="vidaYNum">
-        <i class="fa-solid fa-heart" id="vidas"></i>
-        <h4>5</h4>
-    </div>
-</header>
+
+<div th:replace="header :: header"></div>
+<h3 class="titulo" id="braille-letter" th:text="${ejercicio.getConsigna()}"></h3>
 
 <div class="game-container">
-    <div class="question">
-        <p id="braille-letter" th:text="${ejercicio.getConsigna()}"></p>
-    </div>
-
     <form th:action="@{'/resolverMatriz/' + ${indice}}" method="POST" onsubmit="return concatenarCheckboxes()">
         <input type="hidden" name="ejercicioId" th:value="${ejercicio.getId()}"/>
         <input type="hidden" name="matrizId" th:value="${matriz.getId()}"/>

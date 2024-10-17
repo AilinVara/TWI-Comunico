@@ -7,20 +7,27 @@ import javax.transaction.Transactional;
 
 @Service("servicioEjercicio")
 @Transactional
-public class ServicioEjercicioImpl implements ServicioEjercicio{
+public class ServicioEjercicioImpl implements ServicioEjercicio {
 
     private RepositorioEjercicio repositorioEjercicio;
+    @Autowired
+    private ServicioVida servicioVida;
+    @Autowired
+    private RepositorioUsuario repositorioUsuario;
 
     @Autowired
-    public ServicioEjercicioImpl (RepositorioEjercicio repositorioEjercicio){ this.repositorioEjercicio = repositorioEjercicio;}
+    public ServicioEjercicioImpl(RepositorioEjercicio repositorioEjercicio) {
+        this.repositorioEjercicio = repositorioEjercicio;
+    }
 
     @Override
     public void guardarEjercicio(Ejercicio ejercicio) {
+
         this.repositorioEjercicio.guardar(ejercicio);
     }
 
     @Override
-    public Ejercicio obtenerEjercicio(Long ejercicioId){
+    public Ejercicio obtenerEjercicio(Long ejercicioId) {
         return this.repositorioEjercicio.buscarEjercicio(ejercicioId);
     }
 
@@ -28,6 +35,8 @@ public class ServicioEjercicioImpl implements ServicioEjercicio{
     public Boolean resolverEjercicio(Ejercicio ejercicio, Long opcionId) {
         return ejercicio.getOpcionCorrecta().getId().equals(opcionId);
     }
+
+
 
 }
 

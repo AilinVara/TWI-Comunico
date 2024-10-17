@@ -75,6 +75,49 @@ nav a.active {
 nav a.active:hover {
   background-color: #215598;
 }
+#botonVidas{
+position: fixed;
+background-color: #2B70C9;
+border: none;
+border-radius: 50px;
+right:0.2%;
+top: 25%;
+
+}
+
+#vidaYNum h4 {
+    margin-right: 11px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#vidaYNum:hover{
+    background-color: #1453A3;
+    transform: scale(1.1);
+    border: #01152b;
+    transition: all 0.6s ease;
+}
+#vidas{
+    font-size: 16px;
+    color: #EA2B2B;
+}
+
+#vidaYNum {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #2B70C9;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    position: absolute;
+    right: 100px;
+
+
+}
 
 .perfil {
   display: flex;
