@@ -76,17 +76,18 @@ public class ServicioVidaImplTest {
     @Transactional
     public void dadoQueUsuarioTieneMaximoDeVidasCuandoSeRegeneraEntoncesCantidadDeVidasNoSuperaLaCantidadDeVidasMaximas() {
 
-        when(vidaMock.getCantidadDeVidasActuales()).thenReturn(4);
-        vidaMock.setUltimaVezQueSeRegeneroLaVida(LocalDateTime.now().minusMinutes(2));
-        this.repositorioVidaMock.guardarUnaVida(vidaMock);
+        Vida vidaReal = new Vida(5);
+        vidaReal.setUltimaVezQueSeRegeneroLaVida(LocalDateTime.now().minusMinutes(2));
+
+        when(usuarioMock.getVida()).thenReturn(vidaReal);
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.add(usuarioMock);
         when(this.repositorioUsuario.obtenerTodosLosUsuarios()).thenReturn(usuarios);
+
         this.servicioVida.regenerarVidasDeTodosLosUsuarios();
 
-
-        assertThat(vidaMock.getCantidadDeVidasActuales(), equalTo(5));
-
+        assertThat(vidaReal.getCantidadDeVidasActuales(), equalTo(5));
     }
+
 
 }

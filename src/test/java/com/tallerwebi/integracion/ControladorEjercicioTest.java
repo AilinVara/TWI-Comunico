@@ -28,6 +28,9 @@ import java.util.Objects;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,13 +42,18 @@ public class ControladorEjercicioTest {
 
     private ServicioEjercicio servicioEjercicio;
     private RepositorioEjercicio repositorioEjercicio;
+    private ServicioVida servicioVida;
+    private RepositorioVida repositorioVida;
+    private RepositorioUsuario repositorioUsuario;
 
     @Autowired
     private SessionFactory sessionFactory;
+
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
     private MockHttpSession sessionMock;
+
 
     @BeforeEach
     public void init(){
@@ -53,6 +61,9 @@ public class ControladorEjercicioTest {
         this.servicioEjercicio = new ServicioEjercicioImpl(repositorioEjercicio);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
         this.sessionMock = new MockHttpSession();
+        this.servicioVida = new ServicioVidaImpl(repositorioVida, repositorioUsuario);
+
+
     }
 
     @Test
@@ -67,6 +78,12 @@ public class ControladorEjercicioTest {
 
 
         sessionMock.setAttribute("id", usuario.getId());
+
+        Vida vida = new Vida();
+        vida.setCantidadDeVidasActuales(5);
+        usuario.setVida(vida);
+        this.sessionFactory.getCurrentSession().save(vida);
+        this.sessionFactory.getCurrentSession().update(usuario);
 
         Ejercicio ejercicioResuelto = leccion.getEjercicios().get(0);
 
@@ -96,6 +113,12 @@ public class ControladorEjercicioTest {
         Usuario usuario = new Usuario();
         this.sessionFactory.getCurrentSession().save(usuario);
         sessionMock.setAttribute("id", usuario.getId());
+
+        Vida vida = new Vida();
+        vida.setCantidadDeVidasActuales(5);
+        usuario.setVida(vida);
+        this.sessionFactory.getCurrentSession().save(vida);
+        this.sessionFactory.getCurrentSession().update(usuario);
 
         Ejercicio ejercicio1 = crearEjercicio();
         ejercicio1.setConsigna("Consigna 1");

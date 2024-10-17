@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,10 @@ public class ControladorEjercicioTest {
     private HttpSession sessionMock;
     private ProgresoLeccion progresoMock;
     private ServicioVida servicioVidaMock;
+    private Clock clockMock;
+
+
+
 
     @BeforeEach
     public void init() {
@@ -51,6 +56,14 @@ public class ControladorEjercicioTest {
         servicioVidaMock = mock(ServicioVida.class);
         when(vidaMock.getCantidadDeVidasActuales()).thenReturn(5);
         when(servicioVidaMock.obtenerVida(anyLong())).thenReturn(vidaMock);
+        LocalDateTime haceUnosSegundos = LocalDateTime.now().minusSeconds(30);
+        when(vidaMock.getUltimaVezQueSeRegeneroLaVida()).thenReturn(haceUnosSegundos);
+
+
+        LocalDateTime ahora = LocalDateTime.now();
+        Duration duracion = Duration.between(vidaMock.getUltimaVezQueSeRegeneroLaVida(), ahora);
+        long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
+        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60);
 
         when(ejercicioMock.getOpcionCorrecta()).thenReturn(opcionCorrectaMock);
         when(ejercicioMock.getOpcionesIncorrectas()).thenReturn(opcionesIncorrectas);
@@ -72,7 +85,11 @@ public class ControladorEjercicioTest {
         leccionMock.setEjercicios(lista);
         when(leccionMock.getEjercicios()).thenReturn(lista);
 
+        when(requestMock.getSession()).thenReturn(sessionMock);
+        when(sessionMock.getAttribute(anyString())).thenReturn(1L);
+
         ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1,requestMock);
+
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioMock));
     }
