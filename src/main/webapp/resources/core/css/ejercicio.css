@@ -146,6 +146,7 @@ nav a.active:hover {
 .titulo {
     text-align: center;
     padding: 50px;
+    padding-bottom: 0;
     font-size: 2.5em;
     margin-bottom: 10px;
     color: #333;
@@ -272,7 +273,6 @@ label.optionLetra {
 
 input[type="radio"]:checked {
     transform: scale(1.12);
-    accent-color: #1cb0f6;
 }
 
 .contenedor-enviar{
@@ -286,7 +286,6 @@ input[type="radio"]:checked {
 }
 
 .enviar {
-
     height: 60px;
     width: 120px;
     padding: 20px;
