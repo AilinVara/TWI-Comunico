@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div th:if="${mostrarVolverMenu}">
+    <div class="contenedor-volver" th:if="${mostrarVolverMenu}">
         <a th:href="@{/braille}">
             <input class="volver-atras" type="button" value="Volver al menú">
         </a>
@@ -70,8 +70,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/ejercicio-forma-palabra.js}"></script>
-
-<div th:replace="footer :: footer"></div>
 
 </body>
 </html>

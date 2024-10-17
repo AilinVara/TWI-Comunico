@@ -37,7 +37,7 @@ INSERT INTO Matriz (id, ejercicio_id, puntos) VALUES
 
 INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras) values
                                                                              (1, 'gato.png', "GATO", 'T, A, G, P, S, O, R'),
-                                                                             (2, 'perro.png', "PERRO", 'R, A, P, E, S, O, N'),
+                                                                             (2, 'perro.png', "PERRO", 'R, A, P, N, S, O, E'),
                                                                              (3, 'libro.png', "LIBRO", 'L, O, B, N, S, I, R');
 
 INSERT INTO Curso(id, nombre, descripcion, fecha, hora, tipo, nivel, capacidad, inscriptos) VALUES

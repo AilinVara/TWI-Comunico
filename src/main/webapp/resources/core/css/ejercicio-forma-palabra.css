@@ -178,14 +178,16 @@ button:hover {
     font-size: 2em;
 }
 
-.volver-atras-container {
+.contenedor-volver{
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    margin-top: 30px;
-    margin-bottom: 49px;
+    padding: 50px;
 }
 
 .volver-atras {
+    margin-top: 20px;
     display: inline-block;
     width: 150px;
     padding: 10px;
