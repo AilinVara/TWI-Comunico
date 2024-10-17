@@ -4,44 +4,46 @@
     <meta charset="UTF-8">
     <title>Ejercicio</title>
 
-  <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
-  <link rel="stylesheet" th:href="@{/css/ejercicio.css}" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/ejercicio.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
 <div class="titulo-de-la-leccion">
-  <a th:href="@{/inicio}"><img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img"/></a>
-  <h3>Ejercicio con video</h3>
-  <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"/>
-  <div class="grupo_input" id="vidaYNum">
-    <i class="fa-solid fa-heart" id="vidas"></i>
-    <h4>5</h4>
-  </div>
-</div>
+    <a th:href="@{/inicio}"><img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img"/></a>
+    <h3>Ejercicio con video</h3>
+    <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"/>
+
+    <button id="botonVidas">
+        <div class="grupo_input" id="vidaYNum">
+            <i class="fa-solid fa-heart" id="vidas"></i>
+            <h4 th:text="${vidas}" id="vidasNumero">0</h4>
+        </div>
+    </button>
+</div> <!-- Cierre del div titulo-de-la-leccion correctamente aquí -->
 
 <div class="game-container">
-<div class="question">
-  <p id="braille-letter" th:text="${ejercicio.consigna}"></p>
-</div>
+    <div class="question">
+        <p id="braille-letter" th:text="${ejercicio.consigna}"></p>
+    </div>
 
-  <div class="sign-video">
-    <img class="video" th:src="@{https://diccionariolsc.ces.edu.co/wp-content/uploads/sites/3/2022/05/B_Frontal.gif}" alt = "Muestra">
+    <div class="sign-video">
+        <img class="video" th:src="@{https://diccionariolsc.ces.edu.co/wp-content/uploads/sites/3/2022/05/B_Frontal.gif}" alt="Muestra">
 
-    <form action="#" th:action="@{/resolverVideo}" method="post" th:object="${ejercicio}">
-        <input hidden th:name="ejercicioId" th:value="${ejercicio.getId()}">
+        <form action="#" th:action="@{/resolverVideo}" method="post" th:object="${ejercicio}">
+            <input hidden th:name="ejercicioId" th:value="${ejercicio.getId()}">
 
-        <div class="radioYFrases">
+            <div class="radioYFrases">
                 <div class="OpcionesFrase" th:each="opcion: ${ejercicio.opcionesIncorrectas}">
                     <input class="option optionVideo" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}"/>
-                    <label class="optionFrase" th:for="'opcion_' + ${opcion.id}"
-                           th:text="${opcion.descripcion}">-</label>
+                    <label class="optionFrase" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">-</label>
                 </div>
 
                 <div class="OpcionesFrase">
@@ -50,13 +52,11 @@
                     <label class="optionFrase" th:for="opcionCorrecta"
                            th:text="${ejercicio.opcionCorrecta.descripcion}">-</label>
                 </div>
-        </div>
+            </div>
 
-
-        <button class="enviar enviar-ejercicioVideo" type="submit">Enviar</button>
-    </form>
-
-</div>
+            <button class="enviar enviar-ejercicioVideo" type="submit">Enviar</button>
+        </form>
+    </div>
 
     <div th:if="${esCorrecta != null}">
         <div th:if="${esCorrecta}">
@@ -80,7 +80,6 @@
             </script>
         </div>
     </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

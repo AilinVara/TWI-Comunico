@@ -22,6 +22,7 @@ public class ControladorEjercicio {
     private ServicioMatriz servicioMatriz;
     private ServicioVida servicioVida;
 
+
     @Autowired
     public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioMatriz servicioMatriz, ServicioVida servicioVida) {
         this.servicioEjercicio = servicioEjercicio;
@@ -56,6 +57,7 @@ public class ControladorEjercicio {
     @RequestMapping(path = "/resolver/{indice}", method = RequestMethod.POST)
     public ModelAndView resolverEjercicio(@PathVariable("indice") Long indice, @RequestParam("opcionSeleccionada") Long opcionId, @RequestParam("ejercicioId") Long ejercicioId,
                                           @RequestParam("leccion") Long leccionId, HttpServletRequest request) {
+
         ModelMap modelo = new ModelMap();
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
