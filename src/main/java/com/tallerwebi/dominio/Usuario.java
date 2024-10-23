@@ -12,7 +12,7 @@ public class Usuario {
     private String password;
     private String rol;
     private Boolean activo = false;
-    private Integer comunicoPoints = 0;
+    private Integer comunicoPoints;
 
     @OneToOne
     private Vida vida;

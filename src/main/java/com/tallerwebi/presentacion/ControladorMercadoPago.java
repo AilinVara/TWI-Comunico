@@ -45,7 +45,7 @@ public class ControladorMercadoPago {
             PreferenceItemRequest itemRequest = PreferenceItemRequest.builder()
                     .title("Comunico Points")
                     .quantity(cantidad)
-                    .unitPrice(new BigDecimal(100))
+                    .unitPrice(new BigDecimal(10))
                     .currencyId("ARS")
                     .build();
 
@@ -79,10 +79,12 @@ public class ControladorMercadoPago {
         ModelMap modelo = new ModelMap();
 
         String resultado = allParams.get("status");
-        Integer cantidad = Integer.parseInt(allParams.get("quantity"));
+        String cantidadParam = allParams.get("quantity");
+
         Long idUsuario = (Long) request.getSession().getAttribute("id");
-        if(resultado != null){
+        if(resultado != null && cantidadParam != null){
             if(resultado.equals("approved")){
+                Integer cantidad = Integer.parseInt(cantidadParam);
                 Usuario usuario = this.servicioUsuario.buscarUsuarioPorId(idUsuario);
                 usuario.setComunicoPoints(usuario.getComunicoPoints() + cantidad);
                 this.servicioUsuario.modificar(usuario);
@@ -93,6 +95,6 @@ public class ControladorMercadoPago {
             else if(resultado.equals("rejected"))
                 modelo.put("resultado", resultado);
         }
-        return new ModelAndView("mercadopago", modelo);
+        return new ModelAndView("comprarPoints", modelo);
     }
 }

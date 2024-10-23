@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/comprarPoints.css}">
+    <link rel="icon" th:href="@{/img/Isologo-Comunico.svg}" type="image/x-icon">
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <title>Comprar ComunicoPoints</title>
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<div th:if="${mensaje}">
+    <p th:text="${mensaje}"></p>
+</div>
+
+<div class="titulo">
+    <h1>¡Compra ComunicoPoints!</h1>
+    <p>Con ComunicoPoints, puedes mejorar tu experiencia de aprendizaje obteniendo ayudas como:</p>
+    <ul>
+        <li><i class="fa-solid fa-dice-five"></i> 'Trampas' en los ejercicios.</li>
+        <li><i class="fa-solid fa-unlock"></i> Desbloquear lecciones inhabilitadas.</li>
+        <li><i class="fa-solid fa-heart-circle-plus"></i> Comprar vidas extras para no perder el progreso.</li>
+    </ul>
+</div>
+
+<div class="game-container">
+    <input type="number" id="cantidad" placeholder="Cantidad de Comunico Points">
+    <button onclick="MP()">Comprar</button>
+
+    <div id="wallet_container"></div>
+</div>
+<script th:src="@{/js/mp.js}"></script>
+</body>
+</html>

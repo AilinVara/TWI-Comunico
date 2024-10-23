@@ -6,11 +6,17 @@
 
   <nav>
     <ul>
-      <li><a th:href="@{/inicio}" class="active">Inicio</a></li>
+      <li><a th:href="@{/inicio}">Inicio</a></li>
       <li><a th:href="@{/senias}">Lengua de Señas</a></li>
       <li><a th:href="@{/braille}">Braille</a></li>
       <li><a th:href="@{/cursos}">Cursos</a></li>
-     <a th:href="@{/crear-curso}" ><img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"></a>
+      <li>
+        <a th:href="@{/comprar}" class="points-container">
+          <i class="fa-solid fa-coins"></i>
+          <span th:text="${cantidadMonedas}">0</span>
+        </a>
+      </li>
+      <a th:href="@{/crear-curso}" ><img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"></a>
     </ul>
   </nav>
 </header>
