@@ -1,8 +1,6 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Usuario {
@@ -14,13 +12,10 @@ public class Usuario {
     private String password;
     private String rol;
     private Boolean activo = false;
-
-
+    private Integer comunicoPoints = 0;
 
     @OneToOne
     private Vida vida;
-
-
 
     public Long getId() {
         return id;
@@ -79,6 +74,13 @@ public class Usuario {
 
     }
 
+    public Integer getComunicoPoints() {
+        return comunicoPoints;
+    }
+
+    public void setComunicoPoints(Integer comunicopoints) {
+        this.comunicoPoints = comunicopoints;
+    }
 }
 
 
