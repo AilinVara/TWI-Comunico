@@ -88,11 +88,11 @@ public class ControladorMercadoPago {
                 Usuario usuario = this.servicioUsuario.buscarUsuarioPorId(idUsuario);
                 usuario.setComunicoPoints(usuario.getComunicoPoints() + cantidad);
                 this.servicioUsuario.modificar(usuario);
+                request.getSession().setAttribute("points", usuario.getComunicoPoints());
+                modelo.put("points", usuario.getComunicoPoints());
                 modelo.put("resultado", resultado);
             }
-            else if (resultado.equals("pending"))
-                modelo.put("resultado", resultado);
-            else if(resultado.equals("rejected"))
+            else
                 modelo.put("resultado", resultado);
         }
         return new ModelAndView("comprarPoints", modelo);
