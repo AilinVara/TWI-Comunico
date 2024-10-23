@@ -16,7 +16,7 @@ INSERT INTO Leccion(id, titulo) VALUES
 
 INSERT INTO Ejercicio(id, consigna, opcionCorrecta_id, leccion_id) VALUES
                                                                        (1, 'Ejercicio 1:', 1, 1),
-                                                                       (2, 'Ejercicio 2:', 2, 1),
+                                                                       (2, 'Ejercicio con video', 2, 1),
                                                                        (3, 'Ejercicio 3:', 3, 1),
                                                                        (10, 'Forma la letra: A', 1, 2),
                                                                        (11, 'Forma la letra: B', 2, 2),
