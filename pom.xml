@@ -21,7 +21,7 @@
         <playwright.version>1.36.0</playwright.version>
         <hsqldb.version>2.3.2</hsqldb.version>
         <mysql.version>8.0.33</mysql.version>
-        <mercadopago.version>2.1.29</mercadopago.version>
+        <mercadopago.version>2.1.7</mercadopago.version>
     </properties>
 
     <dependencies>
