@@ -19,13 +19,16 @@
 <div th:replace="header :: header"></div>
 
 <div class="titulo">
-    <h3>Ejercicio con video</h3>
-</div>
+    <h3 th:text="${ejercicio.consigna}">Ejercicio con video</h3>
+    <button id="botonVidas">
+        <div class="grupo_input" id="vidaYNum">
+            <i class="fa-solid fa-heart" id="vidas"></i>
+            <h4 th:text="${vidas}" id="vidasNumero">0</h4>
+        </div>
+    </button>
+</div> <!-- Cierre del div titulo-de-la-leccion correctamente aquí -->
 
 <div class="game-container">
-    <div class="question">
-        <p id="braille-letter">Ejercicio 1</p>
-    </div>
 
     <div class="sign-video">
         <img class="video" th:src="@{https://diccionariolsc.ces.edu.co/wp-content/uploads/sites/3/2022/05/B_Frontal.gif}" alt="Muestra">
@@ -73,6 +76,30 @@
             </script>
         </div>
     </div>
+
+    <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
+    <script th:inline="javascript">
+        document.getElementById("botonVidas").addEventListener("click", function() {
+            let vidasRestantes = document.getElementById("vidasNumero").innerText;
+
+            let tiempoRestante = document.getElementById("tiempoRestante").innerText;
+
+            console.log("Tiempo restante:", tiempoRestante);
+
+            Swal.fire({
+                title: 'Vidas Restantes',
+                html: `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`,
+                icon: 'info',
+                confirmButtonText: 'OK',
+                didOpen: () => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
+                    document.head.appendChild(script);
+                }
+            });
+        });
+    </script>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
