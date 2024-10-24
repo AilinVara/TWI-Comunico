@@ -30,7 +30,9 @@ public class ControladorEjercicioTest {
     private HttpSession sessionMock;
     private ProgresoLeccion progresoMock;
     private ServicioVida servicioVidaMock;
-    private Clock clockMock;
+    private GestionarVidas gestionarVidasMock;
+    
+   
 
 
 
@@ -59,11 +61,9 @@ public class ControladorEjercicioTest {
         LocalDateTime haceUnosSegundos = LocalDateTime.now().minusSeconds(30);
         when(vidaMock.getUltimaVezQueSeRegeneroLaVida()).thenReturn(haceUnosSegundos);
 
+        gestionarVidasMock = mock(GestionarVidas.class);
 
-        LocalDateTime ahora = LocalDateTime.now();
-        Duration duracion = Duration.between(vidaMock.getUltimaVezQueSeRegeneroLaVida(), ahora);
-        long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
-        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60);
+        calcularTiempoRestante(vidaMock);
 
         when(ejercicioMock.getOpcionCorrecta()).thenReturn(opcionCorrectaMock);
         when(ejercicioMock.getOpcionesIncorrectas()).thenReturn(opcionesIncorrectas);
@@ -74,8 +74,10 @@ public class ControladorEjercicioTest {
         servicioLeccionMock = mock(ServicioLeccion.class);
         servicioProgresoLeccionMock = mock(ServicioProgresoLeccion.class);
         servicioMatrizMock = mock(ServicioMatriz.class);
-        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioMatrizMock, servicioVidaMock);
+        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioMatrizMock, servicioVidaMock, gestionarVidasMock);
     }
+
+
 
     @Test
     public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConEjerciciosCuandoVoyAEjercicioReciboLaVistaEjercicioYUnObjetoEjercicioEnElModelo(){
@@ -125,4 +127,10 @@ public class ControladorEjercicioTest {
         assertThat(modelAndView.getModel().get("esCorrecta"), is(false));
     }
 
+    private static void calcularTiempoRestante(Vida vidaMock) {
+        LocalDateTime ahora = LocalDateTime.now();
+        Duration duracion = Duration.between(vidaMock.getUltimaVezQueSeRegeneroLaVida(), ahora);
+        long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
+        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60);
+    }
 }
