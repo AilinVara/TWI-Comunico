@@ -91,27 +91,35 @@ nav a.active:hover {
 .titulo {
     text-align: center;
     padding: 20px;
-    padding-bottom: 0;
-    font-size: 1.5em;
+    padding-bottom: 30px;
+    font-size: 1.3em;
     margin: auto;
-    margin-bottom: 10px;
-    width: 80%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 50%;
     color: #333;
+    background-color: #ffffff;
+    border: 1px solid rgba(81, 81, 81, 0.37);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .titulo p {
-    font-size: 1em;
+    font-size: 1.1em;
     color: #555;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .titulo ul {
     list-style-type: none;
-    padding-left: 0;
+    width: 65%;
+    margin: auto;
 }
 
 .titulo ul li {
-    font-size: 0.8em;
+    text-align: left;
+    font-size: 1em;
     margin: 10px 0;
 }
 .titulo ul li i{
@@ -133,7 +141,7 @@ nav a.active:hover {
 #cantidad {
     margin-top: 20px;
     padding: 10px;
-    font-size: 1.1em;
+    font-size: 0.80em;
 }
 
 button {
@@ -141,7 +149,7 @@ button {
     background-color: #74bf32;
     border: none;
     padding: 15px 30px;
-    font-size: 1.2em;
+    font-size: 0.90em;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
