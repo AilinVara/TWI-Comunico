@@ -30,10 +30,6 @@ public class ControladorEjercicioTest {
     private HttpSession sessionMock;
     private ProgresoLeccion progresoMock;
     private ServicioVida servicioVidaMock;
-    private Clock clockMock;
-
-
-
 
     @BeforeEach
     public void init() {
@@ -58,7 +54,6 @@ public class ControladorEjercicioTest {
         when(servicioVidaMock.obtenerVida(anyLong())).thenReturn(vidaMock);
         LocalDateTime haceUnosSegundos = LocalDateTime.now().minusSeconds(30);
         when(vidaMock.getUltimaVezQueSeRegeneroLaVida()).thenReturn(haceUnosSegundos);
-
 
         LocalDateTime ahora = LocalDateTime.now();
         Duration duracion = Duration.between(vidaMock.getUltimaVezQueSeRegeneroLaVida(), ahora);

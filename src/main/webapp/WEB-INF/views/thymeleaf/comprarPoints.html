@@ -13,9 +13,7 @@
 
 <div th:replace="header :: header"></div>
 
-<div th:if="${mensaje}">
-    <p th:text="${mensaje}"></p>
-</div>
+<div id="alerta" class="alerta" th:if="${alerta}" th:text="${alerta}" th:classappend="${tipoAlerta}"></div>
 
 <div class="titulo">
     <h1>¡Compra ComunicoPoints!</h1>
@@ -27,12 +25,27 @@
     </ul>
 
     <div class="game-container">
-        <input type="number" id="cantidad" placeholder="Cantidad de Comunico Points">
+        <div>
+            <input type="number" id="cantidad" placeholder="Cantidad de Comunico Points">
+            <p id="precio">Total: $0</p>
+        </div>
+
         <button onclick="MP()">Comprar</button>
 
         <div id="wallet_container"></div>
     </div>
 </div>
 <script th:src="@{/js/mp.js}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const alerta = document.getElementById('alerta');
+        if (alerta) {
+            setTimeout(() => {
+                alerta.style.opacity = '0';
+                setTimeout(() => alerta.remove(), 500);
+            }, 4000);
+        }
+    });
+</script>
 </body>
 </html>

@@ -27,3 +27,17 @@ const createCheckoutButton = (preferenceId) => {
         }
     });
 };
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const inputCantidad = document.getElementById('cantidad');
+    const precioElement = document.getElementById('precio');
+
+    function actualizarPrecio() {
+        const cantidad = parseInt(inputCantidad.value) || 0;
+        const precioTotal = cantidad * 10;
+        precioElement.textContent = `Precio: $${precioTotal}`;
+    }
+
+    inputCantidad.addEventListener('input', actualizarPrecio);
+});

@@ -9,7 +9,6 @@ import com.mercadopago.resources.preference.Preference;
 import com.tallerwebi.dominio.ServicioUsuario;
 import com.tallerwebi.dominio.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,9 +25,6 @@ import java.util.Map;
 
 @Controller
 public class ControladorMercadoPago {
-
-    @Value("${codigo.mercadoLibre}")
-    private String mercadoLibreToken;
 
     private ServicioUsuario servicioUsuario;
 
@@ -90,10 +86,14 @@ public class ControladorMercadoPago {
                 this.servicioUsuario.modificar(usuario);
                 request.getSession().setAttribute("points", usuario.getComunicoPoints());
                 modelo.put("points", usuario.getComunicoPoints());
-                modelo.put("resultado", resultado);
+                modelo.put("alerta", "Compra realizada satisfactoriamente.");
+                modelo.put("tipoAlerta", "success");
             }
-            else
-                modelo.put("resultado", resultado);
+            else{
+                modelo.put("alerta", "No pudimos procesar la compra.");
+                modelo.put("tipoAlerta", "error");
+            }
+
         }
         return new ModelAndView("comprarPoints", modelo);
     }
