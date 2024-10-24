@@ -1,7 +1,7 @@
 package com.tallerwebi.integracion;
 
 import com.tallerwebi.dominio.*;
-import com.tallerwebi.infraestructura.RepositorioEjercicioImpl;
+import com.tallerwebi.infraestructura.RepositorioEjercicioTraduccionImpl;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
 import org.hibernate.SessionFactory;
@@ -35,10 +35,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {SpringWebTestConfig.class, HibernateTestConfig.class})
-public class ControladorEjercicioTest {
+public class ControladorEjercicioTraduccionTest {
 
     private ServicioEjercicio servicioEjercicio;
-    private RepositorioEjercicio repositorioEjercicio;
+    private RepositorioEjercicioTraduccion repositorioEjercicioTraduccion;
     private ServicioVida servicioVida;
     private RepositorioVida repositorioVida;
     private RepositorioUsuario repositorioUsuario;
@@ -54,8 +54,8 @@ public class ControladorEjercicioTest {
 
     @BeforeEach
     public void init(){
-        this.repositorioEjercicio = new RepositorioEjercicioImpl(sessionFactory);
-        this.servicioEjercicio = new ServicioEjercicioImpl(repositorioEjercicio);
+        this.repositorioEjercicioTraduccion = new RepositorioEjercicioTraduccionImpl(sessionFactory);
+        this.servicioEjercicio = new ServicioEjercicioImpl(repositorioEjercicioTraduccion);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
         this.sessionMock = new MockHttpSession();
         this.servicioVida = new ServicioVidaImpl(repositorioVida, repositorioUsuario);
@@ -80,11 +80,13 @@ public class ControladorEjercicioTest {
         this.sessionFactory.getCurrentSession().save(vida);
         this.sessionFactory.getCurrentSession().update(usuario);
 
-        Ejercicio ejercicioResuelto = leccion.getEjercicios().get(0);
+        Ejercicio ejercicioTraduccionResuelto = leccion.getEjercicios().get(0);
+
+        EjercicioTraduccion ejercicioTraduccion = (EjercicioTraduccion) ejercicioTraduccionResuelto;
 
         MvcResult result = this.mockMvc.perform(post("/resolver/1?leccion=" + leccion.getId().toString())
-                        .param("opcionSeleccionada", ejercicioResuelto.getOpcionCorrecta().getId().toString())
-                        .param("ejercicioId", ejercicioResuelto.getId().toString())
+                        .param("opcionSeleccionada", ejercicioTraduccion.getOpcionCorrecta().getId().toString())
+                        .param("ejercicioId", ejercicioTraduccionResuelto.getId().toString())
                         .param("leccion",leccion.getId().toString())
                         .session(sessionMock))
                         .andExpect(status().isOk())
@@ -115,26 +117,26 @@ public class ControladorEjercicioTest {
         this.sessionFactory.getCurrentSession().save(vida);
         this.sessionFactory.getCurrentSession().update(usuario);
 
-        Ejercicio ejercicio1 = crearEjercicio();
-        ejercicio1.setConsigna("Consigna 1");
+        EjercicioTraduccion ejercicioTraduccion1 = crearEjercicio();
+        ejercicioTraduccion1.setConsigna("Consigna 1");
 
-        Ejercicio ejercicio2 = crearEjercicio();
-        ejercicio2.setConsigna("Consigna 2");
+        EjercicioTraduccion ejercicioTraduccion2 = crearEjercicio();
+        ejercicioTraduccion2.setConsigna("Consigna 2");
 
-        Ejercicio ejercicio3 = crearEjercicio();
-        ejercicio3.setConsigna("Consigna 3");
+        EjercicioTraduccion ejercicioTraduccion3 = crearEjercicio();
+        ejercicioTraduccion3.setConsigna("Consigna 3");
 
-        this.servicioEjercicio.guardarEjercicio(ejercicio1);
-        this.servicioEjercicio.guardarEjercicio(ejercicio2);
-        this.servicioEjercicio.guardarEjercicio(ejercicio3);
+        this.servicioEjercicio.guardarEjercicio(ejercicioTraduccion1);
+        this.servicioEjercicio.guardarEjercicio(ejercicioTraduccion2);
+        this.servicioEjercicio.guardarEjercicio(ejercicioTraduccion3);
 
-        List<Ejercicio> listaEjercicios = new ArrayList<>();
-        listaEjercicios.add(ejercicio1);
-        listaEjercicios.add(ejercicio2);
-        listaEjercicios.add(ejercicio3);
+        List<Ejercicio> listaEjercicioTraduccions = new ArrayList<>();
+        listaEjercicioTraduccions.add(ejercicioTraduccion1);
+        listaEjercicioTraduccions.add(ejercicioTraduccion2);
+        listaEjercicioTraduccions.add(ejercicioTraduccion3);
 
         Leccion leccion = crearLeccion();
-        leccion.setEjercicios(listaEjercicios);
+        leccion.setEjercicios(listaEjercicioTraduccions);
         this.sessionFactory.getCurrentSession().save(leccion);
 
         MvcResult result = this.mockMvc.perform(get("/ejercicio/3?leccion=" + leccion.getId())
@@ -152,9 +154,9 @@ public class ControladorEjercicioTest {
     }
 
 
-    private Ejercicio crearEjercicio() {
-        Ejercicio ejercicio = new Ejercicio();
-        ejercicio.setConsigna("Consigna");
+    private EjercicioTraduccion crearEjercicio() {
+        EjercicioTraduccion ejercicioTraduccion = new EjercicioTraduccion();
+        ejercicioTraduccion.setConsigna("Consigna");
         Opcion opcionCorrecta = new Opcion("A");
         Opcion opcionIncorrecta1 = new Opcion("B");
         Opcion opcionIncorrecta2 = new Opcion("C");
@@ -164,19 +166,19 @@ public class ControladorEjercicioTest {
         List<Opcion> opcionesIncorrectas = new ArrayList<>();
         opcionesIncorrectas.add(opcionIncorrecta1);
         opcionesIncorrectas.add(opcionIncorrecta2);
-        ejercicio.setOpcionCorrecta(opcionCorrecta);
-        ejercicio.setOpcionesIncorrectas(opcionesIncorrectas);
-        return ejercicio;
+        ejercicioTraduccion.setOpcionCorrecta(opcionCorrecta);
+        ejercicioTraduccion.setOpcionesIncorrectas(opcionesIncorrectas);
+        return ejercicioTraduccion;
     }
 
     private Leccion crearLeccion() {
         Leccion leccion = new Leccion();
         leccion.setTitulo("Leccion 1");
-        List<Ejercicio> ejercicios = new ArrayList<>();
-        Ejercicio ejercicio = crearEjercicio();
-        this.sessionFactory.getCurrentSession().save(ejercicio);
-        ejercicios.add(ejercicio);
-        leccion.setEjercicios(ejercicios);
+        List<Ejercicio> ejercicioTraduccions = new ArrayList<>();
+        EjercicioTraduccion ejercicioTraduccion = crearEjercicio();
+        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion);
+        ejercicioTraduccions.add(ejercicioTraduccion);
+        leccion.setEjercicios(ejercicioTraduccions);
         return leccion;
     }
 }

@@ -9,33 +9,37 @@ import javax.transaction.Transactional;
 @Transactional
 public class ServicioEjercicioImpl implements ServicioEjercicio {
 
-    private RepositorioEjercicio repositorioEjercicio;
+    private RepositorioEjercicioTraduccion repositorioEjercicioTraduccion;
     @Autowired
     private ServicioVida servicioVida;
     @Autowired
     private RepositorioUsuario repositorioUsuario;
 
     @Autowired
-    public ServicioEjercicioImpl(RepositorioEjercicio repositorioEjercicio) {
-        this.repositorioEjercicio = repositorioEjercicio;
+    public ServicioEjercicioImpl(RepositorioEjercicioTraduccion repositorioEjercicioTraduccion) {
+        this.repositorioEjercicioTraduccion = repositorioEjercicioTraduccion;
     }
 
     @Override
-    public void guardarEjercicio(Ejercicio ejercicio) {
+    public void guardarEjercicio(EjercicioTraduccion ejercicioTraduccion) {
 
-        this.repositorioEjercicio.guardar(ejercicio);
+        this.repositorioEjercicioTraduccion.guardar(ejercicioTraduccion);
     }
 
     @Override
     public Ejercicio obtenerEjercicio(Long ejercicioId) {
-        return this.repositorioEjercicio.buscarEjercicio(ejercicioId);
+        return this.repositorioEjercicioTraduccion.buscarEjercicio(ejercicioId);
     }
 
     @Override
-    public Boolean resolverEjercicio(Ejercicio ejercicio, Long opcionId) {
-        return ejercicio.getOpcionCorrecta().getId().equals(opcionId);
+    public Boolean resolverEjercicioTraduccion(EjercicioTraduccion ejercicioTraduccion, Long opcionId) {
+        return ejercicioTraduccion.getOpcionCorrecta().getId().equals(opcionId);
     }
 
+    @Override
+    public Boolean resolverEjercicioMatriz(String puntosSeleccionados, String puntosDeLaMatriz) {
+        return puntosSeleccionados.equals(puntosDeLaMatriz);
+    }
 
 
 }

@@ -3,7 +3,7 @@
 <head>
     <title>Ejercicios de Velocidad</title>
     <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/css/ejercicio-forma-palabra.css}" />
+    <link rel="stylesheet" th:href="@{/css/ejercicioTraduccion-forma-palabra.css}" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -14,9 +14,9 @@
 
 <h1  class="titulo">Formá palabras</h1>
 
-<div th:each="ejercicios : ${ejercicio}">
+<div th:each="ejercicioTraduccions : ${ejercicioTraduccion}">
         <div  class="imagen">
-            <div th:each="letra : ${ejercicio.respuestaCorrecta.toCharArray()}">
+            <div th:each="letra : ${ejercicioTraduccion.respuestaCorrecta.toCharArray()}">
                 <img th:src="@{'/img/braille/' + ${letra}}" alt="Letra en braille">
             </div>
         </div>
@@ -32,7 +32,7 @@
         </div>
         <form action="/verificarRespuesta" method="post">
             <input type="hidden" name="listaLetras" id="listaLetras" value="">
-            <input type="hidden" name="ejercicioId" th:value="${ejercicio.getId()}">
+            <input type="hidden" name="ejercicioId" th:value="${ejercicioTraduccion.getId()}">
             <button type="submit">Verificar</button>
         </form>
 
@@ -69,7 +69,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script th:src="@{/js/ejercicio-forma-palabra.js}"></script>
+<script th:src="@{/js/ejercicioTraduccion-forma-palabra.js}"></script>
 
 </body>
 </html>

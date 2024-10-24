@@ -1,6 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Matriz;
+import com.tallerwebi.dominio.EjercicioMatriz;
 import com.tallerwebi.dominio.RepositorioMatriz;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,26 +19,16 @@ public class RepositorioMatrizImpl implements RepositorioMatriz {
     }
 
     @Override
-    public void guardar(Matriz matriz) {
-        this.sessionFactory.getCurrentSession().save(matriz);
+    public void guardar(EjercicioMatriz ejercicioMatriz) {
+        this.sessionFactory.getCurrentSession().save(ejercicioMatriz);
     }
 
     @Override
     @Transactional
-    public Matriz buscarMatriz(Long id) {
+    public EjercicioMatriz buscarMatriz(Long id) {
         final Session session = sessionFactory.getCurrentSession();
-        return (Matriz) session.createCriteria(Matriz.class)
+        return (EjercicioMatriz) session.createCriteria(EjercicioMatriz.class)
                 .add(Restrictions.eq("id", id))
                 .uniqueResult();
     }
-
-    @Override
-    public Matriz buscarMatrizPorEjercicio(Long ejercicioId) {
-        final Session session = sessionFactory.getCurrentSession();
-        return (Matriz) session.createCriteria(Matriz.class)
-                .createAlias("ejercicio", "e")
-                .add(Restrictions.eq("e.id", ejercicioId))
-                .uniqueResult();
-    }
-
 }

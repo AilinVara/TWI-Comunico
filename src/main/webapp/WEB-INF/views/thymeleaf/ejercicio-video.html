@@ -5,7 +5,7 @@
     <title>Ejercicio</title>
 
     <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/css/ejercicio.css}" />
+    <link rel="stylesheet" th:href="@{/css/ejercicioTraduccion.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,24 +30,24 @@
     <div class="sign-video">
         <img class="video" th:src="@{https://diccionariolsc.ces.edu.co/wp-content/uploads/sites/3/2022/05/B_Frontal.gif}" alt="Muestra">
 
-        <form action="#" th:action="@{/resolverVideo}" method="post" th:object="${ejercicio}">
-            <input hidden th:name="ejercicioId" th:value="${ejercicio.getId()}">
+        <form action="#" th:action="@{/resolverVideo}" method="post" th:object="${ejercicioTraduccion}">
+            <input hidden th:name="ejercicioId" th:value="${ejercicioTraduccion.getId()}">
 
             <div class="radioYFrases">
-                <div class="OpcionesFrase" th:each="opcion: ${ejercicio.opcionesIncorrectas}">
+                <div class="OpcionesFrase" th:each="opcion: ${ejercicioTraduccion.opcionesIncorrectas}">
                     <input class="option optionVideo" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada" th:value="${opcion.id}"/>
                     <label class="optionFrase" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">-</label>
                 </div>
 
                 <div class="OpcionesFrase">
                     <input class="option optionVideo" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
-                           th:value="${ejercicio.opcionCorrecta.id}"/>
+                           th:value="${ejercicioTraduccion.opcionCorrecta.id}"/>
                     <label class="optionFrase" th:for="opcionCorrecta"
-                           th:text="${ejercicio.opcionCorrecta.descripcion}">-</label>
+                           th:text="${ejercicioTraduccion.opcionCorrecta.descripcion}">-</label>
                 </div>
             </div>
 
-            <button class="enviar enviar-ejercicioVideo" type="submit">Enviar</button>
+            <button class="enviar enviar-ejercicioTraduccionVideo" type="submit">Enviar</button>
         </form>
     </div>
 

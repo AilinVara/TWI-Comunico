@@ -42,9 +42,8 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
 
         for(Ejercicio ejercicio : ejercicios){
             ProgresoLeccion progresoExistente = this.repositorioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicio.getId());
-
             if(progresoExistente == null){
-                ProgresoLeccion progresoLeccion = new ProgresoLeccion(usuario, leccion, ejercicio);
+                ProgresoLeccion progresoLeccion = new ProgresoLeccion(usuario, leccion, (EjercicioTraduccion) ejercicio);
                 this.guardarProgresoLeccion(progresoLeccion);
             }
         }

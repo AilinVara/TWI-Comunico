@@ -15,17 +15,8 @@ public class ServicioMatrizImpl implements ServicioMatriz {
     public ServicioMatrizImpl (RepositorioMatriz repositorioMatriz){ this.repositorioMatriz = repositorioMatriz;}
 
     @Override
-    public Matriz obtenerMatriz(Long matrizId){
+    public EjercicioMatriz obtenerMatriz(Long matrizId){
         return this.repositorioMatriz.buscarMatriz(matrizId);
     }
 
-    @Override
-    public Boolean resolverMatriz(String puntosSeleccionados, String puntosDeLaMatriz) {
-        return puntosSeleccionados.equals(puntosDeLaMatriz);
-    }
-
-    @Override
-    public Matriz obtenerMatrizPorEjercicio(Long ejercicioId) {
-        return this.repositorioMatriz.buscarMatrizPorEjercicio(ejercicioId);
-    }
 }

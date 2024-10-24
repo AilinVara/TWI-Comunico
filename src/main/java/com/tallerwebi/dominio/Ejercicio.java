@@ -1,66 +1,30 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
 
 @Entity
-public class Ejercicio {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Ejercicio {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String consigna;
 
-    @OneToOne
-    private Opcion opcionCorrecta;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Opcion> opcionesIncorrectas;
+    private String tipoEjercicio;
 
-
-    public Ejercicio(){}
-
-    public void setConsigna(String nombre) {
-        this.consigna = nombre;
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
+    public String getTipoEjercicio() {
+        return tipoEjercicio;
     }
 
-    public Opcion getOpcionCorrecta() {
-        return opcionCorrecta;
+    public void setTipoEjercicio(String tipoEjercicio) {
+        this.tipoEjercicio = tipoEjercicio;
     }
 
-    public void setOpcionCorrecta(Opcion opcion) {
-        this.opcionCorrecta = opcion;
-    }
-
-    public String getConsigna() {
-        return consigna;
-    }
-
-    public List<Opcion> getOpcionesIncorrectas() {
-        return opcionesIncorrectas;
-    }
-
-    public void setOpcionesIncorrectas(List<Opcion> opcionesIncorrectas) {
-        this.opcionesIncorrectas = opcionesIncorrectas;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ejercicio ejercicio = (Ejercicio) o;
-        return Objects.equals(id, ejercicio.id) && Objects.equals(consigna, ejercicio.consigna) && Objects.equals(opcionCorrecta, ejercicio.opcionCorrecta) && Objects.equals(opcionesIncorrectas, ejercicio.opcionesIncorrectas);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, consigna, opcionCorrecta, opcionesIncorrectas);
-    }
 }

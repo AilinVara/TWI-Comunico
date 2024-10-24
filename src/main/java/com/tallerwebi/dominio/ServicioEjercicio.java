@@ -2,12 +2,12 @@ package com.tallerwebi.dominio;
 
 public interface ServicioEjercicio {
 
-    void guardarEjercicio(Ejercicio ejercicio);
+    void guardarEjercicio(EjercicioTraduccion ejercicioTraduccion);
 
     Ejercicio obtenerEjercicio(Long ejercicioId);
 
-    Boolean resolverEjercicio(Ejercicio ejercicio, Long opcionId);
+    Boolean resolverEjercicioTraduccion(EjercicioTraduccion ejercicioTraduccion, Long opcionId);
 
-
+    Boolean resolverEjercicioMatriz(String puntosSeleccionados, String puntosDeLaMatriz);
 
 }

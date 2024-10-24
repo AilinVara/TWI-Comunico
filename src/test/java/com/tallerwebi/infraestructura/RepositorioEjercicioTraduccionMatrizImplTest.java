@@ -1,6 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Matriz;
+import com.tallerwebi.dominio.EjercicioMatriz;
 import com.tallerwebi.dominio.RepositorioMatriz;
 import com.tallerwebi.infraestructura.config.HibernateRepositorioTestConfig;
 import org.hibernate.SessionFactory;
@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = HibernateRepositorioTestConfig.class)
-public class RepositorioMatrizImplTest {
+public class RepositorioEjercicioTraduccionMatrizImplTest {
     @Autowired
     private SessionFactory sessionFactory;
     private RepositorioMatriz repositorioMatriz;
@@ -34,47 +34,47 @@ public class RepositorioMatrizImplTest {
     @Transactional
     @Rollback
     public void dadoQueExisteUnRepositorioMatrizCuandoGuardoUnaMatrizEntoncesLaEncuentroEnLaBaseDeDatos(){
-        Matriz matriz = new Matriz();
-        matriz.setPuntos("101000");
+        EjercicioMatriz ejercicioMatriz = new EjercicioMatriz();
+        ejercicioMatriz.setPuntos("101000");
 
-        this.repositorioMatriz.guardar(matriz);
+        this.repositorioMatriz.guardar(ejercicioMatriz);
 
-        String hql = "FROM Matriz where puntos = :puntosBraille";
+        String hql = "FROM EjercicioMatriz where puntos = :puntosBraille";
         Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("puntosBraille", "101000");
-        Matriz matrizObtenida = (Matriz) query.getSingleResult();
+        EjercicioMatriz ejercicioMatrizObtenida = (EjercicioMatriz) query.getSingleResult();
 
-        assertThat(matrizObtenida, equalTo(matriz));
+        assertThat(ejercicioMatrizObtenida, equalTo(ejercicioMatriz));
     }
 
     @Test
     @Transactional
     @Rollback
     public void dadoQueExisteUnaMatrizEnLaBaseDeDatosLaEncuentroPorSuId(){
-        Matriz matriz = new Matriz();
+        EjercicioMatriz ejercicioMatriz = new EjercicioMatriz();
 
-        this.repositorioMatriz.guardar(matriz);
+        this.repositorioMatriz.guardar(ejercicioMatriz);
 
-        Matriz matrizObtenida = this.repositorioMatriz.buscarMatriz(matriz.getId());
+        EjercicioMatriz ejercicioMatrizObtenida = this.repositorioMatriz.buscarMatriz(ejercicioMatriz.getId());
 
-        assertThat(matrizObtenida, equalTo(matriz));
+        assertThat(ejercicioMatrizObtenida, equalTo(ejercicioMatriz));
     }
 
     @Test
     @Transactional
     @Rollback
     public void dadoQueExistenTresMatricesEnLaBaseDeDatosEncuentroUnaPorSuId(){
-        Matriz matriz = new Matriz();
-        Matriz matriz2 = new Matriz();
-        Matriz matriz3 = new Matriz();
+        EjercicioMatriz ejercicioMatriz = new EjercicioMatriz();
+        EjercicioMatriz ejercicioMatriz2 = new EjercicioMatriz();
+        EjercicioMatriz ejercicioMatriz3 = new EjercicioMatriz();
 
-        this.repositorioMatriz.guardar(matriz);
-        this.repositorioMatriz.guardar(matriz2);
-        this.repositorioMatriz.guardar(matriz3);
+        this.repositorioMatriz.guardar(ejercicioMatriz);
+        this.repositorioMatriz.guardar(ejercicioMatriz2);
+        this.repositorioMatriz.guardar(ejercicioMatriz3);
 
-        Matriz matrizObtenida = this.repositorioMatriz.buscarMatriz(matriz2.getId());
+        EjercicioMatriz ejercicioMatrizObtenida = this.repositorioMatriz.buscarMatriz(ejercicioMatriz2.getId());
 
-        assertThat(matrizObtenida, equalTo(matriz2));
+        assertThat(ejercicioMatrizObtenida, equalTo(ejercicioMatriz2));
     }
 
 }

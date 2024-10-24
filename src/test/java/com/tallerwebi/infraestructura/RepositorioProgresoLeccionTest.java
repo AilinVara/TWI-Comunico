@@ -38,9 +38,9 @@ public class RepositorioProgresoLeccionTest {
         this.sessionFactory.getCurrentSession().save(usuario);
         Leccion leccion = new Leccion();
         this.sessionFactory.getCurrentSession().save(leccion);
-        Ejercicio ejercicio = new Ejercicio();
-        this.sessionFactory.getCurrentSession().save(ejercicio);
-        return new ProgresoLeccion(usuario, leccion, ejercicio);
+        EjercicioTraduccion ejercicioTraduccion = new EjercicioTraduccion();
+        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion);
+        return new ProgresoLeccion(usuario, leccion, ejercicioTraduccion);
     }
 
 
@@ -87,16 +87,16 @@ public class RepositorioProgresoLeccionTest {
         this.sessionFactory.getCurrentSession().save(leccion);
         Usuario usuario = new Usuario();
         this.sessionFactory.getCurrentSession().save(usuario);
-        Ejercicio ejercicio1 = new Ejercicio();
-        this.sessionFactory.getCurrentSession().save(ejercicio1);
-        Ejercicio ejercicio2 = new Ejercicio();
-        this.sessionFactory.getCurrentSession().save(ejercicio2);
-        Ejercicio ejercicio3 = new Ejercicio();
-        this.sessionFactory.getCurrentSession().save(ejercicio3);
+        EjercicioTraduccion ejercicioTraduccion1 = new EjercicioTraduccion();
+        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion1);
+        EjercicioTraduccion ejercicioTraduccion2 = new EjercicioTraduccion();
+        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion2);
+        EjercicioTraduccion ejercicioTraduccion3 = new EjercicioTraduccion();
+        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion3);
 
-        ProgresoLeccion progreso1 = new ProgresoLeccion(usuario, leccion, ejercicio1);
-        ProgresoLeccion progreso2 = new ProgresoLeccion(usuario, leccion, ejercicio2);
-        ProgresoLeccion progreso3 = new ProgresoLeccion(usuario, leccion, ejercicio3);
+        ProgresoLeccion progreso1 = new ProgresoLeccion(usuario, leccion, ejercicioTraduccion1);
+        ProgresoLeccion progreso2 = new ProgresoLeccion(usuario, leccion, ejercicioTraduccion2);
+        ProgresoLeccion progreso3 = new ProgresoLeccion(usuario, leccion, ejercicioTraduccion3);
 
         this.repositorioProgresoLeccion.guardar(progreso1);
         this.repositorioProgresoLeccion.guardar(progreso2);

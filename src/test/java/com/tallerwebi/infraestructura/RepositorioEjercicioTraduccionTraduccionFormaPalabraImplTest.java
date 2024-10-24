@@ -1,8 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Ejercicio;
 import com.tallerwebi.dominio.EjercicioFormaPalabra;
-import com.tallerwebi.dominio.Opcion;
 import com.tallerwebi.dominio.RepositorioEjercicioFormaPalabra;
 import com.tallerwebi.infraestructura.config.HibernateRepositorioTestConfig;
 import org.hibernate.SessionFactory;
@@ -22,7 +20,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = HibernateRepositorioTestConfig.class)
-public class RepositorioEjercicioFormaPalabraImplTest {
+public class RepositorioEjercicioTraduccionTraduccionFormaPalabraImplTest {
 
     @Autowired
     private SessionFactory sessionFactory;

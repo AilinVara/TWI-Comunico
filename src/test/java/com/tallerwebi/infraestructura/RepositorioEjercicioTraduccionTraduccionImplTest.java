@@ -1,8 +1,8 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Ejercicio;
+import com.tallerwebi.dominio.EjercicioTraduccion;
 import com.tallerwebi.dominio.Opcion;
-import com.tallerwebi.dominio.RepositorioEjercicio;
+import com.tallerwebi.dominio.RepositorioEjercicioTraduccion;
 import com.tallerwebi.infraestructura.config.HibernateRepositorioTestConfig;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,67 +21,67 @@ import static org.hamcrest.Matchers.equalTo;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = HibernateRepositorioTestConfig.class)
-public class RepositorioEjercicioImplTest {
+public class RepositorioEjercicioTraduccionTraduccionImplTest {
 
     @Autowired
     private SessionFactory sessionFactory;
-    private RepositorioEjercicio repositorioEjercicio;
+    private RepositorioEjercicioTraduccion repositorioEjercicioTraduccion;
 
     @BeforeEach
     public void init() {
-        this.repositorioEjercicio = new RepositorioEjercicioImpl(sessionFactory);
+        this.repositorioEjercicioTraduccion = new RepositorioEjercicioTraduccionImpl(sessionFactory);
     }
 
     @Test
     @Transactional
     @Rollback
     public void dadoQueExisteUnRepositorioEjercicioCuandoGuardoUnEjercicioEntoncesLoEncuentroEnLaBaseDeDatos() {
-        Ejercicio ejercicio = new Ejercicio();
-        ejercicio.setConsigna("A-E");
+        EjercicioTraduccion ejercicioTraduccion = new EjercicioTraduccion();
+        ejercicioTraduccion.setConsigna("A-E");
 
-        this.repositorioEjercicio.guardar(ejercicio);
+        this.repositorioEjercicioTraduccion.guardar(ejercicioTraduccion);
 
-        String hql = "FROM Ejercicio where consigna = :nombre";
+        String hql = "FROM EjercicioTraduccion where consigna = :nombre";
         Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("nombre", "A-E");
-        Ejercicio ejercicioObtenido = (Ejercicio) query.getSingleResult();
+        EjercicioTraduccion ejercicioTraduccionObtenido = (EjercicioTraduccion) query.getSingleResult();
 
-        assertThat(ejercicioObtenido, equalTo(ejercicio));
+        assertThat(ejercicioTraduccionObtenido, equalTo(ejercicioTraduccion));
     }
 
     @Test
     @Transactional
     @Rollback
     public void dadoQueExisteUnEjercicioConOpcionCorrectaEnLaBaseDeDatosCuandoLoBuscoPorDescripcionDeLaOpcionCorrectaLoEncuentroEnLaBaseDeDatos() {
-        Ejercicio ejercicio = new Ejercicio();
+        EjercicioTraduccion ejercicioTraduccion = new EjercicioTraduccion();
         Opcion opcion = new Opcion("A");
 
         this.sessionFactory.getCurrentSession().save(opcion);
 
-        ejercicio.setOpcionCorrecta(opcion);
+        ejercicioTraduccion.setOpcionCorrecta(opcion);
 
-        this.repositorioEjercicio.guardar(ejercicio);
+        this.repositorioEjercicioTraduccion.guardar(ejercicioTraduccion);
 
-        String hql = "SELECT e FROM Ejercicio e JOIN Opcion o ON e.opcionCorrecta.id = o.id WHERE o.descripcion = :descripcion";
+        String hql = "SELECT e FROM EjercicioTraduccion e JOIN Opcion o ON e.opcionCorrecta.id = o.id WHERE o.descripcion = :descripcion";
         Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("descripcion", opcion.getDescripcion());
-        Ejercicio ejercicioObtenido = (Ejercicio) query.getSingleResult();
+        EjercicioTraduccion ejercicioTraduccionObtenido = (EjercicioTraduccion) query.getSingleResult();
 
-        assertThat(ejercicioObtenido, equalTo(ejercicio));
+        assertThat(ejercicioTraduccionObtenido, equalTo(ejercicioTraduccion));
     }
 
     @Test
     @Transactional
     @Rollback
     public void dadoQueExisteUnEjercicioEnLaBaseDeDatosLoEncuentroPorSuId() {
-        Ejercicio ejercicio = new Ejercicio();
-        ejercicio.setConsigna("A-E");
+        EjercicioTraduccion ejercicioTraduccion = new EjercicioTraduccion();
+        ejercicioTraduccion.setConsigna("A-E");
 
-        this.repositorioEjercicio.guardar(ejercicio);
+        this.repositorioEjercicioTraduccion.guardar(ejercicioTraduccion);
 
-        Ejercicio ejercicioObtenido = this.repositorioEjercicio.buscarEjercicio(ejercicio.getId());
+        EjercicioTraduccion ejercicioTraduccionObtenido = this.repositorioEjercicioTraduccion.buscarEjercicio(ejercicioTraduccion.getId());
 
-        assertThat(ejercicioObtenido, equalTo(ejercicio));
+        assertThat(ejercicioTraduccionObtenido, equalTo(ejercicioTraduccion));
     }
 
 }
