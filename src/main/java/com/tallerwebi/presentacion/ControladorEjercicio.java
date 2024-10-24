@@ -7,10 +7,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import javax.servlet.http.HttpServletRequest;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.List;
+
 
 
 @Controller
@@ -19,87 +18,113 @@ public class ControladorEjercicio {
     private ServicioEjercicio servicioEjercicio;
     private ServicioLeccion servicioLeccion;
     private ServicioProgresoLeccion servicioProgresoLeccion;
+    private ServicioMatriz servicioMatriz;
     private ServicioVida servicioVida;
+    private GestionarVidas gestionarVidas;
 
 
     @Autowired
-    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida) {
+    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioMatriz servicioMatriz, ServicioVida servicioVida, GestionarVidas gestionarVidas) {
         this.servicioEjercicio = servicioEjercicio;
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
+        this.servicioMatriz = servicioMatriz;
         this.servicioVida = servicioVida;
+        this.gestionarVidas = gestionarVidas;
     }
+
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
     public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request) {
         ModelMap modelo = new ModelMap();
         modelo.put("leccion", leccionId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
-        Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
-        Ejercicio ejercicio = leccion.getEjercicios().get(indice - 1);
-        modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
+        Long ejercicioId = Long.valueOf(indice);
+        Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
         modelo.put("ejercicio", ejercicio);
         modelo.put("indice", indice);
-        agregarTiempoRestanteAlModelo(modelo,usuarioId);
 
-        if (ejercicio instanceof EjercicioTraduccion) {
-            return new ModelAndView("ejercicio", modelo);
-        }else if(ejercicio instanceof EjercicioMatriz)
+
+        if (ejercicio.getId() >= 10) {
+            Matriz matriz;
+            matriz = this.servicioMatriz.obtenerMatrizPorEjercicio(ejercicio.getId());
+            modelo.put("matriz", matriz);
             return new ModelAndView("formaLetras", modelo);
-        else if(ejercicio instanceof EjercicioFormaPalabra){
-            EjercicioFormaPalabra ejercicioFormaPalabra = (EjercicioFormaPalabra) ejercicio;
-            List<String> letras = servicioEjercicio.convertirLetrasALista(ejercicioFormaPalabra.getLetras());
-            modelo.put("letras", letras);
-            return new ModelAndView("ejercicios-forma-palabra", modelo);
-        } else {
-            return new ModelAndView("ejercicio-video", modelo);
         }
+        return new ModelAndView("ejercicio", modelo);
     }
 
     @RequestMapping(path = "/resolver/{indice}", method = RequestMethod.POST)
-    public ModelAndView resolverEjercicio(@PathVariable("indice") Long indice, @RequestParam("respuesta") String respuesta, @RequestParam("ejercicioId") Long ejercicioId,
+    public ModelAndView resolverEjercicio(@PathVariable("indice") Long indice, @RequestParam("opcionSeleccionada") Long opcionId, @RequestParam("ejercicioId") Long ejercicioId,
                                           @RequestParam("leccion") Long leccionId, HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView();
+
         ModelMap modelo = new ModelMap();
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
-        Boolean resuelto = false;
+
+        if (progreso == null) {
+            this.servicioProgresoLeccion.crearProgresoLeccion(leccionId, usuarioId);
+            progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
+        }
+        Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicio, opcionId);
+        this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
+
+        gestionarVidas.perderVidaSiIncorrecto(usuarioId,resuelto);
+
+        modelo.put("indice", indice);
+        modelo.put("leccion", leccionId);
+        modelo.put("ejercicio", ejercicio);
+        modelo.put("esCorrecta", (resuelto));
+        return new ModelAndView("ejercicio", modelo);
+    }
+
+    @RequestMapping(path = "/resolverMatriz/{indice}", method = RequestMethod.POST)
+    public ModelAndView resolverMatriz(@PathVariable("indice") Long indice,
+                                       @RequestParam("ejercicioId") Long ejercicioId,
+                                       @RequestParam("leccion") Long leccionId,
+                                       @RequestParam("matrizId") Long matrizId,
+                                       @RequestParam("puntosSeleccionados") String puntosSeleccionados,
+                                       HttpServletRequest request) {
+
+        ModelMap modelo = new ModelMap();
+        Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
+        Matriz matriz = this.servicioMatriz.obtenerMatriz(matrizId);
+
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
+
         if (progreso == null) {
             this.servicioProgresoLeccion.crearProgresoLeccion(leccionId, usuarioId);
             progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
         }
 
-        if(ejercicio instanceof EjercicioTraduccion){
-            resuelto = this.servicioEjercicio.resolverEjercicioTraduccion((EjercicioTraduccion) ejercicio, Long.parseLong(respuesta));
-            mav.setViewName("ejercicio");
-        }else if(ejercicio instanceof EjercicioMatriz){
-            EjercicioMatriz ejercicioMatriz = (EjercicioMatriz) ejercicio;
-            resuelto = this.servicioEjercicio.resolverEjercicioMatriz(respuesta, ejercicioMatriz.getPuntos());
-            mav.setViewName("formaLetras");
-        }else if(ejercicio instanceof  EjercicioFormaPalabra){
-            EjercicioFormaPalabra ejercicioFormaPalabra = (EjercicioFormaPalabra) ejercicio;
-            resuelto = this.servicioEjercicio.resolverEjercicioFormaPalabras(ejercicioFormaPalabra.getRespuestaCorrecta(), respuesta);
-            mav.setViewName("ejercicios-forma-palabra");
-        }else{
-            resuelto = this.servicioEjercicio.resolverEjercicioTraduccionSenia((EjercicioTraduccionSenia) ejercicio, Long.parseLong(respuesta));
-            mav.setViewName("ejercicio-video");
-        }
-
-        if (!resuelto) {
-            this.servicioVida.perderUnaVida(usuarioId);
-        }
-
+        Boolean resuelto = this.servicioMatriz.resolverMatriz(puntosSeleccionados, matriz.getPuntos());
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
-
         modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
-        agregarTiempoRestanteAlModelo(modelo,usuarioId);
-        modelo.put("indice", indice);
-        modelo.put("leccion", leccionId);
-        modelo.put("ejercicio", ejercicio);
         modelo.put("esCorrecta", resuelto);
-        mav.addAllObjects(modelo);
-        return mav;
+        modelo.put("leccion", leccionId);
+
+        if (resuelto) {
+            if (ejercicioId < 12) {
+                Ejercicio siguienteEjercicio = this.servicioEjercicio.obtenerEjercicio(ejercicio.getId() + 1);
+                Matriz siguienteMatriz = this.servicioMatriz.obtenerMatriz(matrizId + 1);
+                modelo.put("matriz", siguienteMatriz);
+                modelo.put("ejercicio", siguienteEjercicio);
+            } else if (ejercicioId == 12) {
+                modelo.put("matriz", matriz);
+                modelo.put("mostrarVolverMenu", true);
+                modelo.put("ejercicio", ejercicio);
+            }
+        } else {
+            modelo.put("matriz", matriz);
+            modelo.put("ejercicio", ejercicio);
+        }
+        gestionarVidas.perderVidaSiIncorrecto(usuarioId,resuelto);
+
+
+        modelo.put("indice", indice);
+        return new ModelAndView("formaLetras", modelo);
     }
 
     @RequestMapping(value = "/ejercicio-video", method = RequestMethod.GET)
@@ -110,13 +135,19 @@ public class ControladorEjercicio {
         return new ModelAndView("ejercicio-video", modelo);
     }
 
-    private void agregarTiempoRestanteAlModelo(ModelMap modelo, Long usuarioId) {
-        Vida vida = this.servicioVida.obtenerVida(usuarioId);
-        LocalDateTime ahora = LocalDateTime.now();
-        Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
-        long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
-        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60); // Cada 60 segundos
-        modelo.put("tiempoRestante", tiempoRestante);
+    @RequestMapping(path = "/resolverVideo", method = RequestMethod.POST)
+    public ModelAndView resolverEjercicioVideo(@RequestParam("opcionSeleccionada") Long opcionId, @RequestParam("ejercicioId") Long ejercicioId, HttpServletRequest request) {
+        ModelMap modelo = new ModelMap();
+        Ejercicio ejercicioVideo = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        Boolean resuelto = this.servicioEjercicio.resolverEjercicio(ejercicioVideo, opcionId);
+        modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
+
+        gestionarVidas.perderVidaSiIncorrecto(usuarioId,resuelto);
+
+        modelo.put("ejercicio", ejercicioVideo);
+        modelo.put("esCorrecta", (resuelto));
+        return new ModelAndView("ejercicio-video", modelo);
     }
 
 }

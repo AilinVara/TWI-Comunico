@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -21,20 +20,27 @@ import static org.mockito.Mockito.when;
 public class ControladorEjercicioTest {
 
     private ControladorEjercicio controladorEjercicio;
-    private EjercicioTraduccion ejercicioTraduccionMock;
+    private Ejercicio ejercicioMock;
     private ServicioEjercicio servicioEjercicioMock;
     private ServicioLeccion servicioLeccionMock;
     private ServicioProgresoLeccion servicioProgresoLeccionMock;
+    private ServicioMatriz servicioMatrizMock;
     private HttpServletRequest requestMock;
     private Leccion leccionMock;
     private HttpSession sessionMock;
     private ProgresoLeccion progresoMock;
     private ServicioVida servicioVidaMock;
+    private GestionarVidas gestionarVidasMock;
+    
+   
+
+
+
 
     @BeforeEach
     public void init() {
-        ejercicioTraduccionMock = mock(EjercicioTraduccion.class);
-        when(ejercicioTraduccionMock.getId()).thenReturn(1L);
+        ejercicioMock = mock(Ejercicio.class);
+        when(ejercicioMock.getId()).thenReturn(1L);
 
         requestMock = mock(HttpServletRequest.class);
         leccionMock = mock(Leccion.class);
@@ -46,7 +52,7 @@ public class ControladorEjercicioTest {
 
         Opcion opcionIncorrectaMock = mock(Opcion.class);
         when(opcionIncorrectaMock.getId()).thenReturn(2L);
-        Set<Opcion> opcionesIncorrectas = Set.of(opcionIncorrectaMock);
+        List<Opcion> opcionesIncorrectas = List.of(opcionIncorrectaMock);
 
         Vida vidaMock = mock(Vida.class);
         servicioVidaMock = mock(ServicioVida.class);
@@ -55,27 +61,29 @@ public class ControladorEjercicioTest {
         LocalDateTime haceUnosSegundos = LocalDateTime.now().minusSeconds(30);
         when(vidaMock.getUltimaVezQueSeRegeneroLaVida()).thenReturn(haceUnosSegundos);
 
-        LocalDateTime ahora = LocalDateTime.now();
-        Duration duracion = Duration.between(vidaMock.getUltimaVezQueSeRegeneroLaVida(), ahora);
-        long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
-        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60);
+        gestionarVidasMock = mock(GestionarVidas.class);
 
-        when(ejercicioTraduccionMock.getOpcionCorrecta()).thenReturn(opcionCorrectaMock);
-        when(ejercicioTraduccionMock.getOpcionesIncorrectas()).thenReturn(opcionesIncorrectas);
+        calcularTiempoRestante(vidaMock);
+
+        when(ejercicioMock.getOpcionCorrecta()).thenReturn(opcionCorrectaMock);
+        when(ejercicioMock.getOpcionesIncorrectas()).thenReturn(opcionesIncorrectas);
 
         servicioEjercicioMock = mock(ServicioEjercicio.class);
-        when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioTraduccionMock);
-        when(servicioEjercicioMock.resolverEjercicioTraduccion(ejercicioTraduccionMock, ejercicioTraduccionMock.getOpcionCorrecta().getId())).thenReturn(true);
+        when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioMock);
+        when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, ejercicioMock.getOpcionCorrecta().getId())).thenReturn(true);
         servicioLeccionMock = mock(ServicioLeccion.class);
         servicioProgresoLeccionMock = mock(ServicioProgresoLeccion.class);
-        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioVidaMock);
+        servicioMatrizMock = mock(ServicioMatriz.class);
+        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioMatrizMock, servicioVidaMock, gestionarVidasMock);
     }
+
+
 
     @Test
     public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConEjerciciosCuandoVoyAEjercicioReciboLaVistaEjercicioYUnObjetoEjercicioEnElModelo(){
         when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
         List<Ejercicio> lista = new ArrayList<>();
-        lista.add(ejercicioTraduccionMock);
+        lista.add(ejercicioMock);
         leccionMock.setEjercicios(lista);
         when(leccionMock.getEjercicios()).thenReturn(lista);
 
@@ -85,20 +93,20 @@ public class ControladorEjercicioTest {
         ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1,requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
-        assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioTraduccionMock));
+        assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioMock));
     }
 
 
     @Test
     public void contestarConLaRespuestaCorrectaDebeRetornarEsCorrectaComoTrue(){
-        Long opcionCorrecta = ejercicioTraduccionMock.getOpcionCorrecta().getId();
+        Long opcionCorrecta = ejercicioMock.getOpcionCorrecta().getId();
 
-        when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioTraduccionMock);
+        when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioMock);
         when(requestMock.getSession()).thenReturn(sessionMock);
         when(sessionMock.getAttribute(anyString())).thenReturn(1L);
         when(servicioProgresoLeccionMock.buscarPorIds(anyLong(), anyLong(), anyLong())).thenReturn(progresoMock);
-        when(servicioEjercicioMock.resolverEjercicioTraduccion(ejercicioTraduccionMock, opcionCorrecta)).thenReturn(true);
-        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionCorrecta, "1", 1L, 1L, requestMock);
+        when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, opcionCorrecta)).thenReturn(true);
+        ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(opcionCorrecta, 1L, 1L, 1L, requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("esCorrecta"), is(true));
@@ -106,18 +114,23 @@ public class ControladorEjercicioTest {
 
     @Test
     public void contestarConLaRespuestaIncorrectaDebeRetornarEsCorrectaComoFalse(){
-        String opcionIncorrecta = ejercicioTraduccionMock.getOpcionesIncorrectas().iterator().next().getId().toString();
+        Long opcionIncorrecta = ejercicioMock.getOpcionesIncorrectas().get(0).getId();
 
-
-        when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioTraduccionMock);
+        when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioMock);
         when(requestMock.getSession()).thenReturn(sessionMock);
         when(sessionMock.getAttribute(anyString())).thenReturn(1L);
         when(servicioProgresoLeccionMock.buscarPorIds(anyLong(), anyLong(), anyLong())).thenReturn(progresoMock);
-        when(servicioEjercicioMock.resolverEjercicioTraduccion(ejercicioTraduccionMock, Long.parseLong(opcionIncorrecta))).thenReturn(false);
+        when(servicioEjercicioMock.resolverEjercicio(ejercicioMock, opcionIncorrecta)).thenReturn(false);
         ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(1L, opcionIncorrecta, 1L, 1L, requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("esCorrecta"), is(false));
     }
 
+    private static void calcularTiempoRestante(Vida vidaMock) {
+        LocalDateTime ahora = LocalDateTime.now();
+        Duration duracion = Duration.between(vidaMock.getUltimaVezQueSeRegeneroLaVida(), ahora);
+        long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
+        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60);
+    }
 }
