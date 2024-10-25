@@ -1,7 +1,7 @@
 package com.tallerwebi.integracion;
 
 import com.tallerwebi.dominio.*;
-import com.tallerwebi.infraestructura.RepositorioEjercicioTraduccionImpl;
+import com.tallerwebi.infraestructura.RepositorioEjercicioImpl;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
 import org.hibernate.SessionFactory;
@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ControladorEjercicioTraduccionTest {
 
     private ServicioEjercicio servicioEjercicio;
-    private RepositorioEjercicioTraduccion repositorioEjercicioTraduccion;
+    private RepositorioEjercicio repositorioEjercicio;
     private ServicioVida servicioVida;
     private RepositorioVida repositorioVida;
     private RepositorioUsuario repositorioUsuario;
@@ -54,8 +54,8 @@ public class ControladorEjercicioTraduccionTest {
 
     @BeforeEach
     public void init(){
-        this.repositorioEjercicioTraduccion = new RepositorioEjercicioTraduccionImpl(sessionFactory);
-        this.servicioEjercicio = new ServicioEjercicioImpl(repositorioEjercicioTraduccion);
+        this.repositorioEjercicio = new RepositorioEjercicioImpl(sessionFactory);
+        this.servicioEjercicio = new ServicioEjercicioImpl(repositorioEjercicio);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
         this.sessionMock = new MockHttpSession();
         this.servicioVida = new ServicioVidaImpl(repositorioVida, repositorioUsuario);

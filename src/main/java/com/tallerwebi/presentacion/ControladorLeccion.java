@@ -22,16 +22,6 @@ public class ControladorLeccion {
     @RequestMapping("/leccion/{id}")
     public ModelAndView leccion(@PathVariable Long id) {
         Leccion leccion = this.servicioLeccion.obtenerLeccion(id);
-        Long ejercicio = null;
-        int idLeccion = Math.toIntExact(id);
-        switch (idLeccion){
-            case 1: ejercicio = 1L;
-                    break;
-            case 2: ejercicio = 10L;
-                    break;
-            case 3: ejercicio = 20L;
-                    break;
-        }
-        return new ModelAndView("redirect:/ejercicio/" + ejercicio + "?leccion=" + leccion.getId());
+        return new ModelAndView("redirect:/ejercicio/1?leccion=" + leccion.getId());
     }
 }

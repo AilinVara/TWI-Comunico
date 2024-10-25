@@ -24,7 +24,7 @@ public class ProgresoLeccion {
 
     public ProgresoLeccion(){}
 
-    public ProgresoLeccion(Usuario usuario, Leccion leccion, EjercicioTraduccion ejercicio) {
+    public ProgresoLeccion(Usuario usuario, Leccion leccion, Ejercicio ejercicio) {
         this.usuario = usuario;
         this.ejercicio = ejercicio;
         this.leccion = leccion;
@@ -67,7 +67,7 @@ public class ProgresoLeccion {
         return ejercicio;
     }
 
-    public void setEjercicio(EjercicioTraduccion ejercicioTraduccion) {
-        this.ejercicio = ejercicioTraduccion;
+    public void setEjercicio(Ejercicio ejercicio) {
+        this.ejercicio = ejercicio;
     }
 }

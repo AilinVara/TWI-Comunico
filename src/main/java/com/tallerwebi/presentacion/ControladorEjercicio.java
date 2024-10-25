@@ -31,7 +31,6 @@ public class ControladorEjercicio {
         this.servicioVida = servicioVida;
     }
 
-
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
     public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request) {
         ModelMap modelo = new ModelMap();
@@ -84,7 +83,7 @@ public class ControladorEjercicio {
         modelo.put("indice", indice);
         modelo.put("leccion", leccionId);
         modelo.put("ejercicio", ejercicio);
-        modelo.put("esCorrecta", (resuelto));
+        modelo.put("esCorrecta", resuelto);
         mav.addAllObjects(modelo);
         return mav;
     }

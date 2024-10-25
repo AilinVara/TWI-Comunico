@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class EjercicioMatriz extends Ejercicio {
     private String puntos;
 
-    public String getPuntos() {return puntos;}
+    public String getPuntos() {return this.puntos;}
 
     public void setPuntos(String puntos) {this.puntos = puntos;}
 }

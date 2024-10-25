@@ -11,16 +11,15 @@
 <body>
 
 <div th:replace="header :: header"></div>
-<h3 class="titulo" id="braille-letter" th:text="${ejercicio.getConsigna()}"></h3>
+<h3 class="titulo" id="braille-letter" th:text="|Ejercicio ${(indice)}|"></h3>
 
 <div class="game-container">
     <form th:action="@{'/resolver/' + ${indice}}" method="POST" onsubmit="return concatenarCheckboxes()">
         <input type="hidden" name="ejercicioId" th:value="${ejercicio.getId()}"/>
-        <input type="hidden" name="matrizId" th:value="${ejercicio.getId()}"/>
         <input type="hidden" name="leccion" th:value="${leccion}"/>
-        <input type="hidden" name="puntosSeleccionados" id="puntosSeleccionados" />
+        <input type="hidden" name="respuesta" id="puntosSeleccionados"/>
 
-        <div class="braille-ejercicioMatriz">
+        <div class="braille-matriz">
             <label><input type="checkbox" name="punto" value="1" class="braille-checkbox"></label>
             <label><input type="checkbox" name="punto" value="2" class="braille-checkbox"></label>
             <label><input type="checkbox" name="punto" value="3" class="braille-checkbox"></label>
@@ -58,11 +57,6 @@
                 }
             });
         </script>
-    </div>
-    <div th:if="${mostrarVolverMenu}">
-        <a th:href="@{/braille}">
-            <input class="volver-atras" type="button" value="Volver al menú">
-        </a>
     </div>
 </div>
 

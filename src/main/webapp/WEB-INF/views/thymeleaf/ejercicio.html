@@ -6,7 +6,7 @@
 
     <!-- custom style -->
     <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/css/ejercicioTraduccion.css}"/>
+    <link rel="stylesheet" th:href="@{/css/ejercicio.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,25 +34,25 @@
 
 <div class="game-container">
     <div class="question">
-        <p id="braille-letter" th:text="${ejercicioTraduccion.consigna}"></p>
+        <p id="braille-letter" th:text="${ejercicio.consigna}"></p>
         <div id="braille-display" class="braille"></div>
         <div class="braille-item-sin-hover">
-            <img th:src="@{'/img/braille/' + ${ejercicioTraduccion.opcionCorrecta.descripcion}}">
+            <img th:src="@{'/img/braille/' + ${ejercicio.opcionCorrecta.descripcion}}">
         </div>
     </div>
 
-    <form action="#" th:action="@{'/resolver/' + ${indice}}" method="POST" th:object="${ejercicioTraduccion}">
-        <input hidden name="ejercicioId" th:value="${ejercicioTraduccion.getId()}">
+    <form th:action="@{'/resolver/' + ${indice}}" method="POST" th:object="${ejercicio}">
+        <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
         <input hidden name="leccion" th:value="${leccion}">
         <div class="contenedorDeOpciones">
             <div class="radioYLetraJuntos">
-                <input class="option" type="radio" id="opcionCorrecta" name="opcionSeleccionada"
-                       th:value="${ejercicioTraduccion.opcionCorrecta.id}"/>
-                <label class="optionLetra" th:for="opcionCorrecta" th:text="${ejercicioTraduccion.opcionCorrecta.descripcion}">Opción
+                <input class="option" type="radio" id="opcionCorrecta" name="respuesta"
+                       th:value="${ejercicio.opcionCorrecta.id}"/>
+                <label class="optionLetra" th:for="opcionCorrecta" th:text="${ejercicio.opcionCorrecta.descripcion}">Opción
                     correcta</label>
             </div>
-            <div class="radioYLetraJuntos" th:each="opcion : ${ejercicioTraduccion.opcionesIncorrectas}">
-                <input class="option" type="radio" th:id="'opcion_' + ${opcion.id}" name="opcionSeleccionada"
+            <div class="radioYLetraJuntos" th:each="opcion : ${ejercicio.opcionesIncorrectas}">
+                <input class="option" type="radio" th:id="'opcion_' + ${opcion.id}" name="respuesta"
                        th:value="${opcion.id}"/>
                 <label class="optionLetra" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">Opción
                     incorrecta</label>
@@ -115,6 +115,5 @@
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </body>
 </html>

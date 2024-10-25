@@ -2,7 +2,7 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.EjercicioTraduccion;
 import com.tallerwebi.dominio.Opcion;
-import com.tallerwebi.dominio.RepositorioEjercicioTraduccion;
+import com.tallerwebi.dominio.RepositorioEjercicio;
 import com.tallerwebi.infraestructura.config.HibernateRepositorioTestConfig;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,15 +21,15 @@ import static org.hamcrest.Matchers.equalTo;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = HibernateRepositorioTestConfig.class)
-public class RepositorioEjercicioTraduccionTraduccionImplTest {
+public class RepositorioEjercicioTraduccionImplTest {
 
     @Autowired
     private SessionFactory sessionFactory;
-    private RepositorioEjercicioTraduccion repositorioEjercicioTraduccion;
+    private RepositorioEjercicio repositorioEjercicio;
 
     @BeforeEach
     public void init() {
-        this.repositorioEjercicioTraduccion = new RepositorioEjercicioTraduccionImpl(sessionFactory);
+        this.repositorioEjercicio = new RepositorioEjercicioImpl(sessionFactory);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class RepositorioEjercicioTraduccionTraduccionImplTest {
         EjercicioTraduccion ejercicioTraduccion = new EjercicioTraduccion();
         ejercicioTraduccion.setConsigna("A-E");
 
-        this.repositorioEjercicioTraduccion.guardar(ejercicioTraduccion);
+        this.repositorioEjercicio.guardar(ejercicioTraduccion);
 
         String hql = "FROM EjercicioTraduccion where consigna = :nombre";
         Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
@@ -60,7 +60,7 @@ public class RepositorioEjercicioTraduccionTraduccionImplTest {
 
         ejercicioTraduccion.setOpcionCorrecta(opcion);
 
-        this.repositorioEjercicioTraduccion.guardar(ejercicioTraduccion);
+        this.repositorioEjercicio.guardar(ejercicioTraduccion);
 
         String hql = "SELECT e FROM EjercicioTraduccion e JOIN Opcion o ON e.opcionCorrecta.id = o.id WHERE o.descripcion = :descripcion";
         Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
@@ -77,9 +77,9 @@ public class RepositorioEjercicioTraduccionTraduccionImplTest {
         EjercicioTraduccion ejercicioTraduccion = new EjercicioTraduccion();
         ejercicioTraduccion.setConsigna("A-E");
 
-        this.repositorioEjercicioTraduccion.guardar(ejercicioTraduccion);
+        this.repositorioEjercicio.guardar(ejercicioTraduccion);
 
-        EjercicioTraduccion ejercicioTraduccionObtenido = this.repositorioEjercicioTraduccion.buscarEjercicio(ejercicioTraduccion.getId());
+        EjercicioTraduccion ejercicioTraduccionObtenido = (EjercicioTraduccion) this.repositorioEjercicio.buscarEjercicio(ejercicioTraduccion.getId());
 
         assertThat(ejercicioTraduccionObtenido, equalTo(ejercicioTraduccion));
     }

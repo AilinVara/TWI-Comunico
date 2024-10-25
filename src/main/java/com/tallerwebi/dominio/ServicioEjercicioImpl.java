@@ -9,26 +9,26 @@ import javax.transaction.Transactional;
 @Transactional
 public class ServicioEjercicioImpl implements ServicioEjercicio {
 
-    private RepositorioEjercicioTraduccion repositorioEjercicioTraduccion;
+    private RepositorioEjercicio repositorioEjercicio;
     @Autowired
     private ServicioVida servicioVida;
     @Autowired
     private RepositorioUsuario repositorioUsuario;
 
     @Autowired
-    public ServicioEjercicioImpl(RepositorioEjercicioTraduccion repositorioEjercicioTraduccion) {
-        this.repositorioEjercicioTraduccion = repositorioEjercicioTraduccion;
+    public ServicioEjercicioImpl(RepositorioEjercicio repositorioEjercicio) {
+        this.repositorioEjercicio = repositorioEjercicio;
     }
 
     @Override
     public void guardarEjercicio(EjercicioTraduccion ejercicioTraduccion) {
 
-        this.repositorioEjercicioTraduccion.guardar(ejercicioTraduccion);
+        this.repositorioEjercicio.guardar(ejercicioTraduccion);
     }
 
     @Override
     public Ejercicio obtenerEjercicio(Long ejercicioId) {
-        return this.repositorioEjercicioTraduccion.buscarEjercicio(ejercicioId);
+        return this.repositorioEjercicio.buscarEjercicio(ejercicioId);
     }
 
     @Override

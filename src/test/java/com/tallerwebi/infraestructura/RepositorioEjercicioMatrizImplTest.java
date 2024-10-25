@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = HibernateRepositorioTestConfig.class)
-public class RepositorioEjercicioTraduccionMatrizImplTest {
+public class RepositorioEjercicioMatrizImplTest {
     @Autowired
     private SessionFactory sessionFactory;
     private RepositorioMatriz repositorioMatriz;
