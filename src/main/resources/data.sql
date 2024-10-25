@@ -9,34 +9,61 @@ INSERT INTO Opcion(id, descripcion) VALUES
                                         (2, 'B'),
                                         (3, 'C');
 
-INSERT INTO leccion(id, titulo) VALUES
-                                    (1, 'leccion 1:'),
-                                    (2, 'leccion 2:'),
-                                    (3, 'leccion 3:');
+INSERT INTO Leccion(id, titulo) VALUES
+                                    (1, 'lección 1:'),
+                                    (2, 'lección 2:'),
+                                    (3, 'lección 3:'),
+                                    (4, 'lección 4:');
 
-INSERT INTO ejerciciotraduccion(id, tipoEjercicio, consigna, opcionCorrecta_id, leccion_id) VALUES
-                                                                       (1, 'traduccion', 'Ejercicio 1:', 1, 1),
-                                                                       (2, 'traduccion', 'Ejercicio 2:', 2, 1),
-                                                                       (3, 'traduccion','Ejercicio 3:', 3, 1);
+INSERT INTO Ejercicio(id, tipoEjercicio, leccion_id) VALUES
+                                                         (1, 'traduccion', 1),
+                                                         (2, 'traduccion', 1),
+                                                         (3, 'traduccion', 1),
+                                                         (4, 'traduccionSenia', 4),
+                                                         (5, 'traduccionSenia', 4),
+                                                         (6, 'traduccionSenia', 4),
+                                                         (7, 'matriz', 2),
+                                                         (8, 'matriz', 2),
+                                                         (9, 'matriz', 2),
+                                                         (10, 'forma_palabra', 3),
+                                                         (11, 'forma_palabra', 3),
+                                                         (12, 'forma_palabra', 3);
 
-INSERT INTO ejerciciomatriz(id, tipoEjercicio, puntos, leccion_id) VALUES
-                                                                        (10, 'matriz','100000', 2),
-                                                                       (11, 'matriz','101000', 2),
-                                                                       (12, 'matriz','110000', 2);
+INSERT INTO EjercicioTraduccion(id, consigna, opcionCorrecta_id) VALUES
+                                                                     (1, 'Ejercicio 1:', 1),
+                                                                     (2, 'Ejercicio 2:', 2),
+                                                                     (3, 'Ejercicio 3:', 3);
 
-INSERT INTO ejerciciotraduccion_Opcion(EjercicioTraduccion_id, opcionesIncorrectas_id) VALUES
-                                                                       (1,2),
-                                                                       (1,3),
-                                                                       (2, 1),
-                                                                       (2, 3),
-                                                                       (3, 1),
-                                                                       (3, 2);
+INSERT INTO EjercicioMatriz(id, puntos) VALUES
+                                            (7, '100000'),
+                                            (8, '101000'),
+                                            (9, '110000');
 
+INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras) VALUES
+                                                                             (10, 'gato.png', 'GATO', 'T, A, G, P, S, O, R'),
+                                                                             (11, 'perro.png', 'PERRO', 'R, A, P, N, S, O, E'),
+                                                                             (12, 'libro.png', 'LIBRO', 'L, O, B, N, S, I, R');
 
-INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras) values
-                                                                             (1, 'gato.png', 'GATO', 'T, A, G, P, S, O, R'),
-                                                                             (2, 'perro.png', 'PERRO', 'R, A, P, N, S, O, E'),
-                                                                             (3, 'libro.png', 'LIBRO', 'L, O, B, N, S, I, R');
+INSERT INTO ejerciciotraduccionsenia(id, consigna, opcionCorrecta_id) VALUES
+                                                                     (4, 'Ejercicio 1:', 1),
+                                                                     (5, 'Ejercicio 2:', 2),
+                                                                     (6, 'Ejercicio 3:', 3);
+
+INSERT INTO EjercicioTraduccion_Opcion(EjercicioTraduccion_id, opcionesIncorrectas_id) VALUES
+                                                                                           (1, 2),
+                                                                                           (1, 3),
+                                                                                           (2, 1),
+                                                                                           (2, 3),
+                                                                                           (3, 1),
+                                                                                           (3, 2);
+
+INSERT INTO EjercicioTraduccionSenia_Opcion(EjercicioTraduccionSenia_id, opcionesIncorrectas_id) VALUES
+                                                                                                     (4, 2),
+                                                                                                     (4, 3),
+                                                                                                     (5, 1),
+                                                                                                     (5, 3),
+                                                                                                     (6, 1),
+                                                                                                     (6, 2);
 
 INSERT INTO Curso(id, nombre, descripcion, fecha, hora, tipo, nivel, capacidad, inscriptos) VALUES
                                                                                                 (1, 'Curso básico de lengua de señas', 'Introducción a la lengua de señas para principiantes.', '2024-10-15', '10:00:00', 'SEÑAS', 'BÁSICO', 20, 0),

@@ -3,7 +3,7 @@ package com.tallerwebi.dominio;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Ejercicio {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

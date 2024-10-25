@@ -3,12 +3,7 @@ package com.tallerwebi.dominio;
 import javax.persistence.*;
 
 @Entity
-public class EjercicioFormaPalabra {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class EjercicioFormaPalabra extends Ejercicio{
     private String imagen;
     private String respuestaCorrecta;
     private String letras;
@@ -19,14 +14,6 @@ public class EjercicioFormaPalabra {
         this.imagen = imagen;
         this.respuestaCorrecta = respuestaCorrecta;
         this.letras = letras;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getRespuestaCorrecta() {
