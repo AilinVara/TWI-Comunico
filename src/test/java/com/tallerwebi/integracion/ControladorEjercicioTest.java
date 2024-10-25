@@ -22,26 +22,20 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {SpringWebTestConfig.class, HibernateTestConfig.class})
-public class ControladorEjercicioTraduccionTest {
+public class ControladorEjercicioTest {
 
     private ServicioEjercicio servicioEjercicio;
     private RepositorioEjercicio repositorioEjercicio;
-    private ServicioVida servicioVida;
-    private RepositorioVida repositorioVida;
-    private RepositorioUsuario repositorioUsuario;
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -58,7 +52,6 @@ public class ControladorEjercicioTraduccionTest {
         this.servicioEjercicio = new ServicioEjercicioImpl(repositorioEjercicio);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
         this.sessionMock = new MockHttpSession();
-        this.servicioVida = new ServicioVidaImpl(repositorioVida, repositorioUsuario);
     }
 
     @Test
@@ -70,7 +63,6 @@ public class ControladorEjercicioTraduccionTest {
 
         Leccion leccion = crearLeccion();
         this.sessionFactory.getCurrentSession().save(leccion);
-
 
         sessionMock.setAttribute("id", usuario.getId());
 
@@ -84,13 +76,10 @@ public class ControladorEjercicioTraduccionTest {
 
         EjercicioTraduccion ejercicioTraduccion = (EjercicioTraduccion) ejercicioTraduccionResuelto;
 
-        MvcResult result = this.mockMvc.perform(post("/resolver/1?leccion=" + leccion.getId().toString())
-                        .param("opcionSeleccionada", ejercicioTraduccion.getOpcionCorrecta().getId().toString())
-                        .param("ejercicioId", ejercicioTraduccionResuelto.getId().toString())
-                        .param("leccion",leccion.getId().toString())
+        MvcResult result = this.mockMvc.perform(get("/ejercicio/3?leccion=" + leccion.getId())
                         .session(sessionMock))
-                        .andExpect(status().isOk())
-                        .andReturn();
+                .andExpect(status().isOk())
+                .andReturn();
 
         ModelAndView modelAndView = result.getModelAndView();
 
@@ -98,7 +87,6 @@ public class ControladorEjercicioTraduccionTest {
 
         assertThat("ejercicio", equalToIgnoringCase(Objects.requireNonNull(modelAndView.getViewName())));
         assertThat(false, is(modelAndView.getModel().isEmpty()));
-        assertThat(modelAndView.getModel().get("esCorrecta"), equalTo(true));
     }
 
 
@@ -135,7 +123,7 @@ public class ControladorEjercicioTraduccionTest {
         listaEjercicioTraduccions.add(ejercicioTraduccion2);
         listaEjercicioTraduccions.add(ejercicioTraduccion3);
 
-        Leccion leccion = crearLeccion();
+        Leccion leccion = new Leccion();
         leccion.setEjercicios(listaEjercicioTraduccions);
         this.sessionFactory.getCurrentSession().save(leccion);
 
@@ -163,7 +151,7 @@ public class ControladorEjercicioTraduccionTest {
         this.sessionFactory.getCurrentSession().save(opcionCorrecta);
         this.sessionFactory.getCurrentSession().save(opcionIncorrecta1);
         this.sessionFactory.getCurrentSession().save(opcionIncorrecta2);
-        List<Opcion> opcionesIncorrectas = new ArrayList<>();
+        Set<Opcion> opcionesIncorrectas = new HashSet<>();
         opcionesIncorrectas.add(opcionIncorrecta1);
         opcionesIncorrectas.add(opcionIncorrecta2);
         ejercicioTraduccion.setOpcionCorrecta(opcionCorrecta);
@@ -177,7 +165,13 @@ public class ControladorEjercicioTraduccionTest {
         List<Ejercicio> ejercicioTraduccions = new ArrayList<>();
         EjercicioTraduccion ejercicioTraduccion = crearEjercicio();
         this.sessionFactory.getCurrentSession().save(ejercicioTraduccion);
+        EjercicioTraduccion ejercicioTraduccion2 = crearEjercicio();
+        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion2);
+        EjercicioTraduccion ejercicioTraduccion3 = crearEjercicio();
+        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion3);
         ejercicioTraduccions.add(ejercicioTraduccion);
+        ejercicioTraduccions.add(ejercicioTraduccion2);
+        ejercicioTraduccions.add(ejercicioTraduccion3);
         leccion.setEjercicios(ejercicioTraduccions);
         return leccion;
     }

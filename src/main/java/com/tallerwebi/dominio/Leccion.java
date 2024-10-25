@@ -9,7 +9,7 @@ public class Leccion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "leccion_id")
     private List<Ejercicio> ejercicios;
 

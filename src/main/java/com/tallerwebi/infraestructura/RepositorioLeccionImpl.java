@@ -31,10 +31,10 @@ public class RepositorioLeccionImpl implements RepositorioLeccion {
                 .uniqueResult();
     }
 
-    @Override
     public Leccion buscarPorId(Long id) {
         final Session session = sessionFactory.getCurrentSession();
-        return (Leccion) session.createQuery("SELECT l FROM Leccion l LEFT JOIN FETCH l.ejercicios WHERE l.id = :id")
+        return (Leccion) session.createQuery(
+                        "SELECT l FROM Leccion l WHERE l.id = :id", Leccion.class)
                 .setParameter("id", id)
                 .uniqueResult();
     }

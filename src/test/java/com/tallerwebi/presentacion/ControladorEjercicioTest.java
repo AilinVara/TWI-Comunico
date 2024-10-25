@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -17,14 +18,13 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ControladorEjercicioTraduccionTest {
+public class ControladorEjercicioTest {
 
     private ControladorEjercicio controladorEjercicio;
     private EjercicioTraduccion ejercicioTraduccionMock;
     private ServicioEjercicio servicioEjercicioMock;
     private ServicioLeccion servicioLeccionMock;
     private ServicioProgresoLeccion servicioProgresoLeccionMock;
-    private ServicioMatriz servicioMatrizMock;
     private HttpServletRequest requestMock;
     private Leccion leccionMock;
     private HttpSession sessionMock;
@@ -46,7 +46,7 @@ public class ControladorEjercicioTraduccionTest {
 
         Opcion opcionIncorrectaMock = mock(Opcion.class);
         when(opcionIncorrectaMock.getId()).thenReturn(2L);
-        List<Opcion> opcionesIncorrectas = List.of(opcionIncorrectaMock);
+        Set<Opcion> opcionesIncorrectas = Set.of(opcionIncorrectaMock);
 
         Vida vidaMock = mock(Vida.class);
         servicioVidaMock = mock(ServicioVida.class);
@@ -68,8 +68,7 @@ public class ControladorEjercicioTraduccionTest {
         when(servicioEjercicioMock.resolverEjercicioTraduccion(ejercicioTraduccionMock, ejercicioTraduccionMock.getOpcionCorrecta().getId())).thenReturn(true);
         servicioLeccionMock = mock(ServicioLeccion.class);
         servicioProgresoLeccionMock = mock(ServicioProgresoLeccion.class);
-        servicioMatrizMock = mock(ServicioMatriz.class);
-        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioMatrizMock, servicioVidaMock);
+        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioVidaMock);
     }
 
     @Test
@@ -107,7 +106,8 @@ public class ControladorEjercicioTraduccionTest {
 
     @Test
     public void contestarConLaRespuestaIncorrectaDebeRetornarEsCorrectaComoFalse(){
-        String opcionIncorrecta = ejercicioTraduccionMock.getOpcionesIncorrectas().get(0).getId().toString();
+        String opcionIncorrecta = ejercicioTraduccionMock.getOpcionesIncorrectas().iterator().next().getId().toString();
+
 
         when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioTraduccionMock);
         when(requestMock.getSession()).thenReturn(sessionMock);

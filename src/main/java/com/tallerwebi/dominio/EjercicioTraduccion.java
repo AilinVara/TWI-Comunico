@@ -1,8 +1,8 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class EjercicioTraduccion extends Ejercicio{
@@ -10,7 +10,7 @@ public class EjercicioTraduccion extends Ejercicio{
     @OneToOne
     private Opcion opcionCorrecta;
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Opcion> opcionesIncorrectas;
+    private Set<Opcion> opcionesIncorrectas;
 
     public EjercicioTraduccion(){}
 
@@ -30,11 +30,11 @@ public class EjercicioTraduccion extends Ejercicio{
         return consigna;
     }
 
-    public List<Opcion> getOpcionesIncorrectas() {
+    public Set<Opcion> getOpcionesIncorrectas() {
         return opcionesIncorrectas;
     }
 
-    public void setOpcionesIncorrectas(List<Opcion> opcionesIncorrectas) {
+    public void setOpcionesIncorrectas(Set<Opcion> opcionesIncorrectas) {
         this.opcionesIncorrectas = opcionesIncorrectas;
     }
 
