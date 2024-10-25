@@ -20,7 +20,7 @@ public class GestionarVidas {
     public void perderVidaSiIncorrecto(Long usuarioId, Boolean resuelto) {
         if (!resuelto) {
             servicioVida.perderUnaVida(usuarioId);
-            servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
+
         }
     }
 
@@ -29,7 +29,7 @@ public class GestionarVidas {
         LocalDateTime ahora = LocalDateTime.now();
         Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
         long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
-        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60);
+        long tiempoRestante = 120 - (segundosDesdeUltimaRegeneracion % 120);
         modelo.put("tiempoRestante", tiempoRestante);
     }
 }

@@ -77,7 +77,7 @@ public class ServicioVidaImplTest {
     public void dadoQueUsuarioTieneMaximoDeVidasCuandoSeRegeneraEntoncesCantidadDeVidasNoSuperaLaCantidadDeVidasMaximas() {
 
         Vida vidaReal = new Vida(5);
-        vidaReal.setUltimaVezQueSeRegeneroLaVida(LocalDateTime.now().minusMinutes(2));
+        vidaReal.setUltimaVezQueSeRegeneroLaVida(LocalDateTime.now().minusMinutes(3));
 
         when(usuarioMock.getVida()).thenReturn(vidaReal);
         List<Usuario> usuarios = new ArrayList<>();

@@ -50,7 +50,7 @@ public class ControladorDeVidasGlobal {
         Vida vida = servicioVida.obtenerVida(usuarioId);
         LocalDateTime ahora = LocalDateTime.now();
         Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
-        return 60 - (duracion.getSeconds() % 60);
+        return 120 - (duracion.getSeconds() % 120);
     }
 
 

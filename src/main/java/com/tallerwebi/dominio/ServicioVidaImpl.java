@@ -67,7 +67,7 @@ public class ServicioVidaImpl implements ServicioVida {
             Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
 
 
-            if (duracion.toMinutes() >= 1 && vida.getCantidadDeVidasActuales() < 5) {
+            if (duracion.toMinutes() >= 2 && vida.getCantidadDeVidasActuales() < 5) {
                 vida.setCantidadDeVidasActuales(vida.getCantidadDeVidasActuales() + 1);
                 vida.setUltimaVezQueSeRegeneroLaVida(ahora);
                 repositorioVida.actualizarVida(vida);

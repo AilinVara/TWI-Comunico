@@ -12,8 +12,6 @@ public class Vida {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    private Boolean vidasCompletas;
-//    private Boolean vidaPerdida;
     private Integer cantidadDeVidasActuales;
     private LocalDateTime ultimaVezQueSeRegeneroLaVida;
 
