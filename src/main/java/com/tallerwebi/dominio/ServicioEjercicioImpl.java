@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.List;
 
 @Service("servicioEjercicio")
 @Transactional
@@ -21,9 +23,8 @@ public class ServicioEjercicioImpl implements ServicioEjercicio {
     }
 
     @Override
-    public void guardarEjercicio(EjercicioTraduccion ejercicioTraduccion) {
-
-        this.repositorioEjercicio.guardar(ejercicioTraduccion);
+    public void guardarEjercicio(Ejercicio ejercicio) {
+        this.repositorioEjercicio.guardar(ejercicio);
     }
 
     @Override
@@ -37,10 +38,24 @@ public class ServicioEjercicioImpl implements ServicioEjercicio {
     }
 
     @Override
+    public Boolean resolverEjercicioTraduccionSenia(EjercicioTraduccionSenia ejercicioTraduccionSenia, Long opcionId) {
+        return ejercicioTraduccionSenia.getOpcionCorrecta().getId().equals(opcionId);
+    }
+
+    @Override
     public Boolean resolverEjercicioMatriz(String puntosSeleccionados, String puntosDeLaMatriz) {
         return puntosSeleccionados.equals(puntosDeLaMatriz);
     }
 
+    @Override
+    public List<String> convertirLetrasALista(String letras) {
+        return Arrays.asList(letras.split(","));
+    }
+
+    @Override
+    public Boolean resolverEjercicioFormaPalabras(String letras, String listaLetras) {
+        return letras.equals(listaLetras);
+    }
 
 }
 
