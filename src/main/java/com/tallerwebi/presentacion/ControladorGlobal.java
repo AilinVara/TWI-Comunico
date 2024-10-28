@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioExperiencia;
 import com.tallerwebi.dominio.ServicioUsuario;;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -13,10 +14,12 @@ import javax.servlet.http.HttpSession;
 public class ControladorGlobal {
 
     private final ServicioUsuario servicioUsuario;
+    private final ServicioExperiencia servicioExperiencia;
 
     @Autowired
-    public ControladorGlobal(ServicioUsuario servicioUsuario){
+    public ControladorGlobal(ServicioUsuario servicioUsuario, ServicioExperiencia servicioExperiencia){
         this.servicioUsuario = servicioUsuario;
+        this.servicioExperiencia = servicioExperiencia;
     }
 
     @ModelAttribute
@@ -29,5 +32,14 @@ public class ControladorGlobal {
                 model.addAttribute("points", monedas);
             }
         }
+    }
+    @ModelAttribute("experiencia")
+    public Integer obtenerExperienciaDelUsuario(HttpServletRequest request) {
+
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return 0; // Retorna un valor por defecto si no hay usuario logueado
+        }
+        return servicioExperiencia.obtenerExperiencia(usuarioId).getCantidadExperiencia();
     }
 }

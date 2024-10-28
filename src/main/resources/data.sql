@@ -1,8 +1,10 @@
 INSERT INTO Vida (cantidadDeVidasActuales, ultimaVezQueSeRegeneroLaVida)
 VALUES (5, CURRENT_TIMESTAMP);
+INSERT INTO Experiencia (cantidadExperiencia,nivel)
+VALUES(0,0);
 
-INSERT INTO Usuario(id, email, password, rol, activo, vida_id, comunicoPoints)
-VALUES(null, 'test@unlam.edu.ar', 'test', 'ADMIN', true, 1, 0);
+INSERT INTO Usuario(id, email, password, rol, activo, vida_id, comunicoPoints, experiencia_id)
+VALUES(null, 'test@unlam.edu.ar', 'test', 'ADMIN', true, 1, 0, 1);
 
 INSERT INTO Opcion(id, descripcion) VALUES
                                         (1, 'A'),
