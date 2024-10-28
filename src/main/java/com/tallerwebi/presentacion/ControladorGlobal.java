@@ -1,8 +1,7 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioUsuario;
-import com.tallerwebi.dominio.ServicioVida;
-import com.tallerwebi.dominio.Vida;
+import com.tallerwebi.dominio.ServicioExperiencia;
+import com.tallerwebi.dominio.ServicioUsuario;;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,11 +16,15 @@ import java.time.LocalDateTime;
 public class ControladorGlobal {
 
     private final ServicioUsuario servicioUsuario;
+    private final ServicioExperiencia servicioExperiencia;
+
     private final ServicioVida servicioVida;
     //Commit
     @Autowired
+    public ControladorGlobal(ServicioUsuario servicioUsuario, ServicioExperiencia servicioExperiencia){
     public ControladorGlobal(ServicioUsuario servicioUsuario,ServicioVida servicioVida){
         this.servicioUsuario = servicioUsuario;
+        this.servicioExperiencia = servicioExperiencia;
         this.servicioVida = servicioVida;
     }
 
@@ -35,6 +38,15 @@ public class ControladorGlobal {
                 model.addAttribute("points", monedas);
             }
         }
+    }
+    @ModelAttribute("experiencia")
+    public Integer obtenerExperienciaDelUsuario(HttpServletRequest request) {
+
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return 0; // Retorna un valor por defecto si no hay usuario logueado
+        }
+        return servicioExperiencia.obtenerExperiencia(usuarioId).getCantidadExperiencia();
     }
 
     @ModelAttribute("vidas")
