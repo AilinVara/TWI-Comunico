@@ -11,6 +11,12 @@
 
 <div th:replace="header :: header"></div>
 
+<div class="barra-experiencia">
+    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
+        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/2000XP</p>
+    </div>
+</div>
+
 <h1  class="titulo">Formá palabras</h1>
 
 <div th:each="ejercicios : ${ejercicio}">
@@ -64,6 +70,16 @@
 </div>
 </div>
 
+<script th:inline="javascript">
+    function actualizarExperiencia(experiencia) {
+        const barra = document.querySelector('.experiencia-llena');
+        const porcentaje = (experiencia / 2000) * 100;
+        barra.style.width = porcentaje + '%';
+        barra.style.backgroundColor = '#4caf50';  // Color de la barra cuando se llena
+    }
+
+    actualizarExperiencia([[${experiencia}]]);
+</script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/ejercicio-forma-palabra.js}"></script>
 
