@@ -402,6 +402,26 @@ footer {
 }
 
 
+       .barra-experiencia {
+            width: 20%;
+             background-color: #afafaf;
+             border-radius: 10px;
+             overflow: hidden;
+             height: 22px;
+             margin-left: 20px;
+             }
+
+        .experiencia-llena {
+            height: 100%;
+            background-color: #ce82ff;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+       .barra-experiencia p {
+       margin-left: 7px;
+       }
+
+
 /*----------------------------------Ejercicio-Video------------------------------------*/
 
 .sign-video{
