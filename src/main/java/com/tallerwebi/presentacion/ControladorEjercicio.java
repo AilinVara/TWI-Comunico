@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -18,16 +20,14 @@ public class ControladorEjercicio {
     private ServicioLeccion servicioLeccion;
     private ServicioProgresoLeccion servicioProgresoLeccion;
     private ServicioVida servicioVida;
-    private GestionarVidas gestionarVidas;
 
 
     @Autowired
-    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, GestionarVidas gestionarVidas) {
+    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida) {
         this.servicioEjercicio = servicioEjercicio;
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
-        this.gestionarVidas = gestionarVidas;
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
@@ -37,10 +37,10 @@ public class ControladorEjercicio {
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
         Ejercicio ejercicio = leccion.getEjercicios().get(indice - 1);
-        //modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
+        modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
         modelo.put("ejercicio", ejercicio);
         modelo.put("indice", indice);
-
+        agregarTiempoRestanteAlModelo(modelo,usuarioId);
 
         if (ejercicio instanceof EjercicioTraduccion) {
             return new ModelAndView("ejercicio", modelo);
@@ -86,11 +86,14 @@ public class ControladorEjercicio {
             mav.setViewName("ejercicio-video");
         }
 
-        gestionarVidas.perderVidaSiIncorrecto(usuarioId,resuelto);
+        if (!resuelto) {
+            this.servicioVida.perderUnaVida(usuarioId);
+        }
 
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
-
+        modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
+        agregarTiempoRestanteAlModelo(modelo,usuarioId);
         modelo.put("indice", indice);
         modelo.put("leccion", leccionId);
         modelo.put("ejercicio", ejercicio);
@@ -107,6 +110,14 @@ public class ControladorEjercicio {
         return new ModelAndView("ejercicio-video", modelo);
     }
 
+    private void agregarTiempoRestanteAlModelo(ModelMap modelo, Long usuarioId) {
+        Vida vida = this.servicioVida.obtenerVida(usuarioId);
+        LocalDateTime ahora = LocalDateTime.now();
+        Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
+        long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
+        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60); // Cada 60 segundos
+        modelo.put("tiempoRestante", tiempoRestante);
+    }
 
 }
 

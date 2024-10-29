@@ -30,7 +30,6 @@ public class ControladorEjercicioTest {
     private HttpSession sessionMock;
     private ProgresoLeccion progresoMock;
     private ServicioVida servicioVidaMock;
-    private GestionarVidas gestionarVidasMock;
 
     @BeforeEach
     public void init() {
@@ -41,7 +40,6 @@ public class ControladorEjercicioTest {
         leccionMock = mock(Leccion.class);
         progresoMock = mock(ProgresoLeccion.class);
         sessionMock = mock(HttpSession.class);
-        gestionarVidasMock = mock(GestionarVidas.class);
 
         Opcion opcionCorrectaMock = mock(Opcion.class);
         when(opcionCorrectaMock.getId()).thenReturn(1L);
@@ -57,7 +55,6 @@ public class ControladorEjercicioTest {
         LocalDateTime haceUnosSegundos = LocalDateTime.now().minusSeconds(30);
         when(vidaMock.getUltimaVezQueSeRegeneroLaVida()).thenReturn(haceUnosSegundos);
 
-
         LocalDateTime ahora = LocalDateTime.now();
         Duration duracion = Duration.between(vidaMock.getUltimaVezQueSeRegeneroLaVida(), ahora);
         long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
@@ -71,7 +68,7 @@ public class ControladorEjercicioTest {
         when(servicioEjercicioMock.resolverEjercicioTraduccion(ejercicioTraduccionMock, ejercicioTraduccionMock.getOpcionCorrecta().getId())).thenReturn(true);
         servicioLeccionMock = mock(ServicioLeccion.class);
         servicioProgresoLeccionMock = mock(ServicioProgresoLeccion.class);
-        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioVidaMock,gestionarVidasMock);
+        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioVidaMock);
     }
 
     @Test
