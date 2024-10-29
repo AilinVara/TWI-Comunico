@@ -1,12 +1,17 @@
-<header th:fragment="header">
+<header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+  <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
+  <link rel="stylesheet" th:href="@{/css/ejercicio.css}"/>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
   <div class="logo">
     <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
-    <h1>omunico</h1>
+    <h1>Comunico</h1>
   </div>
 
   <nav>
     <ul>
-      <li><a th:href="@{/inicio}">Inicio</a></li>
+      <li><a th:href="@{/inicio}" class="active">Inicio</a></li>
       <li><a th:href="@{/senias}">Lengua de Señas</a></li>
       <li><a th:href="@{/braille}">Braille</a></li>
       <li><a th:href="@{/cursos}">Cursos</a></li>
@@ -15,8 +20,91 @@
           <i class="fa-solid fa-coins"></i>
           <span th:text="${points}">0</span>
         </a>
+        <button id="botonVidas" style="display: contents;">
+          <div class="grupo_input" id="vidaYNum">
+            <i class="fa-solid fa-heart" id="vidas"></i>
+            <h4 th:text="${vidas}" id="vidasNumero">0</h4>
+          </div>
+        </button>
+
       </li>
       <a th:href="@{/crear-curso}" ><img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"></a>
     </ul>
   </nav>
+
+  <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
+
+  <script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("botonVidas").addEventListener("click", function() {
+          let vidasRestantes = parseInt(document.getElementById("vidasNumero").innerText, 10);
+          let tiempoRestante = document.getElementById("tiempoRestante").innerText;
+
+          console.log("Tiempo restante:", tiempoRestante);
+
+          let mensaje = `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.`;
+
+
+          // Mostrar mensaje si tiene todas las vidas
+          if(vidasRestantes === 5) {
+            Swal.fire({
+              title: '¡Tienes todas tus vidas!',
+              html: 'Tienes 5 vidas, ¡aprovecha para aprender!',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
+            return;
+
+          }
+
+          // Lógica cuando se queda sin vidas
+          if(vidasRestantes == 0) {
+            mensaje += `<br>Para seguir aprendiendo necesitas vidas <i class="fa-solid fa-heart-circle-exclamation"></i> <br> ¿Deseas comprar más? <i class="fa-solid fa-heart-circle-plus"></i>.`;
+
+
+            Swal.fire({
+              title: 'Sin Vidas Restantes',
+              html: mensaje,
+              icon: 'info',
+              confirmButtonText: 'Comprar',
+              showCancelButton: true,
+              cancelButtonText: 'Cancelar',
+              preConfirm: () => {
+
+                window.location.href = '/comprar.html'; // Cambiar URL por la adecuada
+
+              }
+            });
+          } else if (vidasRestantes <= 4) {
+
+            mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`;
+
+
+            Swal.fire({
+              title: 'Vidas Restantes',
+              html: mensaje,
+              icon: 'info',
+              confirmButtonText: 'OK'
+            });
+
+          }
+
+
+
+          document.getElementById("vidasNumero").innerText = vidasRestantes;
+      });
+    });
+  </script>
+  <style>
+    #botonVidas {
+      background: none;
+      border: none;
+      outline: none;
+      padding: 0;
+      cursor: default;
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+
 </header>
