@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Component
 public class GestionarVidas {
-
+    //Commit
     private final ServicioVida servicioVida;
 
     @Autowired

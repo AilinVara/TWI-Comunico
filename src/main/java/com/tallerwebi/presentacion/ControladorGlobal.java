@@ -18,7 +18,7 @@ public class ControladorGlobal {
 
     private final ServicioUsuario servicioUsuario;
     private final ServicioVida servicioVida;
-
+    //Commit
     @Autowired
     public ControladorGlobal(ServicioUsuario servicioUsuario,ServicioVida servicioVida){
         this.servicioUsuario = servicioUsuario;

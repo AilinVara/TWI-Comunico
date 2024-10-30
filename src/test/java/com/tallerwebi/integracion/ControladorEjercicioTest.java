@@ -36,7 +36,7 @@ public class ControladorEjercicioTest {
 
     private ServicioEjercicio servicioEjercicio;
     private RepositorioEjercicio repositorioEjercicio;
-
+    //Commit
     @Autowired
     private SessionFactory sessionFactory;
 
