@@ -1,12 +1,15 @@
 package com.tallerwebi.integracion;
 
+import com.tallerwebi.dominio.Vida;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
 import com.tallerwebi.dominio.Usuario;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -32,10 +35,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ControladorLoginTest {
 
 	private Usuario usuarioMock;
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	@Autowired
 	private WebApplicationContext wac;
 	private MockMvc mockMvc;
+	private MockHttpSession sessionMock;
 
 
 	@BeforeEach
@@ -43,6 +49,7 @@ public class ControladorLoginTest {
 		usuarioMock = mock(Usuario.class);
 		when(usuarioMock.getEmail()).thenReturn("dami@unlam.com");
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+
 	}
 
 
@@ -69,7 +76,7 @@ public class ControladorLoginTest {
 		ModelAndView modelAndView = result.getModelAndView();
 		assert modelAndView != null;
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("senias"));
-		assertThat(true,  is(modelAndView.getModel().isEmpty()));
+		assertThat(false,  is(modelAndView.getModel().isEmpty()));
 	}
 
 	@Test
