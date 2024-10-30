@@ -45,7 +45,7 @@ public class ControladorMercadoPagoTest {
     private RepositorioUsuario repositorioUsuario;
     private RepositorioVida repositorioVida;
     private ServicioVida servicioVida;
-
+    //Commit
     @BeforeEach
     public void init() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();

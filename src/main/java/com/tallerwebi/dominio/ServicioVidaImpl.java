@@ -15,7 +15,7 @@ import java.util.List;
 @Transactional
 @EnableScheduling
 public class ServicioVidaImpl implements ServicioVida {
-
+    //Commit
     private RepositorioVida repositorioVida;
     private RepositorioUsuario repositorioUsuario;
 
