@@ -13,7 +13,7 @@ public class Leccion {
     @JoinColumn(name = "leccion_id")
     private List<Ejercicio> ejercicios;
 
-    private String titulo;
+    private String tipo;
 
     public void setId(Long id) {
         this.id = id;
@@ -23,8 +23,12 @@ public class Leccion {
         return id;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTipo(String titulo) {
+        this.tipo = titulo;
+    }
+
+    public String getTipo() {
+        return this.tipo;
     }
 
     public List<Ejercicio> getEjercicios() {
