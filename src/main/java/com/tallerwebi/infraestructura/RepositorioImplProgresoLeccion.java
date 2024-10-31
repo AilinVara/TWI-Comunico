@@ -46,4 +46,11 @@ public class RepositorioImplProgresoLeccion implements RepositorioProgresoLeccio
     public void actualizar(ProgresoLeccion progresoLeccion) {
         this.sessionFactory.getCurrentSession().update(progresoLeccion);
     }
+
+    @Override
+    public List<ProgresoLeccion> buscarProgresosPorUsuario(Long usuarioId) {
+        return (List<ProgresoLeccion>) this.sessionFactory.getCurrentSession().createCriteria(ProgresoLeccion.class)
+                .add(Restrictions.eq("usuario.id", usuarioId))
+                .list();
+    }
 }

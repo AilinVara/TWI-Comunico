@@ -8,6 +8,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class RepositorioLeccionImpl implements RepositorioLeccion {
 
@@ -24,11 +26,11 @@ public class RepositorioLeccionImpl implements RepositorioLeccion {
     }
 
     @Override
-    public Leccion buscarPorTitulo(String titulo) {
+    public List<Leccion> buscarPorTipo(String tipo) {
         final Session session = sessionFactory.getCurrentSession();
-        return (Leccion) session.createCriteria(Leccion.class)
-                .add(Restrictions.eq("titulo", titulo))
-                .uniqueResult();
+        return (List<Leccion>) session.createCriteria(Leccion.class)
+                .add(Restrictions.eq("tipo", tipo))
+                .list();
     }
 
     public Leccion buscarPorId(Long id) {
