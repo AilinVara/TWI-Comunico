@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/mapa-braille-traduccion.css}">
+    <title>Braille - Traducción</title>
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+<ul>
+    <th:block th:each="progreso, indice : ${progresos}">
+        <li>
+            <p>Lección [[${indice.index + 1}]]</p>
+            <p>Id lección = [[${progreso.key}]]</p>
+            <div th:if="${progreso.value}">
+                <a th:href="@{'/leccion/' + ${progreso.key}}" class="desbloqueada">Realizar</a>
+            </div>
+            <div th:unless="${progreso.value}">
+                <a th:href="@{'/leccion/' + ${progreso.key}}" class="bloqueada">Bloqueada</a>
+            </div>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>
