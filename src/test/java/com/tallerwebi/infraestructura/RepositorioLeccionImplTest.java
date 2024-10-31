@@ -53,11 +53,11 @@ public class RepositorioLeccionImplTest {
     @Rollback
     public void dadoQueExisteUnaLeccionCuandoLaBuscoPorTituloEntoncesLaEncuentroEnLaBaseDeDatos(){
         Leccion leccion = new Leccion();
-        leccion.setTitulo("Primer leccion");
+        leccion.setTipo("Primer leccion");
 
         this.repositorioLeccion.guardar(leccion);
 
-        Leccion leccionObtenida = this.repositorioLeccion.buscarPorTitulo("Primer leccion");
+        Leccion leccionObtenida = this.repositorioLeccion.buscarPorTipo("Primer leccion").get(0);
 
         assertThat(leccionObtenida, equalTo(leccion));
     }

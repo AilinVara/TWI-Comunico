@@ -82,7 +82,7 @@ public class RepositorioProgresoLeccionTest {
     @Test
     @Transactional
     @Rollback
-    public void dadoQueExisten3ProgresosLeccionDeUnUsuarioEnUnaLeccionCuandoLosBuscoPorUsuarioIdYLeccionIdEntoncesLosEncuentroEnLaBaseDeDatos() {
+    public void dadoQueExistenTresProgresosLeccionDeUnUsuarioEnUnaLeccionCuandoLosBuscoPorUsuarioIdYLeccionIdEntoncesLosEncuentroEnLaBaseDeDatos() {
         Leccion leccion = new Leccion();
         this.sessionFactory.getCurrentSession().save(leccion);
         Usuario usuario = new Usuario();
@@ -128,5 +128,40 @@ public class RepositorioProgresoLeccionTest {
         ProgresoLeccion progresoDespues = this.repositorioProgresoLeccion.buscarPorIds(progresoAntes.getLeccion().getId(), progresoAntes.getUsuario().getId(), progresoAntes.getEjercicio().getId());
 
         assertThat(progresoDespues.getCompleto(), equalTo(true));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void dadoQueExistenTresProgresosLeccionDeUnUsuarioEnVariasLeccionesCuandoLosBuscoPorUsuarioIdEntoncesLosEncuentroEnLaBaseDeDatos() {
+        Leccion leccion = new Leccion();
+        this.sessionFactory.getCurrentSession().save(leccion);
+        Leccion leccion1 = new Leccion();
+        this.sessionFactory.getCurrentSession().save(leccion1);
+        Leccion leccion2 = new Leccion();
+        this.sessionFactory.getCurrentSession().save(leccion2);
+        Usuario usuario = new Usuario();
+        this.sessionFactory.getCurrentSession().save(usuario);
+        EjercicioTraduccion ejercicioTraduccion1 = new EjercicioTraduccion();
+        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion1);
+        EjercicioTraduccion ejercicioTraduccion2 = new EjercicioTraduccion();
+        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion2);
+        EjercicioTraduccion ejercicioTraduccion3 = new EjercicioTraduccion();
+        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion3);
+
+        ProgresoLeccion progreso1 = new ProgresoLeccion(usuario, leccion, ejercicioTraduccion1);
+        ProgresoLeccion progreso2 = new ProgresoLeccion(usuario, leccion1, ejercicioTraduccion2);
+        ProgresoLeccion progreso3 = new ProgresoLeccion(usuario, leccion2, ejercicioTraduccion3);
+
+        this.repositorioProgresoLeccion.guardar(progreso1);
+        this.repositorioProgresoLeccion.guardar(progreso2);
+        this.repositorioProgresoLeccion.guardar(progreso3);
+
+        List<ProgresoLeccion> progresosRecibidos = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuario.getId());
+
+        assertThat(progresosRecibidos.size(), equalTo(3));
+        assertThat(progresosRecibidos.contains(progreso1), equalTo(true));
+        assertThat(progresosRecibidos.contains(progreso2), equalTo(true));
+        assertThat(progresosRecibidos.contains(progreso3), equalTo(true));
     }
 }
