@@ -22,7 +22,6 @@ public class ControladorGlobal {
     //Commit
     @Autowired
     public ControladorGlobal(ServicioUsuario servicioUsuario, ServicioExperiencia servicioExperiencia){
-    public ControladorGlobal(ServicioUsuario servicioUsuario,ServicioVida servicioVida){
         this.servicioUsuario = servicioUsuario;
         this.servicioExperiencia = servicioExperiencia;
         this.servicioVida = servicioVida;
