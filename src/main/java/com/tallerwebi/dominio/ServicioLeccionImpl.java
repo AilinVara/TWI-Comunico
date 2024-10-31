@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service("servicioLeccion")
 @Transactional
 public class ServicioLeccionImpl implements ServicioLeccion {
@@ -22,5 +24,10 @@ public class ServicioLeccionImpl implements ServicioLeccion {
     @Override
     public Leccion obtenerLeccion(Long id) {
         return this.repositorioLeccion.buscarPorId(id);
+    }
+
+    @Override
+    public List<Leccion> obtenerLeccionesPorTipo(String tipo) {
+        return this.repositorioLeccion.buscarPorTipo(tipo);
     }
 }

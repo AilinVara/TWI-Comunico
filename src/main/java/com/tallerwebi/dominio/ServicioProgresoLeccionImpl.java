@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("servicioProgresoLeccion")
 @Transactional
@@ -57,6 +59,28 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
 
     @Override
     public Boolean verificarCompletado(List<ProgresoLeccion> progresoLeccion) {
-        return (progresoLeccion.get(0).getCompleto() && progresoLeccion.get(1).getCompleto() && progresoLeccion.get(2).getCompleto());
+        return progresoLeccion.stream().allMatch(ProgresoLeccion::getCompleto);
+    }
+
+    @Override
+    public Boolean verificarCompletadoPorLeccion(Long leccionId, Long usuarioId) {
+        List<ProgresoLeccion> progresosDeLeccion = this.buscarProgresoLeccionDeUsuario(usuarioId, leccionId);
+        return this.verificarCompletado(progresosDeLeccion);
+    }
+
+    @Override
+    public List<ProgresoLeccion> buscarProgresoPorTipoEjercicio(String tipoEjercicio, Long usuarioId) {
+       List<ProgresoLeccion> todosProgresosLeccion = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
+
+        if(todosProgresosLeccion.isEmpty()){
+            for (Leccion leccion : this.servicioLeccion.obtenerLeccionesPorTipo("traduccion")){
+                this.crearProgresoLeccion(leccion.getId(), usuarioId);
+            }
+            todosProgresosLeccion = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
+        }
+
+        return  todosProgresosLeccion.stream()
+                .filter(l -> l.getLeccion().getTipo().equals(tipoEjercicio))
+                .collect(Collectors.toList());
     }
 }
