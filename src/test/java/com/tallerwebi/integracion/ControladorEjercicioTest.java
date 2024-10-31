@@ -161,7 +161,7 @@ public class ControladorEjercicioTest {
 
     private Leccion crearLeccion() {
         Leccion leccion = new Leccion();
-        leccion.setTitulo("Leccion 1");
+        leccion.setTipo("Leccion 1");
         List<Ejercicio> ejercicioTraduccions = new ArrayList<>();
         EjercicioTraduccion ejercicioTraduccion = crearEjercicio();
         this.sessionFactory.getCurrentSession().save(ejercicioTraduccion);

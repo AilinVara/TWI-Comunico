@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -46,7 +47,7 @@ public class ControladorEjercicioTest {
 
         Opcion opcionIncorrectaMock = mock(Opcion.class);
         when(opcionIncorrectaMock.getId()).thenReturn(2L);
-        Set<Opcion> opcionesIncorrectas = Set.of(opcionIncorrectaMock);
+        Set<Opcion> opcionesIncorrectas = new HashSet<>(Set.of(opcionIncorrectaMock));
 
         Vida vidaMock = mock(Vida.class);
         servicioVidaMock = mock(ServicioVida.class);
