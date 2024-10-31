@@ -9,4 +9,8 @@ public interface ServicioExperiencia {
     void ganar100DeExperiencia(Long usuarioId);
 
     void ganar1000DeExperiencia(Long usuarioId);
+
+    String obtenerUnTitulo(Long usuarioId);
+
+
 }

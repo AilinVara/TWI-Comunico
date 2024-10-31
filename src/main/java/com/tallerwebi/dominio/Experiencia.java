@@ -14,6 +14,7 @@ public class Experiencia {
     private int nivel;
 
 
+
     public Experiencia() {
         this.cantidadExperiencia = 0;
         this.nivel = 0;

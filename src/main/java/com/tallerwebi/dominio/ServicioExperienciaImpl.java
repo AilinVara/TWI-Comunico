@@ -57,4 +57,9 @@ public class ServicioExperienciaImpl implements ServicioExperiencia {
             repositorioExperiencia.actualizarExperiencia(experiencia);
         }
     }
+
+    @Override
+    public String obtenerUnTitulo(Long usuarioId) {
+        return this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getTitulo();
+    }
 }

@@ -13,6 +13,7 @@ public class Usuario {
     private String rol;
     private Boolean activo = false;
     private Integer comunicoPoints;
+    private String titulo;
 
     @OneToOne
     private Vida vida;
@@ -93,7 +94,13 @@ public class Usuario {
         this.experiencia = experiencia;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
 
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 }
 
 
