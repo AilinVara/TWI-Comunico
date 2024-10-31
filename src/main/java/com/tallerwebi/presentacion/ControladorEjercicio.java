@@ -10,7 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -43,6 +46,15 @@ public class ControladorEjercicio {
         agregarTiempoRestanteAlModelo(modelo,usuarioId);
 
         if (ejercicio instanceof EjercicioTraduccion) {
+            EjercicioTraduccion ejercicioTraduccion = (EjercicioTraduccion) ejercicio;
+
+            Set<Opcion> opciones = ejercicioTraduccion.getOpcionesIncorrectas();
+            opciones.add(ejercicioTraduccion.getOpcionCorrecta());
+
+            List<Opcion> opcionesDesordenadas = new ArrayList<>(opciones);
+            Collections.shuffle(opcionesDesordenadas);
+
+            modelo.put("opciones", opcionesDesordenadas);
             return new ModelAndView("ejercicio", modelo);
         }else if(ejercicio instanceof EjercicioMatriz)
             return new ModelAndView("formaLetras", modelo);
@@ -64,7 +76,7 @@ public class ControladorEjercicio {
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
-        Boolean resuelto = false;
+        Boolean resuelto;
         if (progreso == null) {
             this.servicioProgresoLeccion.crearProgresoLeccion(leccionId, usuarioId);
             progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
