@@ -143,6 +143,22 @@ nav a.active:hover {
     transform: scale(1.2);
 }
 
+.cerrar {
+    position: relative;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.cerrar:hover {
+    color: #ff0000;
+}
+
 .titulo {
     text-align: center;
     padding: 50px;
