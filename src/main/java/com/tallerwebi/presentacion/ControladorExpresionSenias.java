@@ -39,13 +39,11 @@ public class ControladorExpresionSenias {
     public ModelAndView cargarImagenesDeExpresion() throws IOException {
         List<ExpresionSenias> expresions = this.servicioExpresion.listarExpresionSenias();
 
-
         if(expresions.isEmpty()) {
             for(int i = 0; i < routes.size() &&  i < names.size(); i++) {
                 this.servicioExpresion.guardarExpresionSenias(names.get(i), routes.get(i));
             }
         }
-
         return null;
     }
 }
