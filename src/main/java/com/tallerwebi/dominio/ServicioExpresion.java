@@ -10,5 +10,5 @@ public interface ServicioExpresion {
 
     List<ExpresionSenias> listarExpresionSenias();
 
-    void guardarExpresionSenias(String nombre, Path rutaImagen) throws IOException;
+    void guardarExpresionSenias(String nombre, String rutaImagen) throws IOException;
 }
