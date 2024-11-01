@@ -24,10 +24,10 @@ public class ServicioExperienciaImpl implements ServicioExperiencia {
 
     @Override
     public Boolean ganarUnNivel(Long usuarioId) {
-         boolean desbloqueado = false;
+        boolean desbloqueado = false;
         Experiencia experiencia = this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getExperiencia();
         int nivel = this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getExperiencia().getNivel();
-        if (experiencia.getCantidadExperiencia()>= 2000)
+        if (experiencia.getCantidadExperiencia() >= 2000)
             experiencia.setNivel(experiencia.getNivel() + 1);
         desbloqueado = true;
         return desbloqueado;
@@ -36,10 +36,10 @@ public class ServicioExperienciaImpl implements ServicioExperiencia {
     @Override
     public void ganar100DeExperiencia(Long usuarioId) {
 
-       Experiencia experiencia = this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getExperiencia();
+        Experiencia experiencia = this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getExperiencia();
 
         if (experiencia.getCantidadExperiencia() >= 0) {
-            experiencia.setCantidadExperiencia(experiencia.getCantidadExperiencia()+100);
+            experiencia.setCantidadExperiencia(experiencia.getCantidadExperiencia() + 100);
 
             repositorioExperiencia.actualizarExperiencia(experiencia);
 
@@ -58,8 +58,6 @@ public class ServicioExperienciaImpl implements ServicioExperiencia {
         }
     }
 
-    @Override
-    public String obtenerUnTitulo(Long usuarioId) {
-        return this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getTitulo();
-    }
+
 }
+

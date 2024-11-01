@@ -7,6 +7,7 @@
     <!-- custom style -->
     <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
     <link rel="stylesheet" th:href="@{/css/ejercicio.css}"/>
+    <link rel="stylesheet" th:href="@{/css/header.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,14 +43,7 @@
 
 
 
-<div class="game-container">
-    <div class="question">
-        <p id="braille-letter" th:text="${ejercicio.consigna}"></p>
-        <div id="braille-display" class="braille"></div>
-        <div class="braille-item-sin-hover">
-            <img th:src="@{'/img/braille/' + ${ejercicio.opcionCorrecta.descripcion}}">
-        </div>
-    </div>
+
  <div class="game-container">
      <div class="question">
          <p id="braille-letter" th:text="${ejercicio.consigna}"></p>
@@ -141,6 +135,8 @@
 
         actualizarExperiencia([[${experiencia}]]);
     </script>
+
+     <script th:inline="javascript">
              Swal.fire({
                  title: 'Vidas Restantes',
                  html: `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`,

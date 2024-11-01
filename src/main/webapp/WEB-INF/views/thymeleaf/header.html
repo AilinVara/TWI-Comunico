@@ -1,10 +1,5 @@
 <header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
-  <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
-  <link rel="stylesheet" th:href="@{/css/ejercicio.css}"/>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<!--commit-->
-<header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+  <link rel="stylesheet" th:href="@{/css/header.css}"/>
   <div class="logo">
     <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
     <h1>Comunico</h1>
@@ -12,6 +7,7 @@
 
   <nav>
     <ul>
+      <p><span class="titulo-metalizado"  th:text="${titulo}">Principiante</span></p>
       <li><a th:href="@{/inicio}" class="active">Inicio</a></li>
       <li><a th:href="@{/senias}">Lengua de Señas</a></li>
       <li><a th:href="@{/braille}">Braille</a></li>
@@ -91,20 +87,10 @@
           }
 
 
-
           document.getElementById("vidasNumero").innerText = vidasRestantes;
       });
     });
   </script>
-  <style>
-    #botonVidas {
-      background: none;
-      border: none;
-      outline: none;
-      padding: 0;
-      cursor: default;
-    }
-  </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
 

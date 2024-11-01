@@ -23,6 +23,7 @@ public class ControladorEjercicio {
     private ServicioExperiencia servicioExperiencia;
 
 
+
     @Autowired
     public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia) {
         this.servicioEjercicio = servicioEjercicio;
@@ -30,6 +31,7 @@ public class ControladorEjercicio {
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
         this.servicioExperiencia = servicioExperiencia;
+
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)

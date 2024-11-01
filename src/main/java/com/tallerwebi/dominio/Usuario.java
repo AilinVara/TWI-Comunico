@@ -13,13 +13,14 @@ public class Usuario {
     private String rol;
     private Boolean activo = false;
     private Integer comunicoPoints;
-    private String titulo;
+    private String titulo = "Principiante";
 
     @OneToOne
     private Vida vida;
 
     @OneToOne
     private Experiencia experiencia;
+
 
     public Long getId() {
         return id;

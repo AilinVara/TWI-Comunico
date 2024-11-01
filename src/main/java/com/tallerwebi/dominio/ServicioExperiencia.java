@@ -10,7 +10,6 @@ public interface ServicioExperiencia {
 
     void ganar1000DeExperiencia(Long usuarioId);
 
-    String obtenerUnTitulo(Long usuarioId);
 
 
 }

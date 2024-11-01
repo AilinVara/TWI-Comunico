@@ -1,7 +1,6 @@
 package com.tallerwebi.presentacion;
-
-import com.tallerwebi.dominio.ServicioExperiencia;
-import com.tallerwebi.dominio.ServicioUsuario;;
+import com.tallerwebi.dominio.*;
+;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,14 +16,17 @@ public class ControladorGlobal {
 
     private final ServicioUsuario servicioUsuario;
     private final ServicioExperiencia servicioExperiencia;
-
     private final ServicioVida servicioVida;
+    private final ServicioTitulo servicioTitulo;
+
+
     //Commit
     @Autowired
-    public ControladorGlobal(ServicioUsuario servicioUsuario, ServicioExperiencia servicioExperiencia){
+    public ControladorGlobal(ServicioUsuario servicioUsuario, ServicioExperiencia servicioExperiencia, ServicioVida servicioVida, ServicioTitulo servicioTitulo){
         this.servicioUsuario = servicioUsuario;
         this.servicioExperiencia = servicioExperiencia;
         this.servicioVida = servicioVida;
+        this.servicioTitulo = servicioTitulo;
     }
 
     @ModelAttribute
@@ -43,7 +45,7 @@ public class ControladorGlobal {
 
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         if (usuarioId == null) {
-            return 0; // Retorna un valor por defecto si no hay usuario logueado
+            return 0;
         }
         return servicioExperiencia.obtenerExperiencia(usuarioId).getCantidadExperiencia();
     }
@@ -64,6 +66,16 @@ public class ControladorGlobal {
             return 0L;
         }
         return calcularTiempoRestante(usuarioId);
+    }
+
+    @ModelAttribute("titulo")
+    public String obtenerTituloUsuario(HttpServletRequest request) {
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return "usuarioNull";
+        }
+        servicioTitulo.actualizarTituloSegunExperiencia(usuarioId);
+        return servicioTitulo.obtenerTitulo(usuarioId);
     }
 
 
