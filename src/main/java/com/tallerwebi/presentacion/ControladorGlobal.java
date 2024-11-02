@@ -1,10 +1,12 @@
 package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
-;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -78,6 +80,10 @@ public class ControladorGlobal {
         return servicioTitulo.obtenerTitulo(usuarioId);
     }
 
+    @RequestMapping("/titulosUsuario")
+    public ModelAndView mostrarTitulos() {
+        return new ModelAndView("titulosUsuario");
+    }
 
     private Long calcularTiempoRestante(Long usuarioId) {
         Vida vida = servicioVida.obtenerVida(usuarioId);

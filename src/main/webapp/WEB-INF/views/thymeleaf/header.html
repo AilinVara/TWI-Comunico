@@ -7,7 +7,14 @@
 
   <nav>
     <ul>
-      <p><span class="titulo-metalizado"  th:text="${titulo}">Principiante</span></p>
+      <li>
+        <a th:href="@{/titulosUsuario}" class="contenedorDeTitulos">
+          <p>
+            <span th:classappend="'titulo-' + ${titulo.toLowerCase()}" class="titulo-metalizado" th:text="${titulo}">Principiante</span>
+          </p>
+        </a>
+      </li>
+
       <li><a th:href="@{/inicio}" class="active">Inicio</a></li>
       <li><a th:href="@{/senias}">Lengua de Señas</a></li>
       <li><a th:href="@{/braille}">Braille</a></li>

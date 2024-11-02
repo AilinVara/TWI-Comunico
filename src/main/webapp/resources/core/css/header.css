@@ -5,7 +5,7 @@
       padding: 0;
       cursor: default;
     }
-/* Contenedor del título */
+/* Contenedor del título
 .titulo-metalizado {
   background: linear-gradient(45deg, #b08d57, #e0b074, #b08d57);
   color: white;
@@ -17,10 +17,10 @@
       top: 20%;
 
 }
-
+*/
 /* Pseudo-elementos para las puntas en forma de flecha */
-.titulo-metalizado::before,
-.titulo-metalizado::after {
+.contenedorDeTitulos .titulo-metalizado::before,
+.contenedorDeTitulos .titulo-metalizado::after {
   content: '';
   position: absolute;
   top: 0;
@@ -30,13 +30,48 @@
   clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
 
-.titulo-metalizado::before {
+.contenedorDeTitulos .titulo-metalizado::before {
   left: -20px;
   transform: rotate(180deg);
 }
 
-.titulo-metalizado::after {
+.contenedorDeTitulos .titulo-metalizado::after {
   right: -20px;
+}
+
+/* Estilo base para todos los títulos */
+.contenedorDeTitulos .titulo-metalizado {
+    color: white;
+    padding: 6px 15px;
+    font-size: 20px;
+    text-align: center;
+    position: absolute;
+    right: 85%;
+    top: 20%;
+}
+
+/* Principiante (Bronze) */
+.contenedorDeTitulos .titulo-principiante {
+    background: linear-gradient(45deg, #b08d57, #e0b074, #b08d57);
+}
+
+/* Novato (Plata) */
+.contenedorDeTitulos .titulo-novato {
+    background: linear-gradient(45deg, #c0c0c0, #d9d9d9, #c0c0c0);
+}
+
+/* Amateur (Oro) */
+.contenedorDeTitulos .titulo-amateur {
+    background: linear-gradient(45deg, #ffd700, #ffea00, #ffd700);
+}
+
+/* Experto (Diamante) */
+.contenedorDeTitulos .titulo-experto {
+    background: linear-gradient(45deg, #b9f2ff, #e0ffff, #b9f2ff);
+}
+/* Comunicador (Máximo) */
+.contenedorDeTitulos .titulo-comunicador {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad, #e3c9e3);
 }
 /*----------------------------------Vidas---------------------------------*/
 #vidaYNum h4 {
@@ -82,7 +117,7 @@
              overflow: hidden;
              height: 22px;
              margin-left: 20px;
-             position: absolute;
+             position: relative;
              top: 190px;
              }
 

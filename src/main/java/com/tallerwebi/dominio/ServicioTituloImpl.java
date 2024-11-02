@@ -28,7 +28,7 @@ public class ServicioTituloImpl implements ServicioTitulo{
         String nuevoTitulo = "Principiante";
         if (experiencia >= 5000) {
             nuevoTitulo = "Comunicador";
-        } else if (experiencia >= 3000) {
+        } else if (experiencia >= 3500) {
             nuevoTitulo = "Experto";
         } else if (experiencia >= 2000) {
             nuevoTitulo = "Amateur";
