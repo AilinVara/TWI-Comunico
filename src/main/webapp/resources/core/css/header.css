@@ -1,0 +1,97 @@
+ #botonVidas {
+      background: none;
+      border: none;
+      outline: none;
+      padding: 0;
+      cursor: default;
+    }
+/* Contenedor del título */
+.titulo-metalizado {
+  background: linear-gradient(45deg, #b08d57, #e0b074, #b08d57);
+  color: white;
+  padding: 6px 15px;
+  font-size: 20px;
+  text-align: center;
+  position: absolute;
+      right: 85%;
+      top: 20%;
+
+}
+
+/* Pseudo-elementos para las puntas en forma de flecha */
+.titulo-metalizado::before,
+.titulo-metalizado::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: inherit;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.titulo-metalizado::before {
+  left: -20px;
+  transform: rotate(180deg);
+}
+
+.titulo-metalizado::after {
+  right: -20px;
+}
+/*----------------------------------Vidas---------------------------------*/
+#vidaYNum h4 {
+    margin-right: 14px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#vidaYNum:hover{
+    background-color: #1453A3;
+    transform: scale(1.1);
+    border: #01152b;
+    transition: all 0.6s ease;
+}
+#vidas{
+    font-size: 16px;
+    color: #EA2B2B;
+}
+
+#vidaYNum {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #2B70C9;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    position: absolute;
+    right: 100px;
+    bottom: 430px
+
+
+}
+
+/*----------------------------------Barra Experiencia------------------------------------*/
+       .barra-experiencia {
+            width: 20%;
+             background-color: #afafaf;
+             border-radius: 10px;
+             overflow: hidden;
+             height: 22px;
+             margin-left: 20px;
+             position: absolute;
+             top: 190px;
+             }
+
+        .experiencia-llena {
+            height: 100%;
+            background-color: #ce82ff;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+       .barra-experiencia p {
+       margin-left: 7px;
+       }
