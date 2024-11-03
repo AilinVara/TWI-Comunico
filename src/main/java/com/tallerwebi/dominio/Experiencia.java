@@ -10,8 +10,8 @@ public class Experiencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int cantidadExperiencia;
-    private int nivel;
+    private Integer cantidadExperiencia;
+    private Integer nivel;
 
 
 
@@ -20,7 +20,15 @@ public class Experiencia {
         this.nivel = 0;
     }
 
-    public int getCantidadExperiencia() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getCantidadExperiencia() {
         return cantidadExperiencia;
     }
 
@@ -28,7 +36,7 @@ public class Experiencia {
         this.cantidadExperiencia = cantidadExperiencia;
     }
 
-    public int getNivel() {
+    public Integer getNivel() {
         return nivel;
     }
 

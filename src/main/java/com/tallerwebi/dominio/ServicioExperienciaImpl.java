@@ -38,7 +38,7 @@ public class ServicioExperienciaImpl implements ServicioExperiencia {
 
         Experiencia experiencia = this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getExperiencia();
 
-        if (experiencia.getCantidadExperiencia() >= 0) {
+        if (experiencia.getCantidadExperiencia() >= 0 && experiencia.getCantidadExperiencia() < 5000) {
             experiencia.setCantidadExperiencia(experiencia.getCantidadExperiencia() + 100);
 
             repositorioExperiencia.actualizarExperiencia(experiencia);

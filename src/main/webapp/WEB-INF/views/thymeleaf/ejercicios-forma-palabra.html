@@ -7,14 +7,15 @@
     <link rel="stylesheet" th:href="@{/css/header.css}"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
 <div th:replace="header :: header"></div>
 
 <div class="barra-experiencia">
-    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
-        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/2000XP</p>
+    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 5000 * 100} + '%'">
+        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/5000XP</p>
     </div>
 </div>
 
@@ -74,7 +75,7 @@
 <script th:inline="javascript">
     function actualizarExperiencia(experiencia) {
         const barra = document.querySelector('.experiencia-llena');
-        const porcentaje = (experiencia / 2000) * 100;
+        const porcentaje = (experiencia / 5000) * 100;
         barra.style.width = porcentaje + '%';
         barra.style.backgroundColor = '#4caf50';  // Color de la barra cuando se llena
     }
