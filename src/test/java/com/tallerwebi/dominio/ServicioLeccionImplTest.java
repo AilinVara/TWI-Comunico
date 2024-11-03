@@ -37,4 +37,13 @@ public class ServicioLeccionImplTest {
         assertThat(leccionObtenida, equalTo(leccion));
     }
 
+    @Test
+    public void dadoQueExistenLeccionesCuandoLasBuscoPorSuTipoEntoncesObtengoLasLeccionesDeDichoTipo() {
+        Leccion leccion = new Leccion();
+        when(repositorioLeccionMock.buscarPorId(leccion.getId())).thenReturn(leccion);
+
+        Leccion leccionObtenida = servicioLeccion.obtenerLeccion(leccion.getId());
+
+        assertThat(leccionObtenida, equalTo(leccion));
+    }
 }

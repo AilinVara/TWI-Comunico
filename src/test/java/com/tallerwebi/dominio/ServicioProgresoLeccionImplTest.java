@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class ServicioProgresoLeccionImplTest {
 
@@ -24,20 +24,33 @@ public class ServicioProgresoLeccionImplTest {
     }
 
     @Test
-    public void dadoUnListaDeProgresosCuandoTodosEstanCompletosEntoncesDevuelveTrue() {
-        ProgresoLeccion progreso1 = new ProgresoLeccion();
-        progreso1.setCompleto(true);
-        ProgresoLeccion progreso2 = new ProgresoLeccion();
-        progreso2.setCompleto(true);
+    public void dadoUnProgresoLeccionCuandoLoGuardoEntoncesSeLlamaAlMetodoGuardarDelRepositorio() {
+        ProgresoLeccion progresoLeccion = new ProgresoLeccion();
 
-        List<ProgresoLeccion> progresos = new ArrayList<>();
-        progresos.add(progreso1);
-        progresos.add(progreso2);
+        servicioProgresoLeccion.guardarProgresoLeccion(progresoLeccion);
 
-        boolean resultado = servicioProgresoLeccion.verificarCompletado(progresos);
-
-        assertThat(resultado, equalTo(true));
+        verify(repositorioMock).guardar(progresoLeccion);
     }
+
+    @Test
+    public void dadoUnosIdsCuandoBuscoeElProgresoPorIdsEntoncesDevuelveElProgresoLeccionCorrecto() {
+        ProgresoLeccion progresoLeccion = new ProgresoLeccion();
+        when(repositorioMock.buscarPorIds(1L, 2L, 3L)).thenReturn(progresoLeccion);
+
+        ProgresoLeccion resultado = servicioProgresoLeccion.buscarPorIds(1L, 2L, 3L);
+
+        assertThat(resultado, equalTo(progresoLeccion));
+    }
+
+    @Test
+    public void dadoUnProgresoLeccionYResueltoCuandoActualizoEntoncesElProgresoSeMarcaComoCompleto() {
+        ProgresoLeccion progresoLeccion = new ProgresoLeccion();
+        servicioProgresoLeccion.actualizarProgreso(progresoLeccion, true);
+
+        assertThat(progresoLeccion.getCompleto(), equalTo(true));
+        verify(repositorioMock).actualizar(progresoLeccion);
+    }
+
 
     @Test
     public void dadoUnaListaDeProgresosCuandoAlMenosUnoNoEstaCompletoEntoncesDevuelveFalse() {
