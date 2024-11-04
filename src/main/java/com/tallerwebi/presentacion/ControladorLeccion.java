@@ -58,4 +58,33 @@ public class ControladorLeccion {
         modelo.put("progresos", leccionesDesbloqueadas);
         return new ModelAndView("mapa-braille-traduccion", modelo);
     }
+
+    @RequestMapping("/braille/lecciones/matriz")
+    public ModelAndView leccionesMatriz(HttpServletRequest request){
+        ModelMap modelo = new ModelMap();
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        List<ProgresoLeccion> progresosTraduccion = this.servicioProgresoLeccion.buscarProgresoPorTipoEjercicio("matriz", usuarioId);
+
+        Map<Long, Boolean> leccionesCompletadas = new TreeMap<>();
+
+        for (ProgresoLeccion progreso : progresosTraduccion) {
+            Long leccionId= progreso.getLeccion().getId();
+            Boolean completado = this.servicioProgresoLeccion.verificarCompletadoPorLeccion(progreso.getLeccion().getId(), usuarioId);
+            leccionesCompletadas.put(leccionId, completado);
+        }
+
+        boolean desbloqueado = true;
+        Map<Long, Boolean> leccionesDesbloqueadas = new TreeMap<>();
+
+        for (Map.Entry<Long, Boolean> entry : leccionesCompletadas.entrySet()) {
+            Long leccionId = entry.getKey();
+            boolean completado = entry.getValue();
+
+            leccionesDesbloqueadas.put(leccionId, desbloqueado);
+            desbloqueado = completado;
+        }
+
+        modelo.put("progresos", leccionesDesbloqueadas);
+        return new ModelAndView("mapa-braille-traduccion", modelo);
+    }
 }

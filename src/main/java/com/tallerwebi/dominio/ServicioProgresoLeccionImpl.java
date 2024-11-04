@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,7 +72,7 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
        List<ProgresoLeccion> todosProgresosLeccion = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
 
         if(todosProgresosLeccion.isEmpty()){
-            for (Leccion leccion : this.servicioLeccion.obtenerLeccionesPorTipo("traduccion")){
+            for (Leccion leccion : this.servicioLeccion.obtenerLeccionesPorTipo(tipoEjercicio)){
                 this.crearProgresoLeccion(leccion.getId(), usuarioId);
             }
             todosProgresosLeccion = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);

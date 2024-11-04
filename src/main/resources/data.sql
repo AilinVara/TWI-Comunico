@@ -34,8 +34,8 @@ INSERT INTO Opcion(id, descripcion) VALUES
 
 INSERT INTO Leccion(id, tipo) VALUES
                                     (1, 'traduccion'),
-                                    (2, 'Lección 2:'),
-                                    (3, 'Lección 3:'),
+                                    (2, 'matriz'),
+                                    (3, 'forma_palabra'),
                                     (4, 'traduccion'),
                                     (5, 'traduccion'),
                                     (6, 'traduccion'),
@@ -44,7 +44,15 @@ INSERT INTO Leccion(id, tipo) VALUES
                                     (9, 'traduccion'),
                                     (10, 'traduccion'),
                                     (11, 'traduccion'),
-                                    (12, 'Lección 12');
+                                    (12, 'traduccionSenia'),
+                                    (13, 'matriz'),
+                                    (14, 'matriz'),
+                                    (15, 'matriz'),
+                                    (16, 'matriz'),
+                                    (17, 'matriz'),
+                                    (18, 'matriz'),
+                                    (19, 'matriz'),
+                                    (20, 'matriz');
 
 INSERT INTO Ejercicio(id, tipoEjercicio, leccion_id) VALUES
                                                          (1, 'traduccion', 1),
@@ -81,7 +89,31 @@ INSERT INTO Ejercicio(id, tipoEjercicio, leccion_id) VALUES
                                                          (32, 'traduccion', 10),
                                                          (33, 'traduccion', 10),
                                                          (34, 'traduccion', 11),
-                                                         (35, 'traduccion', 11);
+                                                         (35, 'traduccion', 11),
+                                                         (36, 'matriz', 13),
+                                                         (37, 'matriz', 13),
+                                                         (38, 'matriz', 13),
+                                                         (39, 'matriz', 14),
+                                                         (40, 'matriz', 14),
+                                                         (41, 'matriz', 14),
+                                                         (42, 'matriz', 15),
+                                                         (43, 'matriz', 15),
+                                                         (44, 'matriz', 15),
+                                                         (45, 'matriz', 16),
+                                                         (46, 'matriz', 16),
+                                                         (47, 'matriz', 16),
+                                                         (48, 'matriz', 17),
+                                                         (49, 'matriz', 17),
+                                                         (50, 'matriz', 17),
+                                                         (51, 'matriz', 18),
+                                                         (52, 'matriz', 18),
+                                                         (53, 'matriz', 18),
+                                                         (54, 'matriz', 19),
+                                                         (55, 'matriz', 19),
+                                                         (56, 'matriz', 19),
+                                                         (57, 'matriz', 20),
+                                                         (58, 'matriz', 20),
+                                                         (59, 'matriz', 20);
 
 
 INSERT INTO EjercicioTraduccion(id, consigna, opcionCorrecta_id) VALUES
@@ -114,7 +146,30 @@ INSERT INTO EjercicioTraduccion(id, consigna, opcionCorrecta_id) VALUES
 INSERT INTO EjercicioMatriz(id, puntos) VALUES
                                             (7, '100000'),
                                             (8, '101000'),
-                                            (9, '110000');
+                                            (9, '110000'),
+                                            (36, '110100'),
+                                            (37, '100100'),
+                                            (38, '111000'),
+                                            (39, '111100'),
+                                            (40, '101100'),
+                                            (41, '011000'),
+                                            (42, '011100'),
+                                            (43, '100010'),
+                                            (44, '101010'),
+                                            (45, '110010'),
+                                            (46, '110110'),
+                                            (47, '100110'),
+                                            (48, '111010'),
+                                            (49, '111110'),
+                                            (50, '101110'),
+                                            (51, '011010'),
+                                            (52, '011110'),
+                                            (53, '100011'),
+                                            (54, '101011'),
+                                            (55, '011101'),
+                                            (56, '110011'),
+                                            (57, '110111'),
+                                            (58, '100111');
 
 INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras) VALUES
                                                                              (10, 'gato.png', 'GATO', 'T, A, G, P, S, O, R'),
