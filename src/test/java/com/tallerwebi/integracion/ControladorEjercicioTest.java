@@ -69,6 +69,11 @@ public class ControladorEjercicioTest {
         Vida vida = new Vida();
         vida.setCantidadDeVidasActuales(5);
         usuario.setVida(vida);
+        Experiencia experiencia = new Experiencia();
+        experiencia.setCantidadExperiencia(400);
+        usuario.setExperiencia(experiencia);
+
+        this.sessionFactory.getCurrentSession().save(experiencia);
         this.sessionFactory.getCurrentSession().save(vida);
         this.sessionFactory.getCurrentSession().update(usuario);
 
@@ -102,6 +107,11 @@ public class ControladorEjercicioTest {
         Vida vida = new Vida();
         vida.setCantidadDeVidasActuales(5);
         usuario.setVida(vida);
+        Experiencia experiencia = new Experiencia();
+        experiencia.setCantidadExperiencia(400);
+        usuario.setExperiencia(experiencia);
+
+        this.sessionFactory.getCurrentSession().save(experiencia);
         this.sessionFactory.getCurrentSession().save(vida);
         this.sessionFactory.getCurrentSession().update(usuario);
 
