@@ -47,7 +47,7 @@ public class ControladorEjercicioTest {
 
 
     @BeforeEach
-    public void init(){
+    public void init() {
         this.repositorioEjercicio = new RepositorioEjercicioImpl(sessionFactory);
         this.servicioEjercicio = new ServicioEjercicioImpl(repositorioEjercicio);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
@@ -72,11 +72,9 @@ public class ControladorEjercicioTest {
         this.sessionFactory.getCurrentSession().save(vida);
         this.sessionFactory.getCurrentSession().update(usuario);
 
-        Ejercicio ejercicioTraduccionResuelto = leccion.getEjercicios().get(0);
+        EjercicioTraduccion ejercicioTraduccionResuelto = (EjercicioTraduccion) leccion.getEjercicios().get(0);
 
-        EjercicioTraduccion ejercicioTraduccion = (EjercicioTraduccion) ejercicioTraduccionResuelto;
-
-        MvcResult result = this.mockMvc.perform(get("/ejercicio/3?leccion=" + leccion.getId())
+        MvcResult result = this.mockMvc.perform(get("/ejercicio/" + ejercicioTraduccionResuelto.getId() + "?leccion=" + leccion.getId())
                         .session(sessionMock))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -84,12 +82,9 @@ public class ControladorEjercicioTest {
         ModelAndView modelAndView = result.getModelAndView();
 
         assert modelAndView != null;
-
-        assertThat("ejercicio", equalToIgnoringCase(Objects.requireNonNull(modelAndView.getViewName())));
-        assertThat(false, is(modelAndView.getModel().isEmpty()));
+        assertThat("ejercicio", equalToIgnoringCase(modelAndView.getViewName()));
+        assertThat(modelAndView.getModel().get("correcto"), is(true));
     }
-
-
 
     @Test
     @Transactional
@@ -105,30 +100,19 @@ public class ControladorEjercicioTest {
         this.sessionFactory.getCurrentSession().save(vida);
         this.sessionFactory.getCurrentSession().update(usuario);
 
-        EjercicioTraduccion ejercicioTraduccion1 = crearEjercicio();
-        ejercicioTraduccion1.setConsigna("Consigna 1");
-
-        EjercicioTraduccion ejercicioTraduccion2 = crearEjercicio();
-        ejercicioTraduccion2.setConsigna("Consigna 2");
-
-        EjercicioTraduccion ejercicioTraduccion3 = crearEjercicio();
-        ejercicioTraduccion3.setConsigna("Consigna 3");
-
-        this.servicioEjercicio.guardarEjercicio(ejercicioTraduccion1);
-        this.servicioEjercicio.guardarEjercicio(ejercicioTraduccion2);
-        this.servicioEjercicio.guardarEjercicio(ejercicioTraduccion3);
-
         List<Ejercicio> listaEjercicioTraduccions = new ArrayList<>();
-        listaEjercicioTraduccions.add(ejercicioTraduccion1);
-        listaEjercicioTraduccions.add(ejercicioTraduccion2);
-        listaEjercicioTraduccions.add(ejercicioTraduccion3);
+        for (int i = 1; i <= 3; i++) {
+            EjercicioTraduccion ejercicioTraduccion = crearEjercicio();
+            ejercicioTraduccion.setConsigna("Consigna " + i);
+            this.servicioEjercicio.guardarEjercicio(ejercicioTraduccion);
+            listaEjercicioTraduccions.add(ejercicioTraduccion);
+        }
 
         Leccion leccion = new Leccion();
         leccion.setEjercicios(listaEjercicioTraduccions);
         this.sessionFactory.getCurrentSession().save(leccion);
 
-        MvcResult result = this.mockMvc.perform(get("/ejercicio/3?leccion=" + leccion.getId())
-                        .param("leccion", leccion.getId().toString())
+        MvcResult result = this.mockMvc.perform(get("/ejercicio/2?leccion=" + leccion.getId())
                         .session(sessionMock))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -136,11 +120,9 @@ public class ControladorEjercicioTest {
         ModelAndView modelAndView = result.getModelAndView();
 
         assert modelAndView != null;
-
         assertThat(modelAndView.getViewName(), equalTo("ejercicio"));
-        assertThat(modelAndView.getModel().get("indice"), equalTo(3));
+        assertThat(modelAndView.getModel().get("indice"), equalTo(2));
     }
-
 
     private EjercicioTraduccion crearEjercicio() {
         EjercicioTraduccion ejercicioTraduccion = new EjercicioTraduccion();
@@ -161,18 +143,14 @@ public class ControladorEjercicioTest {
 
     private Leccion crearLeccion() {
         Leccion leccion = new Leccion();
-        leccion.setTipo("Leccion 1");
-        List<Ejercicio> ejercicioTraduccions = new ArrayList<>();
-        EjercicioTraduccion ejercicioTraduccion = crearEjercicio();
-        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion);
-        EjercicioTraduccion ejercicioTraduccion2 = crearEjercicio();
-        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion2);
-        EjercicioTraduccion ejercicioTraduccion3 = crearEjercicio();
-        this.sessionFactory.getCurrentSession().save(ejercicioTraduccion3);
-        ejercicioTraduccions.add(ejercicioTraduccion);
-        ejercicioTraduccions.add(ejercicioTraduccion2);
-        ejercicioTraduccions.add(ejercicioTraduccion3);
-        leccion.setEjercicios(ejercicioTraduccions);
+        leccion.setTipo("Lección 1");
+        List<Ejercicio> ejercicios = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            EjercicioTraduccion ejercicioTraduccion = crearEjercicio();
+            ejercicios.add(ejercicioTraduccion);
+            this.sessionFactory.getCurrentSession().save(ejercicioTraduccion);
+        }
+        leccion.setEjercicios(ejercicios);
         return leccion;
     }
 }
