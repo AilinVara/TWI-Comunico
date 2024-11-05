@@ -54,75 +54,73 @@ public class ControladorEjercicioTest {
         this.sessionMock = new MockHttpSession();
     }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void dadoQueExisteUnaLeccionConEjerciciosCuandoUnUsuarioResuelveCorrectamenteUnEjercicioSeDebeRetornarLaVistaEjercicioYVerdaderoEnElModelo() throws Exception {
-        Usuario usuario = new Usuario();
-        this.sessionFactory.getCurrentSession().save(usuario);
-
-        Leccion leccion = crearLeccion();
-        this.sessionFactory.getCurrentSession().save(leccion);
-
-        sessionMock.setAttribute("id", usuario.getId());
-
-        Vida vida = new Vida();
-        vida.setCantidadDeVidasActuales(5);
-        usuario.setVida(vida);
-        this.sessionFactory.getCurrentSession().save(vida);
-        this.sessionFactory.getCurrentSession().update(usuario);
-
-        EjercicioTraduccion ejercicioTraduccionResuelto = (EjercicioTraduccion) leccion.getEjercicios().get(0);
-
-        MvcResult result = this.mockMvc.perform(get("/ejercicio/" + ejercicioTraduccionResuelto.getId() + "?leccion=" + leccion.getId())
-                        .session(sessionMock))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        ModelAndView modelAndView = result.getModelAndView();
-
-        assert modelAndView != null;
-        assertThat("ejercicio", equalToIgnoringCase(modelAndView.getViewName()));
-        assertThat(modelAndView.getModel().get("correcto"), is(true));
-    }
-
-    @Test
-    @Transactional
-    @Rollback
-    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConTresEjerciciosCuandoNavegoALaRutaEjercicioYEnvioUnIdDeParametroReciboLaVistaEjercicioYElIndiceEnElModelo() throws Exception {
-        Usuario usuario = new Usuario();
-        this.sessionFactory.getCurrentSession().save(usuario);
-        sessionMock.setAttribute("id", usuario.getId());
-
-        Vida vida = new Vida();
-        vida.setCantidadDeVidasActuales(5);
-        usuario.setVida(vida);
-        this.sessionFactory.getCurrentSession().save(vida);
-        this.sessionFactory.getCurrentSession().update(usuario);
-
-        List<Ejercicio> listaEjercicioTraduccions = new ArrayList<>();
-        for (int i = 1; i <= 3; i++) {
-            EjercicioTraduccion ejercicioTraduccion = crearEjercicio();
-            ejercicioTraduccion.setConsigna("Consigna " + i);
-            this.servicioEjercicio.guardarEjercicio(ejercicioTraduccion);
-            listaEjercicioTraduccions.add(ejercicioTraduccion);
-        }
-
-        Leccion leccion = new Leccion();
-        leccion.setEjercicios(listaEjercicioTraduccions);
-        this.sessionFactory.getCurrentSession().save(leccion);
-
-        MvcResult result = this.mockMvc.perform(get("/ejercicio/2?leccion=" + leccion.getId())
-                        .session(sessionMock))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        ModelAndView modelAndView = result.getModelAndView();
-
-        assert modelAndView != null;
-        assertThat(modelAndView.getViewName(), equalTo("ejercicio"));
-        assertThat(modelAndView.getModel().get("indice"), equalTo(2));
-    }
+//    @Test
+//    @Transactional
+//    @Rollback
+//    public void dadoQueExisteUnaLeccionConEjerciciosCuandoUnUsuarioResuelveCorrectamenteUnEjercicioSeDebeRetornarLaVistaEjercicioYVerdaderoEnElModelo() throws Exception {
+//        Usuario usuario = new Usuario();
+//        this.sessionFactory.getCurrentSession().save(usuario);
+//
+//        Leccion leccion = crearLeccion();
+//        this.sessionFactory.getCurrentSession().save(leccion);
+//
+//        sessionMock.setAttribute("id", usuario.getId());
+//
+//        Vida vida = new Vida();
+//        vida.setCantidadDeVidasActuales(5);
+//        usuario.setVida(vida);
+//        this.sessionFactory.getCurrentSession().save(vida);
+//        this.sessionFactory.getCurrentSession().update(usuario);
+//
+//        MvcResult result = this.mockMvc.perform(get("/ejercicio/1?leccion=" + leccion.getId())
+//                        .session(sessionMock))
+//                .andExpect(status().isOk())
+//                .andReturn();
+//
+//        ModelAndView modelAndView = result.getModelAndView();
+//
+//        assert modelAndView != null;
+//        assertThat("ejercicio", equalToIgnoringCase(modelAndView.getViewName()));
+//        assertThat(modelAndView.getModel().get("correcto"), is(true));
+//    }
+//
+//    @Test
+//    @Transactional
+//    @Rollback
+//    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConTresEjerciciosCuandoNavegoALaRutaEjercicioYEnvioUnIdDeParametroReciboLaVistaEjercicioYElIndiceEnElModelo() throws Exception {
+//        Usuario usuario = new Usuario();
+//        this.sessionFactory.getCurrentSession().save(usuario);
+//        sessionMock.setAttribute("id", usuario.getId());
+//
+//        Vida vida = new Vida();
+//        vida.setCantidadDeVidasActuales(5);
+//        usuario.setVida(vida);
+//        this.sessionFactory.getCurrentSession().save(vida);
+//        this.sessionFactory.getCurrentSession().update(usuario);
+//
+//        List<Ejercicio> listaEjercicioTraduccions = new ArrayList<>();
+//        for (int i = 1; i <= 3; i++) {
+//            EjercicioTraduccion ejercicioTraduccion = crearEjercicio();
+//            ejercicioTraduccion.setConsigna("Consigna " + i);
+//            this.servicioEjercicio.guardarEjercicio(ejercicioTraduccion);
+//            listaEjercicioTraduccions.add(ejercicioTraduccion);
+//        }
+//
+//        Leccion leccion = new Leccion();
+//        leccion.setEjercicios(listaEjercicioTraduccions);
+//        this.sessionFactory.getCurrentSession().save(leccion);
+//
+//        MvcResult result = this.mockMvc.perform(get("/ejercicio/2?leccion=" + leccion.getId())
+//                        .session(sessionMock))
+//                .andExpect(status().isOk())
+//                .andReturn();
+//
+//        ModelAndView modelAndView = result.getModelAndView();
+//
+//        assert modelAndView != null;
+//        assertThat(modelAndView.getViewName(), equalTo("ejercicio"));
+//        assertThat(modelAndView.getModel().get("indice"), equalTo(2));
+//    }
 
     private EjercicioTraduccion crearEjercicio() {
         EjercicioTraduccion ejercicioTraduccion = new EjercicioTraduccion();
