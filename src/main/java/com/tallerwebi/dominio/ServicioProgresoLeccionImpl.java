@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service("servicioProgresoLeccion")
@@ -71,7 +72,7 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
     public List<ProgresoLeccion> buscarProgresoPorTipoEjercicio(String tipoEjercicio, Long usuarioId) {
        List<ProgresoLeccion> todosProgresosLeccion = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
 
-        if(todosProgresosLeccion.isEmpty()){
+        if(todosProgresosLeccion.isEmpty() || todosProgresosLeccion.stream().noneMatch(p -> p.getLeccion().getTipo().equals(tipoEjercicio))){
             for (Leccion leccion : this.servicioLeccion.obtenerLeccionesPorTipo(tipoEjercicio)){
                 this.crearProgresoLeccion(leccion.getId(), usuarioId);
             }
@@ -81,5 +82,25 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
         return  todosProgresosLeccion.stream()
                 .filter(l -> l.getLeccion().getTipo().equals(tipoEjercicio))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<Long, Boolean> buscarProgresoPorTipoEjercicioConEstado(String tipoEjercicio, Long usuarioId) {
+        List<ProgresoLeccion> todosProgresosLeccion = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
+
+        if (todosProgresosLeccion.isEmpty() || todosProgresosLeccion.stream().noneMatch(p -> p.getLeccion().getTipo().equals(tipoEjercicio))) {
+            for (Leccion leccion : this.servicioLeccion.obtenerLeccionesPorTipo(tipoEjercicio)) {
+                this.crearProgresoLeccion(leccion.getId(), usuarioId);
+            }
+            todosProgresosLeccion = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
+        }
+
+        return todosProgresosLeccion.stream()
+                .filter(l -> l.getLeccion().getTipo().equals(tipoEjercicio))
+                .collect(Collectors.groupingBy(
+                        p -> p.getLeccion().getId(),
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                this::verificarCompletado)));
     }
 }

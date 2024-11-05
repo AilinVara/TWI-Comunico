@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ServicioProgresoLeccion {
     void guardarProgresoLeccion(ProgresoLeccion progresoLeccion);
@@ -18,4 +19,6 @@ public interface ServicioProgresoLeccion {
     Boolean verificarCompletadoPorLeccion(Long leccionId, Long usuarioId);
 
     List<ProgresoLeccion> buscarProgresoPorTipoEjercicio(String tipoEjercicio, Long usuarioId);
+
+    Map<Long, Boolean> buscarProgresoPorTipoEjercicioConEstado(String tipoEjercicio, Long usuarioId);
 }
