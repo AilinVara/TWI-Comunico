@@ -11,7 +11,7 @@
 <body>
 
 <div th:replace="header :: header"></div>
-<h3 class="titulo" id="braille-letter" th:text="|Ejercicio ${(indice)}|"></h3>
+<h3 class="titulo" id="braille-letter" th:text="|Ejercicio ${(indice)} - ${ejercicio.getLetra()}| "></h3>
 
 <div class="game-container">
     <form th:action="@{'/resolver/' + ${indice}}" method="POST" onsubmit="return concatenarCheckboxes()">
@@ -37,7 +37,7 @@
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
             let siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
-                : '/braille';
+                : '/braille/lecciones/matriz';
             let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
 
             if (![[${esCorrecta}]]) {

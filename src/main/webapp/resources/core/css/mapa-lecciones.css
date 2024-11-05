@@ -87,3 +87,52 @@ nav a.active:hover {
 .user-icon:hover {
     transform: scale(1.2);
 }
+
+.titulo {
+    color: #ff9600;
+    font-size: 2.5em;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.leccionesBasicas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+}
+
+.lecciones {
+    height: 76px;
+    width: 550px;
+    padding: 20px;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.lecciones:hover {
+    background-color: #89e219;
+    color: white;
+    transform: scale(1.05);
+}
+
+.lecciones_deshabilitadas {
+    height: 76px;
+    width: 550px;
+    padding: 20px;
+    color: #605f5f;
+    background-color: #8e8c8c;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}

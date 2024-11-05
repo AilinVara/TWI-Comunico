@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/mapa-lecciones.css}">
+    <title th:text="'Braille - ' + ${tipo}">Braille - Lecciones</title>
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+<h2 class="titulo">Braille - [[${tipo}]]</h2>
+<ul class="leccionesBasicas">
+    <th:block th:each="progreso, indice : ${progresos}" >
+        <li>
+            <a th:if="${progreso.value}" th:href="@{'/leccion/' + ${progreso.key}}">
+                <input type="button" class="lecciones" th:value="'Lección '+ ${indice.count}" />
+            </a>
+            <a th:unless="${progreso.value}" href="#">
+                <input type="button" class="lecciones_deshabilitadas" th:value="'Lección '+ ${indice.count}" />
+            </a>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>
