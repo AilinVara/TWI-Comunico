@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/titulosUsuario.css}"/>
+    <link rel="stylesheet" th:href="@{/css/comprarPoints.css}">
+    <link rel="icon" th:href="@{/img/Isologo-Comunico.svg}" type="image/x-icon">
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titulos</title>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+<div class="barra-experiencia">
+    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
+        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/5000XP</p>
+    </div>
+</div>
+
+<ul class="titulosUsuarioOrden">
+    <li>
+        <div class="titulosUsuario">
+        <p class="titulo-metalizado titulo-principiante">Principiante</p>
+            <p>Comienzas con este titulo.</p>
+        </div>
+    </li>
+    <li>
+        <div class="titulosUsuario">
+        <p class="titulo-metalizado titulo-novato">Novato</p>
+        <p>Se necesita 500XP para conseguir este titulo.</p>
+        </div>
+    </li>
+    <li>
+        <div class="titulosUsuario">
+        <p class="titulo-metalizado titulo-amateur">Amateur</p>
+        <p>Se necesita 2000XP para conseguir este titulo.</p>
+        </div>
+    </li>
+    <li>
+        <div class="titulosUsuario">
+        <p class="titulo-metalizado titulo-experto">Experto</p>
+        <p>Se necesita 3500XP para conseguir este titulo.</p>
+        </div>
+    </li>
+    <li>
+        <div class="titulosUsuario">
+        <p class="titulo-metalizado titulo-comunicador">Comunicador</p>
+        <p>Se necesita 5000XP para conseguir este titulo.</p>
+        </div>
+    </li>
+</ul>
+
+</body>
+</html>

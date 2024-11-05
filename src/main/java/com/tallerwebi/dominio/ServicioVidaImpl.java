@@ -15,7 +15,7 @@ import java.util.List;
 @Transactional
 @EnableScheduling
 public class ServicioVidaImpl implements ServicioVida {
-
+    //Commit
     private RepositorioVida repositorioVida;
     private RepositorioUsuario repositorioUsuario;
 
@@ -30,14 +30,6 @@ public class ServicioVidaImpl implements ServicioVida {
     public Vida obtenerVida(Long usuarioId) {
         return this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getVida();
 
-//        //Esto es para guardar una vida temporalmente sin crearla en la base
-//        if (vida == null) {
-//            vida = new Vida();
-//            vida.setCantidadDeVidasActuales(5);
-//            vida.setId(vidaId);
-//            this.repositorioVida.guardarUnaVida(vida);
-//        }
-//        return vida;
     }
 
     @Override

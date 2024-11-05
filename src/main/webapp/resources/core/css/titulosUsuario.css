@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Feather Bold', sans-serif;
+}
+  .barra-experiencia {
+          width: 20%;
+         background-color: #afafaf;
+         border-radius: 10px;
+         overflow: hidden;
+         height: 22px;
+         /* margin-left: 20px; */
+         position: relative !important;
+         top: 43px !important;
+         left: 250px !important;
+             }
+
+        .experiencia-llena {
+            height: 100%;
+            background-color: #ce82ff;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+       .barra-experiencia p {
+       margin-left: 7px;
+       }
+
+.titulosUsuarioOrden {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1em;
+    padding: 20px;
+    max-width: 100%;
+    background-color: none;
+    list-style-type: none; /* Quita los puntos de la lista */
+    margin-top: 4em;
+}
+
+.titulosUsuario {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #f9f9f9;
+    position: relative;
+}
+
+/* Estilo base para todos los títulos*/
+.titulo-metalizado {
+    color: white;
+    padding: 6px 15px;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+/* Principiante (Bronce) */
+.titulo-principiante {
+    background: linear-gradient(45deg, #b08d57, #e0b074, #b08d57);
+}
+
+/* Novato (Plata) */
+.titulo-novato {
+    background: linear-gradient(45deg, #c0c0c0, #d9d9d9, #c0c0c0);
+}
+
+/* Amateur (Oro) */
+.titulo-amateur {
+    background: linear-gradient(45deg, #ffd700, #ffea00, #ffd700);
+}
+
+/* Experto (Diamante) */
+.titulo-experto {
+    background: linear-gradient(45deg, #b9f2ff, #e0ffff, #b9f2ff);
+}
+/* Comunicador (Máximo) */
+.titulo-comunicador {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad, #e3c9e3);
+}
+
+/* Extra para un tamaño consistente en el texto de los requisitos */
+.titulosUsuario p {
+    margin: 10px 0;
+}

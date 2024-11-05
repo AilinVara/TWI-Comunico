@@ -60,3 +60,18 @@ top: 25%;
 
 
 }
+.barra-experiencia {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.experiencia-llena {
+    height: 100%;
+    background-color: #4caf50; /* Cambia este color según tu preferencia */
+    width: 0; /* Se actualizará dinámicamente */
+    transition: width 0.5s ease;
+}

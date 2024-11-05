@@ -1,10 +1,9 @@
 package com.tallerwebi.integracion;
 
-import com.tallerwebi.dominio.RepositorioUsuario;
-import com.tallerwebi.dominio.ServicioUsuario;
-import com.tallerwebi.dominio.ServicioUsuarioImpl;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
+import com.tallerwebi.infraestructura.RepositorioExperienciaImpl;
 import com.tallerwebi.infraestructura.RepositorioUsuarioImpl;
+import com.tallerwebi.infraestructura.RepositorioVidaImpl;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
 import org.hibernate.SessionFactory;
@@ -45,13 +44,24 @@ public class ControladorMercadoPagoTest {
     private MockHttpSession sessionMock;
     private ServicioUsuario servicioUsuario;
     private RepositorioUsuario repositorioUsuario;
-
+    private RepositorioVida repositorioVida;
+    private ServicioVida servicioVida;
+    private ServicioTitulo servicioTitulo;
+    private ServicioExperiencia servicioExperiencia;
+    private RepositorioExperiencia repositorioExperiencia;
+    //Commit
     @BeforeEach
     public void init() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
         this.sessionMock = new MockHttpSession();
         this.repositorioUsuario = new RepositorioUsuarioImpl(sessionFactory);
+        this.repositorioExperiencia = new RepositorioExperienciaImpl(sessionFactory);
         this.servicioUsuario = new ServicioUsuarioImpl(repositorioUsuario);
+        this.repositorioVida = new RepositorioVidaImpl(sessionFactory);
+        this.servicioVida = new ServicioVidaImpl(repositorioVida,repositorioUsuario);
+        this.servicioTitulo = new ServicioTituloImpl(repositorioUsuario);
+        this.servicioExperiencia = new ServicioExperienciaImpl(repositorioUsuario,repositorioExperiencia);
+
     }
 
     @Test
@@ -78,6 +88,16 @@ public class ControladorMercadoPagoTest {
         this.sessionFactory.getCurrentSession().save(usuario);
         sessionMock.setAttribute("id", usuario.getId());
 
+        Vida vida = new Vida();
+        vida.setCantidadDeVidasActuales(5);
+        usuario.setVida(vida);
+        Experiencia experiencia = new Experiencia();
+        experiencia.setCantidadExperiencia(400);
+        usuario.setExperiencia(experiencia);
+
+        this.sessionFactory.getCurrentSession().save(experiencia);
+        this.sessionFactory.getCurrentSession().save(vida);
+        this.sessionFactory.getCurrentSession().update(usuario);
         MvcResult result = this.mockMvc.perform(get("/comprar")
                         .param("status", "approved")
                         .param("quantity", "5")
@@ -86,6 +106,7 @@ public class ControladorMercadoPagoTest {
                 .andReturn();
 
         Usuario usuarioActualizado = this.servicioUsuario.buscarUsuarioPorId(usuario.getId());
+
         assertEquals(15, usuarioActualizado.getComunicoPoints().intValue());
 
         ModelAndView modelAndView = result.getModelAndView();
@@ -104,6 +125,16 @@ public class ControladorMercadoPagoTest {
         this.sessionFactory.getCurrentSession().save(usuario);
 
         sessionMock.setAttribute("id", usuario.getId());
+        Vida vida = new Vida();
+        vida.setCantidadDeVidasActuales(5);
+        usuario.setVida(vida);
+        Experiencia experiencia = new Experiencia();
+        experiencia.setCantidadExperiencia(400);
+        usuario.setExperiencia(experiencia);
+
+        this.sessionFactory.getCurrentSession().save(experiencia);
+        this.sessionFactory.getCurrentSession().save(vida);
+        this.sessionFactory.getCurrentSession().update(usuario);
 
         MvcResult result = this.mockMvc.perform(get("/comprar")
                         .param("status", "failure")

@@ -6,6 +6,7 @@
   <title>Comunico</title>
   <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{/css/senias.css}"/>
+  <link rel="stylesheet" th:href="@{/css/header.css}"/>
   <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
   <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
 </head>
@@ -13,6 +14,13 @@
 <body>
 
 <div th:replace="header :: header"></div>
+
+<div class="barra-experiencia">
+  <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
+    <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/2000XP</p>
+  </div>
+</div>
+
 
 <div class="titulo"><i class="fa-regular fa-hand"></i> Lecciones de Lengua de señas</div>
 <div class="leccionesBasicas">
@@ -27,6 +35,16 @@
   <a th:href="@{/inicio}" class="volver-atras">Volver atrás</a>
 </div>>
 
+<script th:inline="javascript">
+  function actualizarExperiencia(experiencia) {
+      const barra = document.querySelector('.experiencia-llena');
+      const porcentaje = (experiencia / 2000) * 100;
+      barra.style.width = porcentaje + '%';
+      barra.style.backgroundColor = '#4caf50';  // Color de la barra cuando se llena
+  }
+
+  actualizarExperiencia([[${experiencia}]]);
+</script>
 <div th:replace="footer :: footer"></div>
 
 </body>

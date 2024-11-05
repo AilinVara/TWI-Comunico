@@ -22,6 +22,7 @@ public class RepositorioVidaImpl implements RepositorioVida {
 
     @Override
     public void guardarUnaVida(Vida vida) {
+
         this.sessionFactory.getCurrentSession().save(vida);
     }
 

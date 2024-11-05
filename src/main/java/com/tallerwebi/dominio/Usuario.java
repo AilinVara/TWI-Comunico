@@ -13,9 +13,14 @@ public class Usuario {
     private String rol;
     private Boolean activo = false;
     private Integer comunicoPoints;
+    private String titulo = "Principiante";
 
     @OneToOne
     private Vida vida;
+
+    @OneToOne
+    private Experiencia experiencia;
+
 
     public Long getId() {
         return id;
@@ -80,6 +85,22 @@ public class Usuario {
 
     public void setComunicoPoints(Integer comunicopoints) {
         this.comunicoPoints = comunicopoints;
+    }
+
+    public Experiencia getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(Experiencia experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Forma Letras en Braille</title>
     <link rel="stylesheet" th:href="@{/css/formaLetras.css}" />
+    <link rel="stylesheet" th:href="@{/css/header.css}"/>
     <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -11,7 +12,14 @@
 <body>
 
 <div th:replace="header :: header"></div>
-<h3 class="titulo" id="braille-letter" th:text="|Ejercicio ${(indice)} - ${ejercicio.getLetra()}| "></h3>
+
+<div class="barra-experiencia">
+    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
+        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/2000XP</p>
+    </div>
+</div>
+
+<h3 class="titulo" id="braille-letter" th:text="|Ejercicio ${(indice)}|"></h3>
 
 <div class="game-container">
     <form th:action="@{'/resolver/' + ${indice}}" method="POST" onsubmit="return concatenarCheckboxes()">
@@ -79,6 +87,16 @@
     }
 </script>
 
+<script th:inline="javascript">
+    function actualizarExperiencia(experiencia) {
+        const barra = document.querySelector('.experiencia-llena');
+        const porcentaje = (experiencia / 2000) * 100;
+        barra.style.width = porcentaje + '%';
+        barra.style.backgroundColor = '#4caf50';  // Color de la barra cuando se llena
+    }
+
+    actualizarExperiencia([[${experiencia}]]);
+</script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>

@@ -6,6 +6,7 @@
 
     <link rel="icon" th:href="@{/img/icon.svg}" type="image/x-icon">
     <link rel="stylesheet" th:href="@{/css/ejercicio.css}" />
+    <link rel="stylesheet" th:href="@{/css/header.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +19,12 @@
 
 <div th:replace="header :: header"></div>
 
+<div class="barra-experiencia">
+    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
+        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/5000XP</p>
+    </div>
+</div>
+
 <div class="titulo">
     <h3>Ejercicio con video</h3>
 </div>
@@ -26,6 +33,7 @@
     <div class="question">
         <p id="braille-letter">Ejercicio 1</p>
     </div>
+
 
     <div class="sign-video">
         <img class="video" th:src="@{https://diccionariolsc.ces.edu.co/wp-content/uploads/sites/3/2022/05/B_Frontal.gif}" alt="Muestra">
@@ -75,8 +83,20 @@
                 }
             });
         </script>
+
+
     </div>
 </div>
+<script th:inline="javascript">
+    function actualizarExperiencia(experiencia) {
+        const barra = document.querySelector('.experiencia-llena');
+        const porcentaje = (experiencia / 5000) * 100;
+        barra.style.width = porcentaje + '%';
+        barra.style.backgroundColor = '#4caf50';  // Color de la barra cuando se llena
+    }
+
+    actualizarExperiencia([[${experiencia}]]);
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

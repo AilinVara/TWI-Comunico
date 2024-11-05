@@ -18,19 +18,23 @@ import java.util.Set;
 
 @Controller
 public class ControladorEjercicio {
-
+    //Commit
     private ServicioEjercicio servicioEjercicio;
     private ServicioLeccion servicioLeccion;
     private ServicioProgresoLeccion servicioProgresoLeccion;
     private ServicioVida servicioVida;
+    private ServicioExperiencia servicioExperiencia;
+
 
 
     @Autowired
-    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida) {
+    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia) {
         this.servicioEjercicio = servicioEjercicio;
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
+        this.servicioExperiencia = servicioExperiencia;
+
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
@@ -84,6 +88,7 @@ public class ControladorEjercicio {
 
         if(ejercicio instanceof EjercicioTraduccion){
             resuelto = this.servicioEjercicio.resolverEjercicioTraduccion((EjercicioTraduccion) ejercicio, Long.parseLong(respuesta));
+
             mav.setViewName("ejercicio");
         }else if(ejercicio instanceof EjercicioMatriz){
             EjercicioMatriz ejercicioMatriz = (EjercicioMatriz) ejercicio;
@@ -97,8 +102,10 @@ public class ControladorEjercicio {
             resuelto = this.servicioEjercicio.resolverEjercicioTraduccionSenia((EjercicioTraduccionSenia) ejercicio, Long.parseLong(respuesta));
             mav.setViewName("ejercicio-video");
         }
+        if (resuelto){
+            this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
+        } else {
 
-        if (!resuelto) {
             this.servicioVida.perderUnaVida(usuarioId);
         }
 
