@@ -30,24 +30,15 @@ public class ControladorLeccion {
         return new ModelAndView("redirect:/ejercicio/1?leccion=" + leccion.getId());
     }
 
-    @RequestMapping("/braille/lecciones/traduccion")
-    public ModelAndView leccionesTraduccion(HttpServletRequest request){
+    @RequestMapping("/braille/lecciones/{tipo}")
+    public ModelAndView obtenerLecciones(@PathVariable("tipo") String tipo, HttpServletRequest request){
         ModelMap modelo = new ModelMap();
         Long usuarioId = (Long) request.getSession().getAttribute("id");
-        List<ProgresoLeccion> progresosTraduccion = this.servicioProgresoLeccion.buscarProgresoPorTipoEjercicio("traduccion", usuarioId);
-
-        Map<Long, Boolean> leccionesCompletadas = new TreeMap<>();
-
-        for (ProgresoLeccion progreso : progresosTraduccion) {
-            Long leccionId= progreso.getLeccion().getId();
-            Boolean completado = this.servicioProgresoLeccion.verificarCompletadoPorLeccion(progreso.getLeccion().getId(), usuarioId);
-            leccionesCompletadas.put(leccionId, completado);
-        }
+        Map<Long, Boolean> leccionesDesbloqueadas = this.servicioProgresoLeccion.buscarProgresoPorTipoEjercicioConEstado(tipo, usuarioId);
 
         boolean desbloqueado = true;
-        Map<Long, Boolean> leccionesDesbloqueadas = new TreeMap<>();
 
-        for (Map.Entry<Long, Boolean> entry : leccionesCompletadas.entrySet()) {
+        for (Map.Entry<Long, Boolean> entry : leccionesDesbloqueadas.entrySet()) {
             Long leccionId = entry.getKey();
             boolean completado = entry.getValue();
 
@@ -55,36 +46,20 @@ public class ControladorLeccion {
             desbloqueado = completado;
         }
 
-        modelo.put("progresos", leccionesDesbloqueadas);
-        return new ModelAndView("mapa-braille-traduccion", modelo);
-    }
-
-    @RequestMapping("/braille/lecciones/matriz")
-    public ModelAndView leccionesMatriz(HttpServletRequest request){
-        ModelMap modelo = new ModelMap();
-        Long usuarioId = (Long) request.getSession().getAttribute("id");
-        List<ProgresoLeccion> progresosTraduccion = this.servicioProgresoLeccion.buscarProgresoPorTipoEjercicio("matriz", usuarioId);
-
-        Map<Long, Boolean> leccionesCompletadas = new TreeMap<>();
-
-        for (ProgresoLeccion progreso : progresosTraduccion) {
-            Long leccionId= progreso.getLeccion().getId();
-            Boolean completado = this.servicioProgresoLeccion.verificarCompletadoPorLeccion(progreso.getLeccion().getId(), usuarioId);
-            leccionesCompletadas.put(leccionId, completado);
+        switch (tipo){
+            case "matriz":
+                tipo = "Formá letras";
+                break;
+            case "traduccion":
+                tipo = "Reconocé letras";
+                break;
+            case "forma-palabras":
+                tipo = "Formá palabras";
+                break;
         }
 
-        boolean desbloqueado = true;
-        Map<Long, Boolean> leccionesDesbloqueadas = new TreeMap<>();
-
-        for (Map.Entry<Long, Boolean> entry : leccionesCompletadas.entrySet()) {
-            Long leccionId = entry.getKey();
-            boolean completado = entry.getValue();
-
-            leccionesDesbloqueadas.put(leccionId, desbloqueado);
-            desbloqueado = completado;
-        }
-
+        modelo.put("tipo", tipo);
         modelo.put("progresos", leccionesDesbloqueadas);
-        return new ModelAndView("mapa-braille-traduccion", modelo);
+        return new ModelAndView("mapa-lecciones", modelo);
     }
 }

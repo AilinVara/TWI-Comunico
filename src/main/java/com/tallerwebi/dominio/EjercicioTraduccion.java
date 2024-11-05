@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@DiscriminatorValue("traduccion")
 public class EjercicioTraduccion extends Ejercicio{
     private String consigna;
     @OneToOne

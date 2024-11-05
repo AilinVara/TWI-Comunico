@@ -3,6 +3,7 @@ package com.tallerwebi.dominio;
 import javax.persistence.*;
 
 @Entity
+@DiscriminatorValue("forma-palabras")
 public class EjercicioFormaPalabra extends Ejercicio{
     private String imagen;
     private String respuestaCorrecta;
@@ -39,4 +40,6 @@ public class EjercicioFormaPalabra extends Ejercicio{
     public void setLetras(String letras) {
         this.letras = letras;
     }
+
+
 }
