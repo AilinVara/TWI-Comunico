@@ -88,12 +88,12 @@ nav a.active:hover {
     transform: scale(1.2);
 }
 
-
 .cerrar {
     position: relative;
     top: 10px;
     left: 97%;
     border: none;
+    margin:0;
     font-size: 1.7em;
     color: #333;
     cursor: pointer;
@@ -161,6 +161,7 @@ nav a.active:hover {
 }
 
 .cerrar:hover {
+    background-color: #f44336;
     color: #ff0000;
 }
 

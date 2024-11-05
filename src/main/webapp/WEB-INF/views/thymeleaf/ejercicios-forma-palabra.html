@@ -13,12 +13,6 @@
 
 <div th:replace="header :: header"></div>
 
-<div class="barra-experiencia">
-    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 5000 * 100} + '%'">
-        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/5000XP</p>
-    </div>
-</div>
-
 <button class="cerrar" id="botonCerrar">&#10005;</button>
 
 <div id="modalSalir" class="modal">
@@ -28,6 +22,12 @@
             <button id="cancelarSalir" class="confirmar">Continuar</button>
             <button id="confirmarSalir" class="cancelar">Abandonar</button>
         </div>
+    </div>
+</div>
+
+<div class="barra-experiencia">
+    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 5000 * 100} + '%'">
+        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/5000XP</p>
     </div>
 </div>
 
