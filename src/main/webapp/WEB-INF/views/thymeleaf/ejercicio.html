@@ -62,21 +62,6 @@
                 <label class="optionLetra" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">Opción</label>
             </div>
         </div>
-        <!--<div class="contenedorDeOpciones">
-            <div class="radioYLetraJuntos">
-                <input class="option" type="radio" id="opcionCorrecta" name="respuesta"
-                       th:value="${ejercicio.opcionCorrecta.id}"/>
-                <label class="optionLetra" th:for="opcionCorrecta" th:text="${ejercicio.opcionCorrecta.descripcion}">Opción
-                    correcta</label>
-            </div>
-            <div class="radioYLetraJuntos" th:each="opcion : ${ejercicio.opcionesIncorrectas}">
-                <input class="option" type="radio" th:id="'opcion_' + ${opcion.id}" name="respuesta"
-                       th:value="${opcion.id}"/>
-                <label class="optionLetra" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">Opción
-                    incorrecta</label>
-            </div>
-
-         </div>-->
          <div class="contenedor-enviar">
              <button class="enviar" type="submit">Enviar</button>
          </div>
@@ -87,7 +72,7 @@
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
             let siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
-                : '/braille';
+                : '/braille/lecciones/traduccion';
             let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
 
              if (![[${esCorrecta}]]) {

@@ -117,7 +117,8 @@ INSERT INTO EjercicioMatriz(id, puntos, letra, tipoEjercicio, leccion_id) VALUES
                                                                               (55, '011101', 'W', 'matriz', 19),
                                                                               (56, '110011', 'X', 'matriz', 19),
                                                                               (57, '110111', 'Y', 'matriz', 20),
-                                                                              (58, '100111', 'Z', 'matriz', 20);
+                                                                              (58, '100111', 'Z', 'matriz', 20),
+                                                                              (59, '110011', 'X', 'matriz', 20);
 
 
 INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras, tipoEjercicio, leccion_id) VALUES

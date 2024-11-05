@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<h3 class="titulo" id="braille-letter" th:text="|Ejercicio ${(indice)}|"></h3>
+<h3 class="titulo" id="braille-letter" th:text="|Ejercicio ${(indice)} - Letra ${ejercicio.getLetra()}|"></h3>
 
 <div class="game-container">
     <form th:action="@{'/resolver/' + ${indice}}" method="POST" onsubmit="return concatenarCheckboxes()">
