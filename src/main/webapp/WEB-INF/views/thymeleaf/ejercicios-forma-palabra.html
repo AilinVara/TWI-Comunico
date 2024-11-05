@@ -19,6 +19,18 @@
     </div>
 </div>
 
+<button class="cerrar" id="botonCerrar">&#10005;</button>
+
+<div id="modalSalir" class="modal">
+    <div class="modal-content">
+        <h2>¿Estás seguro que querés salir?</h2>
+        <div class="contenedorDeOpciones">
+            <button id="cancelarSalir" class="confirmar">Continuar</button>
+            <button id="confirmarSalir" class="cancelar">Abandonar</button>
+        </div>
+    </div>
+</div>
+
 <h1  class="titulo">Formá palabras</h1>
 
 <div th:each="ejercicios : ${ejercicio}">
@@ -82,8 +94,30 @@
 
     actualizarExperiencia([[${experiencia}]]);
 </script>
+
+<script>
+
+    document.getElementById('botonCerrar').onclick = function() {
+        document.getElementById('modalSalir').style.display = 'block';
+    };
+
+    document.getElementById('cancelarSalir').onclick = function() {
+        document.getElementById('modalSalir').style.display = 'none';
+    };
+
+    document.getElementById('confirmarSalir').onclick = function() {
+        window.location.href = '/braille/lecciones/forma-palabras';
+    };
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('modalSalir');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/ejercicio-forma-palabra.js}"></script>
-
 </body>
 </html>

@@ -88,6 +88,82 @@ nav a.active:hover {
     transform: scale(1.2);
 }
 
+
+.cerrar {
+    position: relative;
+    top: 10px;
+    left: 97%;
+    border: none;
+    font-size: 1.7em;
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0 7px;
+    border-radius: 10px;
+    background-color: #f44336;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    text-align: center;
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 450px;
+    border-radius: 10px;
+}
+
+.contenedorDeOpciones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 15px;
+}
+
+.confirmar, .cancelar {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.confirmar {
+    background-color: #1cb0f6;
+    color: white;
+}
+
+.confirmar:hover {
+    background-color: #2b70c9;
+}
+
+.cancelar {
+    background-color: #f44336;
+    color: white;
+}
+
+.cancelar:hover {
+    background-color: #c62828;
+}
+
+.cerrar:hover {
+    color: #ff0000;
+}
+
 .titulo {
     color: #ff9600;
     text-align: center;

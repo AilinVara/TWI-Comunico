@@ -20,13 +20,23 @@
 </head>
 
 <body>
-<!--commit-->
 <div th:replace="header :: header"></div>
 
-<a th:href="@{/braille/lecciones/traduccion}" class="cerrar">&#10005;</a>
+<button class="cerrar" id="botonCerrar">&#10005;</button>
+
+<div id="modalSalir" class="modal">
+    <div class="modal-content">
+        <h2>¿Estás seguro que querés salir?</h2>
+        <div class="contenedorDeOpciones">
+            <button id="cancelarSalir" class="confirmar">Continuar</button>
+            <button id="confirmarSalir" class="cancelar">Abandonar</button>
+        </div>
+    </div>
+</div>
+
 
 <div class="titulo">
-    <h3>Ejercicio</h3>
+    <h3 th:text="${ejercicio.consigna}">Ejercicio</h3>
     <!-- <button id="botonVidas">
          <div class="grupo_input" id="vidaYNum">
              <i class="fa-solid fa-heart" id="vidas"></i>
@@ -42,12 +52,8 @@
     </div>
 </div>
 
-
-
  <div class="game-container">
      <div class="question">
-         <p id="braille-letter" th:text="${ejercicio.consigna}"></p>
-         <div id="braille-display" class="braille"></div>
          <div class="braille-item-sin-hover">
              <img th:src="@{'/img/braille/' + ${ejercicio.opcionCorrecta.descripcion}}">
          </div>
@@ -143,6 +149,28 @@
      </script>
 
  </div>
+
+<script>
+
+    document.getElementById('botonCerrar').onclick = function() {
+        document.getElementById('modalSalir').style.display = 'block';
+    };
+
+    document.getElementById('cancelarSalir').onclick = function() {
+        document.getElementById('modalSalir').style.display = 'none';
+    };
+
+    document.getElementById('confirmarSalir').onclick = function() {
+        window.location.href = '/braille/lecciones/traduccion';
+    };
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('modalSalir');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+</script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  </body>
  </html>
