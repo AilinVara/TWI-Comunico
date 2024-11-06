@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Cursos disponibles</title>
-    <link rel="stylesheet" th:href="@{/css/cursos.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/cursos.css}">
     <link rel="icon" th:href="@{/img/Isologo-Comunico.svg}" type="image/x-icon">
     <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
     <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
@@ -12,6 +12,7 @@
 <body>
 
 <div th:replace="header :: header"></div>
+<div class="titulo-container">
 
 <h1 class="titulo">Cursos disponibles</h1>
 
@@ -46,6 +47,7 @@
     <button type="submit" class="btn-filtrar">Filtrar Cursos</button>
 </form>
 
+</div>
 <div class="cursos-container">
     <div class="curso-card" th:each="curso : ${cursos}">
 

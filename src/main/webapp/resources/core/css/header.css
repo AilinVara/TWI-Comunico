@@ -101,16 +101,15 @@
 }
 
 /*----------------------------------Barra Experiencia------------------------------------*/
-       .barra-experiencia {
-            width: 20%;
-             background-color: #afafaf;
-             border-radius: 10px;
-             overflow: hidden;
-             height: 22px;
-             margin-left: 20px;
-             position: relative;
-             top: 190px;
-             }
+ .barra-experiencia {
+     width: 20%;
+     background-color: #afafaf;
+     border-radius: 10px;
+     overflow: hidden;
+     height: 22px;
+     position: relative;
+     top: 0.3em;
+ }
 
  .experiencia-llena {
      height: 100%;

@@ -11,9 +11,8 @@
          overflow: hidden;
          height: 22px;
          /* margin-left: 20px; */
-         position: relative !important;
-         top: 43px !important;
-         left: 250px !important;
+         position: relative;
+      margin: auto;
              }
 
         .experiencia-llena {
@@ -27,12 +26,11 @@
        }
 
 .titulosUsuarioOrden {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     padding: 20px;
     max-width: 100%;
-    background-color: none;
     list-style-type: none; /* Quita los puntos de la lista */
     margin-top: 4em;
 }
@@ -44,6 +42,7 @@
     text-align: center;
     background-color: #f9f9f9;
     position: relative;
+    margin: 10px;
 }
 
 /* Estilo base para todos los títulos*/
@@ -71,7 +70,7 @@
 
 /* Experto (Diamante) */
 .titulo-experto {
-    background: linear-gradient(45deg, #b9f2ff, #e0ffff, #b9f2ff);
+    background: linear-gradient(45deg, #6ebffb, #91f2fb, #5fbafb);
 }
 /* Comunicador (Máximo) */
 .titulo-comunicador {
@@ -81,4 +80,83 @@
 /* Extra para un tamaño consistente en el texto de los requisitos */
 .titulosUsuario p {
     margin: 10px 0;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    font-size: 1em;
+    width: 100%;
+    position: relative;
+    top: 200px;
+
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.footer-section h4 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    font-size: 1em;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-logo {
+    width: 100px;
+    margin-top: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #ddd;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.9em;
 }
