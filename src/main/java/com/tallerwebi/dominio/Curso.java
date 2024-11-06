@@ -3,6 +3,8 @@ package com.tallerwebi.dominio;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Curso {
@@ -19,7 +21,8 @@ public class Curso {
     private String nivel;
 
     private int capacidad;
-    private int inscriptos;
+    @ElementCollection
+    private List<String> alumnosInscritos = new ArrayList<>();
 
     @Lob
     private byte[] imagen;
@@ -34,7 +37,6 @@ public class Curso {
         this.tipo = tipo;
         this.nivel = nivel;
         this.capacidad = capacidad;
-        this.inscriptos = 0;
     }
 
     public Long getId() {
@@ -101,12 +103,16 @@ public class Curso {
         this.capacidad = capacidad;
     }
 
-    public int getInscriptos() {
-        return inscriptos;
+    public List<String> getAlumnosInscritos() {
+        return alumnosInscritos;
     }
 
-    public void setInscriptos(int inscriptos) {
-        this.inscriptos = inscriptos;
+    public void setAlumnosInscritos(List<String> alumnosInscritos) {
+        this.alumnosInscritos = alumnosInscritos;
+    }
+
+    public void agregarAlumno(String nombreApellido) {
+        this.alumnosInscritos.add(nombreApellido);
     }
 
     public byte[] getImagen() {

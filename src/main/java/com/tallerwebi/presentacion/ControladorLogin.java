@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -71,6 +72,11 @@ public class ControladorLogin {
     @RequestMapping(path = "/inicio", method = RequestMethod.GET)
     public ModelAndView irAInicio() {
         return new ModelAndView("inicio");
+    }
+
+    @RequestMapping(path = "/prueba-niveles", method = RequestMethod.GET)
+    public ModelAndView mostrarNiveles() {
+        return new ModelAndView("prueba-niveles");
     }
 
 }

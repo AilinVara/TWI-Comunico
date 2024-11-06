@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,8 +12,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class ServicioCursoImpl implements ServicioCurso {
 
+    private final RepositorioCurso repositorioCurso;
+
     @Autowired
-    private RepositorioCurso repositorioCurso;
+    public ServicioCursoImpl(RepositorioCurso repositorioCurso) {
+        this.repositorioCurso = repositorioCurso;
+    }
 
     @Override
     public List<Curso> obtenerCursosDisponibles() {
@@ -49,5 +54,26 @@ public class ServicioCursoImpl implements ServicioCurso {
             }
         }
         return cursos;
+    }
+
+    public List<Curso> obtenerCursosPorFecha(LocalDate fecha) {
+        return repositorioCurso.obtenerCursoPorFecha(fecha);
+    }
+
+    @Override
+    public Curso obtenerCursoPorId(Long id) {
+        return repositorioCurso.obtenerCursoPorId(id);
+    }
+
+
+    public boolean inscribirAlumno(String nombre, String apellido, Long cursoId) {
+        Curso curso = repositorioCurso.obtenerCursoPorId(cursoId);
+        if (curso == null) {
+            return false;
+        }
+        String nombreCompleto = nombre + " " + apellido;
+        curso.agregarAlumno(nombreCompleto);
+
+        return true;
     }
 }
