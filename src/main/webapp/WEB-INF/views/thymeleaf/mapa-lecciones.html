@@ -7,14 +7,17 @@
     <title th:text="'Braille - ' + ${tipo}">Braille - Lecciones</title>
     <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
     <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+
 <div th:replace="header :: header"></div>
+
 <h2 class="titulo">Braille - [[${tipo}]]</h2>
 <ul class="leccionesBasicas">
-    <th:block th:each="progreso, indice : ${progresos}" >
+    <th:block th:each="progreso, indice : ${progresos}">
         <li>
-            <a th:if="${progreso.value}" th:href="@{'/leccion/' + ${progreso.key}}">
+            <a th:if="${progreso.value}" href="#" class="leccion-activa" th:data-leccion="@{'/leccion/' + ${progreso.key}}">
                 <input type="button" class="lecciones" th:value="'Lección '+ ${indice.count}" />
             </a>
             <a th:unless="${progreso.value}" href="#">
@@ -23,5 +26,42 @@
         </li>
     </th:block>
 </ul>
+
+<script th:inline="javascript">
+    let vidasRestantes = [[${vidas}]];
+
+    const leccionesActivas = document.querySelectorAll('.leccion-activa');
+
+    leccionesActivas.forEach(leccion => {
+        leccion.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            if (vidasRestantes === 0) {
+                Swal.fire({
+                    title: 'Vidas agotadas',
+                    html: 'No te quedan vidas. ¿Te gustaría comprar más vidas?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Comprar vidas',
+                    cancelButtonText: 'No, gracias',
+                    didOpen: () => {
+                        const script = document.createElement('script');
+                        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
+                        document.head.appendChild(script);
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/comprar';
+                    } else {
+                        console.log("El usuario eligió no comprar vidas");
+                    }
+                });
+            } else {
+                window.location.href = leccion.getAttribute('data-leccion');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
