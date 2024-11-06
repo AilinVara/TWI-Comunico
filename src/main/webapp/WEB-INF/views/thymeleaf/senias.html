@@ -15,13 +15,6 @@
 
 <div th:replace="header :: header"></div>
 
-<div class="barra-experiencia">
-  <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
-    <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/2000XP</p>
-  </div>
-</div>
-
-
 <div class="titulo"><i class="fa-regular fa-hand"></i> Lecciones de Lengua de señas</div>
 <div class="leccionesBasicas">
   <a th:href="@{/senias/alfabeto}"><input class="lecciones" type="button" name="abecedario" id="abc" value="Abecedario"></a>
