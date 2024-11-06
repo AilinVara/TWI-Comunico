@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado de Inscripción</title>
+    <link rel="stylesheet" th:href="@{/css/cursos.css}">
+</head>
+<body>
+
+<h1 th:text="${mensaje}"></h1>
+
+<a th:href="@{/cursos}" class="btn btn-primary">Volver a la lista de cursos</a>
+
+</body>
+</html>

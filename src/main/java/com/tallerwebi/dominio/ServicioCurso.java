@@ -12,6 +12,9 @@ public interface ServicioCurso {
 
     List<Curso> buscarCursosPorNombre(String nombre);
 
+    Curso obtenerCursoPorId(Long id);
+
     void agregarCurso(Curso nuevoCurso);
 
+    boolean inscribirAlumno(String nombre, String apellido, Long cursoId);
 }

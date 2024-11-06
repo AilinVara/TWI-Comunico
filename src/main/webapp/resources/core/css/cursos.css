@@ -150,7 +150,23 @@ select, input[type="text"], input[type="date"] {
         margin-right: 5px;
     }
 
-    footer {
+.btn-inscribirse {
+    background-color: #4CAF50; /* Color verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.btn-inscribirse:hover {
+    background-color: #45a049;
+}
+
+
+footer {
         background-color: #333;
         color: white;
         padding: 40px 20px;

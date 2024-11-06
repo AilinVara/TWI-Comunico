@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.hibernate.query.Query;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 
@@ -18,6 +19,9 @@ public class RepositorioCursoImpl implements RepositorioCurso {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    public RepositorioCursoImpl(SessionFactory sessionFactory) {
+    }
 
     @Override
     public List<Curso> obtenerTodosLosCursos() {
@@ -30,6 +34,12 @@ public class RepositorioCursoImpl implements RepositorioCurso {
     public void agregarCurso(Curso curso) {
         Session session = sessionFactory.getCurrentSession();
         session.save(curso);
+    }
+
+    @Override
+    public void actualizarCurso(Curso curso) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(curso);
     }
 
 
@@ -58,6 +68,18 @@ public class RepositorioCursoImpl implements RepositorioCurso {
         }
         return cursosFiltrados;
     }
+
+    @Override
+    public List<Curso> obtenerCursoPorFecha(LocalDate fecha) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Curso.class);
+        criteria.add(Restrictions.eq("fecha", fecha));
+        return criteria.list();
+    }
+
+    @Override
+    public Curso obtenerCursoPorId(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Curso.class, id);
+    }
 }
-
-

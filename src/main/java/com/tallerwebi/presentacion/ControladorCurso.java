@@ -48,7 +48,6 @@ public class ControladorCurso {
         nuevoCurso.setTipo(tipo);
         nuevoCurso.setNivel(nivel);
         nuevoCurso.setCapacidad(capacidad);
-        nuevoCurso.setInscriptos(0);
 
         servicioCurso.agregarCurso(nuevoCurso);
 
@@ -77,5 +76,21 @@ public class ControladorCurso {
         List<Curso> cursosBuscados = servicioCurso.buscarCursosPorNombre(nombre);
         model.addAttribute("cursos", cursosBuscados);
         return "cursos";
+    }
+
+    @RequestMapping(value = "/inscribir", method = RequestMethod.POST)
+    public String inscribirCurso(@RequestParam("nombre") String nombre,
+                                 @RequestParam("apellido") String apellido,
+                                 @RequestParam("cursoId") Long cursoId, Model model) {
+
+        boolean inscripcionExitosa = servicioCurso.inscribirAlumno(nombre, apellido, cursoId);
+
+        if (inscripcionExitosa) {
+            model.addAttribute("mensaje", "Inscripción exitosa");
+        } else {
+            model.addAttribute("mensaje", "Ocurrió un error en la inscripción");
+        }
+
+        return "confirmacion-inscripcion";
     }
 }
