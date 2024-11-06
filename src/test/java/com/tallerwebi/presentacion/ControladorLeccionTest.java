@@ -1,8 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Leccion;
-import com.tallerwebi.dominio.ServicioLeccion;
-import com.tallerwebi.dominio.ServicioProgresoLeccion;
+import com.tallerwebi.dominio.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,13 +20,15 @@ public class ControladorLeccionTest {
 
     private ServicioProgresoLeccion servicioProgresoMock;
     private ServicioLeccion servicioLeccionMock;
+    private ServicioVida servicioVidaMock;
     private ControladorLeccion controladorLeccion;
 
     @BeforeEach
     public void init() {
         servicioProgresoMock = mock(ServicioProgresoLeccion.class);
         servicioLeccionMock = mock(ServicioLeccion.class);
-        controladorLeccion = new ControladorLeccion(servicioLeccionMock, servicioProgresoMock);
+        servicioVidaMock = mock(ServicioVida.class);
+        controladorLeccion = new ControladorLeccion(servicioLeccionMock, servicioProgresoMock, servicioVidaMock);
     }
 
     @Test
@@ -95,4 +95,28 @@ public class ControladorLeccionTest {
         assertThat(progresos, hasEntry(2L, false));
         assertThat(progresos, hasEntry(3L, false));
     }
+
+    @Test
+    public void dadoQueUnUsuarioLlamaALeccionesTraduccionYNoTieneVidasEntoncesSeImpideContinuar() {
+        Long leccionId = 1L;
+        Long usuarioId = 1L;
+        Leccion leccion = new Leccion();
+        leccion.setId(leccionId);
+
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpSession session = mock(HttpSession.class);
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("id")).thenReturn(usuarioId);
+
+        Vida sinVidas = new Vida();
+        sinVidas.setCantidadDeVidasActuales(0);
+
+        when(servicioLeccionMock.obtenerLeccion(leccionId)).thenReturn(leccion);
+        when(servicioVidaMock.obtenerVida(usuarioId)).thenReturn(sinVidas);
+
+        ModelAndView modelAndView = controladorLeccion.obtenerLecciones("traduccion", request);
+
+        assertEquals("mapa-lecciones", modelAndView.getViewName());
+    }
+
 }
