@@ -10,10 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Controller
@@ -40,14 +37,29 @@ public class ControladorEjercicio {
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
     public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request) {
         ModelMap modelo = new ModelMap();
-        modelo.put("leccion", leccionId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
+        Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
+        modelo.put("leccion", leccionId);
         Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
         Ejercicio ejercicio = leccion.getEjercicios().get(indice - 1);
-        modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
+        modelo.put("vidas", vidas);
         modelo.put("ejercicio", ejercicio);
         modelo.put("indice", indice);
         agregarTiempoRestanteAlModelo(modelo,usuarioId);
+
+        Map<Class<? extends Ejercicio>, String> redirecciones = Map.of(
+                EjercicioTraduccion.class, "redirect:/braille/lecciones/traduccion",
+                EjercicioMatriz.class, "redirect:/braille/lecciones/matriz",
+                EjercicioFormaPalabra.class, "redirect:/braille/lecciones/forma-palabras",
+                EjercicioTraduccionSenia.class, "redirect:/senias"
+        );
+
+        if (vidas == 0) {
+            String redireccion = redirecciones.get(ejercicio.getClass());
+            if (redireccion != null) {
+                return new ModelAndView(redireccion);
+            }
+        }
 
         if (ejercicio instanceof EjercicioTraduccion) {
             EjercicioTraduccion ejercicioTraduccion = (EjercicioTraduccion) ejercicio;

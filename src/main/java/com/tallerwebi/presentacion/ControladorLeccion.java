@@ -15,13 +15,15 @@ import java.util.*;
 @Controller
 public class ControladorLeccion {
 
+    private ServicioVida servicioVida;
     private ServicioProgresoLeccion servicioProgresoLeccion;
     private ServicioLeccion servicioLeccion;
 
     @Autowired
-    public ControladorLeccion(ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion) {
+    public ControladorLeccion(ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida) {
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
+        this.servicioVida = servicioVida;
     }
 
     @RequestMapping("/leccion/{id}")
@@ -34,6 +36,7 @@ public class ControladorLeccion {
     public ModelAndView obtenerLecciones(@PathVariable("tipo") String tipo, HttpServletRequest request){
         ModelMap modelo = new ModelMap();
         Long usuarioId = (Long) request.getSession().getAttribute("id");
+        Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
         Map<Long, Boolean> leccionesDesbloqueadas = this.servicioProgresoLeccion.buscarProgresoPorTipoEjercicioConEstado(tipo, usuarioId);
 
         boolean desbloqueado = true;
@@ -57,7 +60,7 @@ public class ControladorLeccion {
                 tipo = "Formá palabras";
                 break;
         }
-
+        modelo.put("vidas", vidas);
         modelo.put("tipo", tipo);
         modelo.put("progresos", leccionesDesbloqueadas);
         return new ModelAndView("mapa-lecciones", modelo);
