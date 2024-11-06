@@ -12,7 +12,7 @@
 
 <div th:replace="header :: header"></div>
 
-<h2 class="titulo"><i class="fa-solid fa-braille"></i>Expresiones</h2>
+<h2 class="titulo"><i class="fa-regular fa-hand"></i>Expresiones</h2>
 
 <div class="buscador">
     <form th:action="@{${#httpServletRequest.requestURI}}" method="get">
@@ -26,7 +26,7 @@
          th:classappend="${#lists.size(expresionsenias) == 1} ? 'single-result'">
         <div th:each="expresion: ${expresionsenias}" class="senia-item" >
             <span class="letra" th:text="${expresion.nombre}">Letra</span>
-            <img class="senias-img" th:src="@{'/img/senias/' + ${expresion.nombre}}" alt="Expresiones" >
+            <img class="senias-img" th:src="@{'/img/senias-' + ${expresion.nombre}+ '.png'} "  alt="Expresiones" >
         </div>
     </div>
 </div>

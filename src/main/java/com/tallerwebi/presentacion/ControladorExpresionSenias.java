@@ -33,8 +33,8 @@ public class ControladorExpresionSenias {
         routes = new ArrayList<>();
         names = new ArrayList<>();
 
-        agregarRutas("src/main/webapp/resources/core/img/Como-estas-senias.png");
-        agregarNombres("Como estas");
+        agregarRutas("src/main/webapp/resources/core/img/senias-como-estas.png");
+        agregarNombres("como-estas");
 
     }
 
@@ -54,10 +54,10 @@ public class ControladorExpresionSenias {
                 this.servicioExpresion.guardarExpresionSenias(names.get(i), routes.get(i));
             }
         }
-        return new ModelAndView("indice");
+        return new ModelAndView("expresiones");
     }
 
-@RequestMapping(value = "/img/senias/{nombre}")
+@RequestMapping(value = "/img/expresiones/{nombre}")
 public ResponseEntity<byte[]>obtenerImagenExpresionSenias(@PathVariable("nombre") String nombre) throws IOException {
         ExpresionSenias expresion = this.servicioExpresion.buscarExpresionSenias(nombre);
         byte[] imagen = expresion.getImagenExpresion();
@@ -65,7 +65,7 @@ public ResponseEntity<byte[]>obtenerImagenExpresionSenias(@PathVariable("nombre"
 }
 
 
-    @RequestMapping("senias/expresiones")
+    @RequestMapping("expresiones")
     public ModelAndView mostrarExpresionSenias(
             @RequestParam(required=false, defaultValue = "", value = "expresionsenias") String expresionBuscada) {
         ModelMap modelo = new ModelMap();
