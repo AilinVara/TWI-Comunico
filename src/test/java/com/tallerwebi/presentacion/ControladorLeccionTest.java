@@ -13,6 +13,7 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -53,6 +54,7 @@ public class ControladorLeccionTest {
         leccionesDesbloqueadas.put(3L, false);
 
         when(servicioProgresoMock.buscarProgresoPorTipoEjercicioConEstado("traduccion", usuarioId)).thenReturn(leccionesDesbloqueadas);
+        when(servicioVidaMock.obtenerVida(anyLong())).thenReturn(new Vida());
 
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpSession session = mock(HttpSession.class);
@@ -79,6 +81,7 @@ public class ControladorLeccionTest {
         leccionesDesbloqueadas.put(3L, false);
 
         when(servicioProgresoMock.buscarProgresoPorTipoEjercicioConEstado("traduccion", usuarioId)).thenReturn(leccionesDesbloqueadas);
+        when(servicioVidaMock.obtenerVida(anyLong())).thenReturn(new Vida());
 
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpSession session = mock(HttpSession.class);
