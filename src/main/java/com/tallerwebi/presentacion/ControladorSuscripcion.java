@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ControladorSuscripcion {
@@ -56,8 +57,12 @@ public class ControladorSuscripcion {
     @PostMapping("/comprarSuscripcion")
     public ModelAndView comprarPlan(@RequestParam("nombreSuscripcion") String nombreSuscripcion, HttpServletRequest request, RedirectAttributes flash) {
         HttpSession session = request.getSession();
-//        Usuario usuario = (Usuario) session.getAttribute("usuario");
         Double precio = 0.0d;
+
+        if(!session.getAttribute("nombreSuscripcion").equals("sin plan")) {
+            flash.addFlashAttribute("error", "El usuario ya tiene una suscripción activa.");
+            return new ModelAndView("redirect:/suscripciones");
+        }
 
         switch (nombreSuscripcion.toLowerCase()) {
             case "basico":
@@ -86,9 +91,9 @@ public class ControladorSuscripcion {
                 items.add(itemRequest);
 
                 PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                        .success("http://localhost:8080/payment/feedbackPlan?collection_status=approved")
-                        .failure("http://localhost:8080/payment/feedbackPlan?collection_status=failure")
-                        .pending("http://localhost:8080/payment/feedbackPlan?collection_status=pending")
+                        .success("http://localhost:8080/comprarSuscripcion/Pagar?status=approved")
+                        .failure("http://localhost:8080/comprarSuscripcion/Pagar?status=failure")
+                        .pending("http://localhost:8080/comprarSuscripcion/Pagar?status=pending")
                         .build();
 
                 PreferenceRequest preferenceRequest = PreferenceRequest.builder()
@@ -110,13 +115,14 @@ public class ControladorSuscripcion {
         return new ModelAndView("redirect:/suscripciones");
     }
 
-    @GetMapping("/payment/feedbackPlan")
-    public ModelAndView feedback(HttpServletRequest request, RedirectAttributes flash) {
-
+    @GetMapping("/comprarSuscripcion/Pagar")
+    public ModelAndView feedback(@RequestParam Map<String, String> allParams, HttpServletRequest request, RedirectAttributes flash) {
         HttpSession session = request.getSession();
-        Usuario usuario= servicioUsuario.buscarUsuarioPorId(1L);
+        String resultado = allParams.get("status");
 
-        if (!session.getAttribute("nombreSuscripcion").equals("sin plan")) {
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(1L);
+
+        if (resultado != null && resultado.equals("approved")) {
             String nombreSuscripcion = (String) session.getAttribute("nombreSuscripcion");
 
             switch (nombreSuscripcion) {
@@ -130,17 +136,18 @@ public class ControladorSuscripcion {
                     beneficiosPlanPremium(usuario, flash);
                     break;
             }
+
             flash.addFlashAttribute("success", "El pago fue aprobado exitosamente.");
-            return new ModelAndView("redirect:/suscripciones");
+        } else {
+            flash.addFlashAttribute("error", "El pago no fue aprobado.");
         }
-        flash.addFlashAttribute("error", "El pago no fue aprobado.");
+
         return new ModelAndView("redirect:/suscripciones");
     }
 
     private void beneficiosPlanPremium(Usuario usuario, RedirectAttributes flash) {
         try {
             servicioSuscripcion.comprarSuscripcionPremium(usuario);
-            servicioSuscripcion.aplicarBeneficioSuscripcionPremium(usuario);
         } catch (SuscriptoException e) {
             flash.addFlashAttribute("error", "El usuario ya tiene una suscripción activa.");
         }
@@ -149,7 +156,6 @@ public class ControladorSuscripcion {
     private void beneficiosPlanEstandar(Usuario usuario, RedirectAttributes flash) {
         try {
             servicioSuscripcion.comprarSuscripcionEstandar(usuario);
-            servicioSuscripcion.aplicarBeneficioSuscripcionEstandar(usuario);
         } catch (SuscriptoException e) {
             flash.addFlashAttribute("error", "El usuario ya tiene una suscripción activa.");
         }
@@ -158,7 +164,6 @@ public class ControladorSuscripcion {
     private void beneficiosPlanBasico(Usuario usuario, RedirectAttributes flash) {
         try {
             servicioSuscripcion.comprarSuscripcionBasica(usuario);
-            servicioSuscripcion.aplicarBeneficioSuscripcionBasica(usuario);
         } catch (SuscriptoException e) {
             flash.addFlashAttribute("error", "El usuario ya tiene una suscripción activa.");
         }
