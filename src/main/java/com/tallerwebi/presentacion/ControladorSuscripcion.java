@@ -91,9 +91,9 @@ public class ControladorSuscripcion {
                 items.add(itemRequest);
 
                 PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                        .success("http://localhost:8080/comprarSuscripcion/Pagar?status=approved")
-                        .failure("http://localhost:8080/comprarSuscripcion/Pagar?status=failure")
-                        .pending("http://localhost:8080/comprarSuscripcion/Pagar?status=pending")
+                        .success("http://localhost:8080/comprarSuscripcion/Pagar?collection_status=approved&nombreSuscripcion=" + nombreSuscripcion)
+                        .failure("http://localhost:8080/comprarSuscripcion/Pagar?collection_status=failure&nombreSuscripcion=" + nombreSuscripcion)
+                        .pending("http://localhost:8080/comprarSuscripcion/Pagar?collection_status=pending&nombreSuscripcion=" + nombreSuscripcion)
                         .build();
 
                 PreferenceRequest preferenceRequest = PreferenceRequest.builder()
@@ -104,7 +104,6 @@ public class ControladorSuscripcion {
                 PreferenceClient client = new PreferenceClient();
                 Preference preference = client.create(preferenceRequest);
 
-                session.setAttribute("nombreSuscripcion", nombreSuscripcion);
                 return new ModelAndView("redirect:" + preference.getSandboxInitPoint());
             } catch (Exception e) {
                 flash.addFlashAttribute("error", "Hubo un problema al procesar la compra.");
@@ -116,14 +115,15 @@ public class ControladorSuscripcion {
     }
 
     @GetMapping("/comprarSuscripcion/Pagar")
-    public ModelAndView feedback(@RequestParam Map<String, String> allParams, HttpServletRequest request, RedirectAttributes flash) {
+    public ModelAndView feedback(@RequestParam("nombreSuscripcion") String nombreSuscripcion,
+                                 @RequestParam Map<String, String> allParams,HttpServletRequest request, RedirectAttributes flash) {
         HttpSession session = request.getSession();
         String resultado = allParams.get("status");
 
-        Usuario usuario = servicioUsuario.buscarUsuarioPorId(1L);
+        Long idUsuario = (Long) request.getSession().getAttribute("id");
 
-        if (resultado != null && resultado.equals("approved")) {
-            String nombreSuscripcion = (String) session.getAttribute("nombreSuscripcion");
+        if (resultado.equals("approved")) {
+            Usuario usuario = servicioUsuario.buscarUsuarioPorId(idUsuario);
 
             switch (nombreSuscripcion) {
                 case "basico":
@@ -136,7 +136,7 @@ public class ControladorSuscripcion {
                     beneficiosPlanPremium(usuario, flash);
                     break;
             }
-
+            session.setAttribute("nombreSuscripcion", usuario.getSuscripcion().getTipoSuscripcion().getNombre());
             flash.addFlashAttribute("success", "El pago fue aprobado exitosamente.");
         } else {
             flash.addFlashAttribute("error", "El pago no fue aprobado.");
