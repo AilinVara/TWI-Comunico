@@ -11,7 +11,7 @@ public class TipoSuscripcion {
         @Column(name = "nombre", nullable = false, unique = true)
         private String nombre;
 
-        @Column(name = "descripcion", nullable = false, columnDefinition = "LONGTEXT")
+        @Column(name = "descripcion", nullable = false)
         private String descripcion;
 
         public String getDescripcion() {

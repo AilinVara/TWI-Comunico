@@ -1,7 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +21,8 @@ public class ControladorLoginTest {
 	private HttpServletRequest requestMock;
 	private HttpSession sessionMock;
 	private ServicioLogin servicioLoginMock;
+	private Suscripcion suscripcionMock;
+	private TipoSuscripcion tipoSuscripcionMock;
 
 
 	@BeforeEach
@@ -33,6 +34,8 @@ public class ControladorLoginTest {
 		sessionMock = mock(HttpSession.class);
 		servicioLoginMock = mock(ServicioLogin.class);
 		controladorLogin = new ControladorLogin(servicioLoginMock);
+		suscripcionMock = mock(Suscripcion.class);
+		tipoSuscripcionMock = mock(TipoSuscripcion.class);
 	}
 
 	@Test
@@ -48,23 +51,30 @@ public class ControladorLoginTest {
 		assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Usuario o clave incorrecta"));
 		verify(sessionMock, times(0)).setAttribute("ROL", "ADMIN");
 	}
-	
+
 	@Test
 	public void loginConUsuarioYPasswordCorrectosDeberiaLLevarAInicio(){
-		// preparacion
+		// Preparación
 		Usuario usuarioEncontradoMock = mock(Usuario.class);
+		Suscripcion suscripcionMock = mock(Suscripcion.class);
+		TipoSuscripcion tipoSuscripcionMock = mock(TipoSuscripcion.class);
+
 		when(usuarioEncontradoMock.getRol()).thenReturn("ADMIN");
+		when(usuarioEncontradoMock.getSuscripcion()).thenReturn(suscripcionMock);
+		when(suscripcionMock.getTipoSuscripcion()).thenReturn(tipoSuscripcionMock);
+		when(tipoSuscripcionMock.getNombre()).thenReturn("sin plan");
 
 		when(requestMock.getSession()).thenReturn(sessionMock);
 		when(servicioLoginMock.consultarUsuario(anyString(), anyString())).thenReturn(usuarioEncontradoMock);
-		
-		// ejecucion
+
+		// Ejecución
 		ModelAndView modelAndView = controladorLogin.validarLogin(datosLoginMock, requestMock);
-		
-		// validacion
+
+		// Validación
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/inicio"));
 		verify(sessionMock, times(1)).setAttribute("ROL", usuarioEncontradoMock.getRol());
 	}
+
 
 	@Test
 	public void registrameSiUsuarioNoExisteDeberiaCrearUsuarioYVolverAlLogin() throws UsuarioExistente {
