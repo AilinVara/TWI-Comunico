@@ -40,4 +40,11 @@ public class RepositorioLeccionImpl implements RepositorioLeccion {
                 .setParameter("id", id)
                 .uniqueResult();
     }
+
+    @Override
+    public List<Leccion> obtenerLecciones() {
+        final Session session = sessionFactory.getCurrentSession();
+        return (List<Leccion>) session.createCriteria(Leccion.class)
+                .list();
+    }
 }

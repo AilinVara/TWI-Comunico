@@ -1,0 +1,16 @@
+<div id="timer">Tiempo restante: <span id="time-remaining" th:text="${tiempoRestante}">60</span> segundos</div>
+
+<script>
+    let timeRemaining = parseInt(document.getElementById("time-remaining").textContent);
+
+    const countdown = setInterval(() => {
+        timeRemaining--;
+        document.getElementById("time-remaining").textContent = timeRemaining;
+
+        if (timeRemaining <= 0) {
+            clearInterval(countdown);
+            alert("El tiempo ha expirado");
+            window.location.href = "/ejercicio/random"; // Redirigir al siguiente ejercicio aleatorio
+        }
+    }, 1000);
+</script>

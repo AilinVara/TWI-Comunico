@@ -40,6 +40,4 @@ public class EjercicioFormaPalabra extends Ejercicio{
     public void setLetras(String letras) {
         this.letras = letras;
     }
-
-
 }

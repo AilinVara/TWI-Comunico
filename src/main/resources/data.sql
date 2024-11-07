@@ -3,9 +3,20 @@ VALUES (5, CURRENT_TIMESTAMP);
 INSERT INTO Experiencia (cantidadExperiencia,nivel)
 VALUES(0,0);
 
-INSERT INTO Usuario (email, password, rol, activo, vida_id, comunicoPoints, experiencia_id, titulo)
-VALUES ('test@unlam.edu.ar', 'test', 'ADMIN', true, 1, 0, 1, 'Principiante');
+INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (1, 'sin plan', '* Sin beneficio');
+INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (2, 'basico', '* Corregir errores <br>* 500 comunicoPoints<br><br>');
+INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (3, 'estandar', '* Corregir errores <br>* + 15 ayudas disponibles <br>* 1000 comunicoPoints <br>');
+INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (4, 'premium', '* Corregir errores <br>* + 20 ayudas disponibles <br>* 1500 comunicoPoints <br>* Obtener vidas ilimitadas ');
+INSERT INTO suscripcion (id,tipo_suscripcion_id) values (1,1);
+INSERT INTO suscripcion (id,tipo_suscripcion_id) values (2,2);
+INSERT INTO suscripcion (id,tipo_suscripcion_id) values (3,3);
+INSERT INTO suscripcion (id,tipo_suscripcion_id) values (4,4);
 
+INSERT INTO codigodescuento(id) values (1);
+
+
+INSERT INTO Usuario (descripcion, email, emailVerificado, password, rol, activo, nombreDeUsuario, vida_id, comunicoPoints, experiencia_id, titulo, suscripcion_id)
+VALUES ('Interesado en aprender braille','test@unlam.edu.ar', true,'test', 'ADMIN', true,'TestUnlam', 1, 0, 1, 'Principiante', 1);
 
 INSERT INTO Opcion(id, descripcion) VALUES
                                         (1, 'A'),
@@ -59,7 +70,10 @@ INSERT INTO Leccion(id, tipo) VALUES
                                   (21, 'forma-palabras'),
                                   (22, 'forma-palabras'),
                                   (23, 'forma-palabras'),
-                                  (24, 'forma-palabras');
+                                  (24, 'forma-palabras'),
+                                  (25, 'desafio-velocidad'),
+                                  (26, 'desafio-velocidad'),
+                                  (27, 'desafio-velocidad');
 
 
 INSERT INTO EjercicioTraduccion(id, consigna, opcionCorrecta_id, tipoEjercicio, leccion_id) VALUES
@@ -88,7 +102,10 @@ INSERT INTO EjercicioTraduccion(id, consigna, opcionCorrecta_id, tipoEjercicio, 
                                                                                                 (32, 'Ejercicio 2:', 23, 'traduccion', 10),
                                                                                                 (33, 'Ejercicio 3:', 24, 'traduccion', 10),
                                                                                                 (34, 'Ejercicio 1:', 25, 'traduccion', 11),
-                                                                                                (35, 'Ejercicio 2:', 26, 'traduccion', 11);
+                                                                                                (35, 'Ejercicio 2:', 26, 'traduccion', 11),
+                                                                                                (72, 'Ejercicio 1:', 1, 'traduccion', 25),
+                                                                                                (73, 'Ejercicio 2:', 2, 'traduccion', 25),
+                                                                                                (74, 'Ejercicio 3:', 3, 'traduccion', 25);
 
 
 INSERT INTO EjercicioMatriz(id, puntos, letra, tipoEjercicio, leccion_id) VALUES
@@ -118,7 +135,10 @@ INSERT INTO EjercicioMatriz(id, puntos, letra, tipoEjercicio, leccion_id) VALUES
                                                                               (56, '110011', 'X', 'matriz', 19),
                                                                               (57, '110111', 'Y', 'matriz', 20),
                                                                               (58, '100111', 'Z', 'matriz', 20),
-                                                                              (59, '110011', 'X', 'matriz', 20);
+                                                                              (59, '110011', 'X', 'matriz', 20),
+                                                                              (75, '100000', 'A', 'matriz', 26),
+                                                                              (76, '101000', 'B', 'matriz', 26),
+                                                                              (77, '110000', 'C', 'matriz', 26);
 
 
 INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras, tipoEjercicio, leccion_id) VALUES
@@ -136,7 +156,10 @@ INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras, tipoEje
                                                                                                         (68, 'rey.png', 'REY', 'E, R, A, U, Y, M, N', 'forma_palabras', 23),
                                                                                                         (69, 'paz.png', 'PAZ', 'A, Z, M, P, T, L, R', 'forma_palabras', 24),
                                                                                                         (70, 'rio.png', 'RIO', 'R, O, M, I, L, T, S', 'forma_palabras', 24),
-                                                                                                        (71, 'mar.png', 'MAR', 'A, R, Z, M, T, B, L', 'forma_palabras', 24);
+                                                                                                        (71, 'mar.png', 'MAR', 'A, R, Z, M, T, B, L', 'forma_palabras', 24),
+                                                                                                        (78, 'gato.png', 'GATO', 'T, A, G, P, S, O, R', 'forma_palabras', 27),
+                                                                                                        (79, 'perro.png', 'PERRO', 'R, A, P, N, S, O, E', 'forma_palabras', 27),
+                                                                                                        (80, 'libro.png', 'LIBRO', 'L, O, B, N, S, I, R', 'forma_palabras', 27);
 
 INSERT INTO EjercicioTraduccionSenia(id, consigna, opcionCorrecta_id, tipoEjercicio, leccion_id) VALUES
                                                                                                      (4, 'Ejercicio 1:', 1, 'traduccionSenia', 12),

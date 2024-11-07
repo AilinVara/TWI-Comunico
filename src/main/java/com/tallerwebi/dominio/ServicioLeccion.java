@@ -7,5 +7,7 @@ public interface ServicioLeccion {
 
     Leccion obtenerLeccion(Long id);
 
+    List<Leccion> obtenerLecciones();
+
     List<Leccion> obtenerLeccionesPorTipo(String tipo);
 }

@@ -27,7 +27,14 @@ public class ServicioLeccionImpl implements ServicioLeccion {
     }
 
     @Override
+    public List<Leccion> obtenerLecciones() {
+        return this.repositorioLeccion.obtenerLecciones();
+    }
+
+    @Override
     public List<Leccion> obtenerLeccionesPorTipo(String tipo) {
         return this.repositorioLeccion.buscarPorTipo(tipo);
     }
+
+
 }

@@ -40,6 +40,9 @@ public class ControladorLogin {
             request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
             request.getSession().setAttribute("id", usuarioBuscado.getId());
             request.getSession().setAttribute("points", usuarioBuscado.getComunicoPoints());
+            request.getSession().setAttribute("suscripcion", usuarioBuscado.getSuscripcion());
+            request.getSession().setAttribute("tipoSuscripcion", usuarioBuscado.getSuscripcion().getTipoSuscripcion());
+            request.getSession().setAttribute("nombreSuscripcion", usuarioBuscado.getSuscripcion().getTipoSuscripcion().getNombre());
             return new ModelAndView("redirect:/inicio");
         } else {
             model.put("error", "Usuario o clave incorrecta");

@@ -8,4 +8,6 @@ public interface RepositorioLeccion {
     List<Leccion> buscarPorTipo(String tipo);
 
     Leccion buscarPorId(Long id);
+
+    List<Leccion> obtenerLecciones();
 }

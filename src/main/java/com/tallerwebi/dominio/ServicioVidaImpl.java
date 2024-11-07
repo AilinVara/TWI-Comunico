@@ -51,7 +51,7 @@ public class ServicioVidaImpl implements ServicioVida {
     @Override
     @Scheduled(fixedRate = 60000)
     public void regenerarVidasDeTodosLosUsuarios() {
-        List<Usuario> usuarios = repositorioUsuario.obtenerTodosLosUsuarios();
+        List<Usuario> usuarios = repositorioUsuario.buscarTodos();
 
         for (Usuario usuario : usuarios) {
             Vida vida = usuario.getVida();

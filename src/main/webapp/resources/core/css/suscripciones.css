@@ -1,0 +1,226 @@
+@import url(https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold);
+@font-face {
+    font-family: "Feather Bold";
+    src: url("TWI-Comunico/src/main/webapp/resources/core/fonts/feather_bold_by_typicalbro44_dee263c.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Feather Bold', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f9f8;
+    flex-direction: column;
+    width: 100%;
+}
+
+.pricing-plans {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.pricing-card {
+    position: relative;
+    width: 400px;
+    min-height: 500px;
+    max-height: 600px;
+    padding: 32px;
+    padding-bottom: 96px;
+    border-radius: 12px;
+    border: 2px solid #ececec;
+    background-color: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.pricing-card.basic {
+    --col: #1cb0f6;
+}
+
+.pricing-card.standard {
+    --col: #ff3c94;
+}
+
+.pricing-card.premium {
+    --col: #ff9600;
+}
+
+.pricing-card:hover {
+    border-color: var(--col);
+    transform: translateY(-10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.pricing-card .heading h4 {
+    padding-bottom: 12px;
+    color: var(--col);
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.pricing-card .heading p {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.pricing-card .price {
+    color: var(--col);
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.pricing-card .price sub {
+    color: #6c757d;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.pricing-card .features li {
+    padding-bottom: 12px;
+    color: #495057;
+    font-size: 16px;
+    text-align: left;
+}
+
+.pricing-card .features li i,
+.pricing-card .features li strong {
+    color: #495057;
+    font-size: 16px;
+    text-align: left;
+}
+
+.pricing-card .cta-btn {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid var(--col);
+    background-color: var(--col);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.pricing-card .cta-btn:hover {
+    background-color: white;
+    color: var(--col);
+    border: 2px solid var(--col);
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    font-size: 1em;
+    width: 100%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.footer-section h4 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    font-size: 1em;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-logo {
+    width: 100px;
+    margin-top: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #ddd;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.9em;
+}
+
+footer, header {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .pricing-plans {
+        padding: 32px;
+    }
+
+    .pricing-card {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+    }
+
+    .pricing-card .cta-btn {
+        width: 180px;
+    }
+}

@@ -82,7 +82,7 @@ public class ServicioVidaImplTest {
         when(usuarioMock.getVida()).thenReturn(vidaReal);
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.add(usuarioMock);
-        when(this.repositorioUsuario.obtenerTodosLosUsuarios()).thenReturn(usuarios);
+        when(this.repositorioUsuario.buscarTodos()).thenReturn(usuarios);
 
         this.servicioVida.regenerarVidasDeTodosLosUsuarios();
 
