@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -23,7 +24,6 @@ public class ControladorEjercicio {
     private ServicioExperiencia servicioExperiencia;
 
 
-
     @Autowired
     public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia) {
         this.servicioEjercicio = servicioEjercicio;
@@ -31,7 +31,6 @@ public class ControladorEjercicio {
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
         this.servicioExperiencia = servicioExperiencia;
-
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
@@ -45,7 +44,7 @@ public class ControladorEjercicio {
         modelo.put("vidas", vidas);
         modelo.put("ejercicio", ejercicio);
         modelo.put("indice", indice);
-        agregarTiempoRestanteAlModelo(modelo,usuarioId);
+        agregarTiempoRestanteAlModelo(modelo, usuarioId);
 
         Map<Class<? extends Ejercicio>, String> redirecciones = Map.of(
                 EjercicioTraduccion.class, "redirect:/braille/lecciones/traduccion",
@@ -72,9 +71,9 @@ public class ControladorEjercicio {
 
             modelo.put("opciones", opcionesDesordenadas);
             return new ModelAndView("ejercicio", modelo);
-        }else if(ejercicio instanceof EjercicioMatriz)
+        } else if (ejercicio instanceof EjercicioMatriz)
             return new ModelAndView("formaLetras", modelo);
-        else if(ejercicio instanceof EjercicioFormaPalabra){
+        else if (ejercicio instanceof EjercicioFormaPalabra) {
             EjercicioFormaPalabra ejercicioFormaPalabra = (EjercicioFormaPalabra) ejercicio;
             List<String> letras = servicioEjercicio.convertirLetrasALista(ejercicioFormaPalabra.getLetras());
             modelo.put("letras", letras);
@@ -91,6 +90,7 @@ public class ControladorEjercicio {
         ModelMap modelo = new ModelMap();
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
+        HttpSession session = request.getSession();
         ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
         Boolean resuelto;
         if (progreso == null) {
@@ -98,33 +98,32 @@ public class ControladorEjercicio {
             progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
         }
 
-        if(ejercicio instanceof EjercicioTraduccion){
+        if (ejercicio instanceof EjercicioTraduccion) {
             resuelto = this.servicioEjercicio.resolverEjercicioTraduccion((EjercicioTraduccion) ejercicio, Long.parseLong(respuesta));
 
             mav.setViewName("ejercicio");
-        }else if(ejercicio instanceof EjercicioMatriz){
+        } else if (ejercicio instanceof EjercicioMatriz) {
             EjercicioMatriz ejercicioMatriz = (EjercicioMatriz) ejercicio;
             resuelto = this.servicioEjercicio.resolverEjercicioMatriz(respuesta, ejercicioMatriz.getPuntos());
             mav.setViewName("formaLetras");
-        }else if(ejercicio instanceof  EjercicioFormaPalabra){
+        } else if (ejercicio instanceof EjercicioFormaPalabra) {
             EjercicioFormaPalabra ejercicioFormaPalabra = (EjercicioFormaPalabra) ejercicio;
             resuelto = this.servicioEjercicio.resolverEjercicioFormaPalabras(ejercicioFormaPalabra.getRespuestaCorrecta(), respuesta);
             mav.setViewName("ejercicios-forma-palabra");
-        }else{
+        } else {
             resuelto = this.servicioEjercicio.resolverEjercicioTraduccionSenia((EjercicioTraduccionSenia) ejercicio, Long.parseLong(respuesta));
             mav.setViewName("ejercicio-video");
         }
-        if (resuelto){
+        if (resuelto) {
             this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
-        } else {
-
+        } else if(!session.getAttribute("nombreSuscripcion").equals("premium")){
             this.servicioVida.perderUnaVida(usuarioId);
         }
 
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
         modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
-        agregarTiempoRestanteAlModelo(modelo,usuarioId);
+        agregarTiempoRestanteAlModelo(modelo, usuarioId);
         modelo.put("indice", indice);
         modelo.put("leccion", leccionId);
         modelo.put("ejercicio", ejercicio);
