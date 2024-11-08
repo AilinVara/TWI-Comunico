@@ -1,4 +1,5 @@
 package com.tallerwebi.dominio;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.annotation.Rollback;
@@ -41,6 +42,7 @@ public class ServicioTituloImplTest {
         //when(servicioExperienciaMock.obtenerExperiencia(usuario.getId())).thenReturn(experiencia);
 
     }
+
     @Test
     @Rollback
     @Transactional
@@ -58,6 +60,7 @@ public class ServicioTituloImplTest {
 
         assertThat(usuario.getTitulo(), equalTo("Novato"));
     }
+
     @Test
     @Rollback
     @Transactional

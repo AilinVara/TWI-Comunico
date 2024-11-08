@@ -171,6 +171,7 @@ public class ControladorEjercicioTest {
         when(requestMock.getSession()).thenReturn(sessionMock);
         when(sessionMock.getAttribute(anyString())).thenReturn(1L);
         when(servicioProgresoLeccionMock.buscarPorIds(anyLong(), anyLong(), anyLong())).thenReturn(progresoMock);
+        when(requestMock.getAttribute("nombreSuscripcion")).thenReturn("sin plan");
         when(servicioEjercicioMock.resolverEjercicioTraduccion(ejercicioTraduccionMock, Long.parseLong(opcionIncorrecta))).thenReturn(false);
         ModelAndView modelAndView = controladorEjercicio.resolverEjercicio(1L, opcionIncorrecta, 1L, 1L, requestMock);
 
