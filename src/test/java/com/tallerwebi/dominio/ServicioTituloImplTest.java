@@ -17,6 +17,7 @@ public class ServicioTituloImplTest {
     RepositorioUsuario repositorioUsuarioMock;
     RepositorioExperiencia repositorioExperienciaMock;
     ServicioTitulo servicioTitulo;
+    RepositorioVida repositorioVidaMock;
 
 
     @BeforeEach
@@ -26,8 +27,9 @@ public class ServicioTituloImplTest {
 
         this.repositorioUsuarioMock = mock(RepositorioUsuario.class);
         this.repositorioExperienciaMock = mock(RepositorioExperiencia.class);
+        this.repositorioVidaMock = mock(RepositorioVida.class);
         servicioExperienciaMock = new ServicioExperienciaImpl(repositorioUsuarioMock, repositorioExperienciaMock);
-        servicioTitulo = new ServicioTituloImpl(repositorioUsuarioMock);
+        servicioTitulo = new ServicioTituloImpl(repositorioUsuarioMock, repositorioVidaMock);
         when(repositorioExperienciaMock.buscarExperienciaPorId(experiencia.getId())).thenReturn(experiencia);
         when(repositorioUsuarioMock.buscarUsuarioPorId(usuario.getId())).thenReturn(usuario);
         //when(usuario.getExperiencia()).thenReturn(experiencia);
