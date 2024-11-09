@@ -8,10 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class ServicioTituloImpl implements ServicioTitulo{
 
     private RepositorioUsuario repositorioUsuario;
+    private RepositorioVida repositorioVida;
 
     @Autowired
-    public ServicioTituloImpl(RepositorioUsuario repositorioUsuario) {
+    public ServicioTituloImpl(RepositorioUsuario repositorioUsuario, RepositorioVida repositorioVida) {
         this.repositorioUsuario = repositorioUsuario;
+        this.repositorioVida = repositorioVida;
     }
 
     @Override
@@ -41,5 +43,30 @@ public class ServicioTituloImpl implements ServicioTitulo{
             repositorioUsuario.guardar(usuario);
         }
     }
+    @Override
+    public void obtenerVidasYComunicoPointsCuandoConsigueTitulo(Long usuarioId){
 
+        Usuario usuario = repositorioUsuario.buscarUsuarioPorId(usuarioId);
+        Vida vida = repositorioVida.buscarUnaVidaPorId(usuarioId);
+        Integer comunicoPoints = usuario.getComunicoPoints();
+        String titulo = usuario.getTitulo();
+
+
+        switch (titulo) {
+            case "Novato":
+                usuario.setComunicoPoints(usuario.getComunicoPoints() + 20);
+                break;
+            case "Amateur":
+                usuario.setComunicoPoints(usuario.getComunicoPoints() + 40);
+                break;
+            case "Experto ":
+                usuario.setComunicoPoints(usuario.getComunicoPoints() + 60);
+                break;
+            case "Comunicador ":
+                usuario.setComunicoPoints(usuario.getComunicoPoints() + 100);
+                break;
+            default:
+
+        }
+    }
 }
