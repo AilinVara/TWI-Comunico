@@ -11,12 +11,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ServicioTituloImplTest {
-    ServicioExperiencia servicioExperiencia;
+    ServicioExperiencia servicioExperienciaMock;
     Usuario usuario;
     Experiencia experiencia;
     RepositorioUsuario repositorioUsuarioMock;
     RepositorioExperiencia repositorioExperienciaMock;
     ServicioTitulo servicioTitulo;
+    RepositorioVida repositorioVidaMock;
 
 
     @BeforeEach
@@ -26,8 +27,9 @@ public class ServicioTituloImplTest {
 
         this.repositorioUsuarioMock = mock(RepositorioUsuario.class);
         this.repositorioExperienciaMock = mock(RepositorioExperiencia.class);
-        servicioExperiencia = new ServicioExperienciaImpl(repositorioUsuarioMock, repositorioExperienciaMock);
-        servicioTitulo = new ServicioTituloImpl(repositorioUsuarioMock);
+        this.repositorioVidaMock = mock(RepositorioVida.class);
+        servicioExperienciaMock = new ServicioExperienciaImpl(repositorioUsuarioMock, repositorioExperienciaMock);
+        servicioTitulo = new ServicioTituloImpl(repositorioUsuarioMock, repositorioVidaMock);
         when(repositorioExperienciaMock.buscarExperienciaPorId(experiencia.getId())).thenReturn(experiencia);
         when(repositorioUsuarioMock.buscarUsuarioPorId(usuario.getId())).thenReturn(usuario);
         //when(usuario.getExperiencia()).thenReturn(experiencia);
@@ -43,7 +45,7 @@ public class ServicioTituloImplTest {
         this.repositorioExperienciaMock.guardarExperiencia(experiencia);
         this.repositorioUsuarioMock.guardar(usuario);
 
-        this.servicioExperiencia.ganar100DeExperiencia(usuario.getId());
+        this.servicioExperienciaMock.ganar100DeExperiencia(usuario.getId());
         this.repositorioExperienciaMock.actualizarExperiencia(experiencia);
 
         assertThat(experiencia.getCantidadExperiencia(), equalTo(500));
@@ -60,7 +62,7 @@ public class ServicioTituloImplTest {
         this.repositorioExperienciaMock.guardarExperiencia(experiencia);
         this.repositorioUsuarioMock.guardar(usuario);
 
-        this.servicioExperiencia.ganar100DeExperiencia(usuario.getId());
+        this.servicioExperienciaMock.ganar100DeExperiencia(usuario.getId());
         this.repositorioExperienciaMock.actualizarExperiencia(experiencia);
 
         assertThat(experiencia.getCantidadExperiencia(), equalTo(5000));

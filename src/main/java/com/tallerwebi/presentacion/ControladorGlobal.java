@@ -81,6 +81,7 @@ public class ControladorGlobal {
             return "usuarioNull";
         }
         servicioTitulo.actualizarTituloSegunExperiencia(usuarioId);
+        servicioTitulo.obtenerVidasYComunicoPointsCuandoConsigueTitulo(usuarioId);
         return servicioTitulo.obtenerTitulo(usuarioId);
     }
 
