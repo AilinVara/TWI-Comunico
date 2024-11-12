@@ -19,7 +19,7 @@ public interface RepositorioUsuario {
     void eliminarUsuario(Usuario usuario);
     void eliminarRelacionesDeAmistad(Usuario usuario);
     Usuario buscarPorToken(String token);
-//    List<Compra> historialDeCompras(Usuario usuario);
-//    Integer cantidadDeCompras(Usuario usuario, LocalDateTime fechaCompraPlan);
+    List<Compra> historialDeCompras(Usuario usuario);
+    Integer cantidadDeCompras(Usuario usuario, LocalDateTime fechaCompraPlan);
 }
 

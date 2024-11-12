@@ -15,9 +15,13 @@ INSERT INTO suscripcion (id,tipo_suscripcion_id) values (4,4);
 INSERT INTO codigodescuento(id) values (1);
 
 
-INSERT INTO Usuario (descripcion, email, emailVerificado, password, rol, activo, nombreDeUsuario, vida_id, comunicoPoints, experiencia_id, titulo, suscripcion_id)
-VALUES ('Interesado en aprender braille','test@unlam.edu.ar', true,'test', 'ADMIN', true,'TestUnlam', 1, 0, 1, 'Principiante', 1);
-
+INSERT INTO Usuario (descripcion, email, emailVerificado, password, rol, activo, nombreDeUsuario, foto, vida_id, comunicoPoints, experiencia_id, titulo, suscripcion_id)
+VALUES ('Interesado en aprender braille','test@unlam.edu.ar', true,'test', 'ADMIN', true,'TestUnlam', 'perfil-icon.png',1, 0, 1, 'Principiante', 1),
+       ('Hola, soy Martín y me gusta aprender de todo','martin@gmail.com', true,'test', 'ADMIN', true,'Maertín', 'perfil-icon.png',1, 0, 1, 'Principiante', 1),
+       ('Soy Mateo y me apasiona la lengua de seña','mateo@gmail.com', true,'test', 'ADMIN', true,'Matthew', 'perfil-icon.png',1, 0, 1, 'Principiante', 1),
+       ('Mi nombre es Juli y soy un líder nato','julian@gmail.com', true,'test', 'ADMIN', true,'Juli', 'perfil-icon.png',1, 0, 1, 'Principiante', 1),
+       ('Soy','pedro@gmail.com', true,'test', 'ADMIN', true,'Ricartes123', 'perfil-icon.png',1, 0, 1, 'Principiante', 1),
+       ('Les traigo paz','ailin@gmail.com', true,'test', 'ADMIN', true,'Lira', 'perfil-icon.png',1, 0, 1, 'Principiante', 1);
 INSERT INTO Opcion(id, descripcion) VALUES
                                         (1, 'A'),
                                         (2, 'B'),
