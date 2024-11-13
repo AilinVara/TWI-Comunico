@@ -24,6 +24,13 @@
                 <div class="nombre">
                     <h2 th:text="${usuario.getNombreDeUsuario()}"></h2>
                 </div>
+
+                <div class="barra-experiencia">
+                    <div class="experiencia-llena">
+                        <p><span th:text="${experiencia}">0</span>/5000XP</p>
+                    </div>
+                </div>
+
             </div>
             <div class="descripcion">
                 <h4>Descripción:</h4>
