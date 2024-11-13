@@ -10,6 +10,7 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <header th:replace="header :: header"></header>
@@ -25,11 +26,6 @@
                     <h2 th:text="${usuario.getNombreDeUsuario()}"></h2>
                 </div>
 
-                <div class="barra-experiencia">
-                    <div class="experiencia-llena">
-                        <p><span th:text="${experiencia}">0</span>/5000XP</p>
-                    </div>
-                </div>
 
             </div>
             <div class="descripcion">
@@ -40,8 +36,14 @@
                 </div>
                 <button type="button" class="btn btn-primary configuracion" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
-                    Editar
+                    <i class="fa-solid fa-pen-to-square"></i>
                 </button>
+
+                <div class="barra-experiencia">
+                    <div class="experiencia-llena">
+                        <p><span th:text="${experiencia}">0</span>/5000XP</p>
+                    </div>
+                </div>
             </div>
         </div>
 
