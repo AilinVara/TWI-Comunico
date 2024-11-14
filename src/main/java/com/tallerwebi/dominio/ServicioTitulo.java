@@ -6,5 +6,7 @@ public interface ServicioTitulo {
 
     void actualizarTituloSegunExperiencia(Long usuarioId);
 
-    void obtenerVidasYComunicoPointsCuandoConsigueTitulo(Long usuarioId);
+    void obtenerComunicoPointsCuandoConsigueTitulo(Long usuarioId);
+
+    int obtenerTiempoRegeneracionPorTitulo(Long usuarioId);
 }

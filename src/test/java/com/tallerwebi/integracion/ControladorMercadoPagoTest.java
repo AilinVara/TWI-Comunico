@@ -58,8 +58,8 @@ public class ControladorMercadoPagoTest {
         this.repositorioExperiencia = new RepositorioExperienciaImpl(sessionFactory);
         this.servicioUsuario = new ServicioUsuarioImpl(repositorioUsuario);
         this.repositorioVida = new RepositorioVidaImpl(sessionFactory);
-        this.servicioVida = new ServicioVidaImpl(repositorioVida,repositorioUsuario);
         this.servicioTitulo = new ServicioTituloImpl(repositorioUsuario, repositorioVida);
+        this.servicioVida = new ServicioVidaImpl(repositorioVida,repositorioUsuario, servicioTitulo);
         this.servicioExperiencia = new ServicioExperienciaImpl(repositorioUsuario,repositorioExperiencia);
 
     }

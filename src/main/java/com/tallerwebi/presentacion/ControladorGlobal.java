@@ -31,17 +31,27 @@ public class ControladorGlobal {
         this.servicioTitulo = servicioTitulo;
     }
 
-    @ModelAttribute
-    public void addAttributes(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-            Integer monedas = (Integer) session.getAttribute("points");
-            if (monedas != null) {
-                model.addAttribute("points", monedas);
-            }
-        }
+//    @ModelAttribute
+//    public void addAttributes(HttpServletRequest request, Model model) {
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            Integer monedas = (Integer) session.getAttribute("points");
+//            if (monedas != null) {
+//                model.addAttribute("points", monedas);
+//
+//            }
+//        }
+//    }
+    @ModelAttribute("points")
+    public Integer obtenerComunicoPoints(HttpServletRequest request) {
+    Long usuarioId = (Long) request.getSession().getAttribute("id");
+    if (usuarioId == null) {
+        return 0;
     }
+    Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+    return usuario.getComunicoPoints();
+    }
+
     @ModelAttribute("experiencia")
     public Integer obtenerExperienciaDelUsuario(HttpServletRequest request) {
 
@@ -67,7 +77,7 @@ public class ControladorGlobal {
         if (usuarioId == null) {
             return 0L;
         }
-        return calcularTiempoRestante(usuarioId);
+        return calcularTiempoRestante(request);
     }
 
     @ModelAttribute("titulo")
@@ -76,8 +86,10 @@ public class ControladorGlobal {
         if (usuarioId == null) {
             return "usuarioNull";
         }
+
         servicioTitulo.actualizarTituloSegunExperiencia(usuarioId);
-        servicioTitulo.obtenerVidasYComunicoPointsCuandoConsigueTitulo(usuarioId);
+        servicioTitulo.obtenerComunicoPointsCuandoConsigueTitulo(usuarioId);
+        servicioVida.regenerarVidasDeTodosLosUsuarios();
         return servicioTitulo.obtenerTitulo(usuarioId);
     }
 
@@ -86,10 +98,41 @@ public class ControladorGlobal {
         return new ModelAndView("titulosUsuario");
     }
 
-    private Long calcularTiempoRestante(Long usuarioId) {
+    @ModelAttribute("tiempoRestante")
+    public Long calcularTiempoRestante(HttpServletRequest request) {
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return 0L;
+        }
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+        if (usuario == null) {
+            return 0L;
+        }
         Vida vida = servicioVida.obtenerVida(usuarioId);
         LocalDateTime ahora = LocalDateTime.now();
         Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
-        return 120 - (duracion.getSeconds() % 120);
+
+        String titulo = usuario.getTitulo().trim();
+        long tiempoRegeneracion = 120; // (2 horas)
+
+        switch (titulo) {
+            case "Novato":
+                tiempoRegeneracion = 115;  // 1 hora 55 minutos
+                break;
+            case "Amateur":
+                tiempoRegeneracion = 110;  // 1 hora 50 minutos
+                break;
+            case "Experto":
+                tiempoRegeneracion = 100;  // 1 hora 40 minutos
+                break;
+            case "Comunicador":
+                tiempoRegeneracion = 90;   // 1 hora 30 minutos
+                break;
+            default:
+                break;
+        }
+
+        return tiempoRegeneracion * 60 - (duracion.getSeconds() % (tiempoRegeneracion * 60));
     }
 }
+

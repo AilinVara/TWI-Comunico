@@ -24,7 +24,16 @@
        .barra-experiencia p {
        margin-left: 7px;
        }
+.titulosUsuario i {
+color: #ffb34c;
+}
+.recompensa{
+    font-size: 16px;
+    background-color: #000000d6;
+    border-radius: 5px;
+    color: white;
 
+    }
 .titulosUsuarioOrden {
     display: flex;
     flex-direction: row;

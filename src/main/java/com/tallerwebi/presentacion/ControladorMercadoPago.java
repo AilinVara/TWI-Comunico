@@ -6,6 +6,7 @@ import com.mercadopago.client.preference.PreferenceClient;
 import com.mercadopago.client.preference.PreferenceItemRequest;
 import com.mercadopago.client.preference.PreferenceRequest;
 import com.mercadopago.resources.preference.Preference;
+import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.ServicioUsuario;
 import com.tallerwebi.dominio.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,11 @@ import java.util.Map;
 public class ControladorMercadoPago {
 
     private ServicioUsuario servicioUsuario;
+    private RepositorioUsuario repositorioUsuario;
 
     @Autowired
-    public ControladorMercadoPago(ServicioUsuario servicioUsuario) {
+    public ControladorMercadoPago(ServicioUsuario servicioUsuario, RepositorioUsuario repositorioUsuario ) {
+        this.repositorioUsuario = repositorioUsuario;
         this.servicioUsuario = servicioUsuario;
     }
 
@@ -83,8 +86,8 @@ public class ControladorMercadoPago {
                 Integer cantidad = Integer.parseInt(cantidadParam);
                 Usuario usuario = this.servicioUsuario.buscarUsuarioPorId(idUsuario);
                 usuario.setComunicoPoints(usuario.getComunicoPoints() + cantidad);
-                this.servicioUsuario.modificar(usuario);
-                request.getSession().setAttribute("points", usuario.getComunicoPoints());
+                this.repositorioUsuario.guardar(usuario);
+                //request.getSession().setAttribute("points", usuario.getComunicoPoints());
                 modelo.put("points", usuario.getComunicoPoints());
                 modelo.put("alerta", "Compra realizada satisfactoriamente.");
                 modelo.put("tipoAlerta", "success");
