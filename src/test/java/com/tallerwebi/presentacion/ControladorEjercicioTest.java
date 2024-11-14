@@ -33,6 +33,7 @@ public class ControladorEjercicioTest {
     private ServicioVida servicioVidaMock;
     private ServicioExperiencia servicioExperienciaMock;
     private ServicioUsuario servicioUsuarioMock;
+    private Usuario usuarioMock;
 
     @BeforeEach
     public void init() {
@@ -44,6 +45,7 @@ public class ControladorEjercicioTest {
         progresoMock = mock(ProgresoLeccion.class);
         sessionMock = mock(HttpSession.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
+        usuarioMock = mock(Usuario.class);
 
         Opcion opcionCorrectaMock = mock(Opcion.class);
         when(opcionCorrectaMock.getId()).thenReturn(1L);
@@ -126,5 +128,89 @@ public class ControladorEjercicioTest {
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
         assertThat(modelAndView.getModel().get("esCorrecta"), is(false));
     }
+
+    @Test
+    public void usarAyudaEnEjercicioTraduccionDebeRetornarLaVistaEjercicioYDosOpcionesEnElModelo() {
+        when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioTraduccionMock);
+        when(servicioVidaMock.obtenerVida(anyLong())).thenReturn(mock(Vida.class));
+        when(requestMock.getSession()).thenReturn(sessionMock);
+        when(sessionMock.getAttribute(anyString())).thenReturn(1L);
+        when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
+        List<Ejercicio> lista = new ArrayList<>();
+        lista.add(ejercicioTraduccionMock);
+        leccionMock.setEjercicios(lista);
+        when(leccionMock.getEjercicios()).thenReturn(lista);
+        when(servicioUsuarioMock.buscarUsuarioPorId(anyLong())).thenReturn(usuarioMock);
+        when(usuarioMock.getAyudas()).thenReturn(4);
+
+        ModelAndView modelAndView = controladorEjercicio.usarAyuda(1L, 1, requestMock);
+
+        List<Opcion> opciones = (List<Opcion>) modelAndView.getModel().get("opciones");
+
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
+        assertThat(opciones, is(notNullValue()));
+        assertThat(opciones.size(), equalTo(2));
+    }
+
+    @Test
+    public void usarAyudaEnEjercicioMatrizDebeRetornarLaVistaFormaLetrasYUnPuntoEnElModelo() {
+        EjercicioMatriz ejercicioMatrizMock = mock(EjercicioMatriz.class);
+        when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioMatrizMock);
+        when(servicioVidaMock.obtenerVida(anyLong())).thenReturn(mock(Vida.class));
+        when(requestMock.getSession()).thenReturn(sessionMock);
+        when(sessionMock.getAttribute(anyString())).thenReturn(1L);
+        when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
+        List<Ejercicio> lista = new ArrayList<>();
+        lista.add(ejercicioMatrizMock);
+        leccionMock.setEjercicios(lista);
+        when(leccionMock.getEjercicios()).thenReturn(lista);
+        when(servicioUsuarioMock.buscarUsuarioPorId(anyLong())).thenReturn(usuarioMock);
+        when(usuarioMock.getAyudas()).thenReturn(4);
+        when(ejercicioMatrizMock.getPuntos()).thenReturn("100100");
+
+        ModelAndView modelAndView = controladorEjercicio.usarAyuda(1L, 1, requestMock);
+        
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("formaLetras"));
+        assertThat(modelAndView.getModel().get("punto"), is(notNullValue()));
+    }
+
+    @Test
+        public void usarAyudaEnEjercicioFormaPalabraDebeRetornarLaVistaEjercicioFormaPalabraYUnaLetraMenosEnLasOpcionesDeLetras() {
+        EjercicioFormaPalabra ejercicioPalabraMock = mock(EjercicioFormaPalabra.class);
+        when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioPalabraMock);
+        when(servicioVidaMock.obtenerVida(anyLong())).thenReturn(mock(Vida.class));
+        when(requestMock.getSession()).thenReturn(sessionMock);
+        when(sessionMock.getAttribute(anyString())).thenReturn(1L);
+        when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
+        List<Ejercicio> lista = new ArrayList<>();
+        lista.add(ejercicioPalabraMock);
+        leccionMock.setEjercicios(lista);
+        when(leccionMock.getEjercicios()).thenReturn(lista);
+        when(servicioUsuarioMock.buscarUsuarioPorId(anyLong())).thenReturn(usuarioMock);
+        when(usuarioMock.getAyudas()).thenReturn(4);
+        when(ejercicioPalabraMock.getLetras()).thenReturn("P, R, U, E, B, A, Z");
+        when(ejercicioPalabraMock.getRespuestaCorrecta()).thenReturn("PRUEBA");
+        when(servicioEjercicioMock.convertirLetrasALista(ejercicioPalabraMock.getLetras())).thenReturn(obtenerLetrasALista());
+
+        ModelAndView modelAndView = controladorEjercicio.usarAyuda(1L, 1, requestMock);
+
+        List<String> letras = (List<String>) modelAndView.getModel().get("letras");
+
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicios-forma-palabra"));
+        assertThat(letras.size(), equalTo(6));
+    }
+
+    private static List<String> obtenerLetrasALista() {
+        List<String> letrasLista = new ArrayList<>();
+        letrasLista.add("P");
+        letrasLista.add("R");
+        letrasLista.add("U");
+        letrasLista.add("E");
+        letrasLista.add("B");
+        letrasLista.add("A");
+        letrasLista.add("Z");
+        return letrasLista;
+    }
+
 
 }

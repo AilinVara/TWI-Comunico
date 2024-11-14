@@ -3,7 +3,6 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -134,7 +133,7 @@ public class ControladorEjercicio {
     }
 
     @RequestMapping(value = "/ejercicio/{indice}/ayuda")
-    public ModelAndView usarAyuda(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request, Model model) {
+    public ModelAndView usarAyuda(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request) {
         ModelMap modelo = new ModelMap();
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
@@ -144,7 +143,6 @@ public class ControladorEjercicio {
         modelo.put("vidas", vidas);
         modelo.put("ejercicio", ejercicio);
         modelo.put("indice", indice);
-        agregarTiempoRestanteAlModelo(modelo, usuarioId);
 
         Usuario usuario = this.servicioUsuario.buscarUsuarioPorId(usuarioId);
         usuario.setAyudas(usuario.getAyudas()-1);
