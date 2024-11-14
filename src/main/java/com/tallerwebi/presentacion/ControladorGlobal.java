@@ -40,6 +40,10 @@ public class ControladorGlobal {
             if (monedas != null) {
                 model.addAttribute("points", monedas);
             }
+            Integer ayudas = (Integer) session.getAttribute("ayudas");
+            if (ayudas != null) {
+                model.addAttribute("ayudas", ayudas);
+            }
         }
     }
     @ModelAttribute("experiencia")

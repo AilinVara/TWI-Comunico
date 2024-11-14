@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,17 +22,16 @@ public class ControladorEjercicio {
     private ServicioProgresoLeccion servicioProgresoLeccion;
     private ServicioVida servicioVida;
     private ServicioExperiencia servicioExperiencia;
-
-
+    private ServicioUsuario servicioUsuario;
 
     @Autowired
-    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia) {
+    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia, ServicioUsuario servicioUsuario) {
         this.servicioEjercicio = servicioEjercicio;
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
         this.servicioExperiencia = servicioExperiencia;
-
+        this.servicioUsuario = servicioUsuario;
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
@@ -133,22 +133,89 @@ public class ControladorEjercicio {
         return mav;
     }
 
-    @RequestMapping(value = "/ejercicio-video", method = RequestMethod.GET)
-    public ModelAndView irAEjercicioVideo(@RequestParam(required = false, defaultValue = "2", value = "id") Long id) {
+    @RequestMapping(value = "/ejercicio/{indice}/ayuda")
+    public ModelAndView usarAyuda(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request, Model model) {
         ModelMap modelo = new ModelMap();
-        Ejercicio ejercicioVideo = servicioEjercicio.obtenerEjercicio(id);
-        modelo.put("ejercicio", ejercicioVideo);
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
+        modelo.put("leccion", leccionId);
+        Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
+        Ejercicio ejercicio = leccion.getEjercicios().get(indice - 1);
+        modelo.put("vidas", vidas);
+        modelo.put("ejercicio", ejercicio);
+        modelo.put("indice", indice);
+        agregarTiempoRestanteAlModelo(modelo, usuarioId);
+
+        Usuario usuario = this.servicioUsuario.buscarUsuarioPorId(usuarioId);
+        usuario.setAyudas(usuario.getAyudas()-1);
+        this.servicioUsuario.modificar(usuario);
+
+        request.getSession().setAttribute("ayudas", usuario.getAyudas());
+        modelo.put("ayudas", usuario.getAyudas());
+
+        if (ejercicio instanceof EjercicioTraduccion) {
+            EjercicioTraduccion ejercicioTraduccion = (EjercicioTraduccion) ejercicio;
+
+            Set<Opcion> opciones = new HashSet<>();
+            Set<Opcion> opcionesIncorrectas = ejercicioTraduccion.getOpcionesIncorrectas();
+
+            Opcion opcionIncorrecta = opcionesIncorrectas.iterator().next();
+
+            opciones.add(opcionIncorrecta);
+            opciones.add(ejercicioTraduccion.getOpcionCorrecta());
+
+            List<Opcion> opcionesDesordenadas = new ArrayList<>(opciones);
+            Collections.shuffle(opcionesDesordenadas);
+
+            modelo.put("opciones", opcionesDesordenadas);
+            return new ModelAndView("ejercicio", modelo);
+        } else if (ejercicio instanceof EjercicioMatriz) {
+            EjercicioMatriz ejercicioMatriz = (EjercicioMatriz) ejercicio;
+
+            String puntosLetra = ejercicioMatriz.getPuntos();
+            int primerUno = puntosLetra.indexOf('1');
+
+            modelo.put("punto", primerUno);
+            return new ModelAndView("formaLetras", modelo);
+        } else if (ejercicio instanceof EjercicioFormaPalabra) {
+            EjercicioFormaPalabra ejercicioFormaPalabra = (EjercicioFormaPalabra) ejercicio;
+            String respuestaCorrecta = ejercicioFormaPalabra.getRespuestaCorrecta();
+            List<String> letrasListaOriginal = servicioEjercicio.convertirLetrasALista(ejercicioFormaPalabra.getLetras());
+
+            List<String> letrasLista = new ArrayList<>();
+
+            int contadorEliminados = 0;
+
+            for (String letra : letrasListaOriginal) {
+                if (!respuestaCorrecta.contains(letra) && contadorEliminados < 1) {
+                    contadorEliminados++;
+                } else {
+                    letrasLista.add(letra);
+                }
+            }
+
+            modelo.put("letras", letrasLista);
+            return new ModelAndView("ejercicios-forma-palabra", modelo);
+        }
         return new ModelAndView("ejercicio-video", modelo);
     }
 
-    private void agregarTiempoRestanteAlModelo(ModelMap modelo, Long usuarioId) {
-        Vida vida = this.servicioVida.obtenerVida(usuarioId);
-        LocalDateTime ahora = LocalDateTime.now();
-        Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
-        long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
-        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60); // Cada 60 segundos
-        modelo.put("tiempoRestante", tiempoRestante);
-    }
+        @RequestMapping(value = "/ejercicio-video", method = RequestMethod.GET)
+        public ModelAndView irAEjercicioVideo (@RequestParam(required = false, defaultValue = "2", value = "id") Long id)
+        {
+            ModelMap modelo = new ModelMap();
+            Ejercicio ejercicioVideo = servicioEjercicio.obtenerEjercicio(id);
+            modelo.put("ejercicio", ejercicioVideo);
+            return new ModelAndView("ejercicio-video", modelo);
+        }
 
-}
+        private void agregarTiempoRestanteAlModelo (ModelMap modelo, Long usuarioId){
+            Vida vida = this.servicioVida.obtenerVida(usuarioId);
+            LocalDateTime ahora = LocalDateTime.now();
+            Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
+            long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
+            long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60); // Cada 60 segundos
+            modelo.put("tiempoRestante", tiempoRestante);
+        }
+    }
 
