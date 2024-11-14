@@ -21,6 +21,7 @@ public class Usuario {
     private Integer comunicoPoints;
     private Integer ayudas;
     private String titulo = "Principiante";
+    private String ultimoTitulo;
     private String descripcion;
     private String nombre;
     private String apellido;
@@ -213,6 +214,10 @@ public class Usuario {
     public void setEmailVerificado(Boolean emailVerificado) {
         this.emailVerificado = emailVerificado;
     }
+
+    public String getUltimoTitulo() {return ultimoTitulo;}
+
+    public void setUltimoTitulo(String ultimoTitulo) {this.ultimoTitulo = ultimoTitulo;}
 
     @Override
     public boolean equals(Object o) {

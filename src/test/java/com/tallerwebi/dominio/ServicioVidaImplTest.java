@@ -20,7 +20,8 @@ public class ServicioVidaImplTest {
     RepositorioVida repositorioVidaMock;
     Vida vidaMock;
     Usuario usuarioMock;
-    RepositorioUsuario repositorioUsuario;
+    RepositorioUsuario repositorioUsuarioMock;
+    ServicioTitulo servicioTitulo;
 
     @BeforeEach
     public void init() {
@@ -28,10 +29,11 @@ public class ServicioVidaImplTest {
         vidaMock = mock(Vida.class);
         usuarioMock = mock(Usuario.class);
         this.repositorioVidaMock = mock(RepositorioVida.class);
-        this.repositorioUsuario = mock(RepositorioUsuario.class);
-        servicioVida = new ServicioVidaImpl(repositorioVidaMock, repositorioUsuario);
+        this.repositorioUsuarioMock = mock(RepositorioUsuario.class);
+        servicioTitulo = new ServicioTituloImpl(repositorioUsuarioMock,repositorioVidaMock);
+        servicioVida = new ServicioVidaImpl(repositorioVidaMock, repositorioUsuarioMock, servicioTitulo);
         when(repositorioVidaMock.buscarUnaVidaPorId(vidaMock.getId())).thenReturn(vidaMock);
-        when(repositorioUsuario.buscarUsuarioPorId(usuarioMock.getId())).thenReturn(usuarioMock);
+        when(repositorioUsuarioMock.buscarUsuarioPorId(usuarioMock.getId())).thenReturn(usuarioMock);
         when(usuarioMock.getVida()).thenReturn(vidaMock);
         when(servicioVida.obtenerVida(usuarioMock.getId())).thenReturn(vidaMock);
 
@@ -47,7 +49,7 @@ public class ServicioVidaImplTest {
         //vidaMock.setCantidadDeVidasActuales(3);
 
         this.repositorioVidaMock.guardarUnaVida(vidaMock);
-        this.repositorioUsuario.guardar(usuarioMock);
+        this.repositorioUsuarioMock.guardar(usuarioMock);
 
         Boolean resultado = this.servicioVida.perderUnaVida(usuarioMock.getId());
 
@@ -82,7 +84,7 @@ public class ServicioVidaImplTest {
         when(usuarioMock.getVida()).thenReturn(vidaReal);
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.add(usuarioMock);
-        when(this.repositorioUsuario.buscarTodos()).thenReturn(usuarios);
+        when(this.repositorioUsuarioMock.buscarTodos()).thenReturn(usuarios);
 
         this.servicioVida.regenerarVidasDeTodosLosUsuarios();
 

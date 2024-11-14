@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.ServicioUsuario;
 import com.tallerwebi.dominio.Usuario;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,13 +23,14 @@ public class ControladorMercadoPagoTest {
     private ServicioUsuario servicioUsuarioMock;
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
-
+    private RepositorioUsuario repositorioUsuarioMock;
     @BeforeEach
     public void init(){
         servicioUsuarioMock = mock(ServicioUsuario.class);
+        repositorioUsuarioMock = mock(RepositorioUsuario.class);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
-        controladorMercadoPago = new ControladorMercadoPago(servicioUsuarioMock);
+        controladorMercadoPago = new ControladorMercadoPago(servicioUsuarioMock, repositorioUsuarioMock);
     }
 
     @Test
