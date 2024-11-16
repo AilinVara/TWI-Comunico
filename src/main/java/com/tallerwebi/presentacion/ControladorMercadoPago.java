@@ -50,9 +50,9 @@ public class ControladorMercadoPago {
 
             PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest
                     .builder()
-                    .success("http://localhost:8080/comprar?quantity=" + cantidad)
-                    .pending("http://localhost:8080/comprar?quantity=" + cantidad)
-                    .failure("http://localhost:8080/comprar?quantity=" + cantidad)
+                    .success("http://localhost:8080/comprar?quantity="+cantidad)
+                    .pending("http://localhost:8080/comprar?quantity="+cantidad)
+                    .failure("http://localhost:8080/comprar?quantity="+cantidad)
                     .build();
 
 
@@ -71,15 +71,15 @@ public class ControladorMercadoPago {
     }
 
     @RequestMapping("/comprar")
-    public ModelAndView compra(@RequestParam Map<String, String> allParams, HttpServletRequest request) {
+    public ModelAndView compra(@RequestParam Map<String, String> allParams, HttpServletRequest request){
         ModelMap modelo = new ModelMap();
 
         String resultado = allParams.get("status");
         String cantidadParam = allParams.get("quantity");
 
         Long idUsuario = (Long) request.getSession().getAttribute("id");
-        if (resultado != null && cantidadParam != null) {
-            if (resultado.equals("approved")) {
+        if(resultado != null && cantidadParam != null){
+            if(resultado.equals("approved")){
                 Integer cantidad = Integer.parseInt(cantidadParam);
                 Usuario usuario = this.servicioUsuario.buscarUsuarioPorId(idUsuario);
                 usuario.setComunicoPoints(usuario.getComunicoPoints() + cantidad);
@@ -88,7 +88,8 @@ public class ControladorMercadoPago {
                 modelo.put("points", usuario.getComunicoPoints());
                 modelo.put("alerta", "Compra realizada satisfactoriamente.");
                 modelo.put("tipoAlerta", "success");
-            } else {
+            }
+            else{
                 modelo.put("alerta", "No pudimos procesar la compra.");
                 modelo.put("tipoAlerta", "error");
             }
