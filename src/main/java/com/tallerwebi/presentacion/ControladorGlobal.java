@@ -42,15 +42,25 @@ public class ControladorGlobal {
 //            }
 //        }
 //    }
-    @ModelAttribute("points")
-    public Integer obtenerComunicoPoints(HttpServletRequest request) {
+@ModelAttribute("points")
+public Integer obtenerComunicoPoints(HttpServletRequest request) {
     Long usuarioId = (Long) request.getSession().getAttribute("id");
     if (usuarioId == null) {
         return 0;
     }
     Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
-    return usuario.getComunicoPoints();
+
+    // Actualiza la sesión si es necesario
+    if (request.getSession().getAttribute("points") == null ||
+            !request.getSession().getAttribute("points").equals(usuario.getComunicoPoints())) {
+        request.getSession().setAttribute("points", usuario.getComunicoPoints());
     }
+
+    return usuario.getComunicoPoints();
+}
+
+
+
 
     @ModelAttribute("experiencia")
     public Integer obtenerExperienciaDelUsuario(HttpServletRequest request) {
@@ -86,9 +96,10 @@ public class ControladorGlobal {
         if (usuarioId == null) {
             return "usuarioNull";
         }
-
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
         servicioTitulo.actualizarTituloSegunExperiencia(usuarioId);
         servicioTitulo.obtenerComunicoPointsCuandoConsigueTitulo(usuarioId);
+        request.getSession().setAttribute("points", usuario.getComunicoPoints());
         servicioVida.regenerarVidasDeTodosLosUsuarios();
         return servicioTitulo.obtenerTitulo(usuarioId);
     }

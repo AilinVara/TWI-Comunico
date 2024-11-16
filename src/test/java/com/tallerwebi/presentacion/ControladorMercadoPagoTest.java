@@ -14,8 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 public class ControladorMercadoPagoTest {
     //Commit
@@ -45,6 +46,15 @@ public class ControladorMercadoPagoTest {
         when(requestMock.getSession()).thenReturn(sessionMock);
         when(sessionMock.getAttribute("id")).thenReturn(1L);
         when(servicioUsuarioMock.buscarUsuarioPorId(1L)).thenReturn(usuario);
+
+        doAnswer(invocation -> {
+            Long id = invocation.getArgument(0);
+            Integer nuevaCantidad = invocation.getArgument(1);
+            if (id.equals(1L)) {
+                usuario.setComunicoPoints(nuevaCantidad);
+            }
+            return null;
+        }).when(servicioUsuarioMock).actualizarComunicoPointsUsuario(anyLong(), anyInt());
 
         ModelAndView mav = controladorMercadoPago.compra(params, requestMock);
 
