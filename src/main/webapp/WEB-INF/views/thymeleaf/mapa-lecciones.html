@@ -45,6 +45,10 @@
                     showCancelButton: true,
                     confirmButtonText: 'Comprar vidas',
                     cancelButtonText: 'No, gracias',
+                    customClass: {
+                        confirmButton: 'swal2-confirm-button',
+                        cancelButton: 'swal2-cancel-button'
+                    },
                     didOpen: () => {
                         const script = document.createElement('script');
                         script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
