@@ -29,11 +29,13 @@
       <li>
         <button id="botonVidas" style="display: contents;">
           <div class="grupo_input" id="vidaYNum">
-            <i class="fa-solid fa-heart" id="vidas"></i>
-            <h4 th:text="${vidas}" id="vidasNumero">0</h4>
+            <i class="fa-solid fa-heart" id="vidas"
+               th:style="${suscripcion != null && suscripcion == 'premium'} ? 'color: #ff9600;' : 'color: #ea2b2b;'"></i>
+            <h4 th:if="${suscripcion == null || suscripcion != 'premium'}" th:text="${vidas}" id="vidasNumero">0</h4>
           </div>
         </button>
       </li>
+
       <a th:href="@{/crear-curso}" ><img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"></a>
     </ul>
   </nav>
