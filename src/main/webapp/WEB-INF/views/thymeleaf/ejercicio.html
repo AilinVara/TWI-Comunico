@@ -73,6 +73,18 @@
         </div>
     </form>
 
+    <form class="form-ayuda" th:action="@{'/ejercicio/' + ${indice} + '/ayuda'}" method="post">
+        <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
+        <input hidden name="leccion" th:value="${leccion}">
+
+        <button type="submit"
+                class="boton-ayuda"
+                th:classappend="${(ayudas < 1 or (opciones?.size() ?: 0) != 3) ? 'boton-ayuda-deshabilitado' : ''}"
+                th:attr="disabled=${ayudas < 1 or (opciones?.size() ?: 0) != 3}">
+            Usar ayuda
+        </button>
+    </form>
+
 
     <div th:if="${esCorrecta != null}">
         <script th:inline="javascript">
