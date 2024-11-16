@@ -30,6 +30,7 @@
 /*  clip-path: polygon(0 0, 100% 50%, 0 100%);*/
 /*}*/
 
+
 .contenedorDeTitulos .titulo-metalizado::before {
   left: -20px;
   transform: rotate(180deg);

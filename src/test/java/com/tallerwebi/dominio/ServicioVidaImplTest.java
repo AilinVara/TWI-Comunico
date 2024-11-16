@@ -35,6 +35,7 @@ public class ServicioVidaImplTest {
         when(repositorioVidaMock.buscarUnaVidaPorId(vidaMock.getId())).thenReturn(vidaMock);
         when(repositorioUsuarioMock.buscarUsuarioPorId(usuarioMock.getId())).thenReturn(usuarioMock);
         when(usuarioMock.getVida()).thenReturn(vidaMock);
+        usuarioMock.getTitulo();
         when(servicioVida.obtenerVida(usuarioMock.getId())).thenReturn(vidaMock);
 
 
@@ -80,11 +81,12 @@ public class ServicioVidaImplTest {
 
         Vida vidaReal = new Vida(5);
         vidaReal.setUltimaVezQueSeRegeneroLaVida(LocalDateTime.now().minusMinutes(2));
-
+        when(usuarioMock.getTitulo()).thenReturn("Novato");
         when(usuarioMock.getVida()).thenReturn(vidaReal);
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.add(usuarioMock);
         when(this.repositorioUsuarioMock.buscarTodos()).thenReturn(usuarios);
+
 
         this.servicioVida.regenerarVidasDeTodosLosUsuarios();
 

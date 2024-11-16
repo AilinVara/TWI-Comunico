@@ -11,4 +11,5 @@ public interface ServicioUsuario {
     List<Usuario> mostrarAdmins();
     void eliminarUsuario(Usuario usuario);
     void eliminarRelacionesDeAmistad(Usuario usuario);
+    void actualizarComunicoPointsUsuario(Long usuarioId, Integer nuevaCantidad);
 }
