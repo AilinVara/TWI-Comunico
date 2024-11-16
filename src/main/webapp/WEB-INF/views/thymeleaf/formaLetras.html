@@ -27,11 +27,10 @@
 </div>
 
 <div class="barra-experiencia">
-    <div class="experiencia-llena" th:style="'width: ' + (${experiencia} / ${experienciaMaxima} * 100) + '%'">
-        <p><span th:text="${experiencia}" id="experiencia">0</span>/<span th:text="${experienciaMaxima}">0</span>XP</p>
+    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
+        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/2000XP</p>
     </div>
 </div>
-
 
 <h3 class="titulo" id="braille-letter" th:text="|Ejercicio ${(indice)} - Letra ${ejercicio.getLetra()}|"></h3>
 
@@ -54,31 +53,25 @@
             <button type="submit" class="enviar">Enviar</button>
         </div>
     </form>
-
-    <form class="form-ayuda" th:action="@{'/ejercicio/' + ${indice} + '/ayuda'}" method="post">
-        <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
-        <input hidden name="leccion" th:value="${leccion}">
-
-        <button type="submit"
-                class="boton-ayuda"
-                th:classappend="${(ayudas < 1 or punto != null) ? 'boton-ayuda-deshabilitado' : ''}"
-                th:attr="disabled=${ayudas < 1 or punto != null}">
-            Usar ayuda
-        </button>
-    </form>
-
     <div th:if="${esCorrecta != null}">
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
             let siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
                 : '/braille/lecciones/matriz';
-            let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
+            let mensaje;
 
-            if (![[${esCorrecta}]]) {
-                mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
-                mensaje += `<br>Te quedan [[${vidas}]] vidas.`;
-                mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] minutos.`;
+            if ([[${esCorrecta}]]) {
+                mensaje = 'Respuesta correcta';
+            } else {
+                mensaje = 'Respuesta incorrecta';
+
+                if ([[${suscripcion}]] != 'premium') {
+                    mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
+                    mensaje += `<br>Te quedan [[${vidas}]] vidas.`;
+                    mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] segundos.`;
+                }
             }
+
             Swal.fire({
                 icon: [[${esCorrecta}]] ? 'success' : 'error',
                 title: [[${esCorrecta}]] ? '¡Correcto!' : '¡Incorrecto!',
@@ -92,22 +85,67 @@
             });
         </script>
     </div>
-</div>
 
-<input type="hidden" th:attr="data-punto=${punto}" id="punto-data">
+    <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
+    <script th:inline="javascript">
+        document.getElementById("botonVidas").addEventListener("click", function() {
+            let vidasRestantes = document.getElementById("vidasNumero").innerText;
+            let tiempoRestante = document.getElementById("tiempoRestante").innerText;
 
-<input hidden th:attr="data-combinado=${combinado}" id="combinado"/>
+            let esPremium = /*[[${suscripcion == 'premium'}]]*/ false;
 
-<script>
-    window.onload = function() {
-        const puntoData = document.getElementById("punto-data").getAttribute("data-punto");
-        const indicePunto = parseInt(puntoData, 10);
+            console.log("Tiempo restante:", tiempoRestante);
 
-        if (!isNaN(indicePunto) && indicePunto >= 0) {
-            document.querySelectorAll('.braille-checkbox')[indicePunto].checked = true;
+            let mensajeHtml = `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.`;
+
+            if (!esPremium) {
+                mensajeHtml += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`;
+            }
+
+            Swal.fire({
+                title: 'Vidas Restantes',
+                html: mensajeHtml,
+                icon: 'info',
+                confirmButtonText: 'OK',
+                didOpen: () => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
+                    document.head.appendChild(script);
+                }
+            });
+        });
+    </script>
+
+
+    <script th:inline="javascript">
+        function actualizarExperiencia(experiencia) {
+            const barra = document.querySelector('.experiencia-llena');
+            const porcentaje = (experiencia / 5000) * 100;
+            barra.style.width = porcentaje + '%';
+            barra.style.backgroundColor = '#4caf50';  // Color de la barra cuando se llena
         }
-    };
-</script>
+
+        actualizarExperiencia([[${experiencia}]]);
+    </script>
+
+    <script th:inline="javascript">
+        let esPremium = /*[[${suscripcion == 'premium'}]]*/ false;
+
+        if (!esPremium) {
+            Swal.fire({
+                title: 'Vidas Restantes',
+                html: `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`,
+                icon: 'info',
+                confirmButtonText: 'OK',
+                didOpen: () => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
+                    document.head.appendChild(script);
+                }
+            });
+        }
+    </script>
+
 <script>
     function concatenarCheckboxes() {
         let checkboxes = document.querySelectorAll('.braille-checkbox');
@@ -127,63 +165,6 @@
     }
 </script>
 
-<span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
-<script th:inline="javascript">
-    document.getElementById("botonVidas").addEventListener("click", function() {
-        let vidasRestantes = document.getElementById("vidasNumero").innerText;
-        let tiempoRestante = document.getElementById("tiempoRestante").innerText;
-
-        let esPremium = /*[[${suscripcion == 'premium'}]]*/ false;
-
-        console.log("Tiempo restante:", tiempoRestante);
-
-        let mensajeHtml = `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.`;
-
-        if (!esPremium) {
-            mensajeHtml += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`;
-        }
-
-        Swal.fire({
-            title: 'Vidas Restantes',
-            html: mensajeHtml,
-            icon: 'info',
-            confirmButtonText: 'OK',
-            didOpen: () => {
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
-                document.head.appendChild(script);
-            }
-        });
-    });
-</script>
-
-<script th:inline="javascript">
-    function actualizarExperiencia(experiencia) {
-        const barra = document.querySelector('.experiencia-llena');
-        const porcentaje = (experiencia / 2000) * 100;
-        barra.style.width = porcentaje + '%';
-        barra.style.backgroundColor = '#4caf50';  // Color de la barra cuando se llena
-    }
-
-    actualizarExperiencia([[${experiencia}]]);
-</script>
-<script th:inline="javascript">
-    let esPremium = /*[[${suscripcion == 'premium'}]]*/ false;
-
-    if (!esPremium) {
-        Swal.fire({
-            title: 'Vidas Restantes',
-            html: `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`,
-            icon: 'info',
-            confirmButtonText: 'OK',
-            didOpen: () => {
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
-                document.head.appendChild(script);
-            }
-        });
-    }
-</script>
 <script>
 
     document.getElementById('botonCerrar').onclick = function() {
@@ -195,12 +176,7 @@
     };
 
     document.getElementById('confirmarSalir').onclick = function() {
-        let combinado = document.getElementById("combinado").getAttribute("data-combinado");
-        if(combinado != null && combinado){
-            window.location.href = '/braille/lecciones/combinado';
-        }else{
-            window.location.href = '/braille/lecciones/matriz';
-        }
+        window.location.href = '/braille/lecciones/matriz';
     };
 
     window.onclick = function(event) {
@@ -209,7 +185,6 @@
             modal.style.display = 'none';
         }
     };
-
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
