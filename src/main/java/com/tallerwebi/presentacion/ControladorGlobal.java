@@ -147,6 +147,24 @@ public class ControladorGlobal {
         return servicioTitulo.obtenerTitulo(usuarioId);
     }
 
+    @ModelAttribute("suscripcion")
+    public String obtenerSuscripcionDelUsuario(HttpServletRequest request) {
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+
+        if (usuarioId == null) {
+            return "";
+        }
+
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+        String suscripcion = usuario.getSuscripcion().getTipoSuscripcion().getNombre();
+
+        if(suscripcion == null){
+            suscripcion = "sin plan";
+        }
+
+        return suscripcion;
+    }
+
     @RequestMapping("/titulosUsuario")
     public ModelAndView mostrarTitulos() {
         return new ModelAndView("titulosUsuario");
