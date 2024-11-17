@@ -51,7 +51,7 @@ public class ServicioVidaImpl implements ServicioVida {
     }
 
     @Override
-    @Scheduled(fixedRate = 7200000)
+    @Scheduled(fixedRate = 5400000) //Se ejecuta cada una hora y media
     public void regenerarVidasDeTodosLosUsuarios() {
         List<Usuario> usuarios = repositorioUsuario.buscarTodos();
 
