@@ -1,5 +1,5 @@
 function mostrarContenido(opcion) {
-    const secciones = ['amigos', 'facturas'];
+    const secciones = ['amigos','lecciones','facturas'];
 
     secciones.forEach(function(seccion) {
         document.getElementById(seccion).style.display = (seccion === opcion) ? 'block' : 'none';

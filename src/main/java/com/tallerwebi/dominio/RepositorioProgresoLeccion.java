@@ -12,4 +12,6 @@ public interface RepositorioProgresoLeccion {
     void actualizar(ProgresoLeccion progreso);
 
     List<ProgresoLeccion> buscarProgresosPorUsuario(Long usuarioId);
+
+    List<Leccion> darmeTodasLasLecciones();
 }
