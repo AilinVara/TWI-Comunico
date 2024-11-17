@@ -108,31 +108,23 @@
         </section>
 
         <section class="tablas lightblue" id="lecciones">
-            <h1>Progreso en las lecciones</h1>
-
             <table class="progreso-table">
                 <thead>
                 <tr>
-                    <th>Leccion N:</th>
+                    <th>Lección N°</th>
                     <th>Tipo</th>
                 </tr>
                 </thead>
 
-                <div th:each="progreso : ${progresos}">
-                    <article th:if="${progreso.getCompleto()}" class="contenedor-progreso">
-                        <div class="leccion id-leccion">
-                            <h3 th:text="${progreso.getId()}"></h3>
-                        </div>
-
-                        <div class="leccion tipo-leccion">
-                            <h3 th:text="${progreso.getLeccion().getTipo()}"></h3>
-                        </div>
-                    </article>
-                </div>
+                <tbody>
+                <tr th:each="progreso : ${progresos}" th:if="${progreso.getCompleto()}">
+                    <td th:text="${progreso.getId()}" class="progress-id"></td>
+                    <td th:text="${progreso.getLeccion().getTipo()}" class="lection-type"></td>
+                </tr>
+                </tbody>
             </table>
-
-
         </section>
+
 
         <section class="tablas lightblue" id="facturas">
             <h1>Facturas</h1>

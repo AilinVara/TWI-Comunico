@@ -233,7 +233,7 @@
     padding: 0.5rem;
 }
 
-.facturas-table th {
+.facturas-table th{
     background-color: #1cb0f6;
     color: white;
 }
@@ -360,8 +360,38 @@ footer {
     transition: width 1.0s ease;
 }
 
-.contenedor-progreso{
-    display: flex;
-    flex-direction: row;
-    gap: 2%;
+#lecciones {
+    border: 2px solid #3c3c3c;
+    border-radius: 5px;
+    width: 60%;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    padding: 0;
 }
+
+.progreso-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.progreso-table th,
+.progreso-table td {
+    border: 1px solid #3c3c3c;
+    padding: 10px;
+}
+
+.progreso-table th {
+    background-color: #1cb0f6;
+    color: white;
+    font-size: 18px;
+}
+
+.progreso-table td {
+    font-size: 25px;
+    color: #333;
+}
+
+
+
+
