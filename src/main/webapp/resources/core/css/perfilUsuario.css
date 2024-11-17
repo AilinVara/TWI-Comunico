@@ -359,3 +359,9 @@ footer {
     width: 0; /* Se actualizará dinámicamente */
     transition: width 1.0s ease;
 }
+
+.contenedor-progreso{
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+}

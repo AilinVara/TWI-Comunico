@@ -26,7 +26,6 @@
                     <h2 th:text="${usuario.getNombreDeUsuario()}"></h2>
                 </div>
 
-
             </div>
             <div class="descripcion">
                 <h4>Descripción:</h4>
@@ -73,11 +72,15 @@
     </section>
 
     <div>
-
         <ul class="nav nav-tabs listadesordenada">
             <li class="nav-item">
                 <a class="nav-link " href="#" onclick="mostrarContenido('amigos')">Mis Amigos</a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link " href="#" onclick="mostrarContenido('lecciones')">Lecciones realizadas</a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link " href="#" onclick="mostrarContenido('facturas')">Historial de Compras</a>
             </li>
@@ -102,6 +105,33 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section class="tablas lightblue" id="lecciones">
+            <h1>Progreso en las lecciones</h1>
+
+            <table class="progreso-table">
+                <thead>
+                <tr>
+                    <th>Leccion N:</th>
+                    <th>Tipo</th>
+                </tr>
+                </thead>
+
+                <div th:each="progreso : ${progresos}">
+                    <article th:if="${progreso.getCompleto()}" class="contenedor-progreso">
+                        <div class="leccion id-leccion">
+                            <h3 th:text="${progreso.getId()}"></h3>
+                        </div>
+
+                        <div class="leccion tipo-leccion">
+                            <h3 th:text="${progreso.getLeccion().getTipo()}"></h3>
+                        </div>
+                    </article>
+                </div>
+            </table>
+
+
         </section>
 
         <section class="tablas lightblue" id="facturas">

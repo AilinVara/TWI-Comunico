@@ -103,4 +103,9 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
                                 Collectors.toList(),
                                 this::verificarCompletado)));
     }
+
+    @Override
+    public List<Leccion> obtenerLecciones() {
+        return this.repositorioProgresoLeccion.darmeTodasLasLecciones();
+    }
 }
