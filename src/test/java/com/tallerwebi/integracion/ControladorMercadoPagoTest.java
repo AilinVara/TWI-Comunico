@@ -24,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -91,13 +93,28 @@ public class ControladorMercadoPagoTest {
         Vida vida = new Vida();
         vida.setCantidadDeVidasActuales(5);
         usuario.setVida(vida);
+
         Experiencia experiencia = new Experiencia();
         experiencia.setCantidadExperiencia(400);
         usuario.setExperiencia(experiencia);
 
         this.sessionFactory.getCurrentSession().save(experiencia);
         this.sessionFactory.getCurrentSession().save(vida);
+
+        TipoSuscripcion tipoSuscripcion = new TipoSuscripcion();
+        tipoSuscripcion.setNombre("Premium");
+        tipoSuscripcion.setDescripcion("Acceso completo sin restricciones.");
+        this.sessionFactory.getCurrentSession().save(tipoSuscripcion);
+
+        Suscripcion suscripcion = new Suscripcion();
+        suscripcion.setTipoPlan(tipoSuscripcion);
+        suscripcion.setFechaCompra(LocalDateTime.now());
+        suscripcion.setFechaVencimiento(LocalDateTime.now().plusMonths(1));
+        this.sessionFactory.getCurrentSession().save(suscripcion);
+
+        usuario.setSuscripcion(suscripcion);
         this.sessionFactory.getCurrentSession().update(usuario);
+
         MvcResult result = this.mockMvc.perform(get("/comprar")
                         .param("status", "approved")
                         .param("quantity", "5")
@@ -112,9 +129,9 @@ public class ControladorMercadoPagoTest {
         ModelAndView modelAndView = result.getModelAndView();
         assertNotNull(modelAndView);
         assertEquals("comprarPoints", modelAndView.getViewName());
-
         assertEquals("Compra realizada satisfactoriamente.", modelAndView.getModel().get("alerta"));
     }
+
 
     @Test
     @Transactional
@@ -125,15 +142,30 @@ public class ControladorMercadoPagoTest {
         this.sessionFactory.getCurrentSession().save(usuario);
 
         sessionMock.setAttribute("id", usuario.getId());
+
         Vida vida = new Vida();
         vida.setCantidadDeVidasActuales(5);
         usuario.setVida(vida);
+
         Experiencia experiencia = new Experiencia();
         experiencia.setCantidadExperiencia(400);
         usuario.setExperiencia(experiencia);
 
         this.sessionFactory.getCurrentSession().save(experiencia);
         this.sessionFactory.getCurrentSession().save(vida);
+
+        TipoSuscripcion tipoSuscripcion = new TipoSuscripcion();
+        tipoSuscripcion.setNombre("Premium");
+        tipoSuscripcion.setDescripcion("Acceso completo sin restricciones.");
+        this.sessionFactory.getCurrentSession().save(tipoSuscripcion);
+
+        Suscripcion suscripcion = new Suscripcion();
+        suscripcion.setTipoPlan(tipoSuscripcion);
+        suscripcion.setFechaCompra(LocalDateTime.now());
+        suscripcion.setFechaVencimiento(LocalDateTime.now().plusMonths(1));
+        this.sessionFactory.getCurrentSession().save(suscripcion);
+
+        usuario.setSuscripcion(suscripcion);
         this.sessionFactory.getCurrentSession().update(usuario);
 
         MvcResult result = this.mockMvc.perform(get("/comprar")
@@ -151,4 +183,5 @@ public class ControladorMercadoPagoTest {
         assertEquals("comprarPoints", modelAndView.getViewName());
         assertEquals("No pudimos procesar la compra.", modelAndView.getModel().get("alerta"));
     }
+
 }
