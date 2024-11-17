@@ -384,11 +384,11 @@ footer {
 .progreso-table th {
     background-color: #1cb0f6;
     color: white;
-    font-size: 18px;
+    font-size: 24px;
 }
 
 .progreso-table td {
-    font-size: 25px;
+    font-size: 22px;
     color: #333;
 }
 
