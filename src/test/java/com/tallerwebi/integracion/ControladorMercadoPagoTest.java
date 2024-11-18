@@ -2,6 +2,7 @@ package com.tallerwebi.integracion;
 
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.infraestructura.RepositorioExperienciaImpl;
+import com.tallerwebi.infraestructura.RepositorioImplProgresoLeccion;
 import com.tallerwebi.infraestructura.RepositorioUsuarioImpl;
 import com.tallerwebi.infraestructura.RepositorioVidaImpl;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
@@ -49,9 +50,13 @@ public class ControladorMercadoPagoTest {
     private ServicioTitulo servicioTitulo;
     private ServicioExperiencia servicioExperiencia;
     private RepositorioExperiencia repositorioExperiencia;
+
+    private RepositorioProgresoLeccion repositorioProgresoLeccion;
+
     //Commit
     @BeforeEach
     public void init() {
+        this.repositorioProgresoLeccion = new RepositorioImplProgresoLeccion(sessionFactory);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
         this.sessionMock = new MockHttpSession();
         this.repositorioUsuario = new RepositorioUsuarioImpl(sessionFactory);
@@ -60,7 +65,7 @@ public class ControladorMercadoPagoTest {
         this.repositorioVida = new RepositorioVidaImpl(sessionFactory);
         this.servicioTitulo = new ServicioTituloImpl(repositorioUsuario, repositorioVida);
         this.servicioVida = new ServicioVidaImpl(repositorioVida,repositorioUsuario, servicioTitulo);
-        this.servicioExperiencia = new ServicioExperienciaImpl(repositorioUsuario,repositorioExperiencia);
+        this.servicioExperiencia = new ServicioExperienciaImpl(repositorioUsuario,repositorioExperiencia,repositorioProgresoLeccion);
 
     }
 

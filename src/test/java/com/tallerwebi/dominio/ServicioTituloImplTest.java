@@ -19,6 +19,8 @@ public class ServicioTituloImplTest {
     ServicioTitulo servicioTitulo;
     RepositorioVida repositorioVidaMock;
 
+    private RepositorioProgresoLeccion repositorioProgresoLeccion;
+
 
     @BeforeEach
     public void init() {
@@ -29,7 +31,7 @@ public class ServicioTituloImplTest {
         this.repositorioExperienciaMock = mock(RepositorioExperiencia.class);
         this.repositorioVidaMock = mock(RepositorioVida.class);
 
-        servicioExperienciaMock = new ServicioExperienciaImpl(repositorioUsuario, repositorioExperienciaMock);
+        servicioExperienciaMock = new ServicioExperienciaImpl(repositorioUsuario, repositorioExperienciaMock, repositorioProgresoLeccion);
         servicioTitulo = new ServicioTituloImpl(repositorioUsuario, repositorioVidaMock);
         when(repositorioExperienciaMock.buscarExperienciaPorId(experiencia.getId())).thenReturn(experiencia);
         when(repositorioUsuario.buscarUsuarioPorId(usuario.getId())).thenReturn(usuario);
