@@ -96,9 +96,24 @@ public class ServicioTituloImpl implements ServicioTitulo {
             case "Amateur":
                 return 110; // 120 - 10 minutos
             case "Novato":
-                return 120; // No se reduce
+                return 115; // 120 - 5 minutos
             default:
                 return 120; // Default (Principiante)
+        }
+    }
+    @Override
+    public int obtenerExperienciaMaximaPorTitulo(String titulo) {
+        switch (titulo) {
+            case "Principiante":
+                return 500;
+            case "Novato":
+                return 2000;
+            case "Amateur":
+                return 3500;
+            case "Experto":
+                return 5000;
+            default:
+                return 0; // En caso de error o si es un título no definido.
         }
     }
     }

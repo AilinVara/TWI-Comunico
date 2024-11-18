@@ -9,4 +9,6 @@ public interface ServicioTitulo {
     void obtenerComunicoPointsCuandoConsigueTitulo(Long usuarioId);
 
     int obtenerTiempoRegeneracionPorTitulo(Long usuarioId);
+
+    int obtenerExperienciaMaximaPorTitulo(String titulo);
 }

@@ -92,6 +92,26 @@ public class ServicioVidaImplTest {
 
         assertThat(vidaReal.getCantidadDeVidasActuales(), equalTo(5));
     }
+    @Test
+    @Rollback
+    @Transactional
+    public void dadoQueUsuarioConTituloNovatoRegeneraSuVida5MinutosYElDefaultEsDe2HorasQueLaRegenereCorrectamenteEnEseTiempoEstipulado() {
+        Vida vidaReal = new Vida(4);
+        vidaReal.setUltimaVezQueSeRegeneroLaVida(LocalDateTime.now().minusMinutes(115)); // 1 hora y 55 minutos atrás
+
+        when(usuarioMock.getTitulo()).thenReturn("Novato");
+        when(usuarioMock.getVida()).thenReturn(vidaReal);
+
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(usuarioMock);
+
+        when(this.repositorioUsuarioMock.buscarTodos()).thenReturn(usuarios);
+
+
+        this.servicioVida.regenerarVidasDeTodosLosUsuarios();
+
+        assertThat(vidaReal.getCantidadDeVidasActuales(), equalTo(5));
+    }
 
 
 }

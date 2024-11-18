@@ -21,16 +21,19 @@ public class ControladorEjercicio {
     private ServicioProgresoLeccion servicioProgresoLeccion;
     private ServicioVida servicioVida;
     private ServicioExperiencia servicioExperiencia;
+    private ServicioTitulo servicioTitulo;
 
 
 
     @Autowired
-    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia) {
+    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia, ServicioTitulo servicioTitulo) {
         this.servicioEjercicio = servicioEjercicio;
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
         this.servicioExperiencia = servicioExperiencia;
+        this.servicioTitulo = servicioTitulo;
+
 
     }
 
@@ -144,11 +147,22 @@ public class ControladorEjercicio {
     private void agregarTiempoRestanteAlModelo(ModelMap modelo, Long usuarioId) {
         Vida vida = this.servicioVida.obtenerVida(usuarioId);
         LocalDateTime ahora = LocalDateTime.now();
+
+        // Obtener el tiempo de regeneración en minutos según el título del usuario
+        int tiempoRegeneracionEnMinutos = servicioTitulo.obtenerTiempoRegeneracionPorTitulo(usuarioId);
+
         Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
-        long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
-        long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60); // Cada 60 segundos
-        modelo.put("tiempoRestante", tiempoRestante);
+        long minutosDesdeUltimaRegeneracion = duracion.toMinutes();
+
+        // Calcular el tiempo restante basado en el tiempo de regeneración personalizado
+        long tiempoRestanteEnMinutos = tiempoRegeneracionEnMinutos - minutosDesdeUltimaRegeneracion;
+
+        // Asegurarse de que el tiempo restante no sea negativo
+        tiempoRestanteEnMinutos = Math.max(tiempoRestanteEnMinutos, 0);
+
+        modelo.put("tiempoRestante", tiempoRestanteEnMinutos);
     }
+
 
 }
 

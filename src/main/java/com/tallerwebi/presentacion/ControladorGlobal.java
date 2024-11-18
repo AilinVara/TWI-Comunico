@@ -72,6 +72,18 @@ public Integer obtenerComunicoPoints(HttpServletRequest request) {
         return servicioExperiencia.obtenerExperiencia(usuarioId).getCantidadExperiencia();
     }
 
+    @ModelAttribute("experienciaMaxima")
+    public Integer obtenerExperienciaMaximaDelUsuario(HttpServletRequest request) {
+
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return 0;
+        }
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+        String tituloActual = usuario.getTitulo();
+        return servicioTitulo.obtenerExperienciaMaximaPorTitulo(tituloActual);
+    }
+
     @ModelAttribute("vidas")
     public Integer obtenerVidasUsuario(HttpServletRequest request) {
         Long usuarioId = (Long) request.getSession().getAttribute("id");
@@ -124,26 +136,36 @@ public Integer obtenerComunicoPoints(HttpServletRequest request) {
         Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
 
         String titulo = usuario.getTitulo().trim();
-        long tiempoRegeneracion = 120; // (2 horas)
+        long tiempoRegeneracionEnMinutos = 120; // 2 horas por defecto
 
         switch (titulo) {
             case "Novato":
-                tiempoRegeneracion = 115;  // 1 hora 55 minutos
+                tiempoRegeneracionEnMinutos = 115;  // 1 hora 55 minutos
                 break;
             case "Amateur":
-                tiempoRegeneracion = 110;  // 1 hora 50 minutos
+                tiempoRegeneracionEnMinutos = 110;  // 1 hora 50 minutos
                 break;
             case "Experto":
-                tiempoRegeneracion = 100;  // 1 hora 40 minutos
+                tiempoRegeneracionEnMinutos = 100;  // 1 hora 40 minutos
                 break;
             case "Comunicador":
-                tiempoRegeneracion = 90;   // 1 hora 30 minutos
+                tiempoRegeneracionEnMinutos = 90;   // 1 hora 30 minutos
                 break;
             default:
                 break;
         }
 
-        return tiempoRegeneracion * 60 - (duracion.getSeconds() % (tiempoRegeneracion * 60));
+
+        long minutosDesdeUltimaRegeneracion = duracion.toMinutes();
+
+
+        long tiempoRestanteEnMinutos = tiempoRegeneracionEnMinutos - minutosDesdeUltimaRegeneracion;
+
+        // Asegurarse de que el tiempo restante no sea negativo
+        tiempoRestanteEnMinutos = Math.max(tiempoRestanteEnMinutos, 0);
+
+        return tiempoRestanteEnMinutos;
     }
+
 }
 
