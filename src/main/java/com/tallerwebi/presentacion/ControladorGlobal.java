@@ -43,7 +43,7 @@ public class ControladorGlobal {
 //        }
 //    }
 @ModelAttribute("points")
-public Integer obtenerComunicoPoints(HttpServletRequest request) {
+    public Integer obtenerComunicoPoints(HttpServletRequest request) {
     Long usuarioId = (Long) request.getSession().getAttribute("id");
     if (usuarioId == null) {
         return 0;
@@ -59,8 +59,22 @@ public Integer obtenerComunicoPoints(HttpServletRequest request) {
     return usuario.getComunicoPoints();
 }
 
+    @ModelAttribute("ayudas")
+    public Integer obtenerAyudas(HttpServletRequest request) {
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return 0;
+        }
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
 
+        // Actualiza la sesión si es necesario
+        if (request.getSession().getAttribute("ayudas") == null ||
+                !request.getSession().getAttribute("ayudas").equals(usuario.getAyudas())) {
+            request.getSession().setAttribute("ayudas", usuario.getAyudas());
+        }
 
+        return usuario.getAyudas();
+    }
 
     @ModelAttribute("experiencia")
     public Integer obtenerExperienciaDelUsuario(HttpServletRequest request) {
@@ -155,9 +169,7 @@ public Integer obtenerComunicoPoints(HttpServletRequest request) {
                 break;
         }
 
-
         long minutosDesdeUltimaRegeneracion = duracion.toMinutes();
-
 
         long tiempoRestanteEnMinutos = tiempoRegeneracionEnMinutos - minutosDesdeUltimaRegeneracion;
 
@@ -166,6 +178,5 @@ public Integer obtenerComunicoPoints(HttpServletRequest request) {
 
         return tiempoRestanteEnMinutos;
     }
-
 }
 
