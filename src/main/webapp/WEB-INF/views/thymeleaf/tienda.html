@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/tienda.css}"/>
+    <link rel="stylesheet" th:href="@{/css/header.css}"/>
+    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+
+    <style>
+        .features {
+            list-style-type: none;
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header th:replace="header :: header"></header>
+
+<main>
+    <div class="tienda-header">
+        <h1>Tienda de Comunico</h1>
+    </div>
+
+    <div class="saldo-container">
+        <span>Tu saldo: <i class="fas fa-coins"></i> <strong>150 ComunicoPoints</strong></span>
+    </div>
+
+    <!-- Vidas -->
+    <section class="seccion-tienda">
+        <h2>Vidas</h2>
+        <div class="productos-container">
+            <div class="producto-card">
+                <i class="fa-solid fa-heart" id="vidas"></i>
+                <h5>1 Vida Extra</h5>
+                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 200 CP</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+            <div class="producto-card">
+                <i class="fa-solid fa-heart" id="vidas"></i>
+                <h5>3 Vidas Extra</h5>
+                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 500 CP</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+            <div class="producto-card">
+                <i class="fa-solid fa-heart" id="vidas"></i>
+                <h5>5 Vidas Extra</h5>
+                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 800 CP</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+        </div>
+        <a th:href="@{/suscripciones}"><p class="mensaje-premium">¡Obtén más vidas con las suscripciones u obtén vidas ilimitadas con la suscripción Premium!</p></a>
+    </section>
+
+    <!-- Ayudas -->
+    <section class="seccion-tienda">
+        <h2>Ayudas</h2>
+        <div class="productos-container">
+            <div class="producto-card">
+                <i class="fa-solid fa-hand-sparkles" id="ayudas"></i>
+                <h5>1 Ayuda</h5>
+                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 800 CP</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+            <div class="producto-card">
+                <i class="fa-solid fa-hand-sparkles" id="ayudas"></i>
+                <h5>3 Ayudas</h5>
+                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1000 CP</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+            <div class="producto-card">
+                <i class="fa-solid fa-hand-sparkles" id="ayudas"></i>
+                <h5>5 Ayudas</h5>
+                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1500 CP</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+        </div>
+        <a th:href="@{/suscripciones}"><p class="mensaje-premium">¡Disfruta de más ayudas con las suscripciones!</p></a>
+    </section>
+
+    <!-- Llaves -->
+    <section class="seccion-tienda">
+        <h2>Llaves</h2>
+        <div class="productos-container">
+            <div class="producto-card">
+                <i class="fa-solid fa-key" id="llaves" style="color: #FFD43B;"></i>
+                <h5>1 Llave</h5>
+                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1000 CP</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+            <div class="producto-card">
+                <i class="fa-solid fa-key" id="llaves" style="color: #FFD43B;"></i>
+                <h5>3 Llave</h5>
+                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1500 CP</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+            <div class="producto-card">
+                <i class="fa-solid fa-key" id="llaves" style="color: #FFD43B;"></i>
+                <h5>5 Llaves</h5>
+                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 3000 CP</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+        </div>
+        <a th:href="@{/suscripciones}"><p class="mensaje-premium">¡Accede a más llaves con las suscripciones!</p></a>
+
+    </section>
+
+    <!-- ComunicoPoints -->
+    <section class="seccion-tienda">
+        <h2>ComunicoPoints</h2>
+        <div class="productos-container">
+
+            <div class="producto-card">
+                <i class="fa-solid fa-coins" id="comunicoPoints" style="color: #ffb34c"></i>
+                <h5>500 ComunicoPoints</h5>
+                <p>Precio: $5.00D</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+            <div class="producto-card">
+                <i class="fa-solid fa-coins" id="comunicoPoints" style="color: #ffb34c"></i>
+                <h5>1000 ComunicoPoints</h5>
+                <p>Precio: $10.000</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+            <div class="producto-card">
+                <i class="fa-solid fa-coins" id="comunicoPoints" style="color: #ffb34c"></i>
+                <h5>3000 ComunicoPoints</h5>
+                <p>Precio: $30.000</p>
+                <button class="btn btn-comprar">Comprar</button>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="footer :: footer"></footer>
+
+<script type="text/javascript" th:src="@{/js/carrito.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/menuUsuario.js}"></script>
+
+</body>
+</html>
