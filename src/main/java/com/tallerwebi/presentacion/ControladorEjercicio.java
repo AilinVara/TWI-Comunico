@@ -117,11 +117,15 @@ public class ControladorEjercicio {
             resuelto = this.servicioEjercicio.resolverEjercicioTraduccionSenia((EjercicioTraduccionSenia) ejercicio, Long.parseLong(respuesta));
             mav.setViewName("ejercicio-video");
         }
+
+
         if (resuelto){
             this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
-        } else {
-
+        } else  {
             this.servicioVida.perderUnaVida(usuarioId);
+        }
+        if (resuelto && this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccionId, usuarioId)) {
+            this.servicioExperiencia.ganar300DeExperiencia(usuarioId);
         }
 
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
@@ -148,16 +152,13 @@ public class ControladorEjercicio {
         Vida vida = this.servicioVida.obtenerVida(usuarioId);
         LocalDateTime ahora = LocalDateTime.now();
 
-        // Obtener el tiempo de regeneración en minutos según el título del usuario
         int tiempoRegeneracionEnMinutos = servicioTitulo.obtenerTiempoRegeneracionPorTitulo(usuarioId);
 
         Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
         long minutosDesdeUltimaRegeneracion = duracion.toMinutes();
 
-        // Calcular el tiempo restante basado en el tiempo de regeneración personalizado
         long tiempoRestanteEnMinutos = tiempoRegeneracionEnMinutos - minutosDesdeUltimaRegeneracion;
 
-        // Asegurarse de que el tiempo restante no sea negativo
         tiempoRestanteEnMinutos = Math.max(tiempoRestanteEnMinutos, 0);
 
         modelo.put("tiempoRestante", tiempoRestanteEnMinutos);
