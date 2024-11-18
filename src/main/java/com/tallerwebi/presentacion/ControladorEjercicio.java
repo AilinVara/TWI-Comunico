@@ -33,6 +33,7 @@ public class ControladorEjercicio {
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
         this.servicioExperiencia = servicioExperiencia;
+        this.servicioTitulo = servicioTitulo;
 
     }
 
