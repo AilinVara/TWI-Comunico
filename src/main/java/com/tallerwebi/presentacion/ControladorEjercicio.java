@@ -27,18 +27,18 @@ public class ControladorEjercicio {
 
 
     @Autowired
-    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia, ServicioTitulo servicioTitulo) {
+    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia, ServicioTitulo servicioTitulo, ServicioUsuario servicioUsuario) {
         this.servicioEjercicio = servicioEjercicio;
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
         this.servicioExperiencia = servicioExperiencia;
         this.servicioTitulo = servicioTitulo;
-
+        this.servicioUsuario = servicioUsuario;
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
-    public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request) {
+    public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request, @RequestParam(value = "combinado", required = false) String combinado) {
         ModelMap modelo = new ModelMap();
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
@@ -49,6 +49,9 @@ public class ControladorEjercicio {
         modelo.put("ejercicio", ejercicio);
         modelo.put("indice", indice);
         agregarTiempoRestanteAlModelo(modelo,usuarioId);
+        if("true".equals(combinado)){
+            modelo.put("combinado", true);
+        }
 
         Map<Class<? extends Ejercicio>, String> redirecciones = Map.of(
                 EjercicioTraduccion.class, "redirect:/braille/lecciones/traduccion",
@@ -57,7 +60,12 @@ public class ControladorEjercicio {
                 EjercicioTraduccionSenia.class, "redirect:/senias"
         );
 
+
+
         if (vidas == 0) {
+            if ("true".equals(combinado)) {
+                return new ModelAndView("redirect:/braille/lecciones/combinado");
+            }
             String redireccion = redirecciones.get(ejercicio.getClass());
             if (redireccion != null) {
                 return new ModelAndView(redireccion);
@@ -138,6 +146,72 @@ public class ControladorEjercicio {
         modelo.put("esCorrecta", resuelto);
         mav.addAllObjects(modelo);
         return mav;
+    }
+
+    @RequestMapping(value = "/ejercicio/{indice}/ayuda")
+    public ModelAndView usarAyuda(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request) {
+        ModelMap modelo = new ModelMap();
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
+        modelo.put("leccion", leccionId);
+        Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
+        Ejercicio ejercicio = leccion.getEjercicios().get(indice - 1);
+        modelo.put("vidas", vidas);
+        modelo.put("ejercicio", ejercicio);
+        modelo.put("indice", indice);
+
+        Usuario usuario = this.servicioUsuario.buscarUsuarioPorId(usuarioId);
+        usuario.setAyudas(usuario.getAyudas()-1);
+        this.servicioUsuario.modificar(usuario);
+
+        request.getSession().setAttribute("ayudas", usuario.getAyudas());
+        modelo.put("ayudas", usuario.getAyudas());
+
+        if (ejercicio instanceof EjercicioTraduccion) {
+            EjercicioTraduccion ejercicioTraduccion = (EjercicioTraduccion) ejercicio;
+
+            Set<Opcion> opciones = new HashSet<>();
+            Set<Opcion> opcionesIncorrectas = ejercicioTraduccion.getOpcionesIncorrectas();
+
+            Opcion opcionIncorrecta = opcionesIncorrectas.iterator().next();
+
+            opciones.add(opcionIncorrecta);
+            opciones.add(ejercicioTraduccion.getOpcionCorrecta());
+
+            List<Opcion> opcionesDesordenadas = new ArrayList<>(opciones);
+            Collections.shuffle(opcionesDesordenadas);
+
+            modelo.put("opciones", opcionesDesordenadas);
+            return new ModelAndView("ejercicio", modelo);
+        } else if (ejercicio instanceof EjercicioMatriz) {
+            EjercicioMatriz ejercicioMatriz = (EjercicioMatriz) ejercicio;
+
+            String puntosLetra = ejercicioMatriz.getPuntos();
+            int primerUno = puntosLetra.indexOf('1');
+
+            modelo.put("punto", primerUno);
+            return new ModelAndView("formaLetras", modelo);
+        } else if (ejercicio instanceof EjercicioFormaPalabra) {
+            EjercicioFormaPalabra ejercicioFormaPalabra = (EjercicioFormaPalabra) ejercicio;
+            String respuestaCorrecta = ejercicioFormaPalabra.getRespuestaCorrecta();
+            List<String> letrasListaOriginal = servicioEjercicio.convertirLetrasALista(ejercicioFormaPalabra.getLetras());
+
+            List<String> letrasLista = new ArrayList<>();
+
+            int contadorEliminados = 0;
+
+            for (String letra : letrasListaOriginal) {
+                if (!respuestaCorrecta.contains(letra) && contadorEliminados < 1) {
+                    contadorEliminados++;
+                } else {
+                    letrasLista.add(letra);
+                }
+            }
+
+            modelo.put("letras", letrasLista);
+            return new ModelAndView("ejercicios-forma-palabra", modelo);
+        }
+        return new ModelAndView("ejercicio-video", modelo);
     }
 
     @RequestMapping(value = "/ejercicio-video", method = RequestMethod.GET)
