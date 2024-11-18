@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("servicioEjercicio")
 @Transactional
@@ -49,7 +50,9 @@ public class ServicioEjercicioImpl implements ServicioEjercicio {
 
     @Override
     public List<String> convertirLetrasALista(String letras) {
-        return Arrays.asList(letras.split(","));
+        return Arrays.stream(letras.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -19,6 +19,7 @@ public class Usuario {
     private String rol;
     private Boolean activo = false;
     private Integer comunicoPoints;
+    private Integer ayudas;
     private String titulo = "Principiante";
     private String ultimoTitulo;
     private String descripcion;
@@ -132,6 +133,14 @@ public class Usuario {
 
     public void setComunicoPoints(Integer comunicoPoints) {
         this.comunicoPoints = comunicoPoints;
+    }
+
+    public Integer getAyudas() {
+        return ayudas;
+    }
+
+    public void setAyudas(Integer ayudas) {
+        this.ayudas = ayudas;
     }
 
     public Experiencia getExperiencia() {

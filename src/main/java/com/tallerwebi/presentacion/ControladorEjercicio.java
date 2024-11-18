@@ -21,6 +21,7 @@ public class ControladorEjercicio {
     private ServicioProgresoLeccion servicioProgresoLeccion;
     private ServicioVida servicioVida;
     private ServicioExperiencia servicioExperiencia;
+    private ServicioUsuario servicioUsuario;
     private ServicioTitulo servicioTitulo;
 
 
@@ -32,8 +33,6 @@ public class ControladorEjercicio {
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
         this.servicioExperiencia = servicioExperiencia;
-        this.servicioTitulo = servicioTitulo;
-
 
     }
 

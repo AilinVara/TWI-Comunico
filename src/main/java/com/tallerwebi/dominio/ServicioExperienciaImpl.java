@@ -3,6 +3,8 @@ package com.tallerwebi.dominio;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("servicioExperiencia")
 @Transactional
@@ -11,9 +13,13 @@ public class ServicioExperienciaImpl implements ServicioExperiencia {
     private RepositorioUsuario repositorioUsuario;
     private RepositorioExperiencia repositorioExperiencia;
 
-    public ServicioExperienciaImpl(RepositorioUsuario repositorioUsuario, RepositorioExperiencia repositorioExperiencia) {
+    private RepositorioProgresoLeccion repositorioProgresoLeccion;
+
+    public ServicioExperienciaImpl(RepositorioUsuario repositorioUsuario, RepositorioExperiencia repositorioExperiencia,
+                                   RepositorioProgresoLeccion repositorioProgresoLeccion) {
         this.repositorioUsuario = repositorioUsuario;
         this.repositorioExperiencia = repositorioExperiencia;
+        this.repositorioProgresoLeccion = repositorioProgresoLeccion;
     }
 
     @Override
@@ -37,14 +43,13 @@ public class ServicioExperienciaImpl implements ServicioExperiencia {
     public void ganar100DeExperiencia(Long usuarioId) {
 
         Experiencia experiencia = this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getExperiencia();
+        List<ProgresoLeccion> progresos = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
+        progresos.iterator();
 
         if (experiencia.getCantidadExperiencia() >= 0 && experiencia.getCantidadExperiencia() < 5000) {
             experiencia.setCantidadExperiencia(experiencia.getCantidadExperiencia() + 100);
-
             repositorioExperiencia.actualizarExperiencia(experiencia);
-
         }
-
     }
 
     @Override

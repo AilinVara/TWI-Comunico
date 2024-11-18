@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.Compra;
 import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.Usuario;
 import org.hibernate.Session;
@@ -58,6 +59,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
+    @Transactional
     public Usuario buscarUsuarioPorId(Long id) {
         return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
                 .add(Restrictions.eq("id", id))
@@ -129,33 +131,31 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .uniqueResult();
     }
 
-//    @Override
-//    public Integer cantidadDeCompras(Usuario usuario, LocalDateTime fechaCompra) {
-//        Session session = sessionFactory.getCurrentSession();
-//        String hql = "SELECT COUNT(*) FROM Compra WHERE usuario = :usuario AND fechaDeCompra > :fechaCompra";
-//        Query<Long> query = session.createQuery(hql, Long.class);
-//        query.setParameter("usuario", usuario);
-//        query.setParameter("fechaCompra", fechaCompra);
-//        Long count = query.uniqueResult();
-//        return count != null ? count.intValue() : 0;
-//    }
+    @Override
+    public Integer cantidadDeCompras(Usuario usuario, LocalDateTime fechaCompra) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "SELECT COUNT(*) FROM Compra WHERE usuario = :usuario AND fechaDeCompra > :fechaCompra";
+        Query<Long> query = session.createQuery(hql, Long.class);
+        query.setParameter("usuario", usuario);
+        query.setParameter("fechaCompra", fechaCompra);
+        Long count = query.uniqueResult();
+        return count != null ? count.intValue() : 0;
+    }
 
-//    @Override
-//    public List<Compra> historialDeCompras(Usuario usuario) {
-//        Session session = sessionFactory.getCurrentSession();
-//
-//        CriteriaBuilder builder = session.getCriteriaBuilder();
-//        CriteriaQuery<Compra> criteriaQuery = builder.createQuery(Compra.class);
-//
-//        Root<Compra> compraRoot = criteriaQuery.from(Compra.class);
-//        Join<Compra, Usuario> usuarioJoin = compraRoot.join("usuario");
-//
-//        criteriaQuery.select(compraRoot);
-//        criteriaQuery.where(builder.equal(usuarioJoin.get("id"), usuario.getId()));
-//
-//        Query<Compra> query = session.createQuery(criteriaQuery);
-//        return query.getResultList();
-//    }
+    @Override
+    public List<Compra> historialDeCompras(Usuario usuario) {
+        Session session = sessionFactory.getCurrentSession();
 
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Compra> criteriaQuery = builder.createQuery(Compra.class);
 
+        Root<Compra> compraRoot = criteriaQuery.from(Compra.class);
+        Join<Compra, Usuario> usuarioJoin = compraRoot.join("usuario");
+
+        criteriaQuery.select(compraRoot);
+        criteriaQuery.where(builder.equal(usuarioJoin.get("id"), usuario.getId()));
+
+        Query<Compra> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
 }

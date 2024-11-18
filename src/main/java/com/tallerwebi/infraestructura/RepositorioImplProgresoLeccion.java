@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.Leccion;
 import com.tallerwebi.dominio.ProgresoLeccion;
 import com.tallerwebi.dominio.RepositorioProgresoLeccion;
 import org.hibernate.SessionFactory;
@@ -53,4 +54,12 @@ public class RepositorioImplProgresoLeccion implements RepositorioProgresoLeccio
                 .add(Restrictions.eq("usuario.id", usuarioId))
                 .list();
     }
+
+    @Override
+    public List<Leccion> darmeTodasLasLecciones() {
+        List<Leccion> lecciones = this.sessionFactory.getCurrentSession().createCriteria(Leccion.class).list();
+        return lecciones;
+    }
+
+
 }

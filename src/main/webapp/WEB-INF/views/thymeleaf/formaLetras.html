@@ -55,6 +55,18 @@
         </div>
     </form>
 
+    <form class="form-ayuda" th:action="@{'/ejercicio/' + ${indice} + '/ayuda'}" method="post">
+        <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
+        <input hidden name="leccion" th:value="${leccion}">
+
+        <button type="submit"
+                class="boton-ayuda"
+                th:classappend="${(ayudas < 1 or punto != null) ? 'boton-ayuda-deshabilitado' : ''}"
+                th:attr="disabled=${ayudas < 1 or punto != null}">
+            Usar ayuda
+        </button>
+    </form>
+
     <div th:if="${esCorrecta != null}">
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
@@ -82,6 +94,18 @@
     </div>
 </div>
 
+<input type="hidden" th:attr="data-punto=${punto}" id="punto-data">
+
+<script>
+    window.onload = function() {
+        const puntoData = document.getElementById("punto-data").getAttribute("data-punto");
+        const indicePunto = parseInt(puntoData, 10);
+
+        if (!isNaN(indicePunto) && indicePunto >= 0) {
+            document.querySelectorAll('.braille-checkbox')[indicePunto].checked = true;
+        }
+    };
+</script>
 <script>
     function concatenarCheckboxes() {
         let checkboxes = document.querySelectorAll('.braille-checkbox');
@@ -131,6 +155,7 @@
             modal.style.display = 'none';
         }
     };
+
 </script>
 
 <div th:if="${titulo != null}">

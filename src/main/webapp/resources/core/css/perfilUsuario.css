@@ -1,0 +1,397 @@
+@import url(https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold);
+
+@font-face {
+    font-family: "Feather Bold";
+    src: url("TWI-Comunico/src/main/webapp/resources/core/fonts/feather_bold_by_typicalbro44_dee263c.ttf");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.primero {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 3rem;
+}
+
+.primero.usuarios-vista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem; /* Espacio entre las tarjetas */
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* Estilos de cada tarjeta */
+.usuarios-vista .container {
+    position: relative;
+    background-color: #84d8ff;
+    color: #FFFFFF;
+    border-radius: 2rem;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 20px;
+    margin-top: 3.5rem;
+}
+
+.contenedor {
+    position: relative;
+    background-color: #84d8ff;
+    color: #FFFFFF;
+    border-radius: 2rem;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 20px;
+    margin-top: 3.5rem;
+}
+
+/* Avatar de perfil */
+.contenedor .avatar-perfil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 230px;
+    height: 230px;
+    background-color: #D9DCF1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 8px solid #FFFFFF;
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, .2);
+}
+
+.container .avatar-perfil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 230px;
+    height: 230px;
+    background-color: #D9DCF1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 8px solid #FFFFFF;
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, .2);
+}
+
+/* Imagen de perfil dentro del avatar */
+.contenedor .avatar-perfil img {
+    width: 200%;
+    height: 100%;
+}
+
+.container .avatar-perfil img {
+    width: 200%;
+    height: 100%;
+}
+
+/* Estilo del nombre de usuario */
+.nombre {
+    margin-top: 1rem;
+}
+
+/* Estilo de la descripción */
+.descripcion {
+    margin-left: 2rem;
+}
+
+/* Títulos adicionales en el perfil */
+.titulos {
+    position: absolute;
+    display: flex;
+    bottom: 10%;
+    right: 10%;
+    gap: 1rem;
+}
+
+.titulos .titulo {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    background: linear-gradient(45deg, #b08d57, #e0b074, #b08d57);
+    margin: 10px;
+}
+
+.titulo{
+    color: white;
+    padding: 6px 15px;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+ }
+
+/* Botón de configuración (Editar) */
+.configuracion {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #7af0f2;
+    color: white;
+}
+
+/* Contenedor del plan de suscripción */
+.contenedor-plan {
+    width: 20%;
+    padding: 1rem;
+    background-color: #9069cd;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 3.5rem;
+}
+
+/* Título del plan de suscripción */
+.plan-titulo {
+    background-color: #ebe3e3;
+    color: #000000;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+.plan-titulo h3 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.plan-titulo p {
+    margin: 5px 0 0;
+    font-size: 16px;
+}
+
+/* Lista de beneficios del plan */
+.beneficios ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.beneficios ul li {
+    margin-bottom: 0.5rem;
+}
+
+/* Botón para mejorar suscripción */
+.suscripcion button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #58cc02;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Enlace dentro del botón */
+.suscripcion button a {
+    text-decoration: none;
+    color: white;
+}
+
+/* Estilos de las pestañas */
+.listadesordenada {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.nav-tabs .nav-link {
+    color: #000000;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #1cb0f6;
+    color: white;
+}
+
+/* Sección de tablas */
+.tablas {
+    display: none;
+    padding: 2rem;
+}
+
+.tablas.lightblue {
+    background-color: #f0f8ff;
+    border-radius: 5px;
+}
+
+/* Tabla de facturas */
+.facturas-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.facturas-table th,
+.facturas-table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+}
+
+.facturas-table th{
+    background-color: #1cb0f6;
+    color: white;
+}
+
+.facturas-table td {
+    text-align: center;
+}
+
+/* Estilos del modal */
+.modal-header {
+    background-color: #1cb0f6;
+    color: white;
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-footer .btn-secondary {
+    background-color: gray;
+    color: white;
+}
+
+.modal-footer .btn-primary {
+    background-color: #1cb0f6;
+    color: white;
+}
+
+/* Estilo del formulario en el modal */
+.input-group-text {
+    background-color: #1cb0f6;
+    color: white;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    font-size: 1em;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.footer-section h4 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    font-size: 1em;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-logo {
+    width: 100px;
+    margin-top: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #ddd;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.9em;
+}
+
+/*Agregó Mateo*/
+.barra-experiencia {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.experiencia-llena {
+    height: 100%;
+    background-color: #4caf50; /* Cambia este color según tu preferencia */
+    width: 0; /* Se actualizará dinámicamente */
+    transition: width 1.0s ease;
+}
+
+#lecciones {
+    border: 2px solid #3c3c3c;
+    border-radius: 5px;
+    width: 60%;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    padding: 0;
+}
+
+.progreso-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.progreso-table th,
+.progreso-table td {
+    border: 1px solid #3c3c3c;
+    padding: 10px;
+}
+
+.progreso-table th {
+    background-color: #1cb0f6;
+    color: white;
+    font-size: 24px;
+}
+
+.progreso-table td {
+    font-size: 22px;
+    color: #333;
+}
+
+
+
+

@@ -12,8 +12,6 @@ body {
     color: #333;
 }
 
-
-
 .cerrar {
     position: relative;
     top: 10px;
@@ -91,7 +89,6 @@ body {
 
 .titulo {
     text-align: center;
-    padding: 50px;
     padding-bottom: 0;
     font-size: 2.5em;
     margin-bottom: 10px;
@@ -104,6 +101,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 50px;
+    padding-bottom: 0;
 }
 
 .braille-matriz {
@@ -133,37 +131,48 @@ body {
 }
 
 .enviar {
-    background-color: #74bf32;
+    margin-top: 20px;
+    padding: 15px 25px;
+    font-size: 20px;
+    background-color: #58cc02;
+    color: white;
     border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    cursor: pointer;/
+    transition: background-color 0.3s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .enviar:hover {
-    background-color: #89e219;
-    color: white;
+    background-color: #46a001;
 }
 
-.volver-atras {
-    margin-top: 20px;
-    display: inline-block;
-    width: 150px;
-    padding: 10px;
-    background-color: #fff;
-    text-align: center;
-    text-decoration: none;
-    color: #333;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+.boton-ayuda{
+    padding: 8px 16px;
+    color: white;
+    border: none;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-size: 1em;
+    cursor: pointer;
+    margin: 18px 0 18px 0;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    background-color: #ce82ff;
 }
 
-.volver-atras:hover {
-    background-color: #ddd;
+.boton-ayuda:hover {
+    background-color: #b565ff;
     transform: scale(1.05);
+}
+
+.boton-ayuda-deshabilitado{
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #3c3c3c
+}
+
+.boton-ayuda-deshabilitado:hover{
+    background-color: #3c3c3c;
 }
