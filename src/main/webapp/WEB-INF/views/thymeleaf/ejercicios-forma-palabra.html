@@ -68,6 +68,8 @@
         </button>
     </form>
 
+    <input hidden th:attr="data-combinado=${combinado}" id="combinado"/>
+
     <div th:if="${esCorrecta != null}">
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
@@ -118,7 +120,12 @@
     };
 
     document.getElementById('confirmarSalir').onclick = function() {
-        window.location.href = '/braille/lecciones/forma-palabras';
+        let combinado = document.getElementById("combinado").getAttribute("data-combinado");
+        if(combinado != null && combinado){
+            window.location.href = '/braille/lecciones/combinado';
+        }else{
+            window.location.href = '/braille/lecciones/forma-palabras';
+        }
     };
 
     window.onclick = function(event) {
