@@ -126,17 +126,18 @@ public class ControladorEjercicio {
             mav.setViewName("ejercicio-video");
         }
 
-
-        if (resuelto){
+        if (resuelto) {
             this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
-        } else  {
-            this.servicioVida.perderUnaVida(usuarioId);
-        }
-        if (resuelto && this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccionId, usuarioId)) {
-            this.servicioExperiencia.ganar300DeExperiencia(usuarioId);
-        }
+            this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
-        this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
+            if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccionId, usuarioId)) {
+                this.servicioExperiencia.ganar300DeExperiencia(usuarioId);
+                modelo.put("completadoLeccion", true);
+            }
+        } else {
+            this.servicioVida.perderUnaVida(usuarioId);
+            this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
+        }
 
         modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
         agregarTiempoRestanteAlModelo(modelo,usuarioId);
