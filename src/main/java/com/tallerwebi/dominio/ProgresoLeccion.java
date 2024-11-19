@@ -24,6 +24,8 @@ public class ProgresoLeccion {
 
     Boolean completo = false;
 
+    Boolean experienciaOtorgada = false;
+
     public ProgresoLeccion(){}
 
     public ProgresoLeccion(Usuario usuario, Leccion leccion, Ejercicio ejercicio) {
@@ -72,6 +74,10 @@ public class ProgresoLeccion {
     public void setEjercicio(Ejercicio ejercicio) {
         this.ejercicio = ejercicio;
     }
+
+    public Boolean getExperienciaOtorgada() {return experienciaOtorgada;}
+
+    public void setExperienciaOtorgada(Boolean experienciaOtorgada) {this.experienciaOtorgada = experienciaOtorgada;}
 
     @Override
     public boolean equals(Object o) {
