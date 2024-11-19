@@ -60,6 +60,13 @@ public class RepositorioImplProgresoLeccion implements RepositorioProgresoLeccio
         List<Leccion> lecciones = this.sessionFactory.getCurrentSession().createCriteria(Leccion.class).list();
         return lecciones;
     }
+    @Override
+    public boolean experienciaOtorgada(Long usuarioId, Long leccionId) {
+        List<ProgresoLeccion> progresos = buscarPorUsuarioIdYLeccionId(usuarioId, leccionId);
+        // Si alguno de los progresos marca que la experiencia ya fue otorgada, devuelve true
+        return progresos.stream().anyMatch(ProgresoLeccion::getExperienciaOtorgada);
+    }
+
 
 
 }

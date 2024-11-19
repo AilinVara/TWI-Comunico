@@ -10,17 +10,20 @@ import java.util.stream.Collectors;
 
 @Service("servicioProgresoLeccion")
 @Transactional
-public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
+public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion {
     private RepositorioProgresoLeccion repositorioProgresoLeccion;
     private ServicioLogin servicioUsuario;
     private ServicioLeccion servicioLeccion;
+    private ServicioExperiencia servicioExperiencia;
 
     @Autowired
-    public ServicioProgresoLeccionImpl(RepositorioProgresoLeccion repositorioProgresoLeccion, ServicioLogin servicioUsuario, ServicioLeccion servicioLeccion) {
+    public ServicioProgresoLeccionImpl(RepositorioProgresoLeccion repositorioProgresoLeccion, ServicioLogin servicioUsuario, ServicioLeccion servicioLeccion, ServicioExperiencia servicioExperiencia) {
         this.repositorioProgresoLeccion = repositorioProgresoLeccion;
         this.servicioUsuario = servicioUsuario;
         this.servicioLeccion = servicioLeccion;
+        this.servicioExperiencia = servicioExperiencia;
     }
+
     @Override
     public void guardarProgresoLeccion(ProgresoLeccion progresoLeccion) {
         this.repositorioProgresoLeccion.guardar(progresoLeccion);
@@ -42,9 +45,9 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
         Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
         List<Ejercicio> ejercicios = leccion.getEjercicios();
 
-        for(Ejercicio ejercicio : ejercicios){
+        for (Ejercicio ejercicio : ejercicios) {
             ProgresoLeccion progresoExistente = this.repositorioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicio.getId());
-            if(progresoExistente == null){
+            if (progresoExistente == null) {
                 ProgresoLeccion progresoLeccion = new ProgresoLeccion(usuario, leccion, ejercicio);
                 this.guardarProgresoLeccion(progresoLeccion);
             }
@@ -70,16 +73,16 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
 
     @Override
     public List<ProgresoLeccion> buscarProgresoPorTipoEjercicio(String tipoEjercicio, Long usuarioId) {
-       List<ProgresoLeccion> todosProgresosLeccion = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
+        List<ProgresoLeccion> todosProgresosLeccion = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
 
-        if(todosProgresosLeccion.isEmpty() || todosProgresosLeccion.stream().noneMatch(p -> p.getLeccion().getTipo().equals(tipoEjercicio))){
-            for (Leccion leccion : this.servicioLeccion.obtenerLeccionesPorTipo(tipoEjercicio)){
+        if (todosProgresosLeccion.isEmpty() || todosProgresosLeccion.stream().noneMatch(p -> p.getLeccion().getTipo().equals(tipoEjercicio))) {
+            for (Leccion leccion : this.servicioLeccion.obtenerLeccionesPorTipo(tipoEjercicio)) {
                 this.crearProgresoLeccion(leccion.getId(), usuarioId);
             }
             todosProgresosLeccion = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
         }
 
-        return  todosProgresosLeccion.stream()
+        return todosProgresosLeccion.stream()
                 .filter(l -> l.getLeccion().getTipo().equals(tipoEjercicio))
                 .collect(Collectors.toList());
     }
@@ -108,4 +111,24 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
     public List<Leccion> obtenerLecciones() {
         return this.repositorioProgresoLeccion.darmeTodasLasLecciones();
     }
+
+    @Override
+    public boolean otorgarExperienciaPorLeccion(Long usuarioId, Long leccionId) {
+        // Chequea si ya le dió la experiencia
+        boolean otorgada = false;
+        if (!repositorioProgresoLeccion.experienciaOtorgada(usuarioId, leccionId)) {
+            servicioExperiencia.ganar300DeExperiencia(usuarioId);
+
+            List<ProgresoLeccion> progresos = repositorioProgresoLeccion.buscarPorUsuarioIdYLeccionId(usuarioId, leccionId);
+            for (ProgresoLeccion progreso : progresos) {
+                progreso.setExperienciaOtorgada(true);
+                repositorioProgresoLeccion.actualizar(progreso);
+                otorgada = true;
+            }
+        } else {
+            System.out.println("La experiencia ya fue otorgada para esta lección.");
+        }
+    return otorgada;
+    }
 }
+

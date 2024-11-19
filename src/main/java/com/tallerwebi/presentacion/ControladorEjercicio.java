@@ -26,6 +26,7 @@ public class ControladorEjercicio {
 
 
 
+
     @Autowired
     public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia, ServicioTitulo servicioTitulo, ServicioUsuario servicioUsuario) {
         this.servicioEjercicio = servicioEjercicio;
@@ -35,6 +36,7 @@ public class ControladorEjercicio {
         this.servicioExperiencia = servicioExperiencia;
         this.servicioTitulo = servicioTitulo;
         this.servicioUsuario = servicioUsuario;
+
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
@@ -125,19 +127,19 @@ public class ControladorEjercicio {
             resuelto = this.servicioEjercicio.resolverEjercicioTraduccionSenia((EjercicioTraduccionSenia) ejercicio, Long.parseLong(respuesta));
             mav.setViewName("ejercicio-video");
         }
-
         if (resuelto) {
             this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
             this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
             if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccionId, usuarioId)) {
-                this.servicioExperiencia.ganar300DeExperiencia(usuarioId);
-                modelo.put("completadoLeccion", true);
+                boolean experienciaOtorgada = this.servicioProgresoLeccion.otorgarExperienciaPorLeccion(usuarioId, leccionId);
+                modelo.put("completadoLeccion", experienciaOtorgada);
             }
         } else {
             this.servicioVida.perderUnaVida(usuarioId);
             this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
         }
+
 
         modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
         agregarTiempoRestanteAlModelo(modelo,usuarioId);
