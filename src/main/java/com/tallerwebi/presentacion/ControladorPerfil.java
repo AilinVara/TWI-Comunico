@@ -14,8 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ControladorPerfil {
@@ -50,16 +49,19 @@ public class ControladorPerfil {
                 model.put("amigosUsuario", servicioPerfilUsuario.buscarAmigos(usuario));
 
                 List<ProgresoLeccion> listaProgresos = new ArrayList<>();
+                Set<Long> filtroLecciones = new HashSet<>();
 
                 for (Leccion leccion : lecciones) {
                     if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccion.getId(), idUsuario)) {
                         List<ProgresoLeccion> progresos = this.servicioProgresoLeccion.buscarProgresoLeccionDeUsuario(idUsuario, leccion.getId());
 
-                        for (ProgresoLeccion progreso : progresos) {
-                            if (!listaProgresos.contains(progreso)) {
-                                listaProgresos.add(progreso);
-                            }
-                        }
+                     if(!filtroLecciones.contains(leccion.getId())) {
+
+                         if(!progresos.isEmpty()){
+                             listaProgresos.add(progresos.get(0));
+                             filtroLecciones.add(leccion.getId());
+                         }
+                       }
                     }
                 }
                 model.put("progresos", listaProgresos);

@@ -118,7 +118,7 @@
 
                 <tbody>
                 <tr th:each="progreso : ${progresos}" th:if="${progreso.getCompleto()}">
-                    <td th:text="${progreso.getId()}" class="progress-id"></td>
+                    <td th:text="${progreso.getLeccion().getId()}" class="progress-id"></td>
                     <td th:text="${progreso.getLeccion().getTipo()}" class="lection-type"></td>
                 </tr>
                 </tbody>
