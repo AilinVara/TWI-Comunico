@@ -23,6 +23,8 @@ public class ControladorEjercicioTest {
 
     private ControladorEjercicio controladorEjercicio;
     private EjercicioTraduccion ejercicioTraduccionMock;
+    private EjercicioMatriz ejercicioMatrizMock;
+    private EjercicioFormaPalabra ejercicioFormaPalabraMock;
     private ServicioEjercicio servicioEjercicioMock;
     private ServicioLeccion servicioLeccionMock;
     private ServicioProgresoLeccion servicioProgresoLeccionMock;
@@ -40,6 +42,10 @@ public class ControladorEjercicioTest {
     public void init() {
         ejercicioTraduccionMock = mock(EjercicioTraduccion.class);
         when(ejercicioTraduccionMock.getId()).thenReturn(1L);
+        ejercicioMatrizMock = mock(EjercicioMatriz.class);
+        when(ejercicioMatrizMock.getId()).thenReturn(1L);
+        ejercicioFormaPalabraMock = mock(EjercicioFormaPalabra.class);
+        when(ejercicioFormaPalabraMock.getId()).thenReturn(1L);
 
         requestMock = mock(HttpServletRequest.class);
         leccionMock = mock(Leccion.class);
@@ -83,11 +89,14 @@ public class ControladorEjercicioTest {
         servicioLeccionMock = mock(ServicioLeccion.class);
         servicioProgresoLeccionMock = mock(ServicioProgresoLeccion.class);
 
+        when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
+        when(leccionMock.getTipo()).thenReturn("traduccion");
+
         controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioVidaMock,servicioExperienciaMock, servicioTituloMock, servicioUsuarioMock);
     }
 
     @Test
-    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConEjerciciosCuandoVoyAEjercicioReciboLaVistaEjercicioYUnObjetoEjercicioEnElModelo(){
+    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConEjerciciosTraduccionCuandoVoyAEjercicioReciboLaVistaEjercicioYUnEjercicioTraduccionEnElModelo(){
         when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
         List<Ejercicio> lista = new ArrayList<>();
         lista.add(ejercicioTraduccionMock);
@@ -97,10 +106,44 @@ public class ControladorEjercicioTest {
         when(requestMock.getSession()).thenReturn(sessionMock);
         when(sessionMock.getAttribute(anyString())).thenReturn(1L);
 
-        ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1,requestMock, "");
+        ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1,requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
-        assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioTraduccionMock));
+        assertThat(modelAndView.getModel().get("ejercicio").getClass(), equalTo(ejercicioTraduccionMock.getClass()));
+    }
+
+    @Test
+    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConEjerciciosMatrizCuandoVoyAEjercicioReciboLaVistaFormaLetraYUnEjercicioMatrizEnElModelo(){
+        when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
+        List<Ejercicio> lista = new ArrayList<>();
+        lista.add(ejercicioMatrizMock);
+        leccionMock.setEjercicios(lista);
+        when(leccionMock.getEjercicios()).thenReturn(lista);
+
+        when(requestMock.getSession()).thenReturn(sessionMock);
+        when(sessionMock.getAttribute(anyString())).thenReturn(1L);
+
+        ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1,requestMock);
+
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("formaLetras"));
+        assertThat(modelAndView.getModel().get("ejercicio").getClass(), equalTo(ejercicioMatrizMock.getClass()));
+    }
+
+    @Test
+    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConEjerciciosFormaPalabraCuandoVoyAEjercicioReciboLaVistaFormaPalabraYUnEjercicioFormaPalabraEnElModelo(){
+        when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
+        List<Ejercicio> lista = new ArrayList<>();
+        lista.add(ejercicioFormaPalabraMock);
+        leccionMock.setEjercicios(lista);
+        when(leccionMock.getEjercicios()).thenReturn(lista);
+
+        when(requestMock.getSession()).thenReturn(sessionMock);
+        when(sessionMock.getAttribute(anyString())).thenReturn(1L);
+
+        ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1,requestMock);
+
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicios-forma-palabra"));
+        assertThat(modelAndView.getModel().get("ejercicio").getClass(), equalTo(ejercicioFormaPalabraMock.getClass()));
     }
 
 
