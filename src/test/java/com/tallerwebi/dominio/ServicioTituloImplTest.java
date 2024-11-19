@@ -30,13 +30,14 @@ public class ServicioTituloImplTest {
         this.repositorioUsuario = mock(RepositorioUsuario.class);
         this.repositorioExperienciaMock = mock(RepositorioExperiencia.class);
         this.repositorioVidaMock = mock(RepositorioVida.class);
-
+        this.repositorioProgresoLeccion = mock(RepositorioProgresoLeccion.class);
         servicioExperienciaMock = new ServicioExperienciaImpl(repositorioUsuario, repositorioExperienciaMock, repositorioProgresoLeccion);
         servicioTitulo = new ServicioTituloImpl(repositorioUsuario, repositorioVidaMock);
         when(repositorioExperienciaMock.buscarExperienciaPorId(experiencia.getId())).thenReturn(experiencia);
         when(repositorioUsuario.buscarUsuarioPorId(usuario.getId())).thenReturn(usuario);
         //when(usuario.getExperiencia()).thenReturn(experiencia);
         usuario.setExperiencia(experiencia);
+
         //when(servicioExperienciaMock.obtenerExperiencia(usuario.getId())).thenReturn(experiencia);
 
     }
