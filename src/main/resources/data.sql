@@ -103,13 +103,14 @@ INSERT INTO EjercicioTraduccion(id, consigna, opcionCorrecta_id, tipoEjercicio, 
                                                                                                 (31, 'Ejercicio 1:', 22, 'traduccion', 10),
                                                                                                 (32, 'Ejercicio 2:', 23, 'traduccion', 10),
                                                                                                 (33, 'Ejercicio 3:', 24, 'traduccion', 10),
-                                                                                                (34, 'Ejercicio 1:', 25, 'traduccion', 11),
-                                                                                                (35, 'Ejercicio 2:', 26, 'traduccion', 11),
-                                                                                                (72, 'Ejercicio:', 4, 'traduccion', 25),
-                                                                                                (73, 'Ejercicio:', 8, 'traduccion', 26),
-                                                                                                (74, 'Ejercicio:', 10, 'traduccion', 27),
-                                                                                                (75, 'Ejercicio:', 12, 'traduccion', 28),
-                                                                                                (76, 'Ejercicio:', 16, 'traduccion', 29);
+                                                                                                (34, 'Ejercicio 2:', 25, 'traduccion', 11),
+                                                                                                (35, 'Ejercicio 3:', 26, 'traduccion', 11),
+                                                                                                (36, 'Ejercicio 1:', 24, 'traduccion', 11),
+                                                                                                (72, 'Ejercicio 3:', 4, 'traduccion', 25),
+                                                                                                (73, 'Ejercicio 3:', 8, 'traduccion', 26),
+                                                                                                (74, 'Ejercicio 3:', 10, 'traduccion', 27),
+                                                                                                (75, 'Ejercicio 3:', 12, 'traduccion', 28),
+                                                                                                (76, 'Ejercicio 3:', 16, 'traduccion', 29);
 
 
 INSERT INTO EjercicioMatriz(id, puntos, letra, tipoEjercicio, leccion_id) VALUES
@@ -235,8 +236,8 @@ INSERT INTO EjercicioTraduccion_Opcion(EjercicioTraduccion_id, opcionesIncorrect
                                                                                            (34, 23),
                                                                                            (35, 25),
                                                                                            (35, 24),
-                                                                                           (33, 26),
-                                                                                           (33, 25),
+                                                                                           (36, 25),
+                                                                                           (36, 26),
 
 
                                                                                            (72, 5),
@@ -264,8 +265,8 @@ INSERT INTO EjercicioTraduccionSenia_Opcion(EjercicioTraduccionSenia_id, opcione
                                                                                                      (6, 2);
 
 INSERT INTO Curso(id, nombre, descripcion, fecha, hora, tipo, nivel, capacidad) VALUES
-                                                                                                (1, 'Curso básico de lengua de señas', 'Introducción a la lengua de señas para principiantes.', '2024-10-15', '10:00:00', 'SEÑAS', 'BÁSICO', 20),
-                                                                                                (2, 'Curso intermedio de lengua de señas', 'Profundización en la lengua de señas para quienes ya tienen conocimientos básicos.', '2024-10-22', '11:00:00', 'SEÑAS', 'INTERMEDIO', 15),
-                                                                                                (3, 'Curso avanzado de lengua de señas', 'Dominio avanzado de la lengua de señas y su uso en situaciones complejas.', '2024-11-01', '09:00:00', 'SEÑAS', 'AVANZADO', 10),
-                                                                                                (4, 'Curso de braille para principiantes', 'Introducción al sistema Braille y su aplicación en la vida diaria.', '2024-11-05', '14:00:00', 'BRAILLE', 'BÁSICO', 25),
-                                                                                                (5, 'Curso de braille avanzado', 'Profundización en el sistema Braille para usuarios con experiencia.', '2024-11-10', '16:00:00', 'BRAILLE', 'AVANZADO', 10);
+                                                                                    (1, 'Curso básico de lengua de señas', 'Introducción a la lengua de señas para principiantes.', '2024-10-15', '10:00:00', 'SEÑAS', 'BÁSICO', 20),
+                                                                                    (2, 'Curso intermedio de lengua de señas', 'Profundización en la lengua de señas para quienes ya tienen conocimientos básicos.', '2024-10-22', '11:00:00', 'SEÑAS', 'INTERMEDIO', 15),
+                                                                                    (3, 'Curso avanzado de lengua de señas', 'Dominio avanzado de la lengua de señas y su uso en situaciones complejas.', '2024-11-01', '09:00:00', 'SEÑAS', 'AVANZADO', 10),
+                                                                                    (4, 'Curso de braille para principiantes', 'Introducción al sistema Braille y su aplicación en la vida diaria.', '2024-11-05', '14:00:00', 'BRAILLE', 'BÁSICO', 25),
+                                                                                    (5, 'Curso de braille avanzado', 'Profundización en el sistema Braille para usuarios con experiencia.', '2024-11-10', '16:00:00', 'BRAILLE', 'AVANZADO', 10);
