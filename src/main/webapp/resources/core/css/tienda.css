@@ -56,10 +56,6 @@ body {
     background: #fff;
 }
 
-/*.producto-card p{*/
-/*    margin-bottom: 50px;*/
-/*}*/
-
 
 .tienda-header {
     text-align: center;
@@ -83,6 +79,27 @@ body {
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
 }
+
+header i {
+    font-size: inherit;
+}
+
+.saldo-container i {
+    font-size: inherit;
+}
+
+/* Íconos de la tienda: más grandes */
+.seccion-tienda i {
+    font-size: 3rem; /* Tamaño ajustado para los íconos de la tienda */
+}
+
+/* Tamaño del precio en la tienda */
+.seccion-tienda .producto-card .precio i {
+    font-size: 1rem; /* Ajusta el tamaño según desees */
+}
+
+
+
 
 a {
     text-decoration: none;

@@ -45,7 +45,7 @@
             <div class="producto-card">
                 <i class="fa-solid fa-heart"></i>
                 <h5>1 Vida Extra</h5>
-                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 200 CP</p>
+                <p class="precio">Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 200 CP</p>
 
                 <form th:action="@{/comprarVidas}" method="post">
                     <input type="hidden" th:name="vidas" th:value=1>
@@ -57,7 +57,7 @@
             <div class="producto-card">
                 <i class="fa-solid fa-heart"></i>
                 <h5>3 Vidas Extra</h5>
-                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 500 CP</p>
+                <p class="precio">Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 500 CP</p>
 
                 <form th:action="@{/comprarVidas}" method="post">
                     <input type="hidden" th:name="vidas" th:value=3>
@@ -69,7 +69,7 @@
             <div class="producto-card">
                 <i class="fa-solid fa-heart"></i>
                 <h5>5 Vidas Extra</h5>
-                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 800 CP</p>
+                <p class="precio"> Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 800 CP</p>
 
                 <form th:action="@{/comprarVidas}" method="post">
                     <input type="hidden" th:name="vidas" th:value=5>
@@ -89,7 +89,7 @@
             <div class="producto-card">
                 <i class="fa-solid fa-hand-sparkles"></i>
                 <h5>1 Ayuda</h5>
-                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 800 CP</p>
+                <p class="precio">Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 800 CP</p>
                 <form th:action="@{/comprarAyudas}" method="post">
                     <input type="hidden" th:name="ayudas" th:value=1>
                     <button type="submit" class="btn btn-comprar">
@@ -100,7 +100,7 @@
             <div class="producto-card">
                 <i class="fa-solid fa-hand-sparkles"></i>
                 <h5>3 Ayudas</h5>
-                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1000 CP</p>
+                <p class="precio">Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1000 CP</p>
                 <form th:action="@{/comprarAyudas}" method="post">
                     <input type="hidden" th:name="ayudas" th:value=3>
                     <button type="submit" class="btn btn-comprar">
@@ -109,9 +109,9 @@
                 </form>
             </div>
             <div class="producto-card">
-                <i class="fa-solid fa-hand-sparkles" id="ayudas"></i>
+                <i class="fa-solid fa-hand-sparkles"></i>
                 <h5>5 Ayudas</h5>
-                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1500 CP</p>
+                <p class="precio">Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1500 CP</p>
                 <form th:action="@{/comprarAyudas}" method="post">
                     <input type="hidden" th:name="ayudas" th:value=5>
                     <button type="submit" class="btn btn-comprar">
@@ -130,7 +130,7 @@
             <div class="producto-card">
                 <i class="fa-solid fa-key" style="color: #FFD43B;"></i>
                 <h5>1 Llave</h5>
-                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1000 CP</p>
+                <p class="precio">Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1000 CP</p>
                 <form th:action="@{/comprarLlaves}" method="post">
                     <input type="hidden" th:name="llaves" th:value=1>
                     <button type="submit" class="btn btn-comprar">
@@ -141,7 +141,7 @@
             <div class="producto-card">
                 <i class="fa-solid fa-key" style="color: #FFD43B;"></i>
                 <h5>3 Llaves</h5>
-                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1500 CP</p>
+                <p class="precio">Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1500 CP</p>
                 <form th:action="@{/comprarLlaves}" method="post">
                     <input type="hidden" th:name="llaves" th:value=3>
                     <button type="submit" class="btn btn-comprar">
@@ -152,7 +152,7 @@
             <div class="producto-card">
                 <i class="fa-solid fa-key" style="color: #FFD43B;"></i>
                 <h5>5 Llaves</h5>
-                <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 3000 CP</p>
+                <p class="precio">Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 3000 CP</p>
                 <form th:action="@{/comprarLlaves}" method="post">
                     <input type="hidden" th:name="llaves" th:value=5>
                     <button type="submit" class="btn btn-comprar">
