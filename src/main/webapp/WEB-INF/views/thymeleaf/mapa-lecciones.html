@@ -18,8 +18,8 @@
 <ul class="leccionesBasicas">
     <th:block th:each="progreso, indice : ${progresos}">
         <li>
-            <a th:if="${progreso.value}" href="#" class="leccion-activa" th:data-leccion="@{'/leccion/' + ${progreso.key}}">
-                <input type="button" class="lecciones" th:value="'Lección '+ ${indice.count}" />
+            <a th:if="${progreso.value}" href="#" class="leccion-activa" th:id="'link-'+${indice.count}" th:data-leccion="@{'/leccion/' + ${progreso.key}}">
+                <input type="button" class="lecciones" th:id="'leccion-'+${indice.count}" th:value="'Lección '+ ${indice.count}" />
             </a>
             <a th:unless="${progreso.value}" href="#">
                 <input type="button" class="lecciones_deshabilitadas" th:value="'Lección '+ ${indice.count}" />
