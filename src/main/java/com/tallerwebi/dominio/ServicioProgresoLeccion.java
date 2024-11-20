@@ -23,4 +23,6 @@ public interface ServicioProgresoLeccion {
     Map<Long, Boolean> buscarProgresoPorTipoEjercicioConEstado(String tipoEjercicio, Long usuarioId);
 
     List<Leccion> obtenerLecciones();
+
+
 }

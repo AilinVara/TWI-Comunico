@@ -21,17 +21,18 @@ public class ControladorPerfil {
 
         private ServicioPerfilUsuario servicioPerfilUsuario;
         private ServicioSuscripcion servicioSuscripcion;
-        private RepositorioUsuario servicioUsuario;
+        private RepositorioUsuario repositorioUsuario;
 
         //para obtener el historial de lecciones
         private ServicioProgresoLeccion servicioProgresoLeccion;
+
 
     @Autowired
         public ControladorPerfil(ServicioPerfilUsuario servicioPerfilUsuario, ServicioSuscripcion servicioSuscripcion, RepositorioUsuario servicioUsuario,
                                  ServicioProgresoLeccion servicioProgresoLeccion) {
             this.servicioPerfilUsuario = servicioPerfilUsuario;
             this.servicioSuscripcion = servicioSuscripcion;
-            this.servicioUsuario = servicioUsuario;
+            this.repositorioUsuario = servicioUsuario;
             this.servicioProgresoLeccion = servicioProgresoLeccion;
     }
 
@@ -39,7 +40,7 @@ public class ControladorPerfil {
         public ModelAndView mostrarPerfil(HttpServletRequest request, @ModelAttribute("amigo") Usuario amigo, @ModelAttribute("modal") String modal) {
             HttpSession session = request.getSession();
             Long idUsuario = (Long) session.getAttribute("id");
-            Usuario usuario = this.servicioUsuario.buscarUsuarioPorId(idUsuario);
+            Usuario usuario = this.repositorioUsuario.buscarUsuarioPorId(idUsuario);
             List<Leccion> lecciones = servicioProgresoLeccion.obtenerLecciones();
 
             if (usuario != null) {
@@ -50,14 +51,19 @@ public class ControladorPerfil {
 
                 List<ProgresoLeccion> listaProgresos = new ArrayList<>();
                 Set<Long> filtroLecciones = new HashSet<>();
+                Long leccionNum = 0L;
 
                 for (Leccion leccion : lecciones) {
+                    Map<String, String> nombreLecciones = leccion.generarNombreTipoLeccion();
+
                     if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccion.getId(), idUsuario)) {
                         List<ProgresoLeccion> progresos = this.servicioProgresoLeccion.buscarProgresoLeccionDeUsuario(idUsuario, leccion.getId());
-
                      if(!filtroLecciones.contains(leccion.getId())) {
-
                          if(!progresos.isEmpty()){
+                             leccionNum++;
+                             String tipo = progresos.get(0).getLeccion().getTipo();
+                             progresos.get(0).getLeccion().setTipo(nombreLecciones.getOrDefault(tipo, tipo));
+                             progresos.get(0).getLeccion().setId(leccionNum);
                              listaProgresos.add(progresos.get(0));
                              filtroLecciones.add(leccion.getId());
                          }
@@ -89,7 +95,7 @@ public class ControladorPerfil {
 
             HttpSession session = request.getSession();
             Long idUsuario = (Long) session.getAttribute("id");
-            Usuario usuarioExistente = this.servicioUsuario.buscarUsuarioPorId(idUsuario);
+            Usuario usuarioExistente = this.repositorioUsuario.buscarUsuarioPorId(idUsuario);
             if (usuarioExistente == null) {
                 // Manejar el caso donde el usuario no se encuentra
                 flash.addFlashAttribute("error", "Usuario no encontrado");

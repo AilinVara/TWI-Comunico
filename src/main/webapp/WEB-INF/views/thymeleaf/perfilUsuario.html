@@ -16,35 +16,41 @@
 <header th:replace="header :: header"></header>
 <main>
     <section class="primero">
-
         <div class="contenedor">
-            <div>
+            <div class="perfil-header">
                 <div class="avatar-perfil">
                     <img th:src="@{'/img/'+${usuario.foto}}" th:alt="${usuario.foto}">
                 </div>
                 <div class="nombre">
                     <h2 th:text="${usuario.getNombreDeUsuario()}"></h2>
                 </div>
-
             </div>
             <div class="descripcion">
-                <h4>Descripción:</h4>
+                <h4 class="descripcion-h4">Descripción:</h4>
                 <p th:text="${usuario.getDescripcion()}"></p>
-                <div class="titulos">
+
+                <div class="rol-container">
+                    <p id="rol">Rol:</p>
+                    <span id="rol-name" th:text="${usuario.getRol()}"></span>
+                </div>
+
+
+               <div class="titulos">
                     <span class="titulo" th:text="${usuario.getTitulo()}"></span>
                 </div>
+
                 <button type="button" class="btn btn-primary configuracion" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
 
-                <div class="barra-experiencia">
-                    <div class="experiencia-llena">
-                        <p><span th:text="${experiencia}">0</span>/5000XP</p>
+                    <div class="experiencia-usuario">
+                        <p id="exp-p"> <span id="exp-span">Exp:</span>
+                            <span id="exp-bar" th:text="${usuario.getExperiencia().getCantidadExperiencia()}">0</span>/5000px
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
 
         <div class="contenedor-plan">
             <div class="plan-titulo d-flex">
@@ -124,7 +130,6 @@
                 </tbody>
             </table>
         </section>
-
 
         <section class="tablas lightblue" id="facturas">
             <h1>Facturas</h1>
