@@ -8,7 +8,7 @@ public interface ServicioExperiencia {
 
     void ganar100DeExperiencia(Long usuarioId);
 
-    void ganar1000DeExperiencia(Long usuarioId);
+    void ganar300DeExperiencia(Long usuarioId);
 
 
 

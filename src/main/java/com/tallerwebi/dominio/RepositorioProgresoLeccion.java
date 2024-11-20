@@ -14,4 +14,7 @@ public interface RepositorioProgresoLeccion {
     List<ProgresoLeccion> buscarProgresosPorUsuario(Long usuarioId);
 
     List<Leccion> darmeTodasLasLecciones();
+
+    boolean experienciaOtorgada(Long usuarioId, Long leccionId);
+
 }

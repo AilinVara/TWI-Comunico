@@ -165,63 +165,6 @@
 
 </script>
 
-<div th:if="${titulo != null}">
-    <script th:inline="javascript">
-        document.addEventListener("DOMContentLoaded", function() {
-            // Obteniendo la experiencia actual
-            let experiencia = parseInt(document.getElementById("experiencia").innerText, 10);
-            let titulo = [[${titulo}]];
-            let mensaje = `Desbloqueaste el título <strong>${titulo}</strong>`;
-
-
-
-            // Revisamos si ya se mostró un título previamente usando localStorage
-            let ultimoTitulo = localStorage.getItem("ultimoTitulo");
-
-            // Si no es el mismo título que el último desbloqueado, mostrar el mensaje
-            if (titulo !== ultimoTitulo) {
-                // Verifica la experiencia para determinar qué título mostrar y qué alertar
-                if (experiencia >= 5000) {
-                    mensaje += `<br> ¡Obtuviste 100 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 30 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
-                    Swal.fire({
-                        title: '¡Desbloqueaste un nuevo título!',
-                        html: `<br>${mensaje}`,
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-                } else if (experiencia >= 3500) {
-                    mensaje += `<br> ¡Obtuviste 60 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 20 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
-                    Swal.fire({
-                        title: '¡Desbloqueaste un nuevo título!',
-                        html: `<br>${mensaje}`,
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-                } else if (experiencia >= 2000) {
-                    mensaje += `<br> ¡Obtuviste 40 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 10 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
-                    Swal.fire({
-                        title: '¡Desbloqueaste un nuevo título!',
-                        html: `<br>${mensaje}`,
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-                } else if (experiencia >= 500) {
-                    mensaje += `<br> ¡Obtuviste 20 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 5 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
-                    Swal.fire({
-                        title: '¡Desbloqueaste un nuevo título!',
-                        html: `<br>${mensaje}`,
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-                }
-
-                // Almacenar el nuevo título para que no se muestre nuevamente
-                localStorage.setItem("ultimoTitulo", titulo);
-            }
-        });
-    </script>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

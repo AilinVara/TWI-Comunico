@@ -41,23 +41,22 @@ public class ServicioExperienciaImpl implements ServicioExperiencia {
 
     @Override
     public void ganar100DeExperiencia(Long usuarioId) {
-
         Experiencia experiencia = this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getExperiencia();
-        List<ProgresoLeccion> progresos = this.repositorioProgresoLeccion.buscarProgresosPorUsuario(usuarioId);
-        progresos.iterator();
 
         if (experiencia.getCantidadExperiencia() >= 0 && experiencia.getCantidadExperiencia() < 5000) {
             experiencia.setCantidadExperiencia(experiencia.getCantidadExperiencia() + 100);
             repositorioExperiencia.actualizarExperiencia(experiencia);
         }
+
+        repositorioExperiencia.actualizarExperiencia(experiencia);
     }
 
     @Override
-    public void ganar1000DeExperiencia(Long usuarioId) {
+    public void ganar300DeExperiencia(Long usuarioId) {
         Experiencia experiencia = this.repositorioUsuario.buscarUsuarioPorId(usuarioId).getExperiencia();
 
         if (experiencia.getCantidadExperiencia() >= 0) {
-            experiencia.setCantidadExperiencia(experiencia.getCantidadExperiencia() + 1000);
+            experiencia.setCantidadExperiencia(experiencia.getCantidadExperiencia() + 300);
 
             repositorioExperiencia.actualizarExperiencia(experiencia);
         }
