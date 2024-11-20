@@ -6,20 +6,20 @@ public class VistaInicio extends VistaWeb{
 
     public VistaInicio(Page page) {
         super(page);
-        page.navigate("localhost:8080/");
+        page.navigate("http://localhost:8080/");
     }
 
-    public String obtenerTextoDelBotonLogIn(){ return this.obtenerTextoDelElemento(".btn btn-login"); }
+    public String obtenerTextoDelBotonLogIn(){ return this.obtenerTextoDelElemento(".btn.btn-login"); }
 
     public String obtenerTextoDelBotonRegistrarse(){
-        return this.obtenerTextoDelElemento(".btn btn-signup");
+        return this.obtenerTextoDelElemento(".btn.btn-signup");
     }
 
     public void darClickEnIniciarSesion(){
-        this.darClickEnElElemento(".btn btn-login");
+        this.darClickEnElElemento(".btn.btn-login");
     }
 
     public void darClickEnRegistrarse(){
-        this.darClickEnElElemento(".btn btn-signup");
+        this.darClickEnElElemento(".btn.btn-signup");
     }
 }
