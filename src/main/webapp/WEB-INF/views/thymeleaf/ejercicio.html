@@ -122,11 +122,11 @@
             });
         </script>
     </div>
+
     <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
     <script th:inline="javascript">
         document.getElementById("botonVidas").addEventListener("click", function() {
             let vidasRestantes = document.getElementById("vidasNumero").innerText;
-
             let tiempoRestante = document.getElementById("tiempoRestante").innerText;
 
             let esPremium = /*[[${suscripcion == 'premium'}]]*/ false;
