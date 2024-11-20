@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/tienda.css}"/>
     <link rel="stylesheet" th:href="@{/css/header.css}"/>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
 
     <style>
@@ -20,39 +21,65 @@
 
 <header th:replace="header :: header"></header>
 
+<div th:if="${success}" class="alert alert-success">
+    <p th:text="${success}"></p>
+</div>
+<div th:if="${error != null}" class="alert alert-danger" role="alert">
+    <span th:text="${error}"></span>
+</div>
+
 <main>
     <div class="tienda-header">
         <h1>Tienda de Comunico</h1>
     </div>
 
     <div class="saldo-container">
-        <span>Tu saldo: <i class="fas fa-coins"></i> <strong>150 ComunicoPoints</strong></span>
+        <span>Tu saldo: <i class="fas fa-coins"></i> <strong><span th:text="${points + ' ComunicoPoints'}"></span></strong></span>
     </div>
+
 
     <!-- Vidas -->
     <section class="seccion-tienda">
         <h2>Vidas</h2>
         <div class="productos-container">
             <div class="producto-card">
-                <i class="fa-solid fa-heart" id="vidas"></i>
+                <i class="fa-solid fa-heart"></i>
                 <h5>1 Vida Extra</h5>
                 <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 200 CP</p>
-                <button class="btn btn-comprar">Comprar</button>
+
+                <form th:action="@{/comprarVidas}" method="post">
+                    <input type="hidden" th:name="vidas" th:value=1>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
             <div class="producto-card">
-                <i class="fa-solid fa-heart" id="vidas"></i>
+                <i class="fa-solid fa-heart"></i>
                 <h5>3 Vidas Extra</h5>
                 <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 500 CP</p>
-                <button class="btn btn-comprar">Comprar</button>
+
+                <form th:action="@{/comprarVidas}" method="post">
+                    <input type="hidden" th:name="vidas" th:value=3>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
             <div class="producto-card">
-                <i class="fa-solid fa-heart" id="vidas"></i>
+                <i class="fa-solid fa-heart"></i>
                 <h5>5 Vidas Extra</h5>
                 <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 800 CP</p>
-                <button class="btn btn-comprar">Comprar</button>
+
+                <form th:action="@{/comprarVidas}" method="post">
+                    <input type="hidden" th:name="vidas" th:value=5>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
         </div>
-        <a th:href="@{/suscripciones}"><p class="mensaje-premium">¡Obtén más vidas con las suscripciones u obtén vidas ilimitadas con la suscripción Premium!</p></a>
+        <a th:href="@{/suscripciones}"><p class="mensaje-premium">¡Obtené más vidas con las suscripciones u obtené vidas ilimitadas con la suscripción Premium!</p></a>
     </section>
 
     <!-- Ayudas -->
@@ -60,25 +87,40 @@
         <h2>Ayudas</h2>
         <div class="productos-container">
             <div class="producto-card">
-                <i class="fa-solid fa-hand-sparkles" id="ayudas"></i>
+                <i class="fa-solid fa-hand-sparkles"></i>
                 <h5>1 Ayuda</h5>
                 <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 800 CP</p>
-                <button class="btn btn-comprar">Comprar</button>
+                <form th:action="@{/comprarAyudas}" method="post">
+                    <input type="hidden" th:name="ayudas" th:value=1>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
             <div class="producto-card">
-                <i class="fa-solid fa-hand-sparkles" id="ayudas"></i>
+                <i class="fa-solid fa-hand-sparkles"></i>
                 <h5>3 Ayudas</h5>
                 <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1000 CP</p>
-                <button class="btn btn-comprar">Comprar</button>
+                <form th:action="@{/comprarAyudas}" method="post">
+                    <input type="hidden" th:name="ayudas" th:value=3>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
             <div class="producto-card">
                 <i class="fa-solid fa-hand-sparkles" id="ayudas"></i>
                 <h5>5 Ayudas</h5>
                 <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1500 CP</p>
-                <button class="btn btn-comprar">Comprar</button>
+                <form th:action="@{/comprarAyudas}" method="post">
+                    <input type="hidden" th:name="ayudas" th:value=5>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
         </div>
-        <a th:href="@{/suscripciones}"><p class="mensaje-premium">¡Disfruta de más ayudas con las suscripciones!</p></a>
+        <a th:href="@{/suscripciones}"><p class="mensaje-premium">¡Disfrutá de más ayudas con las suscripciones!</p></a>
     </section>
 
     <!-- Llaves -->
@@ -86,25 +128,40 @@
         <h2>Llaves</h2>
         <div class="productos-container">
             <div class="producto-card">
-                <i class="fa-solid fa-key" id="llaves" style="color: #FFD43B;"></i>
+                <i class="fa-solid fa-key" style="color: #FFD43B;"></i>
                 <h5>1 Llave</h5>
                 <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1000 CP</p>
-                <button class="btn btn-comprar">Comprar</button>
+                <form th:action="@{/comprarLlaves}" method="post">
+                    <input type="hidden" th:name="llaves" th:value=1>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
             <div class="producto-card">
-                <i class="fa-solid fa-key" id="llaves" style="color: #FFD43B;"></i>
-                <h5>3 Llave</h5>
+                <i class="fa-solid fa-key" style="color: #FFD43B;"></i>
+                <h5>3 Llaves</h5>
                 <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 1500 CP</p>
-                <button class="btn btn-comprar">Comprar</button>
+                <form th:action="@{/comprarLlaves}" method="post">
+                    <input type="hidden" th:name="llaves" th:value=3>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
             <div class="producto-card">
-                <i class="fa-solid fa-key" id="llaves" style="color: #FFD43B;"></i>
+                <i class="fa-solid fa-key" style="color: #FFD43B;"></i>
                 <h5>5 Llaves</h5>
                 <p>Precio: <i class="fas fa-coins" style="color: #ffb34c"></i> 3000 CP</p>
-                <button class="btn btn-comprar">Comprar</button>
+                <form th:action="@{/comprarLlaves}" method="post">
+                    <input type="hidden" th:name="llaves" th:value=5>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
         </div>
-        <a th:href="@{/suscripciones}"><p class="mensaje-premium">¡Accede a más llaves con las suscripciones!</p></a>
+        <a th:href="@{/suscripciones}"><p class="mensaje-premium">¡Accedé a más llaves con las suscripciones!</p></a>
 
     </section>
 
@@ -112,34 +169,80 @@
     <section class="seccion-tienda">
         <h2>ComunicoPoints</h2>
         <div class="productos-container">
-
             <div class="producto-card">
-                <i class="fa-solid fa-coins" id="comunicoPoints" style="color: #ffb34c"></i>
+                <i class="fa-solid fa-coins" style="color: #ffb34c"></i>
                 <h5>500 ComunicoPoints</h5>
-                <p>Precio: $5.00D</p>
-                <button class="btn btn-comprar">Comprar</button>
+                <p>Precio: $5.000</p>
+
+                <form th:action="@{/comprarComunicoPoints}" method="post">
+                    <input type="hidden" th:name="cantidad" th:value=500>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
             <div class="producto-card">
-                <i class="fa-solid fa-coins" id="comunicoPoints" style="color: #ffb34c"></i>
+                <i class="fa-solid fa-coins" style="color: #ffb34c"></i>
                 <h5>1000 ComunicoPoints</h5>
                 <p>Precio: $10.000</p>
-                <button class="btn btn-comprar">Comprar</button>
+
+                <form th:action="@{/comprarComunicoPoints}" method="post">
+                    <input type="hidden" th:name="cantidad" th:value=1000>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
             <div class="producto-card">
-                <i class="fa-solid fa-coins" id="comunicoPoints" style="color: #ffb34c"></i>
+                <i class="fa-solid fa-coins" style="color: #ffb34c"></i>
                 <h5>3000 ComunicoPoints</h5>
                 <p>Precio: $30.000</p>
-                <button class="btn btn-comprar">Comprar</button>
+
+                <form th:action="@{/comprarComunicoPoints}" method="post">
+                    <input type="hidden" th:name="cantidad" th:value=3000>
+                    <button type="submit" class="btn btn-comprar">
+                        Comprar
+                    </button>
+                </form>
             </div>
         </div>
     </section>
+
 </main>
 
 <footer th:replace="footer :: footer"></footer>
 
-<script type="text/javascript" th:src="@{/js/carrito.js}"></script>
+<script>
+    const mp = new MercadoPago('APP_USR-1ad60a1a-2341-4c9b-abdc-d41cc1e4d8d7', {
+        locale: 'es-AR'
+    });
+
+    mp.bricks().create("wallet", "wallet_container", {
+        initialization: {
+            preferenceId: "<PREFERENCE_ID>",
+            redirectMode: "blank"
+        },
+        customization: {
+            texts: {
+                valueProp: 'smart_option',
+            },
+        },
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const alerta = document.getElementById('alerta');
+        if (alerta) {
+            setTimeout(() => {
+                alerta.style.opacity = '0';
+                setTimeout(() => alerta.remove(), 500);
+            }, 4000);
+        }
+    });
+</script>
+
 <script type="text/javascript" th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/menuUsuario.js}"></script>
 
 </body>
 </html>

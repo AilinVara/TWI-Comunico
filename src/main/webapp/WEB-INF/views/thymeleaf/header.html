@@ -6,21 +6,11 @@
 
   <nav>
     <ul>
-      <li>
-        <a th:href="@{/titulosUsuario}" class="contenedorDeTitulos">
-          <p>
-            <span th:classappend="'titulo-' + ${titulo.toLowerCase()}" class="titulo-metalizado" th:text="${titulo}">Principiante</span>
-          </p>
-        </a>
-      </li>
-
       <li><a th:href="@{/inicio}">Inicio</a></li>
-      <li><a th:href="@{/senias}">Lengua de Señas</a></li>
-      <li><a th:href="@{/braille}">Braille</a></li>
       <li><a th:href="@{/suscripciones}">Suscripciones</a></li>
 
       <li>
-        <a th:href="@{/comprar}" class="points-container">
+        <a class="points-container">
           <i class="fa-solid fa-coins"></i>
           <span th:text="${points}">0</span>
         </a>
@@ -48,7 +38,7 @@
       </li>
       <li>
         <a th:href="@{/tienda}">
-          <i class="fa-solid fa-store" style="color: #0002ff;"></i>
+          <i class="fa-solid fa-store" style="color: #ff7878;"></i>
         </a>
       </li>
       <a th:href="@{/crear-curso}" ><img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"></a>

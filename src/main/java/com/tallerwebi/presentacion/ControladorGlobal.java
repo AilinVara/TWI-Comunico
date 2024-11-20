@@ -179,4 +179,3 @@ public class ControladorGlobal {
         return tiempoRestanteEnMinutos;
     }
 }
-
