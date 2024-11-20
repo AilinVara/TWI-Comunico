@@ -44,6 +44,14 @@ public class ControladorGlobal {
             if (ayudas != null) {
                 model.addAttribute("ayudas", ayudas);
             }
+            Integer llaves = (Integer) session.getAttribute("llaves");
+            if (llaves != null) {
+                model.addAttribute("llaves", llaves);
+            }
+            Integer vidas = (Integer) session.getAttribute("vidas");
+            if (vidas != null) {
+                model.addAttribute("vidas", vidas);
+            }
         }
     }
     @ModelAttribute("experiencia")

@@ -20,6 +20,7 @@ public class Usuario {
     private Boolean activo = false;
     private Integer comunicoPoints;
     private Integer ayudas;
+    private Integer llaves;
     private String titulo = "Principiante";
     private String descripcion;
     private String nombre;
@@ -120,6 +121,14 @@ public class Usuario {
 
     public void setVida(Vida vida) {
         this.vida = vida;
+    }
+
+    public Integer getLlaves() {
+        return llaves;
+    }
+
+    public void setLlaves(Integer llaves) {
+        this.llaves = llaves;
     }
 
     public void activar() {
