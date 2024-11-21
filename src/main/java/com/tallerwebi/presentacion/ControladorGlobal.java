@@ -1,4 +1,5 @@
 package com.tallerwebi.presentacion;
+
 import com.tallerwebi.dominio.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ControladorGlobal {
 
     //Commit
     @Autowired
-    public ControladorGlobal(ServicioUsuario servicioUsuario, ServicioExperiencia servicioExperiencia, ServicioVida servicioVida, ServicioTitulo servicioTitulo){
+    public ControladorGlobal(ServicioUsuario servicioUsuario, ServicioExperiencia servicioExperiencia, ServicioVida servicioVida, ServicioTitulo servicioTitulo) {
         this.servicioUsuario = servicioUsuario;
         this.servicioExperiencia = servicioExperiencia;
         this.servicioVida = servicioVida;
@@ -42,22 +43,40 @@ public class ControladorGlobal {
 //            }
 //        }
 //    }
-@ModelAttribute("points")
+
+    @ModelAttribute("vidas")
+    public Integer obtenerVidas(HttpServletRequest request) {
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return 0;
+        }
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+
+        // Actualiza la sesión si es necesario
+        if (request.getSession().getAttribute("vidas") == null ||
+                !request.getSession().getAttribute("vidas").equals(usuario.getVida().getCantidadDeVidasActuales())) {
+            request.getSession().setAttribute("vidas", usuario.getVida().getCantidadDeVidasActuales());
+        }
+
+        return usuario.getVida().getCantidadDeVidasActuales();
+    }
+
+    @ModelAttribute("points")
     public Integer obtenerComunicoPoints(HttpServletRequest request) {
-    Long usuarioId = (Long) request.getSession().getAttribute("id");
-    if (usuarioId == null) {
-        return 0;
-    }
-    Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return 0;
+        }
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
 
-    // Actualiza la sesión si es necesario
-    if (request.getSession().getAttribute("points") == null ||
-            !request.getSession().getAttribute("points").equals(usuario.getComunicoPoints())) {
-        request.getSession().setAttribute("points", usuario.getComunicoPoints());
-    }
+        // Actualiza la sesión si es necesario
+        if (request.getSession().getAttribute("points") == null ||
+                !request.getSession().getAttribute("points").equals(usuario.getComunicoPoints())) {
+            request.getSession().setAttribute("points", usuario.getComunicoPoints());
+        }
 
-    return usuario.getComunicoPoints();
-}
+        return usuario.getComunicoPoints();
+    }
 
     @ModelAttribute("ayudas")
     public Integer obtenerAyudas(HttpServletRequest request) {
@@ -115,15 +134,6 @@ public class ControladorGlobal {
         return servicioTitulo.obtenerExperienciaMaximaPorTitulo(tituloActual);
     }
 
-    @ModelAttribute("vidas")
-    public Integer obtenerVidasUsuario(HttpServletRequest request) {
-        Long usuarioId = (Long) request.getSession().getAttribute("id");
-        if (usuarioId == null) {
-            return 0;
-        }
-        return servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
-    }
-
     @ModelAttribute("tiempoRestante")
     public Long obtenerTiempoRestante(HttpServletRequest request) {
         Long usuarioId = (Long) request.getSession().getAttribute("id");
@@ -158,7 +168,7 @@ public class ControladorGlobal {
         Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
         String suscripcion = usuario.getSuscripcion().getTipoSuscripcion().getNombre();
 
-        if(suscripcion == null){
+        if (suscripcion == null) {
             suscripcion = "sin plan";
         }
 
