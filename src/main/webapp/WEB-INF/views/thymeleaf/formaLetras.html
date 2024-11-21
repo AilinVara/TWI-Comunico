@@ -74,7 +74,7 @@
                 : '/braille/lecciones/matriz';
             let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
 
-            if (![[${esCorrecta}]]) {
+            if (![[${esCorrecta}]] && [[${suscripcion}]] != 'premium') {
                 mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
                 mensaje += `<br>Te quedan [[${vidas}]] vidas.`;
                 mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] minutos.`;
