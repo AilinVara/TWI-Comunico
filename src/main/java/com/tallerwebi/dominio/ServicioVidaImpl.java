@@ -71,6 +71,11 @@ public class ServicioVidaImpl implements ServicioVida {
         }
     }
 
+    @Override
+    public void actualizarVida(Vida vida) {
+        repositorioVida.actualizarVida(vida);
+    }
+
 }
 
 

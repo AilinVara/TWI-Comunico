@@ -8,6 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -60,7 +61,7 @@ public class RepositorioImplProgresoLeccion implements RepositorioProgresoLeccio
         List<Leccion> lecciones = this.sessionFactory.getCurrentSession().createCriteria(Leccion.class).list();
         return lecciones;
     }
-    @Override
+
     public boolean experienciaOtorgada(Long usuarioId, Long leccionId) {
         List<ProgresoLeccion> progresos = buscarPorUsuarioIdYLeccionId(usuarioId, leccionId);
         // Si alguno de los progresos marca que la experiencia ya fue otorgada, devuelve true

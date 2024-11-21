@@ -26,8 +26,8 @@
 </div>
 
 <div class="barra-experiencia">
-    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 5000 * 100} + '%'">
-        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/5000XP</p>
+    <div class="experiencia-llena" th:style="'width: ' + (${experiencia} / ${experienciaMaxima} * 100) + '%'">
+        <p><span th:text="${experiencia}" id="experiencia">0</span>/<span th:text="${experienciaMaxima}">0</span>XP</p>
     </div>
 </div>
 
@@ -72,17 +72,8 @@
     <div th:if="${esCorrecta != null}">
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
-            let siguienteUrl;
-
-            let combinado = document.getElementById("combinado").getAttribute("data-combinado");
-            if(combinado != null && combinado){
-                siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
-                    : '/braille/lecciones/combinado';
-            }else{
-                siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
-                    : '/braille/lecciones/traduccion';
-            }
-
+            let siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
+                : '/braille/lecciones/forma-palabras';
             let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
 
             if (![[${esCorrecta}]] && [[${suscripcion}]] != 'premium') {

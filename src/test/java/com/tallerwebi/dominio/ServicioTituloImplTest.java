@@ -42,7 +42,6 @@ public class ServicioTituloImplTest {
         //when(servicioExperienciaMock.obtenerExperiencia(usuario.getId())).thenReturn(experiencia);
 
     }
-
     @Test
     @Rollback
     @Transactional
@@ -60,7 +59,6 @@ public class ServicioTituloImplTest {
 
         assertThat(usuario.getTitulo(), equalTo("Novato"));
     }
-
     @Test
     @Rollback
     @Transactional

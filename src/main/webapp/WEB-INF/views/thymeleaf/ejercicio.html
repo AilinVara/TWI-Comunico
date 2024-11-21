@@ -91,23 +91,17 @@
     <div th:if="${esCorrecta != null}">
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
-            let siguienteUrl;
-
-            let combinado = document.getElementById("combinado").getAttribute("data-combinado");
-            if(combinado != null && combinado){
-                siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
-                    : '/braille/lecciones/combinado';
-            }else{
-                siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
-                    : '/braille/lecciones/traduccion';
-            }
-
+            let siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
+                : '/braille/lecciones/traduccion';
             let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
 
             if (![[${esCorrecta}]] && [[${suscripcion}]] != 'premium') {
                 mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
                 mensaje += `<br>Te quedan [[${vidas}]] vidas.`;
                 mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] minutos.`;
+            }
+            if ([[${completadoLeccion}]] != null && [[${completadoLeccion}]]) {
+            mensaje += `<br>¡Has completado la lección! <br> Por completar la lección ganaste 300 XP adicionales.`;
             }
             Swal.fire({
                 icon: [[${esCorrecta}]] ? 'success' : 'error',

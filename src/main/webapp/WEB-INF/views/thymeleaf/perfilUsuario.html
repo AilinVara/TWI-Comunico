@@ -35,7 +35,7 @@
                 </div>
 
 
-               <div class="titulos">
+                <div class="titulos">
                     <span class="titulo" th:text="${usuario.getTitulo()}"></span>
                 </div>
 
@@ -44,13 +44,13 @@
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
 
-                    <div class="experiencia-usuario">
-                        <p id="exp-p"> <span id="exp-span">Exp:</span>
-                            <span id="exp-bar" th:text="${usuario.getExperiencia().getCantidadExperiencia()}">0</span>/5000px
-                        </p>
-                    </div>
+                <div class="experiencia-usuario">
+                    <p id="exp-p"> <span id="exp-span">Exp:</span>
+                        <span id="exp-bar" th:text="${usuario.getExperiencia().getCantidadExperiencia()}">0</span>/5000px
+                    </p>
                 </div>
             </div>
+        </div>
 
         <div class="contenedor-plan">
             <div class="plan-titulo d-flex">
@@ -92,12 +92,34 @@
             </li>
         </ul>
 
+        <section class="tablas lightblue" id="amigos" style="display:none;">
+
+            <div th:each="usuarioAmigo : ${amigosUsuario}" class="contenedor">
+                <div>
+                    <div class="avatar-perfil">
+                        <img th:src="@{'/images/' + ${usuarioAmigo.foto}}" th:alt="${usuarioAmigo.foto}">
+                    </div>
+                    <div class="nombre">
+                        <h2 th:text="${usuarioAmigo.nombreDeUsuario}"></h2>
+                    </div>
+                </div>
+                <div class="descripcion">
+                    <h4>Descripción:</h4>
+                    <p th:text="${usuarioAmigo.descripcion}"></p>
+                    <div class="titulos">
+                        <span class="titulo" th:text="${usuarioAmigo.getTitulo()}"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="tablas lightblue" id="lecciones">
             <table class="progreso-table">
                 <thead>
                 <tr>
                     <th>Lección N°</th>
                     <th>Tipo</th>
+                    <th>Fecha de realización</th>
                 </tr>
                 </thead>
 
@@ -105,6 +127,8 @@
                 <tr th:each="progreso : ${progresos}" th:if="${progreso.getCompleto()}">
                     <td th:text="${progreso.getLeccion().getId()}" class="progress-id"></td>
                     <td th:text="${progreso.getLeccion().getTipo()}" class="lection-type"></td>
+                    <td class="date"
+                        th:text="${progreso.getFechaCompleto() != null ? progreso.getFechaCompleto().toLocalDate() : 'Fecha no disponible'}"></td>
                 </tr>
                 </tbody>
             </table>

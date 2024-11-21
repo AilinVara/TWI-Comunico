@@ -132,11 +132,17 @@ public class ControladorEjercicio {
         if (!resuelto && !usuario.getSuscripcion().getTipoSuscripcion().getNombre().equals("premium")) {
             Boolean vidaPerdida = this.servicioVida.perderUnaVida(usuarioId);
             if (vidaPerdida) {
-                // Obtener el nuevo número de vidas y actualizar la sesión
                 Integer nuevasVidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
                 request.getSession().setAttribute("vidasNumero", nuevasVidas);
             }
+        }else{
+            this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
             this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
+
+            if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccionId, usuarioId)) {
+                boolean experienciaOtorgada = this.servicioProgresoLeccion.otorgarExperienciaPorLeccion(usuarioId, leccionId);
+                modelo.put("completadoLeccion", experienciaOtorgada);
+            }
         }
 
 
