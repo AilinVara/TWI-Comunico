@@ -4,9 +4,9 @@ INSERT INTO Experiencia (cantidadExperiencia,nivel)
 VALUES(0,0);
 
 INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (1, 'sin plan', '* Sin beneficio');
-INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (2, 'basico', '* Corregir errores <br>* 500 comunicoPoints<br><br>');
-INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (3, 'estandar', '* Corregir errores <br>* + 15 ayudas disponibles <br>* 1000 comunicoPoints <br>');
-INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (4, 'premium', '* Corregir errores <br>* + 20 ayudas disponibles <br>* 1500 comunicoPoints <br>* Obtener vidas ilimitadas ');
+INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (2, 'basico', '* 500 ComunicoPoints<br>* 5 ayudas<br>');
+INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (3, 'estandar', '* 1000 ComunicoPoints<br>* 10 ayudas<br>* 1 llave');
+INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (4, 'premium', '* 1500 ComunicoPoints<br>* 15 ayudas<br>* 5 llaves<br>* Obtener vidas ilimitadas');
 INSERT INTO suscripcion (id,tipo_suscripcion_id) values (1,1);
 INSERT INTO suscripcion (id,tipo_suscripcion_id) values (2,2);
 INSERT INTO suscripcion (id,tipo_suscripcion_id) values (3,3);

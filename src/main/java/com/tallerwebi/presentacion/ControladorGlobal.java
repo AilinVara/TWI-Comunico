@@ -1,4 +1,5 @@
 package com.tallerwebi.presentacion;
+
 import com.tallerwebi.dominio.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ControladorGlobal {
 
     //Commit
     @Autowired
-    public ControladorGlobal(ServicioUsuario servicioUsuario, ServicioExperiencia servicioExperiencia, ServicioVida servicioVida, ServicioTitulo servicioTitulo){
+    public ControladorGlobal(ServicioUsuario servicioUsuario, ServicioExperiencia servicioExperiencia, ServicioVida servicioVida, ServicioTitulo servicioTitulo) {
         this.servicioUsuario = servicioUsuario;
         this.servicioExperiencia = servicioExperiencia;
         this.servicioVida = servicioVida;
@@ -42,22 +43,55 @@ public class ControladorGlobal {
 //            }
 //        }
 //    }
-@ModelAttribute("points")
+
+    @ModelAttribute("vidasNumero")
+    public Integer obtenerVidasNumero(HttpServletRequest request) {
+        // Intentar obtener la sesión existente
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("vidasNumero") != null) {
+            return (Integer) session.getAttribute("vidasNumero");
+        }
+
+        // Si no hay sesión o el atributo no existe, crearlo
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return 0; // No hay usuario logueado
+        }
+
+        // Intentar buscar al usuario
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+        if (usuario == null || usuario.getVida() == null) {
+            return 0; // Si el usuario o su vida no están inicializados
+        }
+
+        Integer cantidadDeVidas = usuario.getVida().getCantidadDeVidasActuales();
+        if (session == null) {
+            // Crear sesión si no existe
+            session = request.getSession(true);
+        }
+        // Establecer el atributo en sesión
+        session.setAttribute("vidasNumero", cantidadDeVidas);
+
+        return cantidadDeVidas;
+    }
+
+
+    @ModelAttribute("points")
     public Integer obtenerComunicoPoints(HttpServletRequest request) {
-    Long usuarioId = (Long) request.getSession().getAttribute("id");
-    if (usuarioId == null) {
-        return 0;
-    }
-    Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return 0;
+        }
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
 
-    // Actualiza la sesión si es necesario
-    if (request.getSession().getAttribute("points") == null ||
-            !request.getSession().getAttribute("points").equals(usuario.getComunicoPoints())) {
-        request.getSession().setAttribute("points", usuario.getComunicoPoints());
-    }
+        // Actualiza la sesión si es necesario
+        if (request.getSession().getAttribute("points") == null ||
+                !request.getSession().getAttribute("points").equals(usuario.getComunicoPoints())) {
+            request.getSession().setAttribute("points", usuario.getComunicoPoints());
+        }
 
-    return usuario.getComunicoPoints();
-}
+        return usuario.getComunicoPoints();
+    }
 
     @ModelAttribute("ayudas")
     public Integer obtenerAyudas(HttpServletRequest request) {
@@ -115,15 +149,6 @@ public class ControladorGlobal {
         return servicioTitulo.obtenerExperienciaMaximaPorTitulo(tituloActual);
     }
 
-    @ModelAttribute("vidas")
-    public Integer obtenerVidasUsuario(HttpServletRequest request) {
-        Long usuarioId = (Long) request.getSession().getAttribute("id");
-        if (usuarioId == null) {
-            return 0;
-        }
-        return servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
-    }
-
     @ModelAttribute("tiempoRestante")
     public Long obtenerTiempoRestante(HttpServletRequest request) {
         Long usuarioId = (Long) request.getSession().getAttribute("id");
@@ -145,6 +170,24 @@ public class ControladorGlobal {
         request.getSession().setAttribute("points", usuario.getComunicoPoints());
         servicioVida.regenerarVidasDeTodosLosUsuarios();
         return servicioTitulo.obtenerTitulo(usuarioId);
+    }
+
+    @ModelAttribute("suscripcion")
+    public String obtenerSuscripcionDelUsuario(HttpServletRequest request) {
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+
+        if (usuarioId == null) {
+            return "";
+        }
+
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+        String suscripcion = usuario.getSuscripcion().getTipoSuscripcion().getNombre();
+
+        if (suscripcion == null) {
+            suscripcion = "sin plan";
+        }
+
+        return suscripcion;
     }
 
     @RequestMapping("/titulosUsuario")
@@ -196,4 +239,3 @@ public class ControladorGlobal {
         return tiempoRestanteEnMinutos;
     }
 }
-

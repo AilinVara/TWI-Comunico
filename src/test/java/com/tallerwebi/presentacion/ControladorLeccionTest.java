@@ -23,13 +23,24 @@ public class ControladorLeccionTest {
     private ServicioLeccion servicioLeccionMock;
     private ServicioVida servicioVidaMock;
     private ControladorLeccion controladorLeccion;
+    private ServicioUsuario servicioUsuarioMock;
 
     @BeforeEach
     public void init() {
         servicioProgresoMock = mock(ServicioProgresoLeccion.class);
         servicioLeccionMock = mock(ServicioLeccion.class);
         servicioVidaMock = mock(ServicioVida.class);
-        controladorLeccion = new ControladorLeccion(servicioLeccionMock, servicioProgresoMock, servicioVidaMock);
+        servicioUsuarioMock = mock(ServicioUsuario.class);
+        controladorLeccion = new ControladorLeccion(servicioLeccionMock, servicioProgresoMock, servicioVidaMock, servicioUsuarioMock);
+
+        Long usuarioId = 1L;
+
+        Usuario usuario = mock(Usuario.class);
+        when(servicioUsuarioMock.buscarUsuarioPorId(usuarioId)).thenReturn(usuario);
+        Suscripcion suscripcion = mock(Suscripcion.class);
+        when(usuario.getSuscripcion()).thenReturn(suscripcion);
+        TipoSuscripcion tipoSuscripcion = mock(TipoSuscripcion.class);
+        when(suscripcion.getTipoSuscripcion()).thenReturn(tipoSuscripcion);
     }
 
     @Test

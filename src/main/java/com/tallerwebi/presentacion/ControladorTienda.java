@@ -217,7 +217,7 @@ public class ControladorTienda {
             vida.setCantidadDeVidasActuales(cantidadActual + vidas);
             usuario.setVida(vida);
             this.servicioUsuario.modificar(usuario);
-            request.getSession().setAttribute("vidas", usuario.getVida().getCantidadDeVidasActuales());
+            request.getSession().setAttribute("vidasNumero", usuario.getVida().getCantidadDeVidasActuales());
 
             flash.addFlashAttribute("success", "La compra fue realizada con éxito. Ahora tenés " + vida.getCantidadDeVidasActuales() + " vidas.");
         } else {
