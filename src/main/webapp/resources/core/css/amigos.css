@@ -1,0 +1,219 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.contenedor {
+    display: flex;
+    align-items: center;
+    background-color: #84d8ff;
+    color: #ffffff;
+    border-radius: 1.5rem;
+    width: 80%;
+    max-width: 500px;
+    margin: 2rem auto; /* Más separación entre usuarios */
+    padding: 40px 40px 40px 80px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    gap: 3.5rem;
+}
+
+.contenedor .avatar-perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    background-color: #d9dcf1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 6px solid #ffffff;
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.2);
+}
+
+.contenedor .avatar-perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Sección de texto (derecha del avatar) */
+.contenedor .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Estilo del nombre */
+.info .nombre h2 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Descripción */
+.info .descripcion h4 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.info .descripcion p {
+    font-size: 0.95rem;
+    color: #ffffff;
+}
+
+.titulos {
+    display: flex;
+    justify-content: center; /* Centrar el estandarte horizontalmente */
+    margin-top: 1rem; /* Separación superior */
+}
+
+.titulos .titulo {
+    display: inline-block;
+    background-color: #ffaade; /* Fondo rosado estilo Duolingo */
+    color: #ffffff; /* Texto blanco */
+    font-size: 1.1rem; /* Tamaño de fuente */
+    font-weight: bold; /* Texto en negrita */
+    padding: 0.5rem 1.5rem; /* Espaciado interno */
+    border-radius: 0.5rem; /* Bordes redondeados */
+    text-align: center; /* Alinear texto al centro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+    border: 2px solid #ffffff; /* Bordes blancos */
+    text-transform: uppercase; /* Transformar texto a mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    position: relative; /* Para los triángulos decorativos */
+}
+
+/* Triángulo izquierdo */
+.titulos .titulo::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -20px; /* Ajusta la posición horizontal */
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 20px 10px 0; /* Triángulo */
+    border-color: transparent #ffaade transparent transparent;
+}
+
+/* Triángulo derecho */
+.titulos .titulo::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -20px; /* Ajusta la posición horizontal */
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 20px; /* Triángulo */
+    border-color: transparent transparent transparent #ffaade;
+}
+
+
+/* Botón agregar amigo */
+.configuracion {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: #ffaade; /* Rosado */
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    margin-top: 1rem;
+}
+
+.configuracion:hover {
+    transform: scale(1.05); /* Efecto hover */
+}
+
+.barra-busqueda {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding: 1rem 2rem; /* Más espaciado interno */
+    background-color: #f4f9fd; /* Fondo claro para destacar */
+    border-radius: 1rem; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.form-busqueda {
+    display: flex;
+    flex-grow: 1; /* Ocupa el espacio restante */
+    gap: 0.5rem; /* Espaciado entre el input y el botón */
+}
+
+.input-busqueda {
+    flex: 1; /* Ocupa la mayor parte del espacio */
+    padding: 0.5rem;
+    border: 2px solid #84d8ff; /* Borde azul */
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+.btn-buscar {
+    background-color: #ffaade; /* Fondo rosado */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-buscar:hover {
+    background-color: #f48fb1; /* Cambio de color al pasar el mouse */
+}
+
+.solicitudes-container {
+    margin-left: 2rem; /* Separación más amplia */
+}
+
+.btn-solicitudes {
+    background-color: #84d8ff; /* Fondo azul */
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-solicitudes:hover {
+    background-color: #64b8e0; /* Cambio de color al pasar el mouse */
+}
+
+.separador {
+    border: 0;
+    border-top: 2px solid #dcdcdc; /* Línea gris clara */
+    margin: 2rem 0; /* Espaciado superior e inferior */
+}
+
+/* Sin resultados */
+.sin-resultados p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #777777;
+    margin-top: 2rem;
+    font-style: italic;
+}

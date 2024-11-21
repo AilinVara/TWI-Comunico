@@ -30,6 +30,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
     }
 
     @Override
+    public List<Usuario> buscarUsuariosPorNombre(String nombre) {
+        return this.repositorioUsuario.buscarUsuariosPorNombre(nombre);
+    }
+
+    @Override
     public Set<Usuario> listar(Usuario usuario) {
         List<Usuario> usuarios = repositorioUsuario.buscarTodosLosUsuarios(usuario);
         Set<Usuario> usuariosAux = new HashSet<>();
