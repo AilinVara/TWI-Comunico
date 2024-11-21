@@ -18,6 +18,10 @@ public class VistaWeb {
         return this.obtenerElemento(selectorCSS).textContent();
     }
 
+    protected String obtenerValorDelInput(String selectorCSS) {
+        return this.obtenerElemento(selectorCSS).inputValue();
+    }
+
     protected void darClickEnElElemento(String selectorCSS){
         this.obtenerElemento(selectorCSS).click();
     }

@@ -6,6 +6,7 @@ import java.util.Set;
 public interface ServicioUsuario {
     void modificar(Usuario usuario);
     Usuario buscarUsuarioPorId(Long id);
+    List<Usuario> buscarUsuariosPorNombre(String nombre);
     Set<Usuario> listar(Usuario usuario);
     List<Usuario> mostrarUsuarios();
     List<Usuario> mostrarAdmins();

@@ -96,6 +96,8 @@
 
 <input type="hidden" th:attr="data-punto=${punto}" id="punto-data">
 
+<input hidden th:attr="data-combinado=${combinado}" id="combinado"/>
+
 <script>
     window.onload = function() {
         const puntoData = document.getElementById("punto-data").getAttribute("data-punto");
@@ -146,7 +148,12 @@
     };
 
     document.getElementById('confirmarSalir').onclick = function() {
-        window.location.href = '/braille/lecciones/matriz';
+        let combinado = document.getElementById("combinado").getAttribute("data-combinado");
+        if(combinado != null && combinado){
+            window.location.href = '/braille/lecciones/combinado';
+        }else{
+            window.location.href = '/braille/lecciones/matriz';
+        }
     };
 
     window.onclick = function(event) {

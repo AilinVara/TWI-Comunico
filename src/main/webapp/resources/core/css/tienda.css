@@ -1,0 +1,262 @@
+@import url(https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold);
+@font-face {
+    font-family: "Feather Bold";
+    src: url("TWI-Comunico/src/main/webapp/resources/core/fonts/feather_bold_by_typicalbro44_dee263c.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Feather Bold', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f9f8;
+    flex-direction: column;
+    width: 100%;
+}
+
+.seccion-tienda {
+    margin-bottom: 3em;
+    text-align: center;
+}
+
+.seccion-tienda h2 {
+    margin-bottom: 1em;
+    color: #333;
+}
+
+.mensaje-premium {
+    margin-top: 1em;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff5722;
+}
+
+.productos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 1em;
+}
+
+.producto-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 18rem;
+    padding: 50px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: #fff;
+}
+
+
+.tienda-header {
+    text-align: center;
+    padding: 20px;
+}
+
+.productos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 2em;
+    margin-bottom: 4em;
+}
+
+.producto-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 18rem;
+    padding: 50px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+header i {
+    font-size: inherit;
+}
+
+.saldo-container i {
+    font-size: inherit;
+}
+
+.seccion-tienda i {
+    font-size: 3rem;
+}
+
+.seccion-tienda .producto-card .precio i {
+    font-size: 1rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.mensaje-premium {
+    color: #1cb0f6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.mensaje-premium:hover {
+    animation: cambiarColores 3s infinite;
+}
+
+@keyframes cambiarColores {
+    0% {
+        color: #1cb0f6;
+    }
+    33% {
+        color: #ff3c94;
+    }
+    66% {
+        color: #ff9600;
+    }
+    100% {
+        color: #1cb0f6;
+    }
+}
+
+.producto-card i{
+    margin-bottom: 20px;
+}
+
+.producto-card #vidas,
+.producto-card #ayudas,
+.producto-card #llaves,
+.producto-card #comunicoPoints{
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.producto-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-comprar {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-comprar:hover {
+    background-color: #218838;
+}
+
+.saldo-container {
+    text-align: center;
+    margin-bottom: 70px;
+    font-size: 1.2rem;
+}
+
+.saldo-container i {
+    color: #ffc107;
+}
+
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    font-size: 1em;
+    width: 100%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.footer-section h4 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    font-size: 1em;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-logo {
+    width: 100px;
+    margin-top: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #ddd;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.9em;
+}
+
+footer, header {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/*@media (max-width: 768px) {*/
+/*    .pricing-plans {*/
+/*        padding: 32px;*/
+/*    }*/
+
+/*    .pricing-card {*/
+/*        width: 100%;*/
+/*        max-width: 400px;*/
+/*        height: auto;*/
+/*    }*/
+
+/*    .pricing-card .cta-btn {*/
+/*        width: 180px;*/
+/*    }*/
+/*}*/

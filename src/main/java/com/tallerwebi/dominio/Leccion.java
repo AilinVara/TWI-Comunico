@@ -1,7 +1,10 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Entity
 public class Leccion {
@@ -37,5 +40,28 @@ public class Leccion {
 
     public void setEjercicios(List<Ejercicio> ejercicios) {
         this.ejercicios = ejercicios;
+    }
+
+    public Map<String, String> generarNombreTipoLeccion(){
+        HashMap<String, String> mapNames = new HashMap<String, String>();
+        mapNames.put("forma-palabras", "Formá palabras braille");
+        mapNames.put("traduccion", "Reconocé letras braille");
+        mapNames.put("traduccionSenia", "Reconocé senias");
+        mapNames.put("matriz","Formá letras braille");
+        mapNames.put("desafio-velocidad","Desafio de velocidad");
+        return mapNames;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Leccion leccion = (Leccion) o;
+        return Objects.equals(id, leccion.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

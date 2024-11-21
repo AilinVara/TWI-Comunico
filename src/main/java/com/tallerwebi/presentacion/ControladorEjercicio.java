@@ -16,15 +16,13 @@ import java.util.*;
 @Controller
 public class ControladorEjercicio {
     //Commit
-    private ServicioEjercicio servicioEjercicio;
-    private ServicioLeccion servicioLeccion;
-    private ServicioProgresoLeccion servicioProgresoLeccion;
-    private ServicioVida servicioVida;
-    private ServicioExperiencia servicioExperiencia;
-    private ServicioUsuario servicioUsuario;
-    private ServicioTitulo servicioTitulo;
-
-
+    private final ServicioEjercicio servicioEjercicio;
+    private final ServicioLeccion servicioLeccion;
+    private final ServicioProgresoLeccion servicioProgresoLeccion;
+    private final ServicioVida servicioVida;
+    private final ServicioExperiencia servicioExperiencia;
+    private final ServicioUsuario servicioUsuario;
+    private final ServicioTitulo servicioTitulo;
 
 
     @Autowired
@@ -40,7 +38,7 @@ public class ControladorEjercicio {
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
-    public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request, @RequestParam(value = "combinado", required = false) String combinado) {
+    public ModelAndView irAjercicio(@RequestParam("leccion") Long leccionId, @PathVariable("indice") Integer indice, HttpServletRequest request) {
         ModelMap modelo = new ModelMap();
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
@@ -51,7 +49,7 @@ public class ControladorEjercicio {
         modelo.put("ejercicio", ejercicio);
         modelo.put("indice", indice);
         agregarTiempoRestanteAlModelo(modelo,usuarioId);
-        if("true".equals(combinado)){
+        if(leccion.getTipo().equals("combinado")){
             modelo.put("combinado", true);
         }
 
@@ -63,9 +61,8 @@ public class ControladorEjercicio {
         );
 
 
-
         if (vidas == 0) {
-            if ("true".equals(combinado)) {
+            if (leccion.getTipo().equals("combinado")) {
                 return new ModelAndView("redirect:/braille/lecciones/combinado");
             }
             String redireccion = redirecciones.get(ejercicio.getClass());
@@ -103,7 +100,9 @@ public class ControladorEjercicio {
         ModelAndView mav = new ModelAndView();
         ModelMap modelo = new ModelMap();
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
+        Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
+
         ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
         Boolean resuelto;
         if (progreso == null) {
@@ -141,6 +140,9 @@ public class ControladorEjercicio {
         }
 
 
+        if(leccion.getTipo().equals("combinado")){
+            modelo.put("combinado", true);
+        }
         modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
         agregarTiempoRestanteAlModelo(modelo,usuarioId);
         modelo.put("indice", indice);
@@ -158,6 +160,11 @@ public class ControladorEjercicio {
         Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
         modelo.put("leccion", leccionId);
         Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
+
+        if(leccion.getTipo().equals("combinado")){
+            modelo.put("combinado", true);
+        }
+
         Ejercicio ejercicio = leccion.getEjercicios().get(indice - 1);
         modelo.put("vidas", vidas);
         modelo.put("ejercicio", ejercicio);

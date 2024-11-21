@@ -126,6 +126,7 @@ body {
     background-color: white;
     color: var(--col);
     border: 2px solid var(--col);
+    cursor: pointer;
 }
 
 footer {
