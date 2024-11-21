@@ -64,7 +64,7 @@ public class RepositorioImplProgresoLeccion implements RepositorioProgresoLeccio
     @Override
     public boolean experienciaOtorgada(Long usuarioId, Long leccionId) {
         List<ProgresoLeccion> progresos = buscarPorUsuarioIdYLeccionId(usuarioId, leccionId);
-
+        // Si alguno de los progresos marca que la experiencia ya fue otorgada, devuelve true
         return progresos.stream().anyMatch(ProgresoLeccion::getExperienciaOtorgada);
     }
 
