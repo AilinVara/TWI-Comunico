@@ -27,10 +27,11 @@
 </div>
 
 <div class="barra-experiencia">
-    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
-        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/2000XP</p>
+    <div class="experiencia-llena" th:style="'width: ' + (${experiencia} / ${experienciaMaxima} * 100) + '%'">
+        <p><span th:text="${experiencia}" id="experiencia">0</span>/<span th:text="${experienciaMaxima}">0</span>XP</p>
     </div>
 </div>
+
 
 <h3 class="titulo" id="braille-letter" th:text="|Ejercicio ${(indice)} - Letra ${ejercicio.getLetra()}|"></h3>
 
@@ -76,7 +77,7 @@
             if (![[${esCorrecta}]]) {
                 mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
                 mensaje += `<br>Te quedan [[${vidas}]] vidas.`;
-                mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] segundos.`;
+                mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] minutos.`;
             }
             Swal.fire({
                 icon: [[${esCorrecta}]] ? 'success' : 'error',
@@ -94,6 +95,8 @@
 </div>
 
 <input type="hidden" th:attr="data-punto=${punto}" id="punto-data">
+
+<input hidden th:attr="data-combinado=${combinado}" id="combinado"/>
 
 <script>
     window.onload = function() {
@@ -145,7 +148,12 @@
     };
 
     document.getElementById('confirmarSalir').onclick = function() {
-        window.location.href = '/braille/lecciones/matriz';
+        let combinado = document.getElementById("combinado").getAttribute("data-combinado");
+        if(combinado != null && combinado){
+            window.location.href = '/braille/lecciones/combinado';
+        }else{
+            window.location.href = '/braille/lecciones/matriz';
+        }
     };
 
     window.onclick = function(event) {

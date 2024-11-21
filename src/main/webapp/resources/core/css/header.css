@@ -30,6 +30,7 @@
 /*  clip-path: polygon(0 0, 100% 50%, 0 100%);*/
 /*}*/
 
+
 .contenedorDeTitulos .titulo-metalizado::before {
   left: -20px;
   transform: rotate(180deg);
@@ -82,7 +83,7 @@
 }
 
 #vidaYNum:hover{
-    text-decoration: underline;
+    text-decoration: none;
     color: white;
 }
 
@@ -95,7 +96,6 @@
     display: flex;
     align-items: center;
     height: 50px;
-    cursor: pointer;
     right: 100px;
     bottom: 430px
 }
@@ -133,7 +133,6 @@
      color: #ff4b4b;
 
  }
-
  header {
      display: flex;
      justify-content: space-between;
@@ -158,6 +157,16 @@
      height: auto;
  }
 
+ .nav-container {
+     display: flex;
+     justify-content: center;
+     flex-grow: 1;
+     position: absolute;
+     left: 50%;
+     transform: translateX(-50%);
+ }
+
+
  nav ul {
      list-style-type: none;
      display: flex;
@@ -172,18 +181,7 @@
  }
 
  nav a:hover {
-     text-decoration: underline;
- }
-
- nav a.active {
-     background-color: #2b70c9;
-     padding: 10px;
-     border-radius: 5px;
-     text-decoration: none;
- }
-
- nav a.active:hover {
-     background-color: #215598;
+     color: #2b70c9;
  }
 
 .dropdown-menu {
@@ -270,5 +268,5 @@
  }
 
  .fa-hand-sparkles {
-     color: #832bd8;
+     color: #d74cec;
  }

@@ -16,11 +16,12 @@ public class ServicioProgresoLeccionImplTest {
     private ServicioLogin servicioUsuarioMock;
     private ServicioLeccion servicioLeccionMock;
     private ServicioProgresoLeccion servicioProgresoLeccion;
+    private ServicioExperiencia servicioExperiencia;
 
     @BeforeEach
     public void init(){
         repositorioMock = mock(RepositorioProgresoLeccion.class);
-        servicioProgresoLeccion = new ServicioProgresoLeccionImpl(repositorioMock, servicioUsuarioMock, servicioLeccionMock);
+        servicioProgresoLeccion = new ServicioProgresoLeccionImpl(repositorioMock, servicioUsuarioMock, servicioLeccionMock,servicioExperiencia);
     }
 
     @Test

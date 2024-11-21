@@ -67,6 +67,14 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
+    public List<Usuario> buscarUsuariosPorNombre(String nombre) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Usuario WHERE nombreDeUsuario LIKE :nombre", Usuario.class)
+                .setParameter("nombre", "%" + nombre + "%")
+                .getResultList();
+    }
+
+    @Override
     public List<Usuario> buscarTodos() {
         List<Usuario> usuarios = this.sessionFactory.getCurrentSession().createCriteria(Usuario.class).list();
         return usuarios;

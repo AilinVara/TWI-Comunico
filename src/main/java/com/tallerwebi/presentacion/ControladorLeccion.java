@@ -35,13 +35,14 @@ public class ControladorLeccion {
     }
 
     @RequestMapping("/braille/lecciones/{tipo}")
-    public ModelAndView obtenerLecciones(@PathVariable("tipo") String tipo, HttpServletRequest request){
+    public ModelAndView obtenerLecciones(@PathVariable("tipo") String tipo, HttpServletRequest request) {
         ModelMap modelo = new ModelMap();
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
         Map<Long, Boolean> leccionesDesbloqueadas = this.servicioProgresoLeccion.buscarProgresoPorTipoEjercicioConEstado(tipo, usuarioId);
 
         boolean desbloqueado = true;
+        Map<Long, String> enlaces = new LinkedHashMap<>();
 
         for (Map.Entry<Long, Boolean> entry : leccionesDesbloqueadas.entrySet()) {
             Long leccionId = entry.getKey();
@@ -49,9 +50,15 @@ public class ControladorLeccion {
 
             leccionesDesbloqueadas.put(leccionId, desbloqueado);
             desbloqueado = completado;
+
+            String enlace = "/leccion/" + leccionId;
+            if ("combinado".equals(tipo)) {
+                enlace += "?combinado=true";
+            }
+            enlaces.put(leccionId, enlace);
         }
 
-        switch (tipo){
+        switch (tipo) {
             case "matriz":
                 tipo = "Formá letras";
                 break;
@@ -61,12 +68,18 @@ public class ControladorLeccion {
             case "forma-palabras":
                 tipo = "Formá palabras";
                 break;
+            case "combinado":
+                tipo = "Ejercicios combinados";
+                break;
         }
+
         modelo.put("vidas", vidas);
         modelo.put("tipo", tipo);
         modelo.put("progresos", leccionesDesbloqueadas);
+        modelo.put("enlaces", enlaces);
         return new ModelAndView("mapa-lecciones", modelo);
     }
+
 
     @RequestMapping("/desafio-velocidad")
     public ModelAndView desafioVelocidad(HttpServletRequest request) {

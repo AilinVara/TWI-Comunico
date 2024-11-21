@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitudes</title>
+    <link rel="icon" th:href="@{/img/Isologo-Comunico.svg}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/solicitudes.css}"/>
+    <link rel="stylesheet" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/footer.css}"/>
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header th:replace="header:: header"></header>
+
+<div class="contenedor">
+    <div th:each="solicitud : ${solicitud}" class="card" style="width: 18rem;height: 13rem;">
+        <div class="card-body detalle-tarjetas">
+            <h5 class="card-title" th:text="${solicitud.solicitante.nombreDeUsuario} + ' desea ser tu amigo!'"></h5>
+            <div class="d-flex justify-content-around p-2">
+                <form accept-charset="UTF-8" th:action="@{/aceptar-notificacion}" method="post">
+                    <input type="hidden" th:name="notificacion" th:value="${solicitud.getId()}">
+                    <a>
+                        <button class="btn btn-primary" type="submit">Aceptar</button>
+                    </a>
+                </form>
+                <form accept-charset="UTF-8" th:action="@{/rechazar-notificacion}" method="post">
+                    <input type="hidden" th:name="notificacion" th:value="${solicitud.getId()}">
+                    <button class="btn btn-danger" type="submit">Rechazar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="footer :: footer"></footer>
+
+<script th:src="@{/js/menuUsuario.js}"></script>
+</body>
+</html>

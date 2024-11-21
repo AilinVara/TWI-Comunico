@@ -92,27 +92,6 @@
             </li>
         </ul>
 
-        <section class="tablas lightblue" id="amigos" style="display:none;">
-
-            <div th:each="usuarioAmigo : ${amigosUsuario}" class="contenedor">
-                <div>
-                    <div class="avatar-perfil">
-                        <img th:src="@{'/images/' + ${usuarioAmigo.foto}}" th:alt="${usuarioAmigo.foto}">
-                    </div>
-                    <div class="nombre">
-                        <h2 th:text="${usuarioAmigo.nombreDeUsuario}"></h2>
-                    </div>
-                </div>
-                <div class="descripcion">
-                    <h4>Descripción:</h4>
-                    <p th:text="${usuarioAmigo.descripcion}"></p>
-                    <div class="titulos">
-                        <span class="titulo" th:text="${usuarioAmigo.getTitulo()}"></span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section class="tablas lightblue" id="lecciones">
             <table class="progreso-table">
                 <thead>

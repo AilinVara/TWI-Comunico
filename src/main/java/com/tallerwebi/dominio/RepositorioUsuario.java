@@ -11,6 +11,7 @@ public interface RepositorioUsuario {
     Usuario buscar(String email);
     void modificar(Usuario usuario);
     Usuario buscarUsuarioPorId(Long id);
+    List<Usuario> buscarUsuariosPorNombre(String nombre);
     List<Usuario> buscarTodos();
     List<Usuario> buscarTodosLosUsuarios(Usuario usuario);
     Set<Usuario> buscarAmigos(Usuario usuario);
@@ -21,5 +22,6 @@ public interface RepositorioUsuario {
     Usuario buscarPorToken(String token);
     List<Compra> historialDeCompras(Usuario usuario);
     Integer cantidadDeCompras(Usuario usuario, LocalDateTime fechaCompraPlan);
+
 }
 

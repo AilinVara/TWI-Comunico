@@ -20,7 +20,9 @@ public class Usuario {
     private Boolean activo = false;
     private Integer comunicoPoints;
     private Integer ayudas;
+    private Integer llaves;
     private String titulo = "Principiante";
+    private String ultimoTitulo;
     private String descripcion;
     private String nombre;
     private String apellido;
@@ -122,6 +124,14 @@ public class Usuario {
         this.vida = vida;
     }
 
+    public Integer getLlaves() {
+        return llaves;
+    }
+
+    public void setLlaves(Integer llaves) {
+        this.llaves = llaves;
+    }
+
     public void activar() {
         this.activo = true;
     }
@@ -213,6 +223,10 @@ public class Usuario {
     public void setEmailVerificado(Boolean emailVerificado) {
         this.emailVerificado = emailVerificado;
     }
+
+    public String getUltimoTitulo() {return ultimoTitulo;}
+
+    public void setUltimoTitulo(String ultimoTitulo) {this.ultimoTitulo = ultimoTitulo;}
 
     @Override
     public boolean equals(Object o) {

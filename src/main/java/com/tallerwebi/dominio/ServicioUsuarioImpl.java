@@ -30,6 +30,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
     }
 
     @Override
+    public List<Usuario> buscarUsuariosPorNombre(String nombre) {
+        return this.repositorioUsuario.buscarUsuariosPorNombre(nombre);
+    }
+
+    @Override
     public Set<Usuario> listar(Usuario usuario) {
         List<Usuario> usuarios = repositorioUsuario.buscarTodosLosUsuarios(usuario);
         Set<Usuario> usuariosAux = new HashSet<>();
@@ -65,4 +70,14 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
     public void eliminarRelacionesDeAmistad(Usuario usuario) {
         repositorioUsuario.eliminarRelacionesDeAmistad(usuario);
     }
-}
+
+    @Override
+    @Transactional
+    public void actualizarComunicoPointsUsuario(Long usuarioId, Integer nuevaCantidad) {
+        Usuario usuario = buscarUsuarioPorId(usuarioId);
+        if (usuario != null) {
+            usuario.setComunicoPoints(nuevaCantidad);
+            repositorioUsuario.guardar(usuario);
+        }
+    }
+    }

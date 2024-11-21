@@ -23,6 +23,8 @@ public class ControladorEjercicioTest {
 
     private ControladorEjercicio controladorEjercicio;
     private EjercicioTraduccion ejercicioTraduccionMock;
+    private EjercicioMatriz ejercicioMatrizMock;
+    private EjercicioFormaPalabra ejercicioFormaPalabraMock;
     private ServicioEjercicio servicioEjercicioMock;
     private ServicioLeccion servicioLeccionMock;
     private ServicioProgresoLeccion servicioProgresoLeccionMock;
@@ -34,11 +36,16 @@ public class ControladorEjercicioTest {
     private ServicioExperiencia servicioExperienciaMock;
     private ServicioUsuario servicioUsuarioMock;
     private Usuario usuarioMock;
+    private ServicioTitulo servicioTituloMock;
 
     @BeforeEach
     public void init() {
         ejercicioTraduccionMock = mock(EjercicioTraduccion.class);
         when(ejercicioTraduccionMock.getId()).thenReturn(1L);
+        ejercicioMatrizMock = mock(EjercicioMatriz.class);
+        when(ejercicioMatrizMock.getId()).thenReturn(1L);
+        ejercicioFormaPalabraMock = mock(EjercicioFormaPalabra.class);
+        when(ejercicioFormaPalabraMock.getId()).thenReturn(1L);
 
         requestMock = mock(HttpServletRequest.class);
         leccionMock = mock(Leccion.class);
@@ -64,6 +71,10 @@ public class ControladorEjercicioTest {
         Experiencia experienciaMock = mock(Experiencia.class);
         servicioExperienciaMock = mock(ServicioExperiencia.class);
 
+        servicioTituloMock = mock(ServicioTitulo.class);
+        when(usuarioMock.getTitulo()).thenReturn("Novato");
+
+
         LocalDateTime ahora = LocalDateTime.now();
         Duration duracion = Duration.between(vidaMock.getUltimaVezQueSeRegeneroLaVida(), ahora);
         long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
@@ -77,11 +88,15 @@ public class ControladorEjercicioTest {
         when(servicioEjercicioMock.resolverEjercicioTraduccion(ejercicioTraduccionMock, ejercicioTraduccionMock.getOpcionCorrecta().getId())).thenReturn(true);
         servicioLeccionMock = mock(ServicioLeccion.class);
         servicioProgresoLeccionMock = mock(ServicioProgresoLeccion.class);
-        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioVidaMock,servicioExperienciaMock, servicioUsuarioMock);
+
+        when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
+        when(leccionMock.getTipo()).thenReturn("traduccion");
+
+        controladorEjercicio = new ControladorEjercicio(servicioEjercicioMock, servicioLeccionMock, servicioProgresoLeccionMock, servicioVidaMock,servicioExperienciaMock, servicioTituloMock, servicioUsuarioMock);
     }
 
     @Test
-    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConEjerciciosCuandoVoyAEjercicioReciboLaVistaEjercicioYUnObjetoEjercicioEnElModelo(){
+    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConEjerciciosTraduccionCuandoVoyAEjercicioReciboLaVistaEjercicioYUnEjercicioTraduccionEnElModelo(){
         when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
         List<Ejercicio> lista = new ArrayList<>();
         lista.add(ejercicioTraduccionMock);
@@ -94,7 +109,41 @@ public class ControladorEjercicioTest {
         ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1,requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicio"));
-        assertThat(modelAndView.getModel().get("ejercicio"), equalTo(ejercicioTraduccionMock));
+        assertThat(modelAndView.getModel().get("ejercicio").getClass(), equalTo(ejercicioTraduccionMock.getClass()));
+    }
+
+    @Test
+    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConEjerciciosMatrizCuandoVoyAEjercicioReciboLaVistaFormaLetraYUnEjercicioMatrizEnElModelo(){
+        when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
+        List<Ejercicio> lista = new ArrayList<>();
+        lista.add(ejercicioMatrizMock);
+        leccionMock.setEjercicios(lista);
+        when(leccionMock.getEjercicios()).thenReturn(lista);
+
+        when(requestMock.getSession()).thenReturn(sessionMock);
+        when(sessionMock.getAttribute(anyString())).thenReturn(1L);
+
+        ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1,requestMock);
+
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("formaLetras"));
+        assertThat(modelAndView.getModel().get("ejercicio").getClass(), equalTo(ejercicioMatrizMock.getClass()));
+    }
+
+    @Test
+    public void dadoQueExisteUnUsuarioLogueadoYUnaLeccionConEjerciciosFormaPalabraCuandoVoyAEjercicioReciboLaVistaFormaPalabraYUnEjercicioFormaPalabraEnElModelo(){
+        when(servicioLeccionMock.obtenerLeccion(anyLong())).thenReturn(leccionMock);
+        List<Ejercicio> lista = new ArrayList<>();
+        lista.add(ejercicioFormaPalabraMock);
+        leccionMock.setEjercicios(lista);
+        when(leccionMock.getEjercicios()).thenReturn(lista);
+
+        when(requestMock.getSession()).thenReturn(sessionMock);
+        when(sessionMock.getAttribute(anyString())).thenReturn(1L);
+
+        ModelAndView modelAndView = this.controladorEjercicio.irAjercicio(1L, 1,requestMock);
+
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("ejercicios-forma-palabra"));
+        assertThat(modelAndView.getModel().get("ejercicio").getClass(), equalTo(ejercicioFormaPalabraMock.getClass()));
     }
 
 
@@ -169,13 +218,13 @@ public class ControladorEjercicioTest {
         when(ejercicioMatrizMock.getPuntos()).thenReturn("100100");
 
         ModelAndView modelAndView = controladorEjercicio.usarAyuda(1L, 1, requestMock);
-        
+
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("formaLetras"));
         assertThat(modelAndView.getModel().get("punto"), is(notNullValue()));
     }
 
     @Test
-        public void usarAyudaEnEjercicioFormaPalabraDebeRetornarLaVistaEjercicioFormaPalabraYUnaLetraMenosEnLasOpcionesDeLetras() {
+    public void usarAyudaEnEjercicioFormaPalabraDebeRetornarLaVistaEjercicioFormaPalabraYUnaLetraMenosEnLasOpcionesDeLetras() {
         EjercicioFormaPalabra ejercicioPalabraMock = mock(EjercicioFormaPalabra.class);
         when(servicioEjercicioMock.obtenerEjercicio(anyLong())).thenReturn(ejercicioPalabraMock);
         when(servicioVidaMock.obtenerVida(anyLong())).thenReturn(mock(Vida.class));
@@ -211,6 +260,5 @@ public class ControladorEjercicioTest {
         letrasLista.add("Z");
         return letrasLista;
     }
-
 
 }

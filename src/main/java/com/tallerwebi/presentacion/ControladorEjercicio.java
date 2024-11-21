@@ -16,21 +16,25 @@ import java.util.*;
 @Controller
 public class ControladorEjercicio {
     //Commit
-    private ServicioEjercicio servicioEjercicio;
-    private ServicioLeccion servicioLeccion;
-    private ServicioProgresoLeccion servicioProgresoLeccion;
-    private ServicioVida servicioVida;
-    private ServicioExperiencia servicioExperiencia;
-    private ServicioUsuario servicioUsuario;
+    private final ServicioEjercicio servicioEjercicio;
+    private final ServicioLeccion servicioLeccion;
+    private final ServicioProgresoLeccion servicioProgresoLeccion;
+    private final ServicioVida servicioVida;
+    private final ServicioExperiencia servicioExperiencia;
+    private final ServicioUsuario servicioUsuario;
+    private final ServicioTitulo servicioTitulo;
+
 
     @Autowired
-    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia, ServicioUsuario servicioUsuario) {
+    public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia, ServicioTitulo servicioTitulo, ServicioUsuario servicioUsuario) {
         this.servicioEjercicio = servicioEjercicio;
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
         this.servicioExperiencia = servicioExperiencia;
+        this.servicioTitulo = servicioTitulo;
         this.servicioUsuario = servicioUsuario;
+
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
@@ -45,6 +49,9 @@ public class ControladorEjercicio {
         modelo.put("ejercicio", ejercicio);
         modelo.put("indice", indice);
         agregarTiempoRestanteAlModelo(modelo,usuarioId);
+        if(leccion.getTipo().equals("combinado")){
+            modelo.put("combinado", true);
+        }
 
         Map<Class<? extends Ejercicio>, String> redirecciones = Map.of(
                 EjercicioTraduccion.class, "redirect:/braille/lecciones/traduccion",
@@ -53,7 +60,11 @@ public class ControladorEjercicio {
                 EjercicioTraduccionSenia.class, "redirect:/senias"
         );
 
+
         if (vidas == 0) {
+            if (leccion.getTipo().equals("combinado")) {
+                return new ModelAndView("redirect:/braille/lecciones/combinado");
+            }
             String redireccion = redirecciones.get(ejercicio.getClass());
             if (redireccion != null) {
                 return new ModelAndView(redireccion);
@@ -89,7 +100,9 @@ public class ControladorEjercicio {
         ModelAndView mav = new ModelAndView();
         ModelMap modelo = new ModelMap();
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
+        Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
+
         ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
         Boolean resuelto;
         if (progreso == null) {
@@ -113,15 +126,23 @@ public class ControladorEjercicio {
             resuelto = this.servicioEjercicio.resolverEjercicioTraduccionSenia((EjercicioTraduccionSenia) ejercicio, Long.parseLong(respuesta));
             mav.setViewName("ejercicio-video");
         }
-        if (resuelto){
+        if (resuelto) {
             this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
-        } else {
+            this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
+            if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccionId, usuarioId)) {
+                boolean experienciaOtorgada = this.servicioProgresoLeccion.otorgarExperienciaPorLeccion(usuarioId, leccionId);
+                modelo.put("completadoLeccion", experienciaOtorgada);
+            }
+        } else {
             this.servicioVida.perderUnaVida(usuarioId);
+            this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
         }
 
-        this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
+        if(leccion.getTipo().equals("combinado")){
+            modelo.put("combinado", true);
+        }
         modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
         agregarTiempoRestanteAlModelo(modelo,usuarioId);
         modelo.put("indice", indice);
@@ -139,6 +160,11 @@ public class ControladorEjercicio {
         Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
         modelo.put("leccion", leccionId);
         Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
+
+        if(leccion.getTipo().equals("combinado")){
+            modelo.put("combinado", true);
+        }
+
         Ejercicio ejercicio = leccion.getEjercicios().get(indice - 1);
         modelo.put("vidas", vidas);
         modelo.put("ejercicio", ejercicio);
@@ -198,22 +224,30 @@ public class ControladorEjercicio {
         return new ModelAndView("ejercicio-video", modelo);
     }
 
-        @RequestMapping(value = "/ejercicio-video", method = RequestMethod.GET)
-        public ModelAndView irAEjercicioVideo (@RequestParam(required = false, defaultValue = "2", value = "id") Long id)
-        {
-            ModelMap modelo = new ModelMap();
-            Ejercicio ejercicioVideo = servicioEjercicio.obtenerEjercicio(id);
-            modelo.put("ejercicio", ejercicioVideo);
-            return new ModelAndView("ejercicio-video", modelo);
-        }
-
-        private void agregarTiempoRestanteAlModelo (ModelMap modelo, Long usuarioId){
-            Vida vida = this.servicioVida.obtenerVida(usuarioId);
-            LocalDateTime ahora = LocalDateTime.now();
-            Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
-            long segundosDesdeUltimaRegeneracion = duracion.getSeconds();
-            long tiempoRestante = 60 - (segundosDesdeUltimaRegeneracion % 60); // Cada 60 segundos
-            modelo.put("tiempoRestante", tiempoRestante);
-        }
+    @RequestMapping(value = "/ejercicio-video", method = RequestMethod.GET)
+    public ModelAndView irAEjercicioVideo(@RequestParam(required = false, defaultValue = "2", value = "id") Long id) {
+        ModelMap modelo = new ModelMap();
+        Ejercicio ejercicioVideo = servicioEjercicio.obtenerEjercicio(id);
+        modelo.put("ejercicio", ejercicioVideo);
+        return new ModelAndView("ejercicio-video", modelo);
     }
+
+    private void agregarTiempoRestanteAlModelo(ModelMap modelo, Long usuarioId) {
+        Vida vida = this.servicioVida.obtenerVida(usuarioId);
+        LocalDateTime ahora = LocalDateTime.now();
+
+        int tiempoRegeneracionEnMinutos = servicioTitulo.obtenerTiempoRegeneracionPorTitulo(usuarioId);
+
+        Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
+        long minutosDesdeUltimaRegeneracion = duracion.toMinutes();
+
+        long tiempoRestanteEnMinutos = tiempoRegeneracionEnMinutos - minutosDesdeUltimaRegeneracion;
+
+        tiempoRestanteEnMinutos = Math.max(tiempoRestanteEnMinutos, 0);
+
+        modelo.put("tiempoRestante", tiempoRestanteEnMinutos);
+    }
+
+
+}
 

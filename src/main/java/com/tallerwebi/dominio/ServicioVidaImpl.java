@@ -18,11 +18,13 @@ public class ServicioVidaImpl implements ServicioVida {
     //Commit
     private RepositorioVida repositorioVida;
     private RepositorioUsuario repositorioUsuario;
+    private ServicioTitulo servicioTitulo;
 
     @Autowired
-    public ServicioVidaImpl(RepositorioVida repositorioVida, RepositorioUsuario repositorioUsuario) {
+    public ServicioVidaImpl(RepositorioVida repositorioVida, RepositorioUsuario repositorioUsuario, ServicioTitulo servicioTitulo) {
         this.repositorioVida = repositorioVida;
         this.repositorioUsuario = repositorioUsuario;
+        this.servicioTitulo = servicioTitulo;
     }
 
 
@@ -49,17 +51,19 @@ public class ServicioVidaImpl implements ServicioVida {
     }
 
     @Override
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 5400000) //Se ejecuta cada una hora y media
     public void regenerarVidasDeTodosLosUsuarios() {
         List<Usuario> usuarios = repositorioUsuario.buscarTodos();
 
         for (Usuario usuario : usuarios) {
             Vida vida = usuario.getVida();
             LocalDateTime ahora = LocalDateTime.now();
+
+            int tiempoRegeneracion = servicioTitulo.obtenerTiempoRegeneracionPorTitulo(usuario.getId());
+
             Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
 
-
-            if (duracion.toMinutes() >= 1 && vida.getCantidadDeVidasActuales() < 5) {
+            if (duracion.toMinutes() >= tiempoRegeneracion && vida.getCantidadDeVidasActuales() < 5) {
                 vida.setCantidadDeVidasActuales(vida.getCantidadDeVidasActuales() + 1);
                 vida.setUltimaVezQueSeRegeneroLaVida(ahora);
                 repositorioVida.actualizarVida(vida);

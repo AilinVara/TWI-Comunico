@@ -15,8 +15,9 @@ INSERT INTO suscripcion (id,tipo_suscripcion_id) values (4,4);
 INSERT INTO codigodescuento(id) values (1);
 
 
-INSERT INTO Usuario (descripcion, email, emailVerificado, password, rol, activo, nombreDeUsuario, vida_id, comunicoPoints, experiencia_id, titulo, suscripcion_id, ayudas)
-VALUES ('Interesado en aprender braille','test@unlam.edu.ar', true,'test', 'ADMIN', true,'TestUnlam', 1, 0, 1, 'Principiante', 1, 5);
+INSERT INTO Usuario (descripcion, email, emailVerificado, password, rol, activo, nombreDeUsuario, vida_id, comunicoPoints, experiencia_id, titulo, suscripcion_id, ayudas, llaves)
+VALUES ('Interesado en aprender braille','test@unlam.edu.ar', true,'test', 'ADMIN', true,'TestUnlam', 1, 0, 1, 'Principiante', 1, 5,0),
+       ('asd','lira@asd.com', true,'123', 'ADMIN', true,'Lirita', 1, 0, 1, 'Principiante', 1, 5, 0);
 
 INSERT INTO Opcion(id, descripcion) VALUES
                                         (1, 'A'),
@@ -71,9 +72,11 @@ INSERT INTO Leccion(id, tipo) VALUES
                                   (22, 'forma-palabras'),
                                   (23, 'forma-palabras'),
                                   (24, 'forma-palabras'),
-                                  (25, 'desafio-velocidad'),
-                                  (26, 'desafio-velocidad'),
-                                  (27, 'desafio-velocidad');
+                                  (25, 'combinado'),
+                                  (26, 'combinado'),
+                                  (27, 'combinado'),
+                                  (28, 'combinado'),
+                                  (29, 'combinado');
 
 
 INSERT INTO EjercicioTraduccion(id, consigna, opcionCorrecta_id, tipoEjercicio, leccion_id) VALUES
@@ -101,11 +104,14 @@ INSERT INTO EjercicioTraduccion(id, consigna, opcionCorrecta_id, tipoEjercicio, 
                                                                                                 (31, 'Ejercicio 1:', 22, 'traduccion', 10),
                                                                                                 (32, 'Ejercicio 2:', 23, 'traduccion', 10),
                                                                                                 (33, 'Ejercicio 3:', 24, 'traduccion', 10),
-                                                                                                (34, 'Ejercicio 1:', 25, 'traduccion', 11),
-                                                                                                (35, 'Ejercicio 2:', 26, 'traduccion', 11),
-                                                                                                (72, 'Ejercicio 1:', 1, 'traduccion', 25),
-                                                                                                (73, 'Ejercicio 2:', 2, 'traduccion', 25),
-                                                                                                (74, 'Ejercicio 3:', 3, 'traduccion', 25);
+                                                                                                (34, 'Ejercicio 2:', 25, 'traduccion', 11),
+                                                                                                (35, 'Ejercicio 3:', 26, 'traduccion', 11),
+                                                                                                (36, 'Ejercicio 1:', 24, 'traduccion', 11),
+                                                                                                (72, 'Ejercicio 3:', 4, 'traduccion', 25),
+                                                                                                (73, 'Ejercicio 3:', 8, 'traduccion', 26),
+                                                                                                (74, 'Ejercicio 3:', 10, 'traduccion', 27),
+                                                                                                (75, 'Ejercicio 3:', 12, 'traduccion', 28),
+                                                                                                (76, 'Ejercicio 3:', 16, 'traduccion', 29);
 
 
 INSERT INTO EjercicioMatriz(id, puntos, letra, tipoEjercicio, leccion_id) VALUES
@@ -136,9 +142,11 @@ INSERT INTO EjercicioMatriz(id, puntos, letra, tipoEjercicio, leccion_id) VALUES
                                                                               (57, '110111', 'Y', 'matriz', 20),
                                                                               (58, '100111', 'Z', 'matriz', 20),
                                                                               (59, '110011', 'X', 'matriz', 20),
-                                                                              (75, '100000', 'A', 'matriz', 26),
-                                                                              (76, '101000', 'B', 'matriz', 26),
-                                                                              (77, '110000', 'C', 'matriz', 26);
+                                                                              (75, '111000', 'F', 'matriz', 25),
+                                                                              (76, '111010', 'P', 'matriz', 26),
+                                                                              (77, '101010', 'L', 'matriz', 27),
+                                                                              (78, '011010', 'S', 'matriz', 28),
+                                                                              (79, '111110', 'Q', 'matriz', 29);
 
 
 INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras, tipoEjercicio, leccion_id) VALUES
@@ -157,9 +165,11 @@ INSERT INTO EjercicioFormaPalabra(id, imagen, respuestaCorrecta, letras, tipoEje
                                                                                                         (69, 'paz.png', 'PAZ', 'A, Z, M, P, T, L, R', 'forma_palabras', 24),
                                                                                                         (70, 'rio.png', 'RIO', 'R, O, M, I, L, T, S', 'forma_palabras', 24),
                                                                                                         (71, 'mar.png', 'MAR', 'A, R, Z, M, T, B, L', 'forma_palabras', 24),
-                                                                                                        (78, 'gato.png', 'GATO', 'T, A, G, P, S, O, R', 'forma_palabras', 27),
-                                                                                                        (79, 'perro.png', 'PERRO', 'R, A, P, N, S, O, E', 'forma_palabras', 27),
-                                                                                                        (80, 'libro.png', 'LIBRO', 'L, O, B, N, S, I, R', 'forma_palabras', 27);
+                                                                                                        (81, 'casa.png', 'CASA', 'S, C, A, T, H, Z, A', 'forma_palabras',25),
+                                                                                                        (82, 'luna.png', 'LUNA', 'A, N, U, L, R, Z, O', 'forma_palabras', 26),
+                                                                                                        (83, 'sol.png', 'SOL', 'L, S, R, T, N, O, M', 'forma_palabras', 27),
+                                                                                                        (84, 'ojo.png', 'OJO', 'O, M, J, L, T, N, O', 'forma_palabras', 28),
+                                                                                                        (85, 'rey.png', 'REY', 'E, R, A, U, Y, M, N', 'forma_palabras', 29);
 
 INSERT INTO EjercicioTraduccionSenia(id, consigna, opcionCorrecta_id, tipoEjercicio, leccion_id) VALUES
                                                                                                      (4, 'Ejercicio 1:', 1, 'traduccionSenia', 12),
@@ -227,8 +237,25 @@ INSERT INTO EjercicioTraduccion_Opcion(EjercicioTraduccion_id, opcionesIncorrect
                                                                                            (34, 23),
                                                                                            (35, 25),
                                                                                            (35, 24),
-                                                                                           (33, 26),
-                                                                                           (33, 25);
+                                                                                           (36, 25),
+                                                                                           (36, 26),
+
+
+                                                                                           (72, 5),
+                                                                                           (72, 6),
+
+                                                                                           (73, 7),
+                                                                                           (73, 9),
+
+                                                                                           (74, 11),
+                                                                                           (74, 12),
+
+                                                                                           (75, 10),
+                                                                                           (75, 11),
+
+                                                                                           (76, 17),
+                                                                                           (76, 18);
+
 
 INSERT INTO EjercicioTraduccionSenia_Opcion(EjercicioTraduccionSenia_id, opcionesIncorrectas_id) VALUES
                                                                                                      (4, 2),
@@ -239,8 +266,8 @@ INSERT INTO EjercicioTraduccionSenia_Opcion(EjercicioTraduccionSenia_id, opcione
                                                                                                      (6, 2);
 
 INSERT INTO Curso(id, nombre, descripcion, fecha, hora, tipo, nivel, capacidad) VALUES
-                                                                                                (1, 'Curso básico de lengua de señas', 'Introducción a la lengua de señas para principiantes.', '2024-10-15', '10:00:00', 'SEÑAS', 'BÁSICO', 20),
-                                                                                                (2, 'Curso intermedio de lengua de señas', 'Profundización en la lengua de señas para quienes ya tienen conocimientos básicos.', '2024-10-22', '11:00:00', 'SEÑAS', 'INTERMEDIO', 15),
-                                                                                                (3, 'Curso avanzado de lengua de señas', 'Dominio avanzado de la lengua de señas y su uso en situaciones complejas.', '2024-11-01', '09:00:00', 'SEÑAS', 'AVANZADO', 10),
-                                                                                                (4, 'Curso de braille para principiantes', 'Introducción al sistema Braille y su aplicación en la vida diaria.', '2024-11-05', '14:00:00', 'BRAILLE', 'BÁSICO', 25),
-                                                                                                (5, 'Curso de braille avanzado', 'Profundización en el sistema Braille para usuarios con experiencia.', '2024-11-10', '16:00:00', 'BRAILLE', 'AVANZADO', 10);
+                                                                                    (1, 'Curso básico de lengua de señas', 'Introducción a la lengua de señas para principiantes.', '2024-10-15', '10:00:00', 'SEÑAS', 'BÁSICO', 20),
+                                                                                    (2, 'Curso intermedio de lengua de señas', 'Profundización en la lengua de señas para quienes ya tienen conocimientos básicos.', '2024-10-22', '11:00:00', 'SEÑAS', 'INTERMEDIO', 15),
+                                                                                    (3, 'Curso avanzado de lengua de señas', 'Dominio avanzado de la lengua de señas y su uso en situaciones complejas.', '2024-11-01', '09:00:00', 'SEÑAS', 'AVANZADO', 10),
+                                                                                    (4, 'Curso de braille para principiantes', 'Introducción al sistema Braille y su aplicación en la vida diaria.', '2024-11-05', '14:00:00', 'BRAILLE', 'BÁSICO', 25),
+                                                                                    (5, 'Curso de braille avanzado', 'Profundización en el sistema Braille para usuarios con experiencia.', '2024-11-10', '16:00:00', 'BRAILLE', 'AVANZADO', 10);

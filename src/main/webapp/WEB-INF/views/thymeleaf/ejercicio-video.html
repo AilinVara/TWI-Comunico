@@ -20,10 +20,12 @@
 <div th:replace="header :: header"></div>
 
 <div class="barra-experiencia">
-    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
-        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/5000XP</p>
+    <div class="experiencia-llena" th:style="'width: ' + (${experiencia} / ${experienciaMaxima} * 100) + '%'">
+        <p><span th:text="${experiencia}" id="experiencia">0</span>/<span th:text="${experienciaMaxima}">0</span>XP</p>
     </div>
 </div>
+
+
 
 <div class="titulo">
     <h3>Ejercicio con video</h3>
@@ -69,7 +71,7 @@
             if (![[${esCorrecta}]]) {
                 mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
                 mensaje += `<br>Te quedan [[${vidas}]] vidas.`;
-                mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] segundos.`;
+                mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] minutos.`;
             }
             Swal.fire({
                 icon: [[${esCorrecta}]] ? 'success' : 'error',
@@ -97,6 +99,7 @@
 
     actualizarExperiencia([[${experiencia}]]);
 </script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

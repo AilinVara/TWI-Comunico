@@ -15,10 +15,11 @@
 <div th:replace="header :: header"></div>
 
 <div class="barra-experiencia">
-    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
-        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/5000XP</p>
+    <div class="experiencia-llena" th:style="'width: ' + (${experiencia} / ${experienciaMaxima} * 100) + '%'">
+        <p><span th:text="${experiencia}" id="experiencia">0</span>/<span th:text="${experienciaMaxima}">0</span>XP</p>
     </div>
 </div>
+
 
 <ul class="titulosUsuarioOrden">
     <li>
@@ -31,24 +32,48 @@
         <div class="titulosUsuario">
         <p class="titulo-metalizado titulo-novato">Novato</p>
         <p>Se necesita 500XP para conseguir este titulo.</p>
+            <br>
+            <p class="recompensa">Recompensas </p>
+
+            <p>20<i class="fa-solid fa-coins"></i> ComunicoPoints al instante! </p>
+
+            <p> Regeneras tus vidas 5 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i></p>
         </div>
     </li>
     <li>
         <div class="titulosUsuario">
         <p class="titulo-metalizado titulo-amateur">Amateur</p>
         <p>Se necesita 2000XP para conseguir este titulo.</p>
+            <br>
+            <p class="recompensa">Recompensas </p>
+
+            <p>40<i class="fa-solid fa-coins"></i> ComunicoPoints al instante! </p>
+
+            <p> Regeneras tus vidas 10 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i></p>
         </div>
     </li>
     <li>
         <div class="titulosUsuario">
         <p class="titulo-metalizado titulo-experto">Experto</p>
         <p>Se necesita 3500XP para conseguir este titulo.</p>
+            <br>
+            <p class="recompensa">Recompensas </p>
+
+            <p>60<i class="fa-solid fa-coins"></i> ComunicoPoints al instante! </p>
+
+            <p> Regeneras tus vidas 20 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i></p>
         </div>
     </li>
     <li>
         <div class="titulosUsuario">
         <p class="titulo-metalizado titulo-comunicador">Comunicador</p>
         <p>Se necesita 5000XP para conseguir este titulo.</p>
+            <br>
+            <p class="recompensa">Recompensas </p>
+
+            <p>100<i class="fa-solid fa-coins"></i> ComunicoPoints al instante! </p>
+
+            <p> Regeneras tus vidas 30 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i></p>
         </div>
     </li>
 </ul>
