@@ -6,36 +6,41 @@
 
   <nav>
     <ul>
-      <li>
-        <a th:href="@{/titulosUsuario}" class="contenedorDeTitulos">
-          <p>
-            <span th:classappend="'titulo-' + ${titulo.toLowerCase()}" class="titulo-metalizado" th:text="${titulo}">Principiante</span>
-          </p>
-        </a>
-      </li>
-
       <li><a th:href="@{/inicio}">Inicio</a></li>
-      <li><a th:href="@{/senias}">Lengua de Señas</a></li>
-      <li><a th:href="@{/braille}">Braille</a></li>
       <li><a th:href="@{/suscripciones}">Suscripciones</a></li>
 
       <li>
-        <a th:href="@{/comprar}" class="points-container">
+        <a class="points-container">
           <i class="fa-solid fa-coins"></i>
           <span th:text="${points}">0</span>
         </a>
       </li>
 
       <li>
+        <a>
+          <i class="fa-solid fa-key" style="color: #FFD43B;"></i>
+          <span th:text="${llaves}">0</span>
+        </a>
+      </li>
+
+      <li>
+        <i class="fa-solid fa-hand-sparkles"></i>
+        <span th:text="${ayudas}">0</span>
+      </li>
+
+      <li>
         <button id="botonVidas" style="display: contents;">
           <div class="grupo_input" id="vidaYNum">
-            <i class="fa-solid fa-heart" id="vidas"
-               th:style="${suscripcion != null && suscripcion == 'premium'} ? 'color: #ff9600;' : 'color: #ea2b2b;'"></i>
-            <h4 th:if="${suscripcion == null || suscripcion != 'premium'}" th:text="${vidas}" id="vidasNumero">0</h4>
+            <i class="fa-solid fa-heart" id="vidas"></i>
+            <h4 th:text="${vidas}" id="vidasNumero">0</h4>
           </div>
         </button>
       </li>
-
+      <li>
+        <a th:href="@{/tienda}">
+          <i class="fa-solid fa-store" style="color: #ff7878;"></i>
+        </a>
+      </li>
       <a th:href="@{/crear-curso}" ><img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"></a>
     </ul>
   </nav>
@@ -85,7 +90,7 @@
             });
           } else if (vidasRestantes <= 4) {
 
-            mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`;
+            mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} minutos.`;
 
 
             Swal.fire({
