@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -24,7 +25,8 @@ public class ProgresoLeccion {
 
     Boolean completo = false;
 
-    Boolean experienciaOtorgada = false;
+    @Column(name = "fechaCompleto")
+    private LocalDateTime fechaCompleto;
 
     public ProgresoLeccion(){}
 
@@ -75,9 +77,13 @@ public class ProgresoLeccion {
         this.ejercicio = ejercicio;
     }
 
-    public Boolean getExperienciaOtorgada() {return experienciaOtorgada;}
+    public LocalDateTime getFechaCompleto() {
+        return fechaCompleto;
+    }
 
-    public void setExperienciaOtorgada(Boolean experienciaOtorgada) {this.experienciaOtorgada = experienciaOtorgada;}
+    public void setFechaCompleto(LocalDateTime fechaCompleto) {
+        this.fechaCompleto = fechaCompleto;
+    }
 
     @Override
     public boolean equals(Object o) {

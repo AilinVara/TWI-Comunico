@@ -119,6 +119,7 @@
                 <tr>
                     <th>Lección N°</th>
                     <th>Tipo</th>
+                    <th>Fecha de realización</th>
                 </tr>
                 </thead>
 
@@ -126,6 +127,8 @@
                 <tr th:each="progreso : ${progresos}" th:if="${progreso.getCompleto()}">
                     <td th:text="${progreso.getLeccion().getId()}" class="progress-id"></td>
                     <td th:text="${progreso.getLeccion().getTipo()}" class="lection-type"></td>
+                    <td class="date"
+                        th:text="${progreso.getFechaCompleto() != null ? progreso.getFechaCompleto().toLocalDate() : 'Fecha no disponible'}"></td>
                 </tr>
                 </tbody>
             </table>

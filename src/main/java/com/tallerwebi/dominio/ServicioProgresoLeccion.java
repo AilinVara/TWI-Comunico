@@ -25,4 +25,7 @@ public interface ServicioProgresoLeccion {
     List<Leccion> obtenerLecciones();
 
     boolean otorgarExperienciaPorLeccion(Long usuarioId, Long leccionId);
+    void actualizarFecha(ProgresoLeccion progreso, LocalDateTime fecha);
+
+
 }
