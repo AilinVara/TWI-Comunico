@@ -115,7 +115,7 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion {
     @Override
     public boolean otorgarExperienciaPorLeccion(Long usuarioId, Long leccionId) {
         // Chequea si ya le dió la experiencia
-        boolean otorgada = false;
+        boolean otorgadaAhora = false;
         if (!repositorioProgresoLeccion.experienciaOtorgada(usuarioId, leccionId)) {
             servicioExperiencia.ganar300DeExperiencia(usuarioId);
 
@@ -123,12 +123,12 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion {
             for (ProgresoLeccion progreso : progresos) {
                 progreso.setExperienciaOtorgada(true);
                 repositorioProgresoLeccion.actualizar(progreso);
-                otorgada = true;
+                otorgadaAhora = true;
             }
         } else {
             System.out.println("La experiencia ya fue otorgada para esta lección.");
         }
-    return otorgada;
+    return otorgadaAhora;
     }
 }
 
