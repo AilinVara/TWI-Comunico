@@ -59,7 +59,9 @@ public class ControladorEjercicio {
         );
 
 
-        if (vidas == 0) {
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+
+        if (vidas == 0 && !usuario.getSuscripcion().getTipoSuscripcion().getNombre().equals("premium")) {
             if (leccion.getTipo().equals("combinado")) {
                 return new ModelAndView("redirect:/braille/lecciones/combinado");
             }
@@ -100,6 +102,7 @@ public class ControladorEjercicio {
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
         Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
 
         ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
         Boolean resuelto;
@@ -126,8 +129,7 @@ public class ControladorEjercicio {
         }
         if (resuelto){
             this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
-        } else {
-
+        } else if (!usuario.getSuscripcion().getTipoSuscripcion().getNombre().equals("premium")){
             this.servicioVida.perderUnaVida(usuarioId);
         }
 
