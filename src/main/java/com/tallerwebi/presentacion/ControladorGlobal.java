@@ -76,6 +76,23 @@ public class ControladorGlobal {
         return usuario.getAyudas();
     }
 
+    @ModelAttribute("llaves")
+    public Integer obtenerLlaves(HttpServletRequest request) {
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        if (usuarioId == null) {
+            return 0;
+        }
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+
+        // Actualiza la sesión si es necesario
+        if (request.getSession().getAttribute("llaves") == null ||
+                !request.getSession().getAttribute("llaves").equals(usuario.getLlaves())) {
+            request.getSession().setAttribute("llaves", usuario.getLlaves());
+        }
+
+        return usuario.getLlaves();
+    }
+
     @ModelAttribute("experiencia")
     public Integer obtenerExperienciaDelUsuario(HttpServletRequest request) {
 

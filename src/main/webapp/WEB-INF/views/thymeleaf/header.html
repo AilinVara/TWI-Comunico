@@ -4,40 +4,36 @@
     <h1>omunico</h1>
   </div>
 
+  <div class="nav-container">
+    <nav>
+      <ul>
+        <li><a th:href="@{/inicio}">Inicio</a></li>
+        <li><a th:href="@{/braille}">Braille</a></li>
+        <li><a th:href="@{/senias}">Señas</a></li>
+        <li><a th:href="@{/suscripciones}">Suscripciones</a></li>
+        <li><a th:href="@{/tienda}">Tienda</a></li>
+      </ul>
+    </nav>
+  </div>
+
   <nav>
     <ul>
-      <li>
-        <a th:href="@{/titulosUsuario}" class="contenedorDeTitulos">
-          <p>
-            <span th:classappend="'titulo-' + ${titulo.toLowerCase()}" class="titulo-metalizado" th:text="${titulo}">Principiante</span>
-          </p>
-        </a>
-      </li>
-
-      <li><a th:href="@{/inicio}">Inicio</a></li>
-      <li><a th:href="@{/senias}">Lengua de Señas</a></li>
-      <li><a th:href="@{/braille}">Braille</a></li>
-      <li><a th:href="@{/suscripciones}">Suscripciones</a></li>
-
       <li>
         <a class="points-container">
           <i class="fa-solid fa-coins"></i>
           <span th:text="${points}">0</span>
         </a>
       </li>
-
       <li>
         <a>
           <i class="fa-solid fa-key" style="color: #FFD43B;"></i>
           <span th:text="${llaves}">0</span>
         </a>
       </li>
-
       <li>
         <i class="fa-solid fa-hand-sparkles"></i>
         <span th:text="${ayudas}">0</span>
       </li>
-
       <li>
         <button id="botonVidas" style="display: contents;">
           <div class="grupo_input" id="vidaYNum">
@@ -45,11 +41,6 @@
             <h4 th:text="${vidas}" id="vidasNumero">0</h4>
           </div>
         </button>
-      </li>
-      <li>
-        <a th:href="@{/tienda}">
-          <i class="fa-solid fa-store" style="color: #0002ff;"></i>
-        </a>
       </li>
       <a th:href="@{/crear-curso}" ><img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"></a>
     </ul>
