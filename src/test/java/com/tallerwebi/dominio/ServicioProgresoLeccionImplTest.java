@@ -21,7 +21,7 @@ public class ServicioProgresoLeccionImplTest {
     @BeforeEach
     public void init(){
         repositorioMock = mock(RepositorioProgresoLeccion.class);
-        servicioProgresoLeccion = new ServicioProgresoLeccionImpl(repositorioMock, servicioUsuarioMock, servicioLeccionMock,servicioExperiencia);
+        servicioProgresoLeccion = new ServicioProgresoLeccionImpl(repositorioMock, servicioUsuarioMock, servicioLeccionMock, servicioExperiencia);
     }
 
     @Test
