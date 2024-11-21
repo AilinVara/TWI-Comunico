@@ -29,6 +29,8 @@ public class ServicioSuscripcionImplTest {
     @Rollback
     public void dadoQueUnUsuarioNoTieneSuscripcionQuePuedaComprarSuscripcionBasica() throws SuscriptoException {
         Usuario usuario = new Usuario();
+        usuario.setComunicoPoints(1000);
+        usuario.setAyudas(3);
         Suscripcion suscripcionBasica = new Suscripcion();
         suscripcionBasica.setId(2L);
 
