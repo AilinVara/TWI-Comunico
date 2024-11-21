@@ -35,7 +35,7 @@
                 </div>
 
 
-               <div class="titulos">
+                <div class="titulos">
                     <span class="titulo" th:text="${usuario.getTitulo()}"></span>
                 </div>
 
@@ -44,13 +44,13 @@
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
 
-                    <div class="experiencia-usuario">
-                        <p id="exp-p"> <span id="exp-span">Exp:</span>
-                            <span id="exp-bar" th:text="${usuario.getExperiencia().getCantidadExperiencia()}">0</span>/5000px
-                        </p>
-                    </div>
+                <div class="experiencia-usuario">
+                    <p id="exp-p"> <span id="exp-span">Exp:</span>
+                        <span id="exp-bar" th:text="${usuario.getExperiencia().getCantidadExperiencia()}">0</span>/5000px
+                    </p>
                 </div>
             </div>
+        </div>
 
         <div class="contenedor-plan">
             <div class="plan-titulo d-flex">

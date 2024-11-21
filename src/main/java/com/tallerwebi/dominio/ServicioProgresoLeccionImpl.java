@@ -117,7 +117,7 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion {
     public void actualizarFecha(ProgresoLeccion progreso, LocalDateTime fecha) {
         if(progreso.getCompleto()){
             progreso.setFechaCompleto(fecha);
-            this.repositorioProgresoLeccion.actualizar(progreso);
+            actualizarProgreso(progreso,true);
         }
     }
 
