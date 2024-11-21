@@ -8,7 +8,5 @@ public interface ServicioVida {
 
     void regenerarVidasDeTodosLosUsuarios();
 
-
-
-
+    void actualizarVida(Vida vida);
 }

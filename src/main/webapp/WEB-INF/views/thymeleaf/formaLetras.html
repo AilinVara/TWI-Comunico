@@ -94,35 +94,9 @@
     </div>
 </div>
 
-    <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
-    <script th:inline="javascript">
-        document.getElementById("botonVidas").addEventListener("click", function() {
-            let vidasRestantes = document.getElementById("vidasNumero").innerText;
-            let tiempoRestante = document.getElementById("tiempoRestante").innerText;
+<input type="hidden" th:attr="data-punto=${punto}" id="punto-data">
 
-            let esPremium = /*[[${suscripcion == 'premium'}]]*/ false;
-
-            console.log("Tiempo restante:", tiempoRestante);
-
-            let mensajeHtml = `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.`;
-
-            if (!esPremium) {
-                mensajeHtml += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`;
-            }
-
-            Swal.fire({
-                title: 'Vidas Restantes',
-                html: mensajeHtml,
-                icon: 'info',
-                confirmButtonText: 'OK',
-                didOpen: () => {
-                    const script = document.createElement('script');
-                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
-                    document.head.appendChild(script);
-                }
-            });
-        });
-    </script>
+<input hidden th:attr="data-combinado=${combinado}" id="combinado"/>
 
 
     <script th:inline="javascript">
@@ -153,7 +127,16 @@
             });
         }
     </script>
+<script>
+    window.onload = function() {
+        const puntoData = document.getElementById("punto-data").getAttribute("data-punto");
+        const indicePunto = parseInt(puntoData, 10);
 
+        if (!isNaN(indicePunto) && indicePunto >= 0) {
+            document.querySelectorAll('.braille-checkbox')[indicePunto].checked = true;
+        }
+    };
+</script>
 <script>
     function concatenarCheckboxes() {
         let checkboxes = document.querySelectorAll('.braille-checkbox');

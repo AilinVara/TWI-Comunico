@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioUsuario;
+import com.tallerwebi.dominio.ServicioVida;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Vida;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,13 +25,15 @@ public class ControladorTiendaTest {
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
     private RedirectAttributes flashMapMock;
+    private ServicioVida servicioVidaMock;
 
     @BeforeEach
     public void init() {
         servicioUsuarioMock = mock(ServicioUsuario.class);
+        servicioVidaMock = mock(ServicioVida.class);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
-        controladorTienda = new ControladorTienda(servicioUsuarioMock);
+        controladorTienda = new ControladorTienda(servicioUsuarioMock, servicioVidaMock);
         flashMapMock = mock(RedirectAttributes.class);
     }
 

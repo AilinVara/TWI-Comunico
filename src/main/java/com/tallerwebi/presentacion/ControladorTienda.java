@@ -7,6 +7,7 @@ import com.mercadopago.client.preference.PreferenceItemRequest;
 import com.mercadopago.client.preference.PreferenceRequest;
 import com.mercadopago.resources.preference.Preference;
 import com.tallerwebi.dominio.ServicioUsuario;
+import com.tallerwebi.dominio.ServicioVida;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Vida;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,12 @@ import java.util.Map;
 public class ControladorTienda {
 
     private ServicioUsuario servicioUsuario;
+    private ServicioVida servicioVida;
 
     @Autowired
-    public ControladorTienda(ServicioUsuario servicioUsuario) {
+    public ControladorTienda(ServicioUsuario servicioUsuario, ServicioVida servicioVida) {
         this.servicioUsuario = servicioUsuario;
+        this.servicioVida = servicioVida;
     }
 
 //    @RequestMapping(value = "/mp/{cantidad}", method = RequestMethod.POST)
@@ -212,10 +215,11 @@ public class ControladorTienda {
         if (saldoUsuario >= precio) {
             Integer nuevoSaldo = saldoUsuario - precio;
             usuario.setComunicoPoints(nuevoSaldo);
-            this.servicioUsuario.modificar(usuario);
+//            this.servicioUsuario.modificar(usuario);
             request.getSession().setAttribute("points", usuario.getComunicoPoints());
             vida.setCantidadDeVidasActuales(cantidadActual + vidas);
             usuario.setVida(vida);
+            this.servicioVida.actualizarVida(vida);
             this.servicioUsuario.modificar(usuario);
             request.getSession().setAttribute("vidasNumero", usuario.getVida().getCantidadDeVidasActuales());
 
