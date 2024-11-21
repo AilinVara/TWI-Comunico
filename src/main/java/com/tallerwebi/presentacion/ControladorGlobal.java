@@ -45,21 +45,36 @@ public class ControladorGlobal {
 //    }
 
     @ModelAttribute("vidasNumero")
-    public Integer obtenerVidas(HttpServletRequest request) {
+    public Integer obtenerVidasNumero(HttpServletRequest request) {
+        // Intentar obtener la sesión existente
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("vidasNumero") != null) {
+            return (Integer) session.getAttribute("vidasNumero");
+        }
+
+        // Si no hay sesión o el atributo no existe, crearlo
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         if (usuarioId == null) {
-            return 0;
+            return 0; // No hay usuario logueado
         }
+
+        // Intentar buscar al usuario
         Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
-
-        // Actualiza la sesión si es necesario
-        if (request.getSession().getAttribute("vidasNumero") == null ||
-                !request.getSession().getAttribute("vidasNumero").equals(usuario.getVida().getCantidadDeVidasActuales())) {
-            request.getSession().setAttribute("vidasNumero", usuario.getVida().getCantidadDeVidasActuales());
+        if (usuario == null || usuario.getVida() == null) {
+            return 0; // Si el usuario o su vida no están inicializados
         }
 
-        return usuario.getVida().getCantidadDeVidasActuales();
+        Integer cantidadDeVidas = usuario.getVida().getCantidadDeVidasActuales();
+        if (session == null) {
+            // Crear sesión si no existe
+            session = request.getSession(true);
+        }
+        // Establecer el atributo en sesión
+        session.setAttribute("vidasNumero", cantidadDeVidas);
+
+        return cantidadDeVidas;
     }
+
 
     @ModelAttribute("points")
     public Integer obtenerComunicoPoints(HttpServletRequest request) {

@@ -129,18 +129,16 @@ public class ControladorEjercicio {
             resuelto = this.servicioEjercicio.resolverEjercicioTraduccionSenia((EjercicioTraduccionSenia) ejercicio, Long.parseLong(respuesta));
             mav.setViewName("ejercicio-video");
         }
-        if (resuelto){
-            this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
-            this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
-
-            if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccionId, usuarioId)) {
-                boolean experienciaOtorgada = this.servicioProgresoLeccion.otorgarExperienciaPorLeccion(usuarioId, leccionId);
-                modelo.put("completadoLeccion", experienciaOtorgada);
+        if (!resuelto && !usuario.getSuscripcion().getTipoSuscripcion().getNombre().equals("premium")) {
+            Boolean vidaPerdida = this.servicioVida.perderUnaVida(usuarioId);
+            if (vidaPerdida) {
+                // Obtener el nuevo número de vidas y actualizar la sesión
+                Integer nuevasVidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
+                request.getSession().setAttribute("vidasNumero", nuevasVidas);
             }
-        } else if (!usuario.getSuscripcion().getTipoSuscripcion().getNombre().equals("premium")){
-            this.servicioVida.perderUnaVida(usuarioId);
             this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
         }
+
 
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 

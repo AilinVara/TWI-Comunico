@@ -41,6 +41,8 @@ public class ServicioSuscripcionImpl implements ServicioSuscripcion {
                 usuario.getSuscripcion().setFechaCompra(LocalDateTime.now());
                 usuario.getSuscripcion().setFechaVencimiento(LocalDateTime.now().plusMonths(1));
                 usuario.setDescuentosEmitidos(1);
+                usuario.setComunicoPoints(usuario.getComunicoPoints()+500);
+                usuario.setAyudas(usuario.getAyudas()+5);
                 repositorioUsuario.modificar(usuario);
             } else {
                 throw new SuscriptoException();
@@ -54,6 +56,9 @@ public class ServicioSuscripcionImpl implements ServicioSuscripcion {
                 usuario.getSuscripcion().setFechaCompra(LocalDateTime.now());
                 usuario.getSuscripcion().setFechaVencimiento(LocalDateTime.now().plusMonths(1));
                 usuario.setDescuentosEmitidos(1);
+                usuario.setComunicoPoints(usuario.getComunicoPoints()+1000);
+                usuario.setAyudas(usuario.getAyudas()+10);
+                usuario.setLlaves(usuario.getLlaves()+1);
                 repositorioUsuario.modificar(usuario);
             } else {
                 throw new SuscriptoException();
@@ -67,6 +72,9 @@ public class ServicioSuscripcionImpl implements ServicioSuscripcion {
                 usuario.getSuscripcion().setFechaCompra(LocalDateTime.now());
                 usuario.getSuscripcion().setFechaVencimiento(LocalDateTime.now().plusMonths(1));
                 usuario.setDescuentosEmitidos(1);
+                usuario.setComunicoPoints(usuario.getComunicoPoints()+1500);
+                usuario.setAyudas(usuario.getAyudas()+15);
+                usuario.setLlaves(usuario.getLlaves()+5);
                 repositorioUsuario.modificar(usuario);
             } else {
                 throw new SuscriptoException();
