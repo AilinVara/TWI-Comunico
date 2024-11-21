@@ -39,8 +39,31 @@
                 </div>
             </li>
             <a th:href="@{/crear-curso}"><img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"></a>
-        </ul>
-    </nav>
+
+      <li class="perfil">
+        <div class="user-profile">
+          <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon" id="user-icon">
+          <div class="dropdown-menu" id="dropdown-menu">
+            <a th:href="@{/perfil?seccion='perfil'}">
+              <i class="fa-solid fa-user"></i> Mi perfil
+            </a>
+            <a th:href="@{/mostrarAmigos?seccion='amigos'}">
+              <i class="fa-solid fa-users"></i> Mis amigos
+            </a>
+            <a th:href="@{/perfil?seccion='suscripciones'}">
+              <i class="fa-solid fa-gem"></i> Mi suscripción
+            </a>
+            <a th:href="@{/perfil?seccion='historial'}">
+              <i class="fa-solid fa-shopping-cart"></i> Mis compras
+            </a>
+            <a th:href="@{/cerrar-sesion}" class="cerrar-sesion">
+              <i class="fa-solid fa-sign-out-alt"></i> Cerrar sesión
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </nav>
 
     <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
 

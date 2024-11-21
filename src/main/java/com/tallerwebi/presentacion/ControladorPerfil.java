@@ -47,7 +47,6 @@ public class ControladorPerfil {
                 ModelMap model = new ModelMap();
                 model.put("usuario", usuario);
                 model.put("historialDeCompras", servicioPerfilUsuario.historialDeCompras(usuario));
-                model.put("amigosUsuario", servicioPerfilUsuario.buscarAmigos(usuario));
 
                 List<ProgresoLeccion> listaProgresos = new ArrayList<>();
                 Set<Long> filtroLecciones = new HashSet<>();

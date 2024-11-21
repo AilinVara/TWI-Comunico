@@ -2,51 +2,93 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" th:href="@{/css/perfilUsuario.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Amigos</title>
+    <link rel="icon" th:href="@{/img/Isologo-Comunico.svg}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/amigos.css}"/>
     <link rel="stylesheet" th:href="@{/css/header.css}"/>
-    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/footer.css}"/>
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
 
-<header th:replace="header :: header"></header>
+<header th:replace="header:: header"></header>
 
-<div class="primero usuarios-vista">
-        <div th:each="usuario : ${usuarios}" class="container">
-            <div>
-                <div class="avatar-perfil">
-                    <img th:src="@{'/img/' + ${usuario.foto}}" th:alt="${usuario.foto}">
-                </div>
-                <div class="nombre">
-                    <h2 th:text="${usuario.nombreDeUsuario}"></h2>
-                </div>
+<div class="container">
+
+    <!-- Barra de búsqueda -->
+    <div class="barra-busqueda">
+        <form th:action="@{/buscarAmigos}" method="post" class="form-busqueda">
+            <input type="text" name="nombre" placeholder="Buscar amigos..." class="input-busqueda"
+                   th:value="${nombre != null ? nombre : ''}" />
+            <button type="submit" class="btn-buscar">Buscar</button>
+        </form>
+
+        <!-- Botón de solicitudes de amistad -->
+        <div class="solicitudes-container">
+            <a th:href="@{/solicitud-amistad}" class="btn-solicitudes">Ver solicitudes de amistad</a>
+        </div>
+    </div>
+
+    <!-- Separador visual -->
+    <hr class="separador" />
+
+    <!-- Lista de usuarios encontrados -->
+    <div th:if="${usuarios != null}" th:each="usuario : ${usuarios}" class="contenedor">
+        <div>
+            <div class="avatar-perfil">
+                <img th:src="@{'/img/' + ${usuario.foto}}" th:alt="${usuario.nombreDeUsuario}">
             </div>
-            <div class="descripcion">
-                <h4>Descripción:</h4>
-                <p th:text="${usuario.descripcion}"></p>
-                </div>
+            <div class="nombre">
+                <h2 th:text="${usuario.nombreDeUsuario}"></h2>
+            </div>
+        </div>
+        <div class="descripcion">
+            <h4>Descripción:</h4>
+            <p th:text="${usuario.descripcion}"></p>
+
             <div class="titulos">
                 <span class="titulo" th:text="${usuario.getTitulo()}"></span>
             </div>
-
-                <form th:action="@{/enviar-solicitud}" method="post">
-                    <input type="hidden" th:name="idAmigo" th:value="${usuario.getId()}">
-                    <button type="submit" class="btn btn-primary configuracion"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Agregar amigo
-                    </button>
-                </form>
-
-            </div>
+            <form th:action="@{/enviar-solicitud}" method="post">
+                <input type="hidden" name="idAmigo" th:value="${usuario.id}"/>
+                <button type="submit" class="btn btn-primary configuracion" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Agregar amigo
+                </button>
+            </form>
+        </div>
     </div>
+
+    <!-- Mensaje cuando no hay resultados -->
+    <div th:if="${usuarios == null || usuarios.isEmpty()}" class="sin-resultados">
+        <p>No se encontraron usuarios.</p>
+    </div>
+
+</div>
+
+<section>
+    <div th:each="usuarioAmigo : ${amigosUsuario}" class="contenedor">
+        <div>
+            <div class="avatar-perfil">
+                <img th:src="@{'/images/' + ${usuarioAmigo.foto}}" th:alt="${usuarioAmigo.foto}">
+            </div>
+            <div class="nombre">
+                <h2 th:text="${usuarioAmigo.nombreDeUsuario}"></h2>
+            </div>
+        </div>
+        <div class="descripcion">
+            <h4>Descripción:</h4>
+            <p th:text="${usuarioAmigo.descripcion}"></p>
+            <div class="titulos">
+                <span class="titulo" th:text="${usuarioAmigo.getTitulo()}"></span>
+            </div>
+        </div>
+    </div>
+</section>
 
 <footer th:replace="footer :: footer"></footer>
 
 <script th:src="@{/js/menuUsuario.js}"></script>
-
 </body>
 </html>

@@ -16,7 +16,8 @@ INSERT INTO codigodescuento(id) values (1);
 
 
 INSERT INTO Usuario (descripcion, email, emailVerificado, password, rol, activo, nombreDeUsuario, vida_id, comunicoPoints, experiencia_id, titulo, suscripcion_id, ayudas, llaves)
-VALUES ('Interesado en aprender braille','test@unlam.edu.ar', true,'test', 'ADMIN', true,'TestUnlam', 1, 0, 1, 'Principiante', 1, 5,0);
+VALUES ('Interesado en aprender braille','test@unlam.edu.ar', true,'test', 'ADMIN', true,'TestUnlam', 1, 0, 1, 'Principiante', 1, 5,0),
+       ('asd','lira@asd.com', true,'123', 'ADMIN', true,'Lirita', 1, 0, 1, 'Principiante', 1, 5, 0);
 
 INSERT INTO Opcion(id, descripcion) VALUES
                                         (1, 'A'),
