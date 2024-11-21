@@ -38,7 +38,6 @@
                     <h4 th:text="${vidas}" id="vidasNumero">0</h4>
                 </div>
             </li>
-            <a th:href="@{/crear-curso}"><img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"></a>
 
       <li class="perfil">
         <div class="user-profile">
@@ -184,6 +183,23 @@
             });
         </script>
     </div>
+
+    <!-- Script para el menú desplegable -->
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const userIcon = document.getElementById("user-icon");
+            const dropdownMenu = document.getElementById("dropdown-menu");
+
+            userIcon.addEventListener("click", function(event) {
+                dropdownMenu.classList.toggle("show");
+                event.stopPropagation();
+            });
+
+            document.addEventListener("click", function() {
+                dropdownMenu.classList.remove("show");
+            });
+        });
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
 
