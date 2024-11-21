@@ -24,7 +24,6 @@ public class ControladorEjercicio {
     private final ServicioUsuario servicioUsuario;
     private final ServicioTitulo servicioTitulo;
 
-
     @Autowired
     public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia, ServicioTitulo servicioTitulo, ServicioUsuario servicioUsuario) {
         this.servicioEjercicio = servicioEjercicio;
@@ -34,7 +33,6 @@ public class ControladorEjercicio {
         this.servicioExperiencia = servicioExperiencia;
         this.servicioTitulo = servicioTitulo;
         this.servicioUsuario = servicioUsuario;
-
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
@@ -61,7 +59,9 @@ public class ControladorEjercicio {
         );
 
 
-        if (vidas == 0) {
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+
+        if (vidas == 0 && !usuario.getSuscripcion().getTipoSuscripcion().getNombre().equals("premium")) {
             if (leccion.getTipo().equals("combinado")) {
                 return new ModelAndView("redirect:/braille/lecciones/combinado");
             }
@@ -102,6 +102,7 @@ public class ControladorEjercicio {
         Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
         Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
         Long usuarioId = (Long) request.getSession().getAttribute("id");
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
 
         ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
         Boolean resuelto;
@@ -126,19 +127,13 @@ public class ControladorEjercicio {
             resuelto = this.servicioEjercicio.resolverEjercicioTraduccionSenia((EjercicioTraduccionSenia) ejercicio, Long.parseLong(respuesta));
             mav.setViewName("ejercicio-video");
         }
-        if (resuelto) {
+        if (resuelto){
             this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
-            this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
-
-            if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccionId, usuarioId)) {
-                boolean experienciaOtorgada = this.servicioProgresoLeccion.otorgarExperienciaPorLeccion(usuarioId, leccionId);
-                modelo.put("completadoLeccion", experienciaOtorgada);
-            }
-        } else {
+        } else if (!usuario.getSuscripcion().getTipoSuscripcion().getNombre().equals("premium")){
             this.servicioVida.perderUnaVida(usuarioId);
-            this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
         }
 
+        this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
         if(leccion.getTipo().equals("combinado")){
             modelo.put("combinado", true);
@@ -236,13 +231,16 @@ public class ControladorEjercicio {
         Vida vida = this.servicioVida.obtenerVida(usuarioId);
         LocalDateTime ahora = LocalDateTime.now();
 
+        // Obtener el tiempo de regeneración en minutos según el título del usuario
         int tiempoRegeneracionEnMinutos = servicioTitulo.obtenerTiempoRegeneracionPorTitulo(usuarioId);
 
         Duration duracion = Duration.between(vida.getUltimaVezQueSeRegeneroLaVida(), ahora);
         long minutosDesdeUltimaRegeneracion = duracion.toMinutes();
 
+        // Calcular el tiempo restante basado en el tiempo de regeneración personalizado
         long tiempoRestanteEnMinutos = tiempoRegeneracionEnMinutos - minutosDesdeUltimaRegeneracion;
 
+        // Asegurarse de que el tiempo restante no sea negativo
         tiempoRestanteEnMinutos = Math.max(tiempoRestanteEnMinutos, 0);
 
         modelo.put("tiempoRestante", tiempoRestanteEnMinutos);

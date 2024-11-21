@@ -20,12 +20,14 @@ public class ControladorLeccion {
     private ServicioVida servicioVida;
     private ServicioProgresoLeccion servicioProgresoLeccion;
     private ServicioLeccion servicioLeccion;
+    private final ServicioUsuario servicioUsuario;
 
     @Autowired
-    public ControladorLeccion(ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida) {
+    public ControladorLeccion(ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioUsuario servicioUsuario) {
         this.servicioLeccion = servicioLeccion;
         this.servicioProgresoLeccion = servicioProgresoLeccion;
         this.servicioVida = servicioVida;
+        this.servicioUsuario = servicioUsuario;
     }
 
     @RequestMapping("/leccion/{id}")
@@ -35,7 +37,7 @@ public class ControladorLeccion {
     }
 
     @RequestMapping("/braille/lecciones/{tipo}")
-    public ModelAndView obtenerLecciones(@PathVariable("tipo") String tipo, HttpServletRequest request) {
+    public ModelAndView obtenerLecciones(@PathVariable("tipo") String tipo, HttpServletRequest request){
         ModelMap modelo = new ModelMap();
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
@@ -58,7 +60,7 @@ public class ControladorLeccion {
             enlaces.put(leccionId, enlace);
         }
 
-        switch (tipo) {
+        switch (tipo){
             case "matriz":
                 tipo = "Formá letras";
                 break;
@@ -72,11 +74,16 @@ public class ControladorLeccion {
                 tipo = "Ejercicios combinados";
                 break;
         }
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+        String suscripcion = usuario.getSuscripcion().getTipoSuscripcion().getNombre();
+
 
         modelo.put("vidas", vidas);
         modelo.put("tipo", tipo);
         modelo.put("progresos", leccionesDesbloqueadas);
         modelo.put("enlaces", enlaces);
+        modelo.put("suscripcion", suscripcion);
+
         return new ModelAndView("mapa-lecciones", modelo);
     }
 
