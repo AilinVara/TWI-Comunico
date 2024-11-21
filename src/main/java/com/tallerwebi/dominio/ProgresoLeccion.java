@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +24,9 @@ public class ProgresoLeccion {
     private Ejercicio ejercicio;
 
     Boolean completo = false;
+
+    @Column(name = "fechaCompleto")
+    private LocalDateTime fechaCompleto;
 
     public ProgresoLeccion(){}
 
@@ -71,6 +75,14 @@ public class ProgresoLeccion {
 
     public void setEjercicio(Ejercicio ejercicio) {
         this.ejercicio = ejercicio;
+    }
+
+    public LocalDateTime getFechaCompleto() {
+        return fechaCompleto;
+    }
+
+    public void setFechaCompleto(LocalDateTime fechaCompleto) {
+        this.fechaCompleto = fechaCompleto;
     }
 
     @Override

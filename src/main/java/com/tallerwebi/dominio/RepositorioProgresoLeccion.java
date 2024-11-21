@@ -1,5 +1,7 @@
 package com.tallerwebi.dominio;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RepositorioProgresoLeccion {
@@ -14,4 +16,6 @@ public interface RepositorioProgresoLeccion {
     List<ProgresoLeccion> buscarProgresosPorUsuario(Long usuarioId);
 
     List<Leccion> darmeTodasLasLecciones();
+
+
 }

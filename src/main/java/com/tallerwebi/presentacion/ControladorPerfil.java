@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -55,17 +56,21 @@ public class ControladorPerfil {
 
                 for (Leccion leccion : lecciones) {
                     Map<String, String> nombreLecciones = leccion.generarNombreTipoLeccion();
+                    LocalDateTime fechaActual = LocalDateTime.now();
 
                     if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccion.getId(), idUsuario)) {
                         List<ProgresoLeccion> progresos = this.servicioProgresoLeccion.buscarProgresoLeccionDeUsuario(idUsuario, leccion.getId());
                      if(!filtroLecciones.contains(leccion.getId())) {
                          if(!progresos.isEmpty()){
+
                              leccionNum++;
                              String tipo = progresos.get(0).getLeccion().getTipo();
                              progresos.get(0).getLeccion().setTipo(nombreLecciones.getOrDefault(tipo, tipo));
                              progresos.get(0).getLeccion().setId(leccionNum);
+                             this.servicioProgresoLeccion.actualizarFecha(progresos.get(0),fechaActual);
                              listaProgresos.add(progresos.get(0));
                              filtroLecciones.add(leccion.getId());
+
                          }
                        }
                     }

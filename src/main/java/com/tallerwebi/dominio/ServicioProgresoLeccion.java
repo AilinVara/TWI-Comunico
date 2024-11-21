@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,8 @@ public interface ServicioProgresoLeccion {
     Map<Long, Boolean> buscarProgresoPorTipoEjercicioConEstado(String tipoEjercicio, Long usuarioId);
 
     List<Leccion> obtenerLecciones();
+
+    void actualizarFecha(ProgresoLeccion progreso, LocalDateTime fecha);
 
 
 }
