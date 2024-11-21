@@ -8,8 +8,8 @@
         <nav>
             <ul>
                 <li><a th:href="@{/inicio}">Inicio</a></li>
-                <li><a th:href="@{/braille}" id="braille">Braille</a></li>
                 <li><a th:href="@{/senias}">Señas</a></li>
+                <li><a th:href="@{/braille}" id="braille">Braille</a></li>
                 <li><a th:href="@{/suscripciones}">Suscripciones</a></li>
                 <li><a th:href="@{/tienda}">Tienda</a></li>
             </ul>
@@ -37,7 +37,7 @@
                     <div class="grupo_input" id="vidaYNum">
                         <i class="fa-solid fa-heart" id="vidas"
                            th:style="${suscripcion != null && suscripcion == 'premium'} ? 'color: #ff9600;' : 'color: #ea2b2b;'"></i>
-                        <h4 th:if="${suscripcion == null || suscripcion != 'premium'}" th:text="${vidas}"
+                        <h4 th:if="${suscripcion == null || suscripcion != 'premium'}" th:text="${vidasNumero}"
                             id="vidasNumero">0</h4>
                     </div>
                 </button>

@@ -44,7 +44,7 @@ public class ControladorGlobal {
 //        }
 //    }
 
-    @ModelAttribute("vidas")
+    @ModelAttribute("vidasNumero")
     public Integer obtenerVidas(HttpServletRequest request) {
         Long usuarioId = (Long) request.getSession().getAttribute("id");
         if (usuarioId == null) {
@@ -53,9 +53,9 @@ public class ControladorGlobal {
         Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
 
         // Actualiza la sesión si es necesario
-        if (request.getSession().getAttribute("vidas") == null ||
-                !request.getSession().getAttribute("vidas").equals(usuario.getVida().getCantidadDeVidasActuales())) {
-            request.getSession().setAttribute("vidas", usuario.getVida().getCantidadDeVidasActuales());
+        if (request.getSession().getAttribute("vidasNumero") == null ||
+                !request.getSession().getAttribute("vidasNumero").equals(usuario.getVida().getCantidadDeVidasActuales())) {
+            request.getSession().setAttribute("vidasNumero", usuario.getVida().getCantidadDeVidasActuales());
         }
 
         return usuario.getVida().getCantidadDeVidasActuales();
