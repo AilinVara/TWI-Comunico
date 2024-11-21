@@ -37,6 +37,8 @@ public class ControladorEjercicioTest {
     private ServicioUsuario servicioUsuarioMock;
     private Usuario usuarioMock;
     private ServicioTitulo servicioTituloMock;
+    private TipoSuscripcion tipoSuscripcionMock;
+    private Suscripcion suscripcionMock;
 
     @BeforeEach
     public void init() {
@@ -52,7 +54,20 @@ public class ControladorEjercicioTest {
         progresoMock = mock(ProgresoLeccion.class);
         sessionMock = mock(HttpSession.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
+
         usuarioMock = mock(Usuario.class);
+
+        tipoSuscripcionMock = mock(TipoSuscripcion.class);
+        when(tipoSuscripcionMock.getNombre()).thenReturn("sin plan");
+
+        suscripcionMock = mock(Suscripcion.class);
+        when(suscripcionMock.getTipoSuscripcion()).thenReturn(tipoSuscripcionMock);
+
+        when(usuarioMock.getSuscripcion()).thenReturn(suscripcionMock);
+        when(usuarioMock.getId()).thenReturn(1L);
+
+        when(servicioUsuarioMock.buscarUsuarioPorId(anyLong())).thenReturn(usuarioMock);
+        when(usuarioMock.getId()).thenReturn(1L);
 
         Opcion opcionCorrectaMock = mock(Opcion.class);
         when(opcionCorrectaMock.getId()).thenReturn(1L);
