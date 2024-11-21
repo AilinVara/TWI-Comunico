@@ -16,7 +16,7 @@ public class VistaEjercicioE2E {
     static Browser browser;
     BrowserContext context;
     Page page;
-
+    //commit
     @BeforeAll
     static void abrirNavegador() {
         playwright = Playwright.create();
