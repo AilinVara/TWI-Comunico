@@ -8,8 +8,8 @@
         <nav>
             <ul>
                 <li><a th:href="@{/inicio}">Inicio</a></li>
-                <li><a th:href="@{/braille}">Braille</a></li>
                 <li><a th:href="@{/senias}">Señas</a></li>
+                <li><a th:href="@{/braille}" id="braille">Braille</a></li>
                 <li><a th:href="@{/suscripciones}">Suscripciones</a></li>
                 <li><a th:href="@{/tienda}">Tienda</a></li>
             </ul>
@@ -33,36 +33,40 @@
                 <span th:text="${ayudas}">0</span>
             </li>
             <li>
-                <div class="grupo_input" id="vidaYNum">
-                    <i class="fa-solid fa-heart" id="vidas"></i>
-                    <h4 th:text="${vidas}" id="vidasNumero">0</h4>
-                </div>
+                <button id="botonVidas" style="display: contents;">
+                    <div class="grupo_input" id="vidaYNum">
+                        <i class="fa-solid fa-heart" id="vidas"
+                           th:style="${suscripcion != null && suscripcion == 'premium'} ? 'color: #ff9600;' : 'color: #ea2b2b;'"></i>
+                        <h4 th:if="${suscripcion == null || suscripcion != 'premium'}" th:text="${vidasNumero}"
+                            id="vidasNumero">0</h4>
+                    </div>
+                </button>
             </li>
 
-      <li class="perfil">
-        <div class="user-profile">
-          <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon" id="user-icon">
-          <div class="dropdown-menu" id="dropdown-menu">
-            <a th:href="@{/perfil?seccion='perfil'}">
-              <i class="fa-solid fa-user"></i> Mi perfil
-            </a>
-            <a th:href="@{/mostrarAmigos?seccion='amigos'}">
-              <i class="fa-solid fa-users"></i> Mis amigos
-            </a>
-            <a th:href="@{/perfil?seccion='suscripciones'}">
-              <i class="fa-solid fa-gem"></i> Mi suscripción
-            </a>
-            <a th:href="@{/perfil?seccion='historial'}">
-              <i class="fa-solid fa-shopping-cart"></i> Mis compras
-            </a>
-            <a th:href="@{/cerrar-sesion}" class="cerrar-sesion">
-              <i class="fa-solid fa-sign-out-alt"></i> Cerrar sesión
-            </a>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </nav>
+            <li class="perfil">
+                <div class="user-profile">
+                    <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon" id="user-icon">
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <a th:href="@{/perfil?seccion='perfil'}">
+                            <i class="fa-solid fa-user"></i> Mi perfil
+                        </a>
+                        <a th:href="@{/mostrarAmigos?seccion='amigos'}">
+                            <i class="fa-solid fa-users"></i> Mis amigos
+                        </a>
+                        <a th:href="@{/perfil?seccion='suscripciones'}">
+                            <i class="fa-solid fa-gem"></i> Mi suscripción
+                        </a>
+                        <a th:href="@{/perfil?seccion='historial'}">
+                            <i class="fa-solid fa-shopping-cart"></i> Mis compras
+                        </a>
+                        <a th:href="@{/cerrar-sesion}" class="cerrar-sesion">
+                            <i class="fa-solid fa-sign-out-alt"></i> Cerrar sesión
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
 
     <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
 
@@ -186,16 +190,16 @@
 
     <!-- Script para el menú desplegable -->
     <script th:inline="javascript">
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const userIcon = document.getElementById("user-icon");
             const dropdownMenu = document.getElementById("dropdown-menu");
 
-            userIcon.addEventListener("click", function(event) {
+            userIcon.addEventListener("click", function (event) {
                 dropdownMenu.classList.toggle("show");
                 event.stopPropagation();
             });
 
-            document.addEventListener("click", function() {
+            document.addEventListener("click", function () {
                 dropdownMenu.classList.remove("show");
             });
         });

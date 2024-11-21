@@ -104,13 +104,10 @@
 
             let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
 
-            if (![[${esCorrecta}]]) {
+            if (![[${esCorrecta}]] && [[${suscripcion}]] != 'premium') {
                 mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
                 mensaje += `<br>Te quedan [[${vidas}]] vidas.`;
                 mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] minutos.`;
-            }
-            if ([[${completadoLeccion}]] != null && [[${completadoLeccion}]]) {
-            mensaje += `<br>¡Has completado la lección! <br> Por completar la lección ganaste 300 XP adicionales.`;
             }
             Swal.fire({
                 icon: [[${esCorrecta}]] ? 'success' : 'error',
@@ -125,18 +122,26 @@
             });
         </script>
     </div>
+
     <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
     <script th:inline="javascript">
         document.getElementById("botonVidas").addEventListener("click", function() {
             let vidasRestantes = document.getElementById("vidasNumero").innerText;
-
             let tiempoRestante = document.getElementById("tiempoRestante").innerText;
+
+            let esPremium = /*[[${suscripcion == 'premium'}]]*/ false;
 
             console.log("Tiempo restante:", tiempoRestante);
 
+            let mensajeHtml = `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.`;
+
+            if (!esPremium) {
+                mensajeHtml += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`;
+            }
+
             Swal.fire({
                 title: 'Vidas Restantes',
-                html: `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} minutos.`,
+                html: mensajeHtml,
                 icon: 'info',
                 confirmButtonText: 'OK',
                 didOpen: () => {
@@ -160,18 +165,21 @@
     </script>
 
     <script th:inline="javascript">
-        Swal.fire({
-            title: 'Vidas Restantes',
-            html: `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} minutos.`,
-            icon: 'info',
-            confirmButtonText: 'OK',
-            didOpen: () => {
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
-                document.head.appendChild(script);
-            }
-        });
-        });
+        let esPremium = /*[[${suscripcion == 'premium'}]]*/ false;
+
+        if (!esPremium) {
+            Swal.fire({
+                title: 'Vidas Restantes',
+                html: `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`,
+                icon: 'info',
+                confirmButtonText: 'OK',
+                didOpen: () => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
+                    document.head.appendChild(script);
+                }
+            });
+        }
     </script>
 
 </div>
@@ -203,6 +211,62 @@
     };
 </script>
 
+<div th:if="${titulo != null}">
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obteniendo la experiencia actual
+            let experiencia = parseInt(document.getElementById("experiencia").innerText, 10);
+            let titulo = [[${titulo}]];
+            let mensaje = `Desbloqueaste el título <strong>${titulo}</strong>`;
+
+
+
+            // Revisamos si ya se mostró un título previamente usando localStorage
+            let ultimoTitulo = localStorage.getItem("ultimoTitulo");
+
+            // Si no es el mismo título que el último desbloqueado, mostrar el mensaje
+            if (titulo !== ultimoTitulo) {
+                // Verifica la experiencia para determinar qué título mostrar y qué alertar
+                if (experiencia >= 5000) {
+                    mensaje += `<br> ¡Obtuviste 100 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 30 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                    Swal.fire({
+                        title: '¡Desbloqueaste un nuevo título!',
+                        html: `<br>${mensaje}`,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (experiencia >= 3500) {
+                    mensaje += `<br> ¡Obtuviste 60 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 20 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                    Swal.fire({
+                        title: '¡Desbloqueaste un nuevo título!',
+                        html: `<br>${mensaje}`,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (experiencia >= 2000) {
+                    mensaje += `<br> ¡Obtuviste 40 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 10 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                    Swal.fire({
+                        title: '¡Desbloqueaste un nuevo título!',
+                        html: `<br>${mensaje}`,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (experiencia >= 500) {
+                    mensaje += `<br> ¡Obtuviste 20 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 5 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                    Swal.fire({
+                        title: '¡Desbloqueaste un nuevo título!',
+                        html: `<br>${mensaje}`,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                }
+
+                // Almacenar el nuevo título para que no se muestre nuevamente
+                localStorage.setItem("ultimoTitulo", titulo);
+            }
+        });
+    </script>
+</div>
 
 
 

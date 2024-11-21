@@ -30,6 +30,7 @@
 
 <script th:inline="javascript">
     let vidasRestantes = [[${vidas}]];
+    let suscripcion = [[${suscripcion}]];
 
     const leccionesActivas = document.querySelectorAll('.leccion-activa');
 
@@ -37,7 +38,7 @@
         leccion.addEventListener('click', function(event) {
             event.preventDefault();
 
-            if (vidasRestantes === 0) {
+            if (suscripcion !== "premium" && vidasRestantes === 0) {
                 Swal.fire({
                     title: 'Vidas agotadas',
                     html: 'No te quedan vidas. ¿Te gustaría comprar más vidas?',
@@ -45,6 +46,10 @@
                     showCancelButton: true,
                     confirmButtonText: 'Comprar vidas',
                     cancelButtonText: 'No, gracias',
+                    customClass: {
+                        confirmButton: 'swal2-confirm-button',
+                        cancelButton: 'swal2-cancel-button'
+                    },
                     didOpen: () => {
                         const script = document.createElement('script');
                         script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js';
@@ -52,7 +57,7 @@
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '/comprar';
+                        window.location.href = '/tienda';
                     } else {
                         console.log("El usuario eligió no comprar vidas");
                     }
