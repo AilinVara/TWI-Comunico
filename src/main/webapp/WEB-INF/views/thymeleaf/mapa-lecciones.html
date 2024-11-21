@@ -30,6 +30,7 @@
 
 <script th:inline="javascript">
     let vidasRestantes = [[${vidas}]];
+    let suscripcion = [[${suscripcion}]];
 
     const leccionesActivas = document.querySelectorAll('.leccion-activa');
 
@@ -37,7 +38,7 @@
         leccion.addEventListener('click', function(event) {
             event.preventDefault();
 
-            if (vidasRestantes === 0) {
+            if (suscripcion !== "premium" && vidasRestantes === 0) {
                 Swal.fire({
                     title: 'Vidas agotadas',
                     html: 'No te quedan vidas. ¿Te gustaría comprar más vidas?',
@@ -62,7 +63,7 @@
                     }
                 });
             } else {
-                window.location.href = leccion.getAttribute('data-leccion');
+                    window.location.href = leccion.getAttribute('data-leccion');
             }
         });
     });
