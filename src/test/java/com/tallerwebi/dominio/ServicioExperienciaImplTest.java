@@ -14,26 +14,41 @@ import static org.hamcrest.Matchers.not;
 
 public class ServicioExperienciaImplTest {
 
-    ServicioExperiencia servicioExperienciaMock;
+    ServicioExperiencia servicioExperiencia;
     Usuario usuarioMock;
     Experiencia experiencia;
     RepositorioUsuario repositorioUsuarioMock;
     RepositorioExperiencia repositorioExperienciaMock;
-    RepositorioProgresoLeccion repositorioProgresoLeccion;
+    RepositorioProgresoLeccion repositorioProgresoLeccionMock;
+    ServicioLeccion servicioLeccionMock;
+    ServicioProgresoLeccion servicioProgresoLeccion;
+    ServicioLogin servicioUsuarioMock;
+    Leccion leccion;
+    RepositorioLeccion repositorioLeccionMock;
+    ServicioUsuario servicioUsuario;
+
 
     @BeforeEach
     public void init() {
         usuarioMock = mock(Usuario.class);
-        experiencia = new Experiencia();  // Usa una instancia real
-
+        experiencia = new Experiencia();
+        leccion = new Leccion();
+        leccion.setId(1L);
         this.repositorioUsuarioMock = mock(RepositorioUsuario.class);
         this.repositorioExperienciaMock = mock(RepositorioExperiencia.class);
-        this.repositorioProgresoLeccion = mock(RepositorioProgresoLeccion.class);
-        servicioExperienciaMock = new ServicioExperienciaImpl(repositorioUsuarioMock, repositorioExperienciaMock, repositorioProgresoLeccion);
+        this.repositorioProgresoLeccionMock = mock(RepositorioProgresoLeccion.class);
+        this.repositorioLeccionMock = mock(RepositorioLeccion.class);
+        this.servicioUsuarioMock = mock(ServicioLogin.class);
+        this.servicioLeccionMock = mock(ServicioLeccion.class);
+        servicioExperiencia = new ServicioExperienciaImpl(repositorioUsuarioMock, repositorioExperienciaMock, repositorioProgresoLeccionMock);
+        servicioProgresoLeccion = new ServicioProgresoLeccionImpl(repositorioProgresoLeccionMock, servicioUsuarioMock, servicioLeccionMock,servicioExperiencia);
+        //servicioLeccionMock = new ServicioLeccionImpl(repositorioLeccionMock);
+        servicioUsuario = new ServicioUsuarioImpl(repositorioUsuarioMock);
         when(repositorioExperienciaMock.buscarExperienciaPorId(experiencia.getId())).thenReturn(experiencia);
         when(repositorioUsuarioMock.buscarUsuarioPorId(usuarioMock.getId())).thenReturn(usuarioMock);
         when(usuarioMock.getExperiencia()).thenReturn(experiencia);
-        when(servicioExperienciaMock.obtenerExperiencia(usuarioMock.getId())).thenReturn(experiencia);
+        when(servicioExperiencia.obtenerExperiencia(usuarioMock.getId())).thenReturn(experiencia);
+
 
     }
 
@@ -46,7 +61,7 @@ public class ServicioExperienciaImplTest {
         this.repositorioExperienciaMock.guardarExperiencia(experiencia);
         this.repositorioUsuarioMock.guardar(usuarioMock);
 
-        this.servicioExperienciaMock.ganar100DeExperiencia(usuarioMock.getId());
+        this.servicioExperiencia.ganar100DeExperiencia(usuarioMock.getId());
         this.repositorioExperienciaMock.actualizarExperiencia(experiencia);
 
         assertThat(experiencia.getCantidadExperiencia(), not(equalTo(5100)));
@@ -63,12 +78,31 @@ public class ServicioExperienciaImplTest {
         this.repositorioExperienciaMock.guardarExperiencia(experiencia);
 
         this.repositorioUsuarioMock.guardar(usuarioMock);
-        this.servicioExperienciaMock.ganar100DeExperiencia(usuarioMock.getId());
+        this.servicioExperiencia.ganar100DeExperiencia(usuarioMock.getId());
 
 
 
         assertThat(experiencia.getCantidadExperiencia(), equalTo(4900));
 
     }
+
+        @Test
+        @Rollback
+        @Transactional
+        public void dadoQueElUsuarioCompletaUnaLeccionCorrectamentePorPrimeraVezGana300XP() {
+            experiencia.setCantidadExperiencia(0);
+            this.repositorioExperienciaMock.guardarExperiencia(experiencia);
+
+            this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccion.getId(), usuarioMock.getId());
+
+            this.servicioProgresoLeccion.otorgarExperienciaPorLeccion(usuarioMock.getId(),leccion.getId());
+
+            this.repositorioUsuarioMock.guardar(usuarioMock);
+
+
+            assertThat(experiencia.getCantidadExperiencia(), equalTo(300));
+
+    }
+
 
 }
