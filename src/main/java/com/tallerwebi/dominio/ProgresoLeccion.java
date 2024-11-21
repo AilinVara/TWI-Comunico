@@ -28,6 +28,8 @@ public class ProgresoLeccion {
     @Column(name = "fechaCompleto")
     private LocalDateTime fechaCompleto;
 
+    Boolean experienciaOtorgada = false;
+
     public ProgresoLeccion(){}
 
     public ProgresoLeccion(Usuario usuario, Leccion leccion, Ejercicio ejercicio) {
@@ -98,4 +100,7 @@ public class ProgresoLeccion {
         return Objects.hashCode(id);
     }
 
+    public void setExperienciaOtorgada(Boolean experienciaOtorgada) {this.experienciaOtorgada = experienciaOtorgada;}
+
+    public Boolean getExperienciaOtorgada() {return experienciaOtorgada;}
 }

@@ -17,5 +17,5 @@ public interface RepositorioProgresoLeccion {
 
     List<Leccion> darmeTodasLasLecciones();
 
-
+    boolean experienciaOtorgada(Long usuarioId, Long leccionId);
 }

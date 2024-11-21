@@ -15,12 +15,15 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
     private RepositorioProgresoLeccion repositorioProgresoLeccion;
     private ServicioLogin servicioUsuario;
     private ServicioLeccion servicioLeccion;
+    private ServicioExperiencia servicioExperiencia;
 
     @Autowired
-    public ServicioProgresoLeccionImpl(RepositorioProgresoLeccion repositorioProgresoLeccion, ServicioLogin servicioUsuario, ServicioLeccion servicioLeccion) {
+    public ServicioProgresoLeccionImpl(RepositorioProgresoLeccion repositorioProgresoLeccion, ServicioLogin servicioUsuario, ServicioLeccion servicioLeccion,
+                                       ServicioExperiencia servicioExperiencia) {
         this.repositorioProgresoLeccion = repositorioProgresoLeccion;
         this.servicioUsuario = servicioUsuario;
         this.servicioLeccion = servicioLeccion;
+        this.servicioExperiencia = servicioExperiencia;
     }
     @Override
     public void guardarProgresoLeccion(ProgresoLeccion progresoLeccion) {
@@ -114,7 +117,26 @@ public class ServicioProgresoLeccionImpl implements ServicioProgresoLeccion{
     public void actualizarFecha(ProgresoLeccion progreso, LocalDateTime fecha) {
         if(progreso.getCompleto()){
             progreso.setFechaCompleto(fecha);
-            this.repositorioProgresoLeccion.actualizar(progreso);
+            actualizarProgreso(progreso,true);
         }
+    }
+
+    @Override
+    public boolean otorgarExperienciaPorLeccion(Long usuarioId, Long leccionId) {
+        // Chequea si ya le dió la experiencia
+        boolean otorgada = false;
+        if (!repositorioProgresoLeccion.experienciaOtorgada(usuarioId, leccionId)) {
+            servicioExperiencia.ganar300DeExperiencia(usuarioId);
+
+            List<ProgresoLeccion> progresos = repositorioProgresoLeccion.buscarPorUsuarioIdYLeccionId(usuarioId, leccionId);
+            for (ProgresoLeccion progreso : progresos) {
+                progreso.setExperienciaOtorgada(true);
+                repositorioProgresoLeccion.actualizar(progreso);
+                otorgada = true;
+            }
+        } else {
+            System.out.println("La experiencia ya fue otorgada para esta lección.");
+        }
+        return otorgada;
     }
 }
