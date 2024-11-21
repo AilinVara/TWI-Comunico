@@ -24,6 +24,7 @@ public class ControladorEjercicio {
     private final ServicioUsuario servicioUsuario;
     private final ServicioTitulo servicioTitulo;
 
+
     @Autowired
     public ControladorEjercicio(ServicioEjercicio servicioEjercicio, ServicioLeccion servicioLeccion, ServicioProgresoLeccion servicioProgresoLeccion, ServicioVida servicioVida, ServicioExperiencia servicioExperiencia, ServicioTitulo servicioTitulo, ServicioUsuario servicioUsuario) {
         this.servicioEjercicio = servicioEjercicio;
@@ -33,6 +34,7 @@ public class ControladorEjercicio {
         this.servicioExperiencia = servicioExperiencia;
         this.servicioTitulo = servicioTitulo;
         this.servicioUsuario = servicioUsuario;
+
     }
 
     @RequestMapping(value = "/ejercicio/{indice}", method = RequestMethod.GET)
@@ -129,8 +131,15 @@ public class ControladorEjercicio {
         }
         if (resuelto){
             this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
+            this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
+
+            if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccionId, usuarioId)) {
+                boolean experienciaOtorgada = this.servicioProgresoLeccion.otorgarExperienciaPorLeccion(usuarioId, leccionId);
+                modelo.put("completadoLeccion", experienciaOtorgada);
+            }
         } else if (!usuario.getSuscripcion().getTipoSuscripcion().getNombre().equals("premium")){
             this.servicioVida.perderUnaVida(usuarioId);
+            this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
         }
 
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);

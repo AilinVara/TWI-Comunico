@@ -1,114 +1,207 @@
 <header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
-  <div class="logo">
-    <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
-    <h1>omunico</h1>
-  </div>
+    <div class="logo">
+        <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
+        <h1>omunico</h1>
+    </div>
 
-  <nav>
-    <ul>
-      <li><a th:href="@{/inicio}">Inicio</a></li>
-      <li><a th:href="@{/suscripciones}">Suscripciones</a></li>
+    <div class="nav-container">
+        <nav>
+            <ul>
+                <li><a th:href="@{/inicio}">Inicio</a></li>
+                <li><a th:href="@{/senias}">Señas</a></li>
+                <li><a th:href="@{/braille}">Braille</a></li>
+                <li><a th:href="@{/suscripciones}">Suscripciones</a></li>
+                <li><a th:href="@{/tienda}">Tienda</a></li>
+            </ul>
+        </nav>
+    </div>
 
-      <li>
-        <a class="points-container">
-          <i class="fa-solid fa-coins"></i>
-          <span th:text="${points}">0</span>
-        </a>
-      </li>
+    <nav>
+        <ul>
+            <li>
+                <div class="points-container" style="padding-right: 3px">
+                    <i class="fa-solid fa-coins" style="color: #ffb34c" ;></i>
+                    <span th:text="${points}">0</span>
+                </div>
+            </li>
+            <li>
+                <i class="fa-solid fa-key" style="color: #FFD43B;"></i>
+                <span th:text="${llaves}">0</span>
+            </li>
+            <li>
+                <i class="fa-solid fa-hand-sparkles" style="color: #d74cec;"></i>
+                <span th:text="${ayudas}">0</span>
+            </li>
+            <li>
+                <div class="grupo_input" id="vidaYNum">
+                    <i class="fa-solid fa-heart" id="vidas"></i>
+                    <h4 th:text="${vidas}" id="vidasNumero">0</h4>
+                </div>
+            </li>
 
-      <li>
-        <a>
-          <i class="fa-solid fa-key" style="color: #FFD43B;"></i>
-          <span th:text="${llaves}">0</span>
-        </a>
-      </li>
-
-      <li>
-        <i class="fa-solid fa-hand-sparkles"></i>
-        <span th:text="${ayudas}">0</span>
-      </li>
-
-      <li>
-        <button id="botonVidas" style="display: contents;">
-          <div class="grupo_input" id="vidaYNum">
-            <i class="fa-solid fa-heart" id="vidas"></i>
-            <h4 th:text="${vidas}" id="vidasNumero">0</h4>
+      <li class="perfil">
+        <div class="user-profile">
+          <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon" id="user-icon">
+          <div class="dropdown-menu" id="dropdown-menu">
+            <a th:href="@{/perfil?seccion='perfil'}">
+              <i class="fa-solid fa-user"></i> Mi perfil
+            </a>
+            <a th:href="@{/mostrarAmigos?seccion='amigos'}">
+              <i class="fa-solid fa-users"></i> Mis amigos
+            </a>
+            <a th:href="@{/perfil?seccion='suscripciones'}">
+              <i class="fa-solid fa-gem"></i> Mi suscripción
+            </a>
+            <a th:href="@{/perfil?seccion='historial'}">
+              <i class="fa-solid fa-shopping-cart"></i> Mis compras
+            </a>
+            <a th:href="@{/cerrar-sesion}" class="cerrar-sesion">
+              <i class="fa-solid fa-sign-out-alt"></i> Cerrar sesión
+            </a>
           </div>
-        </button>
+        </div>
       </li>
-      <li>
-        <a th:href="@{/tienda}">
-          <i class="fa-solid fa-store" style="color: #ff7878;"></i>
-        </a>
-      </li>
-      <a th:href="@{/crear-curso}" ><img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon"></a>
     </ul>
   </nav>
 
-  <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
+    <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
 
-  <script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", function() {
-      document.getElementById("botonVidas").addEventListener("click", function() {
-          let vidasRestantes = parseInt(document.getElementById("vidasNumero").innerText, 10);
-          let tiempoRestante = document.getElementById("tiempoRestante").innerText;
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("botonVidas").addEventListener("click", function () {
+                let vidasRestantes = parseInt(document.getElementById("vidasNumero").innerText, 10);
+                let tiempoRestante = document.getElementById("tiempoRestante").innerText;
 
-          console.log("Tiempo restante:", tiempoRestante);
+                console.log("Tiempo restante:", tiempoRestante);
 
-          let mensaje = `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.`;
+                let mensaje = `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.`;
 
 
-          // Mostrar mensaje si tiene todas las vidas
-          if(vidasRestantes === 5) {
-            Swal.fire({
-              title: '¡Tienes todas tus vidas!',
-              html: 'Tienes 5 vidas, ¡aprovecha para aprender!',
-              icon: 'success',
-              confirmButtonText: 'OK'
+                // Mostrar mensaje si tiene todas las vidas
+                if (vidasRestantes === 5) {
+                    Swal.fire({
+                        title: '¡Tienes todas tus vidas!',
+                        html: 'Tienes 5 vidas, ¡aprovecha para aprender!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+
+                }
+
+                // Lógica cuando se queda sin vidas
+                if (vidasRestantes == 0) {
+                    mensaje += `<br>Para seguir aprendiendo necesitas vidas <i class="fa-solid fa-heart-circle-exclamation"></i> <br> ¿Deseas comprar más? <i class="fa-solid fa-heart-circle-plus"></i>.`;
+
+
+                    Swal.fire({
+                        title: 'Sin Vidas Restantes',
+                        html: mensaje,
+                        icon: 'info',
+                        confirmButtonText: 'Comprar',
+                        showCancelButton: true,
+                        cancelButtonText: 'Cancelar',
+                        preConfirm: () => {
+
+                            window.location.href = '/comprar.html'; // Cambiar URL por la adecuada
+
+                        }
+                    });
+                } else if (vidasRestantes <= 4) {
+
+                    mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} minutos.`;
+
+
+                    Swal.fire({
+                        title: 'Vidas Restantes',
+                        html: mensaje,
+                        icon: 'info',
+                        confirmButtonText: 'OK'
+                    });
+
+                }
+
+
+                document.getElementById("vidasNumero").innerText = vidasRestantes;
             });
-            return;
+        });
+    </script>
+    <span th:text="${experiencia}" id="experiencia" style="display: none;">0</span>
 
-          }
+    <div th:if="${titulo != null}" style="display: none;">
+        <script th:inline="javascript">
+            document.addEventListener("DOMContentLoaded", function () {
+                // Obteniendo la experiencia actual
+                let experiencia = parseInt(document.getElementById("experiencia").innerText, 10);
+                let titulo = [[${titulo}]];
+                let mensaje = `Desbloqueaste el título <strong>${titulo}</strong>`;
 
-          // Lógica cuando se queda sin vidas
-          if(vidasRestantes == 0) {
-            mensaje += `<br>Para seguir aprendiendo necesitas vidas <i class="fa-solid fa-heart-circle-exclamation"></i> <br> ¿Deseas comprar más? <i class="fa-solid fa-heart-circle-plus"></i>.`;
 
+                // Revisamos si ya se mostró un título previamente usando localStorage
+                let ultimoTitulo = localStorage.getItem("ultimoTitulo");
 
-            Swal.fire({
-              title: 'Sin Vidas Restantes',
-              html: mensaje,
-              icon: 'info',
-              confirmButtonText: 'Comprar',
-              showCancelButton: true,
-              cancelButtonText: 'Cancelar',
-              preConfirm: () => {
+                // Si no es el mismo título que el último desbloqueado, mostrar el mensaje
+                if (titulo !== ultimoTitulo) {
+                    // Verifica la experiencia para determinar qué título mostrar y qué alertar
+                    if (experiencia >= 5000) {
+                        mensaje += `<br> ¡Obtuviste 100 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 30 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                        Swal.fire({
+                            title: '¡Desbloqueaste un nuevo título!',
+                            html: `<br>${mensaje}`,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    } else if (experiencia >= 3500) {
+                        mensaje += `<br> ¡Obtuviste 60 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 20 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                        Swal.fire({
+                            title: '¡Desbloqueaste un nuevo título!',
+                            html: `<br>${mensaje}`,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    } else if (experiencia >= 2000) {
+                        mensaje += `<br> ¡Obtuviste 40 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 10 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                        Swal.fire({
+                            title: '¡Desbloqueaste un nuevo título!',
+                            html: `<br>${mensaje}`,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    } else if (experiencia >= 500) {
+                        mensaje += `<br> ¡Obtuviste 20 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 5 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                        Swal.fire({
+                            title: '¡Desbloqueaste un nuevo título!',
+                            html: `<br>${mensaje}`,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    }
 
-                window.location.href = '/comprar.html'; // Cambiar URL por la adecuada
-
-              }
+                    // Almacenar el nuevo título para que no se muestre nuevamente
+                    localStorage.setItem("ultimoTitulo", titulo);
+                }
             });
-          } else if (vidasRestantes <= 4) {
+        </script>
+    </div>
 
-            mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} minutos.`;
+    <!-- Script para el menú desplegable -->
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const userIcon = document.getElementById("user-icon");
+            const dropdownMenu = document.getElementById("dropdown-menu");
 
-
-            Swal.fire({
-              title: 'Vidas Restantes',
-              html: mensaje,
-              icon: 'info',
-              confirmButtonText: 'OK'
+            userIcon.addEventListener("click", function(event) {
+                dropdownMenu.classList.toggle("show");
+                event.stopPropagation();
             });
 
-          }
+            document.addEventListener("click", function() {
+                dropdownMenu.classList.remove("show");
+            });
+        });
+    </script>
 
-
-          document.getElementById("vidasNumero").innerText = vidasRestantes;
-      });
-    });
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
 
 
 </header>

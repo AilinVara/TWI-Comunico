@@ -47,10 +47,11 @@
 
 
 <div class="barra-experiencia">
-    <div class="experiencia-llena" th:style="'width: ' + ${experiencia / 2000 * 100} + '%'">
-        <p> <span th:text="${experiencia}" id="experiencia"> 0</span>/5000XP</p>
+    <div class="experiencia-llena" th:style="'width: ' + (${experiencia} / ${experienciaMaxima} * 100) + '%'">
+        <p><span th:text="${experiencia}" id="experiencia">0</span>/<span th:text="${experienciaMaxima}">0</span>XP</p>
     </div>
 </div>
+
 
 <div class="game-container">
     <div class="question">
@@ -85,24 +86,31 @@
         </button>
     </form>
 
+    <input hidden th:attr="data-combinado=${combinado}" id="combinado"/>
 
     <div th:if="${esCorrecta != null}">
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
-            let siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
-                : '/braille/lecciones/traduccion';
-            let mensaje;
+            let siguienteUrl;
 
-            if ([[${esCorrecta}]]) {
-                mensaje = 'Respuesta correcta';
-            } else {
-                mensaje = 'Respuesta incorrecta';
+            let combinado = document.getElementById("combinado").getAttribute("data-combinado");
+            if(combinado != null && combinado){
+                siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
+                    : '/braille/lecciones/combinado';
+            }else{
+                siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
+                    : '/braille/lecciones/traduccion';
+            }
 
-                if ([[${suscripcion}]] != 'premium') {
-                    mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
-                    mensaje += `<br>Te quedan [[${vidas}]] vidas.`;
-                    mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] segundos.`;
-                }
+            let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
+
+            if (![[${esCorrecta}]] && [[${suscripcion}]] != 'premium') {
+                mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
+                mensaje += `<br>Te quedan [[${vidas}]] vidas.`;
+                mensaje += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> [[${tiempoRestante}]] minutos.`;
+            }
+            if ([[${completadoLeccion}]] != null && [[${completadoLeccion}]]) {
+            mensaje += `<br>¡Has completado la lección! <br> Por completar la lección ganaste 300 XP adicionales.`;
             }
 
             Swal.fire({
@@ -118,26 +126,18 @@
             });
         </script>
     </div>
-
     <span id="tiempoRestante" th:text="${tiempoRestante != null ? tiempoRestante : 0}" style="display:none;"></span>
     <script th:inline="javascript">
         document.getElementById("botonVidas").addEventListener("click", function() {
             let vidasRestantes = document.getElementById("vidasNumero").innerText;
-            let tiempoRestante = document.getElementById("tiempoRestante").innerText;
 
-            let esPremium = /*[[${suscripcion == 'premium'}]]*/ false;
+            let tiempoRestante = document.getElementById("tiempoRestante").innerText;
 
             console.log("Tiempo restante:", tiempoRestante);
 
-            let mensajeHtml = `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.`;
-
-            if (!esPremium) {
-                mensajeHtml += `<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} segundos.`;
-            }
-
             Swal.fire({
                 title: 'Vidas Restantes',
-                html: mensajeHtml,
+                html: `Te quedan ${vidasRestantes} vidas <i class="fa-solid fa-heart"></i>.<br>Tiempo restante para la próxima vida: <i class="fa-solid fa-clock-rotate-left"></i> ${tiempoRestante} minutos.`,
                 icon: 'info',
                 confirmButtonText: 'OK',
                 didOpen: () => {
@@ -193,7 +193,12 @@
     };
 
     document.getElementById('confirmarSalir').onclick = function() {
-        window.location.href = '/braille/lecciones/traduccion';
+        let combinado = document.getElementById("combinado").getAttribute("data-combinado");
+        if(combinado != null && combinado){
+            window.location.href = '/braille/lecciones/combinado';
+        }else{
+            window.location.href = '/braille/lecciones/traduccion';
+        }
     };
 
     window.onclick = function(event) {

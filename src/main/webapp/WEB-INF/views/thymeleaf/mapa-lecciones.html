@@ -57,13 +57,13 @@
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '/comprar';
+                        window.location.href = '/tienda';
                     } else {
                         console.log("El usuario eligió no comprar vidas");
                     }
                 });
             } else {
-                    window.location.href = leccion.getAttribute('data-leccion');
+                window.location.href = leccion.getAttribute('data-leccion');
             }
         });
     });
