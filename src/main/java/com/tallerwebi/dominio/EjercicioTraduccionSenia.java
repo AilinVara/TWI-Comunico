@@ -1,12 +1,10 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@DiscriminatorValue("senia")
 public class EjercicioTraduccionSenia extends Ejercicio{
     private String consigna;
     @OneToOne
