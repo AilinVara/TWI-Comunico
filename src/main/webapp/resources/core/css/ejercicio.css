@@ -117,8 +117,12 @@ body {
     font-size: 2em;
     color: #333;
     transition: background-color 0.3s ease;
-
 }
+
+.braille-item-sin-hover img{
+    max-width:  250px;
+}
+
 .letra {
     margin-bottom: 10px;
     font-size: 1.4em;

@@ -19,6 +19,19 @@
 
 <div th:replace="header :: header"></div>
 
+<button class="cerrar" id="botonCerrar">&#10005;</button>
+
+<div id="modalSalir" class="modal">
+    <div class="modal-content">
+        <h2>¿Estás seguro que querés salir?</h2>
+        <div class="contenedorDeOpciones">
+            <button id="cancelarSalir" class="confirmar">Continuar</button>
+            <button id="confirmarSalir" class="cancelar">Abandonar</button>
+        </div>
+    </div>
+</div>
+
+
 <div class="barra-experiencia">
     <div class="experiencia-llena" th:style="'width: ' + (${experiencia} / ${experienciaMaxima} * 100) + '%'">
         <p><span th:text="${experiencia}" id="experiencia">0</span>/<span th:text="${experienciaMaxima}">0</span>XP</p>
@@ -27,45 +40,46 @@
 
 
 
-<div class="titulo">
-    <h3>Ejercicio con video</h3>
-</div>
-
 <div class="game-container">
     <div class="question">
-        <p id="braille-letter">Ejercicio 1</p>
+        <div class="braille-item-sin-hover">
+            <img th:src="@{'/img/senias/' + ${ejercicio.opcionCorrecta.descripcion}}">
+        </div>
     </div>
 
-
-    <div class="sign-video">
-        <img class="video" th:src="@{https://diccionariolsc.ces.edu.co/wp-content/uploads/sites/3/2022/05/B_Frontal.gif}" alt="Muestra">
-
-        <form th:action="@{'/resolver/' + ${indice}}" method="post" th:object="${ejercicio}">
-            <input hidden th:name="ejercicioId" th:value="${ejercicio.getId()}">
-            <input hidden name="leccion" th:value="${leccion}">
-            <div class="radioYFrases">
-                <div class="OpcionesFrase" th:each="opcion: ${ejercicio.opcionesIncorrectas}">
-                    <input class="option optionVideo" type="radio" th:id="'opcion_' + ${opcion.id}" name="respuesta" th:value="${opcion.id}"/>
-                    <label class="optionFrase" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">-</label>
-                </div>
-
-                <div class="OpcionesFrase">
-                    <input class="option optionVideo" type="radio" id="opcionCorrecta" name="respuesta"
-                           th:value="${ejercicio.opcionCorrecta.id}"/>
-                    <label class="optionFrase" th:for="opcionCorrecta"
-                           th:text="${ejercicio.opcionCorrecta.descripcion}">-</label>
-                </div>
+    <form th:action="@{'/resolver/senias/' + ${indice}}" method="POST" th:object="${ejercicio}">
+        <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
+        <input hidden name="leccion" th:value="${leccion}">
+        <div class="contenedorDeOpciones">
+            <div class="radioYLetraJuntos" th:each="opcion : ${opciones}">
+                <input class="option" type="radio" th:id="'opcion_' + ${opcion.id}" name="respuesta" th:value="${opcion.id}" />
+                <label class="optionLetra" th:for="'opcion_' + ${opcion.id}" th:text="${opcion.descripcion}">Opción</label>
             </div>
+        </div>
+        <div class="contenedor-enviar">
+            <button class="enviar" type="submit">Enviar</button>
+        </div>
+    </form>
 
-            <button class="enviar enviar-ejercicioVideo" type="submit">Enviar</button>
-        </form>
-    </div>
+    <form class="form-ayuda" th:action="@{'/ejercicio/' + ${indice} + '/ayuda'}" method="post">
+        <input hidden name="ejercicioId" th:value="${ejercicio.getId()}">
+        <input hidden name="leccion" th:value="${leccion}">
+
+        <button type="submit"
+                class="boton-ayuda"
+                th:classappend="${(ayudas < 1 or (opciones?.size() ?: 0) != 3) ? 'boton-ayuda-deshabilitado' : ''}"
+                th:attr="disabled=${ayudas < 1 or (opciones?.size() ?: 0) != 3}">
+            Usar ayuda
+        </button>
+    </form>
+
+    <input hidden th:attr="data-combinado=${combinado}" id="combinado"/>
 
     <div th:if="${esCorrecta != null}">
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
             let siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
-                : '/senias';
+                : '/senias/lecciones/reconoce-gestos';
             let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
 
             if (![[${esCorrecta}]] && [[${suscripcion}]] != 'premium') {
@@ -76,7 +90,6 @@
             if ([[${completadoLeccion}]] != null && [[${completadoLeccion}]]) {
                 mensaje += `<br>¡Has completado la lección! <br> Por completar la lección ganaste 300 XP adicionales.`;
             }
-
             Swal.fire({
                 icon: [[${esCorrecta}]] ? 'success' : 'error',
                 title: [[${esCorrecta}]] ? '¡Correcto!' : '¡Incorrecto!',
@@ -151,6 +164,89 @@
     actualizarExperiencia([[${experiencia}]]);
 </script>
 
+<script>
+
+    document.getElementById('botonCerrar').onclick = function() {
+        document.getElementById('modalSalir').style.display = 'block';
+    };
+
+    document.getElementById('cancelarSalir').onclick = function() {
+        document.getElementById('modalSalir').style.display = 'none';
+    };
+
+    document.getElementById('confirmarSalir').onclick = function() {
+        let combinado = document.getElementById("combinado").getAttribute("data-combinado");
+        if(combinado != null && combinado){
+            window.location.href = '/braille/lecciones/combinado';
+        }else{
+            window.location.href = '/senias/lecciones/reconoce-gestos';
+        }
+    };
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('modalSalir');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+</script>
+
+<div th:if="${titulo != null}">
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obteniendo la experiencia actual
+            let experiencia = parseInt(document.getElementById("experiencia").innerText, 10);
+            let titulo = [[${titulo}]];
+            let mensaje = `Desbloqueaste el título <strong>${titulo}</strong>`;
+
+
+
+            // Revisamos si ya se mostró un título previamente usando localStorage
+            let ultimoTitulo = localStorage.getItem("ultimoTitulo");
+
+            // Si no es el mismo título que el último desbloqueado, mostrar el mensaje
+            if (titulo !== ultimoTitulo) {
+                // Verifica la experiencia para determinar qué título mostrar y qué alertar
+                if (experiencia >= 5000) {
+                    mensaje += `<br> ¡Obtuviste 100 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 30 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                    Swal.fire({
+                        title: '¡Desbloqueaste un nuevo título!',
+                        html: `<br>${mensaje}`,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (experiencia >= 3500) {
+                    mensaje += `<br> ¡Obtuviste 60 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 20 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                    Swal.fire({
+                        title: '¡Desbloqueaste un nuevo título!',
+                        html: `<br>${mensaje}`,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (experiencia >= 2000) {
+                    mensaje += `<br> ¡Obtuviste 40 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 10 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                    Swal.fire({
+                        title: '¡Desbloqueaste un nuevo título!',
+                        html: `<br>${mensaje}`,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (experiencia >= 500) {
+                    mensaje += `<br> ¡Obtuviste 20 <i class="fa-solid fa-coins"></i> ComunicoPoints y regeneras tus vidas 5 minutos antes! <i class="fa-solid fa-clock-rotate-left"></i> `;
+                    Swal.fire({
+                        title: '¡Desbloqueaste un nuevo título!',
+                        html: `<br>${mensaje}`,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                }
+
+                // Almacenar el nuevo título para que no se muestre nuevamente
+                localStorage.setItem("ultimoTitulo", titulo);
+            }
+        });
+    </script>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

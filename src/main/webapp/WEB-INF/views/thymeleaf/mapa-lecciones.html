@@ -14,7 +14,7 @@
 
 <div th:replace="header :: header"></div>
 
-<h2 class="titulo">Braille - [[${tipo}]]</h2>
+<h2 class="titulo">[[${tipo}]]</h2>
 <ul class="leccionesBasicas">
     <th:block th:each="progreso, indice : ${progresos}">
         <li>

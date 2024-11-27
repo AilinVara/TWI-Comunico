@@ -87,6 +87,36 @@ public class ControladorLeccion {
         return new ModelAndView("mapa-lecciones", modelo);
     }
 
+    @RequestMapping("/senias/lecciones/reconoce-gestos")
+    public ModelAndView obtenerLeccionesSenias(HttpServletRequest request){
+        ModelMap modelo = new ModelMap();
+        String tipo = "senia";
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        Integer vidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
+        Map<Long, Boolean> leccionesDesbloqueadas = this.servicioProgresoLeccion.buscarProgresoPorTipoEjercicioConEstado(tipo, usuarioId);
+
+        boolean desbloqueado = true;
+
+        for (Map.Entry<Long, Boolean> entry : leccionesDesbloqueadas.entrySet()) {
+            Long leccionId = entry.getKey();
+            boolean completado = entry.getValue();
+
+            leccionesDesbloqueadas.put(leccionId, desbloqueado);
+            desbloqueado = completado;
+        }
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+        String suscripcion = usuario.getSuscripcion().getTipoSuscripcion().getNombre();
+
+        tipo = "Reconocé gestos";
+
+        modelo.put("vidas", vidas);
+        modelo.put("tipo", tipo);
+        modelo.put("progresos", leccionesDesbloqueadas);
+        modelo.put("suscripcion", suscripcion);
+
+        return new ModelAndView("mapa-lecciones", modelo);
+    }
+
 
     @RequestMapping("/desafio-velocidad")
     public ModelAndView desafioVelocidad(HttpServletRequest request) {
