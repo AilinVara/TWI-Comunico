@@ -172,6 +172,7 @@
      display: flex;
      gap: 20px;
      align-items: center;
+     font-family: 'Feather Bold', sans-serif;
  }
 
  nav a {

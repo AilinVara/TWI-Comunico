@@ -9,6 +9,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+
 }
 
 .primero {
@@ -41,8 +42,11 @@
 .contenedor {
     position: relative;
     /*background-color: #84d8ff;*/
-    background-color: #5bcbf1;
-    color: #FFFFFF;
+    background-image: url(../img/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #333;
     border-radius: 2rem;
     width: 800px;
     display: flex;
@@ -51,20 +55,20 @@
     padding: 70px;
     margin-top: 3.5rem;
     box-shadow: 0 0 12px 2px rgba(19, 42, 55, 0.38);
+
+        font-family: 'Feather Bold', sans-serif;
 }
 
 /* Avatar de perfil */
  .avatar-perfil {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 230px;
-    height: 230px;
-    background-color: #D9DCF1;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 8px solid #FFFFFF;
-    /*box-shadow: 0 0 12px 2px rgba(0, 0, 0, .2);*/
+        display: flex;
+        width: 230px;
+        height: 230px;
+        background-color: #D9DCF1;
+        border-radius: 100%;
+        overflow: hidden;
+        border: 8px solid #FFFFFF;
+        box-shadow: 0 0 12px 2px rgba(0, 0, 0, .2);
 }
 
 
@@ -78,8 +82,7 @@
 /* Estilo del nombre de usuario */
 .nombre, h2 {
     margin-top: 1rem;
-    margin-left: 0.5rem;
-    font-size: 42px;
+    font-size: 40px;
 }
 
 /* Estilo de la descripción */
@@ -102,9 +105,14 @@
     text-align: center;
     background: linear-gradient(45deg, #b08d57, #e0b074, #b08d57);
     margin: 10px;
-    width: 160px;
-}
+    text-decoration:none;
 
+}
+a:hover{
+color: whitesmoke;!important
+    font-size: 28px;
+    transition: 0.2s;
+}
 .titulo{
     color: white;
     padding: 6px 15px;
@@ -143,6 +151,7 @@
     color: #000000;
     padding: 10px;
     border-radius: 5px 5px 0 0;
+    font-family: 'Feather Bold', sans-serif;
 }
 
 .plan-titulo h3 {
@@ -388,29 +397,48 @@ p{
     font-size: 25px;
 }
 
-.experiencia-usuario{
-    letter-spacing: 0.5px;
-    position: relative;
-    top: 10px;
+.barra-experiencia-usuario{
+      letter-spacing: 0.5px;
+      margin-top: 30px;
+      width: 100%;
+      background-color: #afafaf;
+      border-radius: 25px;
 }
 
 #exp-p, #rol{
-    font-size: 30px;
+    font-size: 20px;
 
 }
 
 #exp-span, .descripcion-h4, #rol{
-    font-weight: bold;
+       font-weight: bold;
+       display: flex;
+       justify-content: center;
+       color: white;
+       padding-top: 10px;
 }
 
-#exp-bar{
-    background-color: #4caf50;
-    border-radius: 10px;
-    transition: width 2.5s ease;
-    padding: 2px;
+.experiencia-llena{
+width: 100%;
+background-color: #afafaf;
+border-radius: 10px;
+margin-left: 10px;
 }
 
 #rol-name{
     font-size: 20px;
+}
+#desc{
+       color: black;
+       background-color: white;
+       padding: 10px;
+       font-size: 18px;
+       border-radius: 10px;
+       box-shadow: 0 0 12px 2px rgba(19, 42, 55, 0.38);
+       margin-top:20px;
+}
+.contenedor-desc{
+background-color:#9069cd;
+border-radius:25px;
 }
 
