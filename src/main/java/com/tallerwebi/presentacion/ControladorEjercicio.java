@@ -57,9 +57,8 @@ public class ControladorEjercicio {
                 EjercicioTraduccion.class, "redirect:/braille/lecciones/traduccion",
                 EjercicioMatriz.class, "redirect:/braille/lecciones/matriz",
                 EjercicioFormaPalabra.class, "redirect:/braille/lecciones/forma-palabras",
-                EjercicioTraduccionSenia.class, "redirect:/senias"
+                EjercicioTraduccionSenia.class, "redirect:/senias/lecciones/reconoce-gestos"
         );
-
 
         Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
 
@@ -92,6 +91,15 @@ public class ControladorEjercicio {
             modelo.put("letras", letras);
             return new ModelAndView("ejercicios-forma-palabra", modelo);
         } else {
+            EjercicioTraduccionSenia ejercicioTraduccion = (EjercicioTraduccionSenia) ejercicio;
+
+            Set<Opcion> opciones = ejercicioTraduccion.getOpcionesIncorrectas();
+            opciones.add(ejercicioTraduccion.getOpcionCorrecta());
+
+            List<Opcion> opcionesDesordenadas = new ArrayList<>(opciones);
+            Collections.shuffle(opcionesDesordenadas);
+
+            modelo.put("opciones", opcionesDesordenadas);
             return new ModelAndView("ejercicio-video", modelo);
         }
     }
@@ -125,10 +133,14 @@ public class ControladorEjercicio {
             EjercicioFormaPalabra ejercicioFormaPalabra = (EjercicioFormaPalabra) ejercicio;
             resuelto = this.servicioEjercicio.resolverEjercicioFormaPalabras(ejercicioFormaPalabra.getRespuestaCorrecta(), respuesta);
             mav.setViewName("ejercicios-forma-palabra");
-        }else{
+        }else if(ejercicio instanceof EjercicioTraduccionSenia){
             resuelto = this.servicioEjercicio.resolverEjercicioTraduccionSenia((EjercicioTraduccionSenia) ejercicio, Long.parseLong(respuesta));
             mav.setViewName("ejercicio-video");
+        }else{
+            resuelto = false;
         }
+
+
         if (!resuelto && !usuario.getSuscripcion().getTipoSuscripcion().getNombre().equals("premium")) {
             Boolean vidaPerdida = this.servicioVida.perderUnaVida(usuarioId);
             if (vidaPerdida) {
@@ -144,7 +156,6 @@ public class ControladorEjercicio {
                 modelo.put("completadoLeccion", experienciaOtorgada);
             }
         }
-
 
         this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
 
@@ -228,16 +239,75 @@ public class ControladorEjercicio {
 
             modelo.put("letras", letrasLista);
             return new ModelAndView("ejercicios-forma-palabra", modelo);
+        } else if (ejercicio instanceof EjercicioTraduccionSenia) {
+            EjercicioTraduccionSenia ejercicioTraduccion = (EjercicioTraduccionSenia) ejercicio;
+
+            Set<Opcion> opciones = new HashSet<>();
+            Set<Opcion> opcionesIncorrectas = ejercicioTraduccion.getOpcionesIncorrectas();
+
+            Opcion opcionIncorrecta = opcionesIncorrectas.iterator().next();
+
+            opciones.add(opcionIncorrecta);
+            opciones.add(ejercicioTraduccion.getOpcionCorrecta());
+
+            List<Opcion> opcionesDesordenadas = new ArrayList<>(opciones);
+            Collections.shuffle(opcionesDesordenadas);
+
+            modelo.put("opciones", opcionesDesordenadas);
+            return new ModelAndView("ejercicio-video", modelo);
         }
         return new ModelAndView("ejercicio-video", modelo);
     }
 
-    @RequestMapping(value = "/ejercicio-video", method = RequestMethod.GET)
-    public ModelAndView irAEjercicioVideo(@RequestParam(required = false, defaultValue = "2", value = "id") Long id) {
+    @RequestMapping(path = "/resolver/senias/{indice}", method = RequestMethod.POST)
+    public ModelAndView resolverEjercicioSenias(@PathVariable("indice") Long indice, @RequestParam("respuesta") String respuesta, @RequestParam("ejercicioId") Long ejercicioId,
+                                          @RequestParam("leccion") Long leccionId, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
         ModelMap modelo = new ModelMap();
-        Ejercicio ejercicioVideo = servicioEjercicio.obtenerEjercicio(id);
-        modelo.put("ejercicio", ejercicioVideo);
-        return new ModelAndView("ejercicio-video", modelo);
+        Ejercicio ejercicio = this.servicioEjercicio.obtenerEjercicio(ejercicioId);
+        Leccion leccion = this.servicioLeccion.obtenerLeccion(leccionId);
+        Long usuarioId = (Long) request.getSession().getAttribute("id");
+        Usuario usuario = servicioUsuario.buscarUsuarioPorId(usuarioId);
+
+        ProgresoLeccion progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
+        Boolean resuelto;
+        if (progreso == null) {
+            this.servicioProgresoLeccion.crearProgresoLeccion(leccionId, usuarioId);
+            progreso = this.servicioProgresoLeccion.buscarPorIds(leccionId, usuarioId, ejercicioId);
+        }
+
+        resuelto = this.servicioEjercicio.resolverEjercicioTraduccionSenia((EjercicioTraduccionSenia) ejercicio, Long.parseLong(respuesta));
+        mav.setViewName("ejercicio-video");
+
+        if (!resuelto && !usuario.getSuscripcion().getTipoSuscripcion().getNombre().equals("premium")) {
+            Boolean vidaPerdida = this.servicioVida.perderUnaVida(usuarioId);
+            if (vidaPerdida) {
+                Integer nuevasVidas = this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales();
+                request.getSession().setAttribute("vidasNumero", nuevasVidas);
+            }
+        }else{
+            this.servicioExperiencia.ganar100DeExperiencia(usuarioId);
+            this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
+
+            if (this.servicioProgresoLeccion.verificarCompletadoPorLeccion(leccionId, usuarioId)) {
+                boolean experienciaOtorgada = this.servicioProgresoLeccion.otorgarExperienciaPorLeccion(usuarioId, leccionId);
+                modelo.put("completadoLeccion", experienciaOtorgada);
+            }
+        }
+
+        this.servicioProgresoLeccion.actualizarProgreso(progreso, resuelto);
+
+        if(leccion.getTipo().equals("combinado")){
+            modelo.put("combinado", true);
+        }
+        modelo.put("vidas", this.servicioVida.obtenerVida(usuarioId).getCantidadDeVidasActuales());
+        agregarTiempoRestanteAlModelo(modelo,usuarioId);
+        modelo.put("indice", indice);
+        modelo.put("leccion", leccionId);
+        modelo.put("ejercicio", ejercicio);
+        modelo.put("esCorrecta", resuelto);
+        mav.addAllObjects(modelo);
+        return mav;
     }
 
     private void agregarTiempoRestanteAlModelo(ModelMap modelo, Long usuarioId) {
