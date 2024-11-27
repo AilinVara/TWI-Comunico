@@ -91,9 +91,16 @@
     <div th:if="${esCorrecta != null}">
         <script th:inline="javascript">
             let siguienteTexto = [[${indice}]] < 3 ? 'Siguiente ejercicio' : 'Finalizar lección';
-            let siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
-                : '/braille/lecciones/traduccion';
-            let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
+            let siguienteUrl;
+
+            let combinado = document.getElementById("combinado").getAttribute("data-combinado");
+            if(combinado != null && combinado){
+                siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
+                    : '/braille/lecciones/combinado';
+            }else{
+                siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
+                    : '/braille/lecciones/traduccion';
+            }
 
             if (![[${esCorrecta}]] && [[${suscripcion}]] != 'premium') {
                 mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
