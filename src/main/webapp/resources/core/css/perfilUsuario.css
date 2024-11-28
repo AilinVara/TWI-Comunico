@@ -101,13 +101,86 @@
 .titulos .titulo {
     padding: 8px;
     border: 1px solid #ddd;
-    border-radius: 8px;
     text-align: center;
-    background: linear-gradient(45deg, #b08d57, #e0b074, #b08d57);
     margin: 10px;
     text-decoration:none;
-
 }
+
+.titulos .titulo-metalizado::before {
+  left: -20px;
+  transform: rotate(180deg);
+}
+
+.titulos .titulo-metalizado::after {
+  right: -20px;
+}
+
+/* Estilo base para todos los títulos */
+.titulos .titulo-metalizado {
+    color: white;
+    padding: 6px 15px;
+    font-size: 20px;
+    text-align: center;
+    right: 85%;
+    top: 20%;
+    transition: background 0.5s ease-in-out;
+    text-decoration:none;
+}
+
+/* Principiante (Bronze) */
+.titulos .titulo-principiante {
+    background: linear-gradient(45deg, #b08d57, #e0b074, #b08d57);
+     padding: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+        margin: 10px;
+        text-decoration:none;
+    text-decoration:none;
+}
+
+/* Novato (Plata) */
+.titulos .titulo-novato {
+    background: linear-gradient(45deg, #c0c0c0, #d9d9d9, #c0c0c0);
+     padding: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+        margin: 10px;
+        text-decoration:none;
+    text-decoration:none;
+}
+
+/* Amateur (Oro) */
+.titulos .titulo-amateur {
+    background: linear-gradient(45deg, #ffd700, #ffea00, #ffd700);
+     padding: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+        margin: 10px;
+        text-decoration:none;
+    text-decoration:none;
+}
+
+/* Experto (Diamante) */
+.titulos .titulo-experto {
+    background: linear-gradient(45deg, #b9f2ff, #e0ffff, #b9f2ff);
+     padding: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+        margin: 10px;
+        text-decoration:none;
+    text-decoration:none;
+}
+/* Comunicador (Máximo) */
+.titulos .titulo-comunicador {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad, #e3c9e3);
+     padding: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+        margin: 10px;
+        text-decoration:none;
+    text-decoration:none;
+}
+
 a:hover{
 color: whitesmoke;!important
     font-size: 28px;
@@ -130,8 +203,11 @@ color: whitesmoke;!important
     padding: 0.5rem;
     width: 4rem;
     border-radius: 0.5rem;
-    background-color: #7af0f2;
+    background-color:#4c037c;
     color: white;
+}
+.configuracion:hover{
+background-color:#9069cd;
 }
 
 /* Contenedor del plan de suscripción */
@@ -142,7 +218,8 @@ color: whitesmoke;!important
     color: #ffffff;
     border-radius: 0.5rem;
     box-shadow: 0 0 12px 2px rgba(19, 42, 55, 0.38);
-    margin-top: 3.5rem;
+    margin-top: 7rem;
+    height: 50%;
 }
 
 /* Título del plan de suscripción */
@@ -168,17 +245,35 @@ color: whitesmoke;!important
 .beneficios ul {
     list-style-type: none;
     padding-left: 0;
+    margin-left: -7.5%;
 }
 
 .beneficios ul li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
+        background-color: blue;
+        background-color: #4c037c;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        width: 100%;
+        font-family: 'Feather Bold', sans-serif;
+        margin-top: 0.7rem;
 }
 
 /* Botón para mejorar suscripción */
-.suscripcion button {
+#mejorar {
     margin-top: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5em;
     background-color: #58cc02;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+#cancelar {
+    margin-top: 1rem;
+    padding: 0.5em;
+    background-color: #ea2b2b;
     color: white;
     border: none;
     border-radius: 5px;
@@ -203,7 +298,7 @@ color: whitesmoke;!important
 }
 
 .nav-tabs .nav-link.active {
-    background-color: #1cb0f6;
+    background-color:#4c037c;
     color: white;
 }
 
@@ -231,7 +326,7 @@ color: whitesmoke;!important
 }
 
 .facturas-table th{
-    background-color: #1cb0f6;
+    background-color: #9069cd;
     color: white;
 }
 
@@ -361,7 +456,7 @@ footer {
     border-radius: 5px;
     width: 60%;
     margin: 20px auto;
-    background-color: #eeecef;
+    background-color: #9069cd;
     padding: 0;
 }
 
@@ -378,7 +473,7 @@ footer {
 }
 
 .progreso-table th {
-    background-color: #1cb0f6;
+    background-color: #9069cd;
     border-radius: 5px;
     color: white;
     font-size: 24px;
@@ -420,10 +515,10 @@ p{
 
 .experiencia-llena{
 width: 100%;
-background-color: #afafaf;
+background-color: #ce82ff;
 border-radius: 10px;
-margin-left: 10px;
 }
+
 
 #rol-name{
     font-size: 20px;
@@ -440,5 +535,8 @@ margin-left: 10px;
 .contenedor-desc{
 background-color:#9069cd;
 border-radius:25px;
+}
+.btn btn-primary configuracion{
+background-color:#9069cd;
 }
 

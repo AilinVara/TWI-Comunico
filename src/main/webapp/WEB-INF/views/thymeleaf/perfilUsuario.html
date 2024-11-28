@@ -34,8 +34,17 @@
 
 
                 <div class="titulos">
-                    <a th:href="@{/titulosUsuario}" class="titulo" th:text="${usuario.getTitulo()}"> </a>
+                    <a th:href="@{/titulosUsuario}"
+                       th:classappend="'titulo-metalizado ' +
+                      (${usuario.getTitulo()} == 'Principiante' ? 'titulo-principiante' :
+                      (${usuario.getTitulo()} == 'Novato' ? 'titulo-novato' :
+                      (${usuario.getTitulo()} == 'Amateur' ? 'titulo-amateur' :
+                      (${usuario.getTitulo()} == 'Experto' ? 'titulo-experto' :
+                      (${usuario.getTitulo()} == 'Comunicador' ? 'titulo-comunicador' : '')))))"
+                       th:text="${usuario.getTitulo()}">
+                    </a>
                 </div>
+
 
                 <button type="button" class="btn btn-primary configuracion" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
@@ -70,7 +79,8 @@
                 </ul>
             </div>
             <div class="suscripcion">
-                <button><a th:href="@{/suscripciones}">Mejorar suscripción</a></button>
+                <button id="mejorar"><a th:href="@{/suscripciones}">Mejorar suscripción</a></button>
+                <button id="cancelar"><a th:href="@{/suscripciones}">Cancelar suscripción</a></button>
             </div>
         </div>
     </section>
