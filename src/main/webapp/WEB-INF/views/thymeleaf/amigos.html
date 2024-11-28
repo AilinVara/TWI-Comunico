@@ -39,7 +39,7 @@
         <div th:if="${usuarios != null}" th:each="usuario : ${usuarios}" class="contenedor">
             <div>
                 <div class="avatar-perfil">
-                    <img th:src="@{'/img/' + ${usuario.foto}}" th:alt="${usuario.nombreDeUsuario}">
+                    <img src="../img/perfil-icon.png" alt="icon">
                 </div>
                 <div class="nombre">
                     <h2 th:text="${usuario.nombreDeUsuario}"></h2>
