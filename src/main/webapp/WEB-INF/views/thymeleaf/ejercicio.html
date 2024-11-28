@@ -101,7 +101,7 @@
                 siguienteUrl = [[${indice}]] < 3 ? '/ejercicio/' + ([[${indice}]] + 1) + '?leccion=' + [[${leccion}]]
                     : '/braille/lecciones/traduccion';
             }
-            let mensaje;
+            let mensaje = [[${esCorrecta}]] ? 'Respuesta correcta' : 'Respuesta incorrecta';
 
             if (![[${esCorrecta}]] && [[${suscripcion}]] != 'premium') {
                 mensaje += `\n Has perdido una vida <i class="fa-solid fa-heart-crack"></i>`;
