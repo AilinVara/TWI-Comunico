@@ -34,29 +34,31 @@
     <!-- Separador visual -->
     <hr class="separador" />
 
-    <!-- Lista de usuarios encontrados -->
-    <div th:if="${usuarios != null}" th:each="usuario : ${usuarios}" class="contenedor">
-        <div>
-            <div class="avatar-perfil">
-                <img th:src="@{'/img/' + ${usuario.foto}}" th:alt="${usuario.nombreDeUsuario}">
+    <div class="container-usuarios">
+        <!-- Lista de usuarios encontrados -->
+        <div th:if="${usuarios != null}" th:each="usuario : ${usuarios}" class="contenedor">
+            <div>
+                <div class="avatar-perfil">
+                    <img th:src="@{'/img/' + ${usuario.foto}}" th:alt="${usuario.nombreDeUsuario}">
+                </div>
+                <div class="nombre">
+                    <h2 th:text="${usuario.nombreDeUsuario}"></h2>
+                </div>
             </div>
-            <div class="nombre">
-                <h2 th:text="${usuario.nombreDeUsuario}"></h2>
-            </div>
-        </div>
-        <div class="descripcion">
-            <h4>Descripción:</h4>
-            <p th:text="${usuario.descripcion}"></p>
+            <div class="descripcion">
+                <h4>Descripción:</h4>
+                <p th:text="${usuario.descripcion}"></p>
 
-            <div class="titulos">
-                <span class="titulo" th:text="${usuario.getTitulo()}"></span>
+                <div class="titulos">
+                    <span class="titulo" th:text="${usuario.getTitulo()}"></span>
+                </div>
+                <form th:action="@{/enviar-solicitud}" method="post">
+                    <input type="hidden" name="idAmigo" th:value="${usuario.id}"/>
+                    <button type="submit" class="btn btn-primary configuracion" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Agregar amigo
+                    </button>
+                </form>
             </div>
-            <form th:action="@{/enviar-solicitud}" method="post">
-                <input type="hidden" name="idAmigo" th:value="${usuario.id}"/>
-                <button type="submit" class="btn btn-primary configuracion" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Agregar amigo
-                </button>
-            </form>
         </div>
     </div>
 
@@ -87,7 +89,10 @@
     </div>
 </section>
 
-<footer th:replace="footer :: footer"></footer>
+<div id="amigos-footer">
+    <footer th:replace="footer :: footer"></footer>
+</div>
+
 
 <script th:src="@{/js/menuUsuario.js}"></script>
 </body>
