@@ -15,8 +15,12 @@
 <header th:replace="header:: header"></header>
 
 <div class="contenedor">
-    <div th:each="solicitud : ${solicitud}" class="card" style="width: 18rem;height: 13rem;">
+    <div th:each="solicitud : ${solicitud}" class="card">
         <div class="card-body detalle-tarjetas">
+
+            <div class="avatar-solicitud">
+                <img src="../img/perfil-icon.png" alt="icon">
+            </div>
             <h5 class="card-title" th:text="${solicitud.solicitante.nombreDeUsuario} + ' desea ser tu amigo!'"></h5>
             <div class="d-flex justify-content-around p-2">
                 <form accept-charset="UTF-8" th:action="@{/aceptar-notificacion}" method="post">
@@ -34,7 +38,10 @@
     </div>
 </div>
 
-<footer th:replace="footer :: footer"></footer>
+<div class="div-footer">
+    <footer th:replace="footer :: footer"></footer>
+</div>
+
 
 <script th:src="@{/js/menuUsuario.js}"></script>
 </body>
