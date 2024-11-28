@@ -25,22 +25,6 @@ INSERT INTO Amigo (usuario_id, amigo_id) VALUES (1, 2), (2,1), (1, 3), (3,1);
 
 INSERT INTO SolicitudAmistad (usuario_id_solicitante, usuario_id_solicitado) VALUES (4, 1);
 
-INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (1, 'sin plan', '* Sin beneficio');
-INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (2, 'basico', '* 500 ComunicoPoints<br>* 5 ayudas<br>');
-INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (3, 'estandar', '* 1000 ComunicoPoints<br>* 10 ayudas<br>* 1 llave');
-INSERT INTO tiposuscripcion (id, nombre, descripcion) VALUES (4, 'premium', '* 1500 ComunicoPoints<br>* 15 ayudas<br>* 5 llaves<br>* Obtener vidas ilimitadas');
-INSERT INTO suscripcion (id,tipo_suscripcion_id) values (1,1);
-INSERT INTO suscripcion (id,tipo_suscripcion_id) values (2,2);
-INSERT INTO suscripcion (id,tipo_suscripcion_id) values (3,3);
-INSERT INTO suscripcion (id,tipo_suscripcion_id) values (4,4);
-
-INSERT INTO codigodescuento(id) values (1);
-
-
-INSERT INTO Usuario (descripcion, email, emailVerificado, password, rol, activo, nombreDeUsuario, vida_id, comunicoPoints, experiencia_id, titulo, suscripcion_id, ayudas, llaves)
-VALUES ('Interesado en aprender braille','test@unlam.edu.ar', true,'test', 'ADMIN', true,'TestUnlam', 1, 0, 1, 'Principiante', 1, 5,0),
-       ('asd','lira@asd.com', true,'123', 'ADMIN', true,'Lirita', 1, 0, 1, 'Principiante', 1, 5, 0);
-
 INSERT INTO Opcion(id, descripcion) VALUES
                                         (1, 'A'),
                                         (2, 'B'),
