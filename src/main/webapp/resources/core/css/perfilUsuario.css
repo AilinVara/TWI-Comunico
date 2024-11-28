@@ -136,6 +136,7 @@
         margin: 10px;
         text-decoration:none;
     text-decoration:none;
+     color: white;
 }
 
 /* Novato (Plata) */
@@ -452,36 +453,44 @@ footer {
 }
 
 #lecciones {
-    border: 2px solid #3c3c3c;
     border-radius: 5px;
     width: 60%;
     margin: 20px auto;
     background-color: #9069cd;
     padding: 0;
+    border:none;
+
 }
 
 .progreso-table {
     width: 100%;
     border-collapse: collapse;
     text-align: center;
+
 }
 
 .progreso-table th,
 .progreso-table td {
     border-right: 1px solid #ffffff;
     padding: 10px;
+
 }
 
 .progreso-table th {
-    background-color: #9069cd;
-    border-radius: 5px;
+    background-color: #4c037c;
     color: white;
     font-size: 24px;
+
 }
 
 .progreso-table td {
     font-size: 22px;
-    color: #333;
+    color: white;
+    font-family: 'Feather Bold', sans-serif;
+    background-color:#9069cd;
+
+
+
 }
 
 .descripcion-h4, #exp-span{
@@ -538,5 +547,9 @@ border-radius:25px;
 }
 .btn btn-primary configuracion{
 background-color:#9069cd;
+}
+.tablas .contenedor{
+margin:auto;
+margin-bottom:20px;
 }
 
