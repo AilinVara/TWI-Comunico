@@ -91,7 +91,7 @@ public class ControladorSolicitudAmistad {
 
                 servicioSolicitudAmistad.aceptarSolicitud(idNotificacion);
 
-                return new ModelAndView("redirect:/solicitud-amistad");
+                return new ModelAndView("redirect:/mostrarAmigos");
             }
 
             return new ModelAndView("redirect:/inicio");
