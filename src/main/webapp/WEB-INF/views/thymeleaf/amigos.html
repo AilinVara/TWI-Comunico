@@ -62,38 +62,38 @@
         </div>
     </div>
 
-    <!-- Mensaje cuando no hay resultados -->
+    <!-- Mensaje cuando no hay resultados
     <div th:if="${usuarios == null || usuarios.isEmpty()}" class="sin-resultados">
-        <p>No se encontraron usuarios.</p>
-    </div>
+         <p>No se encontraron usuarios.</p>
+     </div> -->
 
-</div>
+ </div>
 
-<section>
-    <div th:each="usuarioAmigo : ${amigosUsuario}" class="contenedor">
-        <div>
-            <div class="avatar-perfil">
-                <img th:src="@{'/images/' + ${usuarioAmigo.foto}}" th:alt="${usuarioAmigo.foto}">
-            </div>
-            <div class="nombre">
-                <h2 th:text="${usuarioAmigo.nombreDeUsuario}"></h2>
-            </div>
-        </div>
-        <div class="descripcion">
-            <h4>Descripción:</h4>
-            <p th:text="${usuarioAmigo.descripcion}"></p>
-            <div class="titulos">
-                <span class="titulo" th:text="${usuarioAmigo.getTitulo()}"></span>
-            </div>
-        </div>
-    </div>
-</section>
+ <section>
+     <div th:each="usuarioAmigo, indice : ${amigosUsuario}" class="contenedor">
+         <div>
+             <div class="avatar-perfil">
+                 <img th:src="@{'/img/perfil' + ${indice.count} + '.png'}"  th:alt="${usuarioAmigo.foto}">
+             </div>
+             <div class="nombre">
+                 <h2 th:text="${usuarioAmigo.nombreDeUsuario}"></h2>
+             </div>
+         </div>
+         <div class="descripcion">
+             <h4>Descripción:</h4>
+             <p th:text="${usuarioAmigo.descripcion}"></p>
+             <div class="titulos">
+                 <span class="titulo" th:text="${usuarioAmigo.getTitulo()}"></span>
+             </div>
+         </div>
+     </div>
+ </section>
 
-<div id="amigos-footer">
-    <footer th:replace="footer :: footer"></footer>
-</div>
+ <div id="amigos-footer">
+     <footer th:replace="footer :: footer"></footer>
+ </div>
 
 
-<script th:src="@{/js/menuUsuario.js}"></script>
-</body>
-</html>
+ <script th:src="@{/js/menuUsuario.js}"></script>
+ </body>
+ </html>

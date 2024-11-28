@@ -18,8 +18,8 @@ INSERT INTO codigodescuento(id) values (1);
 INSERT INTO Usuario (descripcion, email, emailVerificado, password, rol, activo, nombreDeUsuario, vida_id, comunicoPoints, experiencia_id, titulo, suscripcion_id, ayudas, llaves)
 VALUES ('Interesada en aprender braille','test@unlam.edu.ar', true,'test', 'ADMIN', true,'María Paz', 1, 0, 1, 'Principiante', 1, 5,0),
        ('Interesada en aprender lenguaje de señas','lira@asd.com', true,'123', 'ADMIN', true,'Lirita', 2, 0, 2, 'Principiante', 1, 5, 0),
-       ('Me gusta el paty','matthew@asd.com', true,'123', 'ADMIN', true,'Matthew', 3, 0, 3, 'Principiante', 1, 5, 0),
-       ('putoelqueleexdxd','algo@asd.com', true,'123', 'ADMIN', true,'Yo pues quien mas', 4, 0, 4, 'Principiante', 1, 5, 0);
+       ('Me gustan las lecciones combinadas','matthew@asd.com', true,'123', 'ADMIN', true,'Matthew', 3, 0, 3, 'Principiante', 1, 5, 0),
+       ('Entusiasmado por aprender','robert@outlook.com', true,'123', 'ADMIN', true,'Roberto', 4, 0, 4, 'Principiante', 1, 5, 0);
 
 INSERT INTO Amigo (usuario_id, amigo_id) VALUES (1, 2), (2,1), (1, 3), (3,1);
 
