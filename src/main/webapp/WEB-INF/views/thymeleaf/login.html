@@ -6,19 +6,37 @@
 
     <title>Taller Web I</title>
 
-    <!-- Boostrap core css -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
-
     <!-- custom style -->
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
     <link rel="stylesheet" th:href="@{/css/header.css}"/>
-
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" th:href="@{/css/footer.css}"/>
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c2f2ab9be.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="logo">
+        <img th:src="@{/img/icon.svg}" alt="Logo" class="logo-img">
+        <h1>omunico</h1>
+    </div>
     <a class="navbar-brand" href="#">UNLAM</a>
+    <ul>
+        <li class="theme-toggle">
+            <input type="checkbox" id="dark-mode-toggle">
+            <label for="dark-mode-toggle" class="toggle-label"><i class="fa-solid fa-circle-half-stroke"></i></label>
+        </li>
+        <li class="language-selector">
+            <label for="language">Idioma:</label>
+            <select id="language" name="language">
+                <option value="es">ES</option>
+                <option value="en">EN</option>
+                <option value="fr">FR</option>
+            </select>
+        </li>
+    </ul>
 </nav>
 
 <main role="main" class="container">
@@ -26,24 +44,25 @@
     <div class = "container">
         <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
             <form action="#" th:action="@{/validar-login}" method="POST" th:object="${datosLogin}">
-                <h3 class="form-signin-heading">Taller Web I</h3>
+                <h3 class="form-signin-heading">Inicio sesión</h3>
                 <hr class="colorgraph"><br>
 
-                <input th:field="*{email}" id="email" type="email" class="form-control" required/>
-                <input th:field="*{password}" type="password" id="password" class="form-control" required/>
+                <input th:field="*{email}" id="email" type="email" class="form-control" required placeholder="Ingresá tu email"/>
+                <input th:field="*{password}" type="password" id="password" class="form-control" required placeholder="Ingresá tu contraseña"/>
 
-                <button id="btn-login" class="btn btn-lg btn-primary btn-block" Type="Submit">Login</button>
+                <button id="btn-login" class="btn btn-lg btn-primary btn-block" Type="Submit">Acceder</button>
 
                 <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
                 </p>
+                <a id="ir-a-registrarme" href="nuevo-usuario">Registrarme</a>
             </form>
-            <a id="ir-a-registrarme" href="nuevo-usuario">Registrarme</a>
         </div>
-    </div>
+        </div>
 </main>
 <!-- /.container -->
 
 <!-- Boostrap core js -->
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+<div th:replace="footer :: footer"></div>
 </body>
 </html>

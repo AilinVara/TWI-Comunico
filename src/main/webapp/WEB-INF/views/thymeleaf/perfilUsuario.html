@@ -19,35 +19,42 @@
         <div class="contenedor">
             <div class="perfil-header">
                 <div class="avatar-perfil">
-                    <img th:src="@{'/img/'+${usuario.foto}}" th:alt="${usuario.foto}">
+                    <img th:src="@{/img/perfil-icon.png}" alt="Usuario" class="user-icon" id="user-icon"th:alt="${usuario.foto}">
                 </div>
                 <div class="nombre">
                     <h2 th:text="${usuario.getNombreDeUsuario()}"></h2>
                 </div>
             </div>
             <div class="descripcion">
-                <h4 class="descripcion-h4">Descripción:</h4>
-                <p th:text="${usuario.getDescripcion()}"></p>
-
-                <div class="rol-container">
-                    <p id="rol">Rol:</p>
-                    <span id="rol-name" th:text="${usuario.getRol()}"></span>
+                <div class="contenedor-desc">
+                <h4 class="descripcion-h4">Descripción</h4>
+                <p id="desc" th:text="${usuario.getDescripcion()}"></p>
                 </div>
+
 
 
                 <div class="titulos">
-                    <span class="titulo" th:text="${usuario.getTitulo()}"></span>
+                    <a th:href="@{/titulosUsuario}"
+                       th:classappend="'titulo-metalizado ' +
+                      (${usuario.getTitulo()} == 'Principiante' ? 'titulo-principiante' :
+                      (${usuario.getTitulo()} == 'Novato' ? 'titulo-novato' :
+                      (${usuario.getTitulo()} == 'Amateur' ? 'titulo-amateur' :
+                      (${usuario.getTitulo()} == 'Experto' ? 'titulo-experto' :
+                      (${usuario.getTitulo()} == 'Comunicador' ? 'titulo-comunicador' : '')))))"
+                       th:text="${usuario.getTitulo()}">
+                    </a>
                 </div>
+
 
                 <button type="button" class="btn btn-primary configuracion" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
 
-                <div class="experiencia-usuario">
-                    <p id="exp-p"> <span id="exp-span">Exp:</span>
-                        <span id="exp-bar" th:text="${usuario.getExperiencia().getCantidadExperiencia()}">0</span>/5000px
-                    </p>
+                <div class="barra-experiencia-usuario">
+                    <div class="experiencia-llena" th:style="'width: ' + (${experiencia} / ${experienciaMaxima} * 100) + '%'">
+                        <p><span th:text="${experiencia}" id="experiencia">0</span>/<span th:text="${experienciaMaxima}">0</span>XP</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -72,7 +79,8 @@
                 </ul>
             </div>
             <div class="suscripcion">
-                <button><a th:href="@{/suscripciones}">Mejorar suscripción</a></button>
+                <button id="mejorar"><a th:href="@{/suscripciones}">Mejorar suscripción</a></button>
+                <button id="cancelar"><a th:href="@{/suscripciones}">Cancelar suscripción</a></button>
             </div>
         </div>
     </section>
@@ -208,6 +216,16 @@
                 modal.show();
             }
         });
+    </script>
+    <script th:inline="javascript">
+        function actualizarExperiencia(experiencia) {
+            const barra = document.querySelector('.experiencia-llena');
+            const porcentaje = (experiencia / 5000) * 100;
+            barra.style.width = porcentaje + '%';
+            barra.style.backgroundColor = '#4caf50';  // Color de la barra cuando se llena
+        }
+
+        actualizarExperiencia([[${experiencia}]]);
     </script>
 </main>
 
